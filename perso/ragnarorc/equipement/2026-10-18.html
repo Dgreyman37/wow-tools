@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meilleur équipement Ragnarorc</title><style>/* Cadre commun des pages perso (SFD_cadre_des_pages.md) : palettes et mise en page de l'outil de guilde.
+   Palettes recopiées de guild_analyser/pages/style.css le 18/10/2026 (aucun lien entre les deux outils : une
+   palette ajoutée là-bas ne vient pas ici toute seule). */
+:root{--or:#c99a1e;--serie2:#3b6ea8;--bg:#f7f6f3;--card:#fff;--fg:#1d1d1f;--mut:#6b6b70;--border:#e1e0dc;--accent:#b8860b;--accent2:#e3b341;--on:#000;--good:#2f7d4f;--bad:#b23b2e;--warn:#c27c0e;--chip:#efede8}
+@media (prefers-color-scheme:dark){:root{--serie2:#7ea6d8;--bg:#16171a;--card:#1f2125;--fg:#e8e6e1;--mut:#9a9a9f;--border:#33363c;--accent:#e3b341;--accent2:#f0d27a;--good:#5cc28a;--bad:#ef7a6c;--warn:#e7a849;--chip:#2a2c31}}
+:root[data-theme=neon]{--bg:#0f0b1e;--card:#1a1530;--fg:#f1ecff;--mut:#a59cc9;--border:#2e2650;--accent:#ff3cac;--accent2:#2bd2ff;--on:#fff;--good:#3cf7a0;--bad:#ff5a7a;--warn:#ffd23f;--chip:#261f45}
+:root[data-theme=fleau]{--bg:#0c130f;--card:#142019;--fg:#e6f2e8;--mut:#8fa898;--border:#25392c;--accent:#7dff4f;--accent2:#b36bff;--on:#0c130f;--good:#7dff4f;--bad:#ff6b8b;--warn:#ffc94d;--chip:#1c2b21}
+:root[data-theme=sunset]{--bg:#fff5ee;--card:#fff;--fg:#2a1a2e;--mut:#7a6475;--border:#f3dccf;--accent:#ff4e6a;--accent2:#8e54e9;--on:#fff;--good:#14a06c;--bad:#d6334a;--warn:#e08a00;--chip:#fde8e0}
+:root[data-theme=lagon]{--bg:#f2fbfa;--card:#fff;--fg:#10262b;--mut:#5b7479;--border:#d3ebe8;--accent:#00b3a4;--accent2:#ff8a3d;--on:#fff;--good:#0f9a6a;--bad:#e0464f;--warn:#e48a00;--chip:#e2f5f3}
+:root[data-theme=synthwave]{--bg:#1a1033;--card:#251845;--fg:#fbeaff;--mut:#b09ccc;--border:#3a2a63;--accent:#ff2a6d;--accent2:#05d9e8;--on:#fff;--chip:#2a1d52}
+:root[data-theme=cyber]{--bg:#0a0a12;--card:#14141f;--fg:#f4f4f8;--mut:#9a9ab0;--border:#2a2a3d;--accent:#fcee0a;--accent2:#00f0ff;--on:#000;--chip:#1e1e2e}
+:root[data-theme=braise]{--bg:#170d09;--card:#231510;--fg:#fbeee6;--mut:#b49a8c;--border:#3d2619;--accent:#ff5a1f;--accent2:#ffd60a;--on:#000;--chip:#2e1c14}
+:root[data-theme=givre]{--bg:#0a1220;--card:#121c30;--fg:#e9f3ff;--mut:#93a6c4;--border:#24324d;--accent:#6fd6ff;--accent2:#b9a3ff;--on:#000;--chip:#1b2740}
+:root[data-theme=aurore]{--bg:#0b0b18;--card:#151527;--fg:#eefcf6;--mut:#9aa3b8;--border:#2a2a45;--accent:#00f5a0;--accent2:#d61fff;--on:#000;--chip:#1f1f36}
+:root[data-theme=sang]{--bg:#140a0c;--card:#211215;--fg:#fbe9ec;--mut:#b3959a;--border:#3d2025;--accent:#ff1744;--accent2:#ff9100;--on:#fff;--chip:#2c1719}
+:root[data-theme=abysse]{--bg:#061821;--card:#0d2430;--fg:#e3f8ff;--mut:#8fb0bd;--border:#1b3a48;--accent:#00b4ff;--accent2:#00ffb2;--on:#000;--chip:#12303d}
+:root[data-theme=bonbon]{--bg:#fff4fb;--card:#fff;--fg:#2d1630;--mut:#7d6380;--border:#f6d9ee;--accent:#ff4fb6;--accent2:#7873f5;--on:#fff;--chip:#fde4f3}
+:root[data-theme=agrume]{--bg:#fffaf0;--card:#fff;--fg:#2a2214;--mut:#7a6c55;--border:#f1e3c8;--accent:#ff8c00;--accent2:#13b8a6;--on:#fff;--chip:#fdf0d8}
+:root[data-theme=pop]{--bg:#fffbe9;--card:#fff;--fg:#1f1a10;--mut:#6e6550;--border:#efe5bf;--accent:#ff2e63;--accent2:#3a86ff;--on:#fff;--chip:#fbf3d0}
+:root[data-theme=framboise]{--bg:#f6fbf8;--card:#fff;--fg:#18261f;--mut:#5f7268;--border:#d6eadf;--accent:#e63973;--accent2:#18a957;--on:#fff;--chip:#e5f3eb}
+:root[data-theme=synthwave],:root[data-theme=cyber],:root[data-theme=braise],:root[data-theme=givre],:root[data-theme=aurore],:root[data-theme=sang],:root[data-theme=abysse]{--good:#4ade80;--bad:#ff6b81;--warn:#fbbf24}
+:root[data-theme=bonbon],:root[data-theme=agrume],:root[data-theme=pop],:root[data-theme=framboise]{--good:#15803d;--bad:#c81e3a;--warn:#b45309}
+:root[data-theme=encre]{--serie2:#b45309;--bg:#fafafa;--card:#fff;--fg:#1b1b1d;--mut:#6b6b70;--border:#e4e4e7;--accent:#27272a;--accent2:#71717a;--on:#fff;--chip:#f0f0f2}
+:root[data-theme=ardoise]{--serie2:#c07a3a;--bg:#f5f6f8;--card:#fff;--fg:#1d232b;--mut:#64707d;--border:#dfe3e8;--accent:#3b5b7a;--accent2:#6d8aa6;--on:#fff;--chip:#eceff3}
+:root[data-theme=marine]{--serie2:#c8963e;--bg:#f6f8fb;--card:#fff;--fg:#14213a;--mut:#5d6b82;--border:#dbe2ec;--accent:#1f3a5f;--accent2:#4a73a1;--on:#fff;--chip:#e8edf4}
+:root[data-theme=sauge]{--serie2:#b5655a;--bg:#f4f6f2;--card:#fff;--fg:#1d261f;--mut:#66756a;--border:#dce4dc;--accent:#4f7461;--accent2:#86a392;--on:#fff;--chip:#e8eee7}
+:root[data-theme=lin]{--serie2:#4f7a8a;--bg:#f8f5f0;--card:#fffdf9;--fg:#2a241d;--mut:#7a6e60;--border:#e8e0d4;--accent:#9a5f3a;--accent2:#c08b62;--on:#fff;--chip:#f0e9df}
+:root[data-theme=graphite]{--serie2:var(--or);--bg:#17191c;--card:#202328;--fg:#e6e8eb;--mut:#959ba5;--border:#30343b;--accent:#a9b2bf;--accent2:#d0d6de;--on:#111;--chip:#282c32}
+:root[data-theme=nuit]{--serie2:#e0b36a;--bg:#0f1520;--card:#172030;--fg:#e3e9f2;--mut:#8d99ad;--border:#263247;--accent:#7ea6d8;--accent2:#a9c3e3;--on:#0f1520;--chip:#1e293b}
+:root[data-theme=mousse]{--serie2:#d39a8a;--bg:#131915;--card:#1b231e;--fg:#e4ece6;--mut:#8e9e93;--border:#2a362e;--accent:#8fb39a;--accent2:#b8d0bd;--on:#131915;--chip:#222c25}
+:root[data-theme=bronze]{--serie2:#8fb0c9;--bg:#191613;--card:#221e1a;--fg:#efe8df;--mut:#a39a8e;--border:#3a332b;--accent:#c49a6c;--accent2:#dcbc94;--on:#191613;--chip:#2b2621}
+:root[data-theme=prune]{--serie2:#c9b46a;--bg:#17131a;--card:#211b25;--fg:#eee6f2;--mut:#a095a8;--border:#352c3b;--accent:#a88bbd;--accent2:#c8b4d6;--on:#17131a;--chip:#2a2230}
+:root[data-theme=encre],:root[data-theme=ardoise],:root[data-theme=marine],:root[data-theme=sauge],:root[data-theme=lin]{--good:#2f6f4a;--bad:#a4372c;--warn:#9a6a12}
+:root[data-theme=graphite],:root[data-theme=nuit],:root[data-theme=mousse],:root[data-theme=bronze],:root[data-theme=prune]{--good:#7fb894;--bad:#e08a80;--warn:#d9b26a}
+
+/* anciens noms de couleurs des pages perso, en fonction de la palette : leurs feuilles n'ont plus de couleurs */
+:root{--fond:var(--bg);--carte:var(--card);--texte:var(--fg);--faible:var(--mut);--ligne:var(--border);
+ --marque:var(--chip);--avert:var(--warn);--avert-fond:color-mix(in srgb,var(--warn) 14%,var(--card));
+ --porte:color-mix(in srgb,var(--accent2) 16%,var(--card));--possede:var(--porte);
+ --plus:var(--good);--moins:var(--bad);--ombre:none}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+
+/* barre du haut : nom, onglets, couleurs */
+header.cadre{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--border);display:flex;
+ align-items:center;gap:16px;padding:0 16px;flex-wrap:wrap}
+header.cadre .logo{font-weight:800;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;
+ background-clip:text;color:transparent;padding:12px 0;white-space:nowrap}
+nav.top{display:flex;gap:2px;flex-wrap:wrap}
+nav.top a{border-bottom:3px solid transparent;color:var(--mut);font-weight:600;padding:12px 12px 9px;letter-spacing:.03em;
+ text-decoration:none;font-size:14px}
+nav.top a:hover{color:var(--fg)}
+nav.top a.on{color:var(--fg);border-color:var(--accent)}
+.ctx{margin-left:auto;display:flex;gap:8px;font-size:13px}
+.ctx select{font:inherit;background:var(--chip);color:var(--fg);border:1px solid var(--border);border-radius:6px;padding:4px 6px}
+
+/* menu « Sur cette page » et contenu */
+.wrap{display:flex;max-width:1400px;margin:0 auto}
+aside#menu{width:230px;flex:none;position:sticky;top:52px;align-self:flex-start;padding:24px 12px 24px 0;
+ max-height:calc(100vh - 52px);overflow:auto}
+aside#menu summary{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);
+ margin:0 0 10px 13px;cursor:pointer;list-style:none}
+aside#menu summary::-webkit-details-marker{display:none}
+aside#menu summary{display:block}aside#menu summary::before{content:none}  /* pas la flèche des volets d'une page */
+aside#menu summary::after{content:"▾";margin-left:6px}aside#menu details:not([open]) summary::after{content:"▸"}
+aside#menu nav a{display:block;color:var(--fg);text-decoration:none;padding:5px 10px;border-left:3px solid var(--border);font-size:14px}
+aside#menu nav a:hover{color:var(--accent);border-left-color:var(--accent)}
+aside#menu nav a.actif{color:var(--accent);border-left-color:var(--accent);font-weight:600;
+ background:color-mix(in srgb,var(--accent) 8%,transparent)}
+main.cadre{flex:1;min-width:0;padding:20px 16px 80px}
+
+/* bandeau du titre de la page */
+.bandeau{position:relative;overflow:hidden;border-radius:16px;padding:22px 24px 18px;margin:4px 0 18px;border:1px solid var(--border);
+ background:radial-gradient(120% 140% at 100% 0%,color-mix(in srgb,var(--accent) 22%,transparent),transparent 60%),
+ linear-gradient(135deg,color-mix(in srgb,var(--accent) 10%,var(--card)),var(--card))}
+.bandeau::after{content:"";position:absolute;right:-40px;bottom:-60px;width:220px;height:220px;border-radius:50%;
+ border:22px solid color-mix(in srgb,var(--accent) 12%,transparent);pointer-events:none}
+.bandeau .surtitre{font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.bandeau h1{font-size:clamp(1.6rem,4vw,2.3rem);margin:6px 0 4px;line-height:1.1}
+.bandeau .versions{color:var(--mut);font-size:.9rem;position:relative;z-index:1}
+
+/* titres de section numérotés, comme la guilde */
+main.cadre{counter-reset:sec}
+main.cadre h2{counter-increment:sec;display:flex;align-items:center;gap:10px;scroll-margin-top:64px}
+main.cadre h2::before{content:counter(sec,decimal-leading-zero);font-size:12px;font-weight:700;color:var(--on);
+ background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:6px;padding:2px 7px;letter-spacing:.05em;flex:none}
+main.cadre h2::after{content:"";flex:1;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),transparent);opacity:.6}
+main.cadre a{color:var(--accent)}
+main.cadre button.actif{background:var(--accent);border-color:var(--accent);color:var(--on)}
+
+.pied{margin-top:64px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--mut)}
+
+@media (max-width:860px){header.cadre{position:static}.wrap{display:block}
+ aside#menu{display:block;position:sticky;top:0;z-index:6;width:auto;max-height:70vh;padding:8px 16px;background:var(--bg);
+ border-bottom:1px solid var(--border)}aside#menu summary{margin:0;padding:6px 0}aside#menu nav{padding-bottom:6px}
+ .ctx{margin-left:0;padding-bottom:8px;flex-wrap:wrap}.ctx select{max-width:100%}}
+/* Page du meilleur équipement. Couleurs : cadre commun (commun/cadre.css). */
+.faible { color:var(--faible); font-size:.85em; }
+.alerte { background:var(--avert-fond); color:var(--avert); padding:8px 12px; border-radius:8px; margin:8px 0;
+  font-size:.92rem; }
+.aide { color:var(--faible); font-size:.88rem; margin:12px 0; }
+section.contenu { background:var(--carte); border-radius:12px; padding:12px 16px; margin:14px 0; }
+section.contenu h2 { font-size:1.1rem; margin:0 0 8px; }
+section.contenu h3 { font-size:1rem; margin:16px 0 6px; }
+.tableau { overflow-x:auto; }
+table { border-collapse:collapse; width:100%; font-size:.92rem; }
+th, td { text-align:left; padding:8px; border-top:1px solid var(--ligne); vertical-align:top; }
+th { font-weight:600; color:var(--faible); font-size:.8rem; text-transform:uppercase; letter-spacing:.03em;
+  border-top:none; }
+td a { color:#a335ee; font-weight:600; text-decoration:none; }
+.marque { background:var(--marque); color:var(--faible); border-radius:4px; padding:0 6px; font-size:.74rem;
+  font-weight:400; margin-left:4px; }
+td.n, th.n { text-align:center; white-space:nowrap; }
+td.plus { color:var(--plus); } td.moins { color:var(--moins); }
+.chiffres { display:flex; flex-wrap:wrap; gap:12px; margin:8px 0; }
+.chiffres > div { background:var(--marque); border-radius:8px; padding:8px 12px; display:flex; flex-direction:column;
+  gap:2px; min-width:140px; }
+</style></head>
+<body>
+<header class="cadre"><span class="logo">Ragnarorc · Perso</span>
+<nav class="top"><a href="../catalogue/" data-local="catalogue_ragnarorc.html">CATALOGUE</a><a href="../talents/" data-local="talents_ragnarorc.html">TALENTS JOUÉS</a><a href="../references/" data-local="references_ragnarorc.html">RÉFÉRENCES</a><a href="../comparaison-talents/" data-local="comparaison_talents_ragnarorc.html">COMPARAISON DES TALENTS</a><a href="../equipement/" data-local="equipement_ragnarorc.html" class="on">MEILLEUR ÉQUIPEMENT</a><a href="../objets/" data-local="objets_ragnarorc.html">OBJETS À VISER</a></nav><div class="ctx"><select id="theme" title="Couleurs"><optgroup label="Sombres"><option value="neon">Néon</option><option value="fleau">Fléau</option><option value="synthwave">Synthwave</option><option value="cyber">Cyberpunk</option><option value="braise">Braise</option><option value="givre">Givre (Liche)</option><option value="aurore">Aurore boréale</option><option value="sang">Sang</option><option value="abysse">Abysse</option></optgroup><optgroup label="Clairs"><option value="sunset">Coucher de soleil</option><option value="lagon">Lagon</option><option value="bonbon">Bonbon</option><option value="agrume">Agrume</option><option value="pop">Pop</option><option value="framboise">Framboise-menthe</option></optgroup><optgroup label="Sobres clairs"><option value="">Or</option><option value="encre">Encre</option><option value="ardoise" selected>Ardoise</option><option value="marine">Marine</option><option value="sauge">Sauge</option><option value="lin">Lin</option></optgroup><optgroup label="Sobres sombres"><option value="graphite">Graphite</option><option value="nuit">Nuit bleue</option><option value="mousse">Mousse</option><option value="bronze">Bronze</option><option value="prune">Prune</option></optgroup></select></div></header>
+<div class="wrap"><aside id="menu"></aside>
+<main class="cadre">
+<div class="bandeau"><div class="surtitre">Outil perso</div><h1>Meilleur équipement de Ragnarorc</h1><div class="versions">export du 18/10/2026 15:47 · simc 5537d8813d</div></div><p class='aide'>Parmi ce que tu portes et ce qui est dans ton sac, avec le build retenu par la comparaison des talents. Ce soir : chaque pièce à son niveau ; avec les montées : chaque pièce peut aussi monter au bout de sa piste. Enchantement et gemmes : ceux de ta pièce portée à cet emplacement. Gain seul : la pièce seule sur ton équipement porté ; sous 0,3 %, une pièce ne change pas (précision de la simulation).</p><section class='contenu'><h2>Raid</h2><p>Build : <strong>Top cleave (25 joueurs)</strong> (San&#x27;layn) (à importer en jeu : page Comparaison des talents)</p><div class='chiffres'><div><span class='faible'>Porté</span><strong>212,3 k</strong></div><div><span class='faible'>Ce soir</span><strong>212,2 k <span class='faible'>(0,0 %)</span></strong></div><div><span class='faible'>Avec les montées</span><strong>213,0 k <span class='faible'>(+0,3 %)</span></strong></div></div><h3>Ce soir : quoi équiper</h3><p>Rien à changer : ton équipement porté est déjà le meilleur.</p><h3>Quoi monter d'abord</h3><p class='aide'>Chaque pièce qui peut encore monter (portée ou du sac), montée seule au bout de sa piste sur l'équipement de ce soir, à sa meilleure place ; la plus rentable (gain pour 10 écussons) d'abord. Gain négatif : même montée, elle ne vaut pas la pièce de ce soir.</p><div class='tableau'><table><thead><tr><th>Emplacement</th><th>Pièce</th><th class='n'>Niveau</th><th>Coût</th><th class='n'>Gain</th><th class='n'>Pour 10 écussons</th></tr></thead><tbody><tr><td>torse</td><td><a href='https://www.wowhead.com/fr/item=268222'>Cuirasse d’esprit téméraire</a> <span class='faible'>(sac)</span></td><td class='n'>321 → 334</td><td>80 écussons Mythe</td><td class='n'>+0,5 %</td><td class='n'>+0,1 %</td></tr><tr><td>taille</td><td><a href='https://www.wowhead.com/fr/item=159418'>Ceinturon de purification pestilentielle</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>+0,1 %</td><td class='n'>0,0 %</td></tr><tr><td>dos</td><td><a href='https://www.wowhead.com/fr/item=251132'>Voile clandestin</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>0,0 %</td><td class='n'>0,0 %</td></tr><tr><td>torse</td><td><a href='https://www.wowhead.com/fr/item=239036'>Cuirasse de gardien du désert</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-0,1 %</td><td class='n'>0,0 %</td></tr><tr><td>torse</td><td><a href='https://www.wowhead.com/fr/item=271477'>Cuirasse de chevalier de la tombe sinistre</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-0,1 %</td><td class='n'>0,0 %</td></tr><tr><td>dos</td><td><a href='https://www.wowhead.com/fr/item=272227'>Voile de chevauche-vent</a> <span class='faible'>(sac)</span></td><td class='n'>308 → 321</td><td>80 écussons Héros</td><td class='n'>-0,3 %</td><td class='n'>0,0 %</td></tr><tr><td>torse</td><td><a href='https://www.wowhead.com/fr/item=273787'>Harnois d’écailles entrelacées usé</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-0,4 %</td><td class='n'>-0,1 %</td></tr><tr><td>torse</td><td><a href='https://www.wowhead.com/fr/item=251193'>Protège-côtes de racine pivotante</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-0,6 %</td><td class='n'>-0,1 %</td></tr><tr><td>bijou 2</td><td><a href='https://www.wowhead.com/fr/item=270168'>Source de rage venimeuse</a> <span class='faible'>(sac)</span></td><td class='n'>318 → 334</td><td>100 écussons Mythe</td><td class='n'>-0,7 %</td><td class='n'>-0,1 %</td></tr><tr><td>anneau 2</td><td><a href='https://www.wowhead.com/fr/item=251194'>Lien de gardelumière</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-0,8 %</td><td class='n'>-0,1 %</td></tr><tr><td>mains</td><td><a href='https://www.wowhead.com/fr/item=271475'>Poignes mortelles de chevalier de la tombe sinistre</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-1,1 %</td><td class='n'>-0,2 %</td></tr><tr><td>tête</td><td><a href='https://www.wowhead.com/fr/item=251229'>Visière des prédations</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-1,1 %</td><td class='n'>-0,2 %</td></tr><tr><td>épaules</td><td><a href='https://www.wowhead.com/fr/item=271472'>Gibets de chevalier de la tombe sinistre</a> <span class='faible'>(sac)</span></td><td class='n'>308 → 321</td><td>80 écussons Héros</td><td class='n'>-1,2 %</td><td class='n'>-0,1 %</td></tr><tr><td>épaules</td><td><a href='https://www.wowhead.com/fr/item=239051'>Espauliers du grand unificateur</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-1,3 %</td><td class='n'>-0,2 %</td></tr><tr><td>bijou 2</td><td><a href='https://www.wowhead.com/fr/item=248583'>Tambour de liens renouvelés</a> <span class='faible'>(sac)</span></td><td class='n'>295 → 308</td><td>80 écussons Champion</td><td class='n'>-1,5 %</td><td class='n'>-0,2 %</td></tr><tr><td>arme</td><td><a href='https://www.wowhead.com/fr/item=251134'>Fendoir de Xathuux</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-3,5 %</td><td class='n'>-0,6 %</td></tr></tbody></table></div><h3>Avec les montées</h3><div class='tableau'><table><thead><tr><th>Emplacement</th><th>Portée</th><th>À mettre</th><th class='n'>Gain seul</th></tr></thead><tbody><tr><td>torse</td><td class='faible'>Cuirasse de chevalier de la tombe sinistre (321)</td><td><a href='https://www.wowhead.com/fr/item=268222'>Cuirasse d’esprit téméraire</a> <span class='faible'>(sac, montée 321 → 334)</span></td><td class='n plus'>+0,5 %</td></tr></tbody></table></div></section><section class='contenu'><h2>Mythique+</h2><p>Build : <strong>Talents portés</strong> (San&#x27;layn) (tes talents)</p><div class='chiffres'><div><span class='faible'>Porté</span><strong>277,8 k</strong></div><div><span class='faible'>Ce soir</span><strong>280,7 k <span class='faible'>(+1,0 %)</span></strong></div><div><span class='faible'>Avec les montées</span><strong>282,0 k <span class='faible'>(+1,5 %)</span></strong></div></div><h3>Ce soir : quoi équiper</h3><div class='tableau'><table><thead><tr><th>Emplacement</th><th>Portée</th><th>À mettre</th><th class='n'>Gain seul</th></tr></thead><tbody><tr><td>bijou 2</td><td class='faible'>Beuglepierre résonnante (334)</td><td><a href='https://www.wowhead.com/fr/item=270165'>Cœur bouillonnant de la garde</a> <span class='faible'>(sac)</span></td><td class='n plus'>+1,0 %</td></tr></tbody></table></div><h3>Quoi monter d'abord</h3><p class='aide'>Chaque pièce qui peut encore monter (portée ou du sac), montée seule au bout de sa piste sur l'équipement de ce soir, à sa meilleure place ; la plus rentable (gain pour 10 écussons) d'abord. Gain négatif : même montée, elle ne vaut pas la pièce de ce soir.</p><div class='tableau'><table><thead><tr><th>Emplacement</th><th>Pièce</th><th class='n'>Niveau</th><th>Coût</th><th class='n'>Gain</th><th class='n'>Pour 10 écussons</th></tr></thead><tbody><tr><td>torse</td><td><a href='https://www.wowhead.com/fr/item=268222'>Cuirasse d’esprit téméraire</a> <span class='faible'>(sac)</span></td><td class='n'>321 → 334</td><td>80 écussons Mythe</td><td class='n'>+0,5 %</td><td class='n'>+0,1 %</td></tr><tr><td>dos</td><td><a href='https://www.wowhead.com/fr/item=251132'>Voile clandestin</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>0,0 %</td><td class='n'>0,0 %</td></tr><tr><td>torse</td><td><a href='https://www.wowhead.com/fr/item=239036'>Cuirasse de gardien du désert</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-0,1 %</td><td class='n'>0,0 %</td></tr><tr><td>dos</td><td><a href='https://www.wowhead.com/fr/item=272227'>Voile de chevauche-vent</a> <span class='faible'>(sac)</span></td><td class='n'>308 → 321</td><td>80 écussons Héros</td><td class='n'>-0,1 %</td><td class='n'>0,0 %</td></tr><tr><td>taille</td><td><a href='https://www.wowhead.com/fr/item=159418'>Ceinturon de purification pestilentielle</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-0,3 %</td><td class='n'>0,0 %</td></tr><tr><td>torse</td><td><a href='https://www.wowhead.com/fr/item=271477'>Cuirasse de chevalier de la tombe sinistre</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-0,3 %</td><td class='n'>-0,1 %</td></tr><tr><td>torse</td><td><a href='https://www.wowhead.com/fr/item=273787'>Harnois d’écailles entrelacées usé</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-0,5 %</td><td class='n'>-0,1 %</td></tr><tr><td>torse</td><td><a href='https://www.wowhead.com/fr/item=251193'>Protège-côtes de racine pivotante</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-0,7 %</td><td class='n'>-0,1 %</td></tr><tr><td>anneau 2</td><td><a href='https://www.wowhead.com/fr/item=251194'>Lien de gardelumière</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-0,7 %</td><td class='n'>-0,1 %</td></tr><tr><td>tête</td><td><a href='https://www.wowhead.com/fr/item=251229'>Visière des prédations</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-1,0 %</td><td class='n'>-0,2 %</td></tr><tr><td>épaules</td><td><a href='https://www.wowhead.com/fr/item=271472'>Gibets de chevalier de la tombe sinistre</a> <span class='faible'>(sac)</span></td><td class='n'>308 → 321</td><td>80 écussons Héros</td><td class='n'>-1,0 %</td><td class='n'>-0,1 %</td></tr><tr><td>épaules</td><td><a href='https://www.wowhead.com/fr/item=239051'>Espauliers du grand unificateur</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-1,0 %</td><td class='n'>-0,2 %</td></tr><tr><td>mains</td><td><a href='https://www.wowhead.com/fr/item=271475'>Poignes mortelles de chevalier de la tombe sinistre</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-1,1 %</td><td class='n'>-0,2 %</td></tr><tr><td>bijou 2</td><td><a href='https://www.wowhead.com/fr/item=248583'>Tambour de liens renouvelés</a> <span class='faible'>(sac)</span></td><td class='n'>295 → 308</td><td>80 écussons Champion</td><td class='n'>-2,4 %</td><td class='n'>-0,3 %</td></tr><tr><td>arme</td><td><a href='https://www.wowhead.com/fr/item=251134'>Fendoir de Xathuux</a> <span class='faible'>(sac)</span></td><td class='n'>311 → 321</td><td>60 écussons Héros</td><td class='n'>-3,7 %</td><td class='n'>-0,6 %</td></tr><tr><td>bijou 2</td><td><a href='https://www.wowhead.com/fr/item=270168'>Source de rage venimeuse</a> <span class='faible'>(sac)</span></td><td class='n'>318 → 334</td><td>100 écussons Mythe</td><td class='n'>-4,5 %</td><td class='n'>-0,4 %</td></tr></tbody></table></div><h3>Avec les montées</h3><div class='tableau'><table><thead><tr><th>Emplacement</th><th>Portée</th><th>À mettre</th><th class='n'>Gain seul</th></tr></thead><tbody><tr><td>bijou 2</td><td class='faible'>Beuglepierre résonnante (334)</td><td><a href='https://www.wowhead.com/fr/item=270165'>Cœur bouillonnant de la garde</a> <span class='faible'>(sac)</span></td><td class='n plus'>+1,0 %</td></tr><tr><td>torse</td><td class='faible'>Cuirasse de chevalier de la tombe sinistre (321)</td><td><a href='https://www.wowhead.com/fr/item=268222'>Cuirasse d’esprit téméraire</a> <span class='faible'>(sac, montée 321 → 334)</span></td><td class='n plus'>+1,2 %</td></tr></tbody></table></div></section>
+<footer class="pied">Généré le 18/10/2026 à 16:39 · Version 92776e6+modifs</footer>
+</main></div>
+<script>// Cadre commun des pages perso (SFD_cadre_des_pages.md) : palette, menu « Sur cette page », onglets en local.
+// Même idée que le script des pages de l'outil de guilde, recodée. Chargé après le script de la page : le menu
+// reprend les titres de section qu'elle a déjà dessinés.
+(() => {
+  // palette, retenue par le navigateur sous une clé à part : la guilde, sur le même site, garde la sienne
+  const CLE = 'perso-theme';
+  const choix = document.getElementById('theme');
+  function appliquer(valeur) {
+    if (valeur) document.documentElement.dataset.theme = valeur;
+    else delete document.documentElement.dataset.theme;
+    try { localStorage.setItem(CLE, valeur); } catch (e) { /* stockage indisponible : la palette reste celle-ci */ }
+  }
+  try { const v = localStorage.getItem(CLE); if (v !== null) choix.value = v; } catch (e) { /* idem */ }
+  appliquer(choix.value);
+  choix.onchange = () => appliquer(choix.value);
+
+  // ouverte en fichier (rapports/<date>/), une page mène aux fichiers du même dossier
+  if (location.protocol === 'file:') {
+    document.querySelectorAll('nav.top a[data-local]').forEach(a => { a.href = a.dataset.local; });
+  }
+
+  // menu : un lien par titre de section, sans son sous-titre en gris (.faible) ; un titre sans identifiant en reçoit un
+  function texteDuTitre(h) {
+    const copie = h.cloneNode(true);
+    copie.querySelectorAll('.faible').forEach(e => e.remove());
+    return copie.textContent.trim();
+  }
+  const titres = [...document.querySelectorAll('main.cadre h2')];
+  const liens = titres.map((h, i) => {
+    if (!h.id) h.id = 'section-' + (i + 1);
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = texteDuTitre(h);
+    return a;
+  });
+  const menu = document.getElementById('menu');
+  const volet = document.createElement('details');
+  volet.open = !matchMedia('(max-width:860px)').matches;
+  volet.innerHTML = '<summary>Sur cette page</summary>';
+  const nav = document.createElement('nav');
+  liens.forEach(a => nav.appendChild(a));
+  volet.appendChild(nav);
+  menu.appendChild(volet);
+
+  // un lien vers une section repliée (volet <details>) la rouvre
+  function ouvrir(cible) {
+    for (let d = cible && cible.closest('details'); d; d = d.parentElement.closest('details')) d.open = true;
+  }
+  nav.addEventListener('click', e => {
+    const a = e.target.closest('a');
+    if (a) ouvrir(document.getElementById(a.getAttribute('href').slice(1)));
+  });
+
+  // section en cours surlignée pendant le défilement
+  function enCours() {
+    let courant = liens[0];
+    titres.forEach((h, i) => { if (h.offsetParent !== null && h.getBoundingClientRect().top < 140) courant = liens[i]; });
+    liens.forEach(a => a.classList.toggle('actif', a === courant));
+  }
+  addEventListener('scroll', enCours, {passive: true});
+  enCours();
+})();
+</script>
+<script src="https://wow.zamimg.com/js/tooltips.js"></script>
+</body></html>
