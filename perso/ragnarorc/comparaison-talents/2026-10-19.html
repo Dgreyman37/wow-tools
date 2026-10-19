@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comparaison des talents Ragnarorc</title><style>/* Cadre commun des pages perso (SFD_cadre_des_pages.md) : palettes et mise en page de l'outil de guilde.
+   Palettes recopiées de guild_analyser/pages/style.css le 18/10/2026 (aucun lien entre les deux outils : une
+   palette ajoutée là-bas ne vient pas ici toute seule). */
+:root{--or:#c99a1e;--serie2:#3b6ea8;--bg:#f7f6f3;--card:#fff;--fg:#1d1d1f;--mut:#6b6b70;--border:#e1e0dc;--accent:#b8860b;--accent2:#e3b341;--on:#000;--good:#2f7d4f;--bad:#b23b2e;--warn:#c27c0e;--chip:#efede8}
+@media (prefers-color-scheme:dark){:root{--serie2:#7ea6d8;--bg:#16171a;--card:#1f2125;--fg:#e8e6e1;--mut:#9a9a9f;--border:#33363c;--accent:#e3b341;--accent2:#f0d27a;--good:#5cc28a;--bad:#ef7a6c;--warn:#e7a849;--chip:#2a2c31}}
+:root[data-theme=neon]{--bg:#0f0b1e;--card:#1a1530;--fg:#f1ecff;--mut:#a59cc9;--border:#2e2650;--accent:#ff3cac;--accent2:#2bd2ff;--on:#fff;--good:#3cf7a0;--bad:#ff5a7a;--warn:#ffd23f;--chip:#261f45}
+:root[data-theme=fleau]{--bg:#0c130f;--card:#142019;--fg:#e6f2e8;--mut:#8fa898;--border:#25392c;--accent:#7dff4f;--accent2:#b36bff;--on:#0c130f;--good:#7dff4f;--bad:#ff6b8b;--warn:#ffc94d;--chip:#1c2b21}
+:root[data-theme=sunset]{--bg:#fff5ee;--card:#fff;--fg:#2a1a2e;--mut:#7a6475;--border:#f3dccf;--accent:#ff4e6a;--accent2:#8e54e9;--on:#fff;--good:#14a06c;--bad:#d6334a;--warn:#e08a00;--chip:#fde8e0}
+:root[data-theme=lagon]{--bg:#f2fbfa;--card:#fff;--fg:#10262b;--mut:#5b7479;--border:#d3ebe8;--accent:#00b3a4;--accent2:#ff8a3d;--on:#fff;--good:#0f9a6a;--bad:#e0464f;--warn:#e48a00;--chip:#e2f5f3}
+:root[data-theme=synthwave]{--bg:#1a1033;--card:#251845;--fg:#fbeaff;--mut:#b09ccc;--border:#3a2a63;--accent:#ff2a6d;--accent2:#05d9e8;--on:#fff;--chip:#2a1d52}
+:root[data-theme=cyber]{--bg:#0a0a12;--card:#14141f;--fg:#f4f4f8;--mut:#9a9ab0;--border:#2a2a3d;--accent:#fcee0a;--accent2:#00f0ff;--on:#000;--chip:#1e1e2e}
+:root[data-theme=braise]{--bg:#170d09;--card:#231510;--fg:#fbeee6;--mut:#b49a8c;--border:#3d2619;--accent:#ff5a1f;--accent2:#ffd60a;--on:#000;--chip:#2e1c14}
+:root[data-theme=givre]{--bg:#0a1220;--card:#121c30;--fg:#e9f3ff;--mut:#93a6c4;--border:#24324d;--accent:#6fd6ff;--accent2:#b9a3ff;--on:#000;--chip:#1b2740}
+:root[data-theme=aurore]{--bg:#0b0b18;--card:#151527;--fg:#eefcf6;--mut:#9aa3b8;--border:#2a2a45;--accent:#00f5a0;--accent2:#d61fff;--on:#000;--chip:#1f1f36}
+:root[data-theme=sang]{--bg:#140a0c;--card:#211215;--fg:#fbe9ec;--mut:#b3959a;--border:#3d2025;--accent:#ff1744;--accent2:#ff9100;--on:#fff;--chip:#2c1719}
+:root[data-theme=abysse]{--bg:#061821;--card:#0d2430;--fg:#e3f8ff;--mut:#8fb0bd;--border:#1b3a48;--accent:#00b4ff;--accent2:#00ffb2;--on:#000;--chip:#12303d}
+:root[data-theme=bonbon]{--bg:#fff4fb;--card:#fff;--fg:#2d1630;--mut:#7d6380;--border:#f6d9ee;--accent:#ff4fb6;--accent2:#7873f5;--on:#fff;--chip:#fde4f3}
+:root[data-theme=agrume]{--bg:#fffaf0;--card:#fff;--fg:#2a2214;--mut:#7a6c55;--border:#f1e3c8;--accent:#ff8c00;--accent2:#13b8a6;--on:#fff;--chip:#fdf0d8}
+:root[data-theme=pop]{--bg:#fffbe9;--card:#fff;--fg:#1f1a10;--mut:#6e6550;--border:#efe5bf;--accent:#ff2e63;--accent2:#3a86ff;--on:#fff;--chip:#fbf3d0}
+:root[data-theme=framboise]{--bg:#f6fbf8;--card:#fff;--fg:#18261f;--mut:#5f7268;--border:#d6eadf;--accent:#e63973;--accent2:#18a957;--on:#fff;--chip:#e5f3eb}
+:root[data-theme=synthwave],:root[data-theme=cyber],:root[data-theme=braise],:root[data-theme=givre],:root[data-theme=aurore],:root[data-theme=sang],:root[data-theme=abysse]{--good:#4ade80;--bad:#ff6b81;--warn:#fbbf24}
+:root[data-theme=bonbon],:root[data-theme=agrume],:root[data-theme=pop],:root[data-theme=framboise]{--good:#15803d;--bad:#c81e3a;--warn:#b45309}
+:root[data-theme=encre]{--serie2:#b45309;--bg:#fafafa;--card:#fff;--fg:#1b1b1d;--mut:#6b6b70;--border:#e4e4e7;--accent:#27272a;--accent2:#71717a;--on:#fff;--chip:#f0f0f2}
+:root[data-theme=ardoise]{--serie2:#c07a3a;--bg:#f5f6f8;--card:#fff;--fg:#1d232b;--mut:#64707d;--border:#dfe3e8;--accent:#3b5b7a;--accent2:#6d8aa6;--on:#fff;--chip:#eceff3}
+:root[data-theme=marine]{--serie2:#c8963e;--bg:#f6f8fb;--card:#fff;--fg:#14213a;--mut:#5d6b82;--border:#dbe2ec;--accent:#1f3a5f;--accent2:#4a73a1;--on:#fff;--chip:#e8edf4}
+:root[data-theme=sauge]{--serie2:#b5655a;--bg:#f4f6f2;--card:#fff;--fg:#1d261f;--mut:#66756a;--border:#dce4dc;--accent:#4f7461;--accent2:#86a392;--on:#fff;--chip:#e8eee7}
+:root[data-theme=lin]{--serie2:#4f7a8a;--bg:#f8f5f0;--card:#fffdf9;--fg:#2a241d;--mut:#7a6e60;--border:#e8e0d4;--accent:#9a5f3a;--accent2:#c08b62;--on:#fff;--chip:#f0e9df}
+:root[data-theme=graphite]{--serie2:var(--or);--bg:#17191c;--card:#202328;--fg:#e6e8eb;--mut:#959ba5;--border:#30343b;--accent:#a9b2bf;--accent2:#d0d6de;--on:#111;--chip:#282c32}
+:root[data-theme=nuit]{--serie2:#e0b36a;--bg:#0f1520;--card:#172030;--fg:#e3e9f2;--mut:#8d99ad;--border:#263247;--accent:#7ea6d8;--accent2:#a9c3e3;--on:#0f1520;--chip:#1e293b}
+:root[data-theme=mousse]{--serie2:#d39a8a;--bg:#131915;--card:#1b231e;--fg:#e4ece6;--mut:#8e9e93;--border:#2a362e;--accent:#8fb39a;--accent2:#b8d0bd;--on:#131915;--chip:#222c25}
+:root[data-theme=bronze]{--serie2:#8fb0c9;--bg:#191613;--card:#221e1a;--fg:#efe8df;--mut:#a39a8e;--border:#3a332b;--accent:#c49a6c;--accent2:#dcbc94;--on:#191613;--chip:#2b2621}
+:root[data-theme=prune]{--serie2:#c9b46a;--bg:#17131a;--card:#211b25;--fg:#eee6f2;--mut:#a095a8;--border:#352c3b;--accent:#a88bbd;--accent2:#c8b4d6;--on:#17131a;--chip:#2a2230}
+:root[data-theme=encre],:root[data-theme=ardoise],:root[data-theme=marine],:root[data-theme=sauge],:root[data-theme=lin]{--good:#2f6f4a;--bad:#a4372c;--warn:#9a6a12}
+:root[data-theme=graphite],:root[data-theme=nuit],:root[data-theme=mousse],:root[data-theme=bronze],:root[data-theme=prune]{--good:#7fb894;--bad:#e08a80;--warn:#d9b26a}
+
+/* anciens noms de couleurs des pages perso, en fonction de la palette : leurs feuilles n'ont plus de couleurs */
+:root{--fond:var(--bg);--carte:var(--card);--texte:var(--fg);--faible:var(--mut);--ligne:var(--border);
+ --marque:var(--chip);--avert:var(--warn);--avert-fond:color-mix(in srgb,var(--warn) 14%,var(--card));
+ --porte:color-mix(in srgb,var(--accent2) 16%,var(--card));--possede:var(--porte);
+ --plus:var(--good);--moins:var(--bad);--ombre:none}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+
+/* barre du haut : nom, onglets, couleurs */
+header.cadre{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--border);display:flex;
+ align-items:center;gap:16px;padding:0 16px;flex-wrap:wrap}
+header.cadre .logo{font-weight:800;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;
+ background-clip:text;color:transparent;padding:12px 0;white-space:nowrap}
+nav.top{display:flex;gap:2px;flex-wrap:wrap}
+nav.top a{border-bottom:3px solid transparent;color:var(--mut);font-weight:600;padding:12px 12px 9px;letter-spacing:.03em;
+ text-decoration:none;font-size:14px}
+nav.top a:hover{color:var(--fg)}
+nav.top a.on{color:var(--fg);border-color:var(--accent)}
+.ctx{margin-left:auto;display:flex;gap:8px;font-size:13px}
+.ctx select{font:inherit;background:var(--chip);color:var(--fg);border:1px solid var(--border);border-radius:6px;padding:4px 6px}
+
+/* menu « Sur cette page » et contenu */
+.wrap{display:flex;max-width:1400px;margin:0 auto}
+aside#menu{width:230px;flex:none;position:sticky;top:52px;align-self:flex-start;padding:24px 12px 24px 0;
+ max-height:calc(100vh - 52px);overflow:auto}
+aside#menu summary{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);
+ margin:0 0 10px 13px;cursor:pointer;list-style:none}
+aside#menu summary::-webkit-details-marker{display:none}
+aside#menu summary{display:block}aside#menu summary::before{content:none}  /* pas la flèche des volets d'une page */
+aside#menu summary::after{content:"▾";margin-left:6px}aside#menu details:not([open]) summary::after{content:"▸"}
+aside#menu nav a{display:block;color:var(--fg);text-decoration:none;padding:5px 10px;border-left:3px solid var(--border);font-size:14px}
+aside#menu nav a:hover{color:var(--accent);border-left-color:var(--accent)}
+aside#menu nav a.actif{color:var(--accent);border-left-color:var(--accent);font-weight:600;
+ background:color-mix(in srgb,var(--accent) 8%,transparent)}
+main.cadre{flex:1;min-width:0;padding:20px 16px 80px}
+
+/* bandeau du titre de la page */
+.bandeau{position:relative;overflow:hidden;border-radius:16px;padding:22px 24px 18px;margin:4px 0 18px;border:1px solid var(--border);
+ background:radial-gradient(120% 140% at 100% 0%,color-mix(in srgb,var(--accent) 22%,transparent),transparent 60%),
+ linear-gradient(135deg,color-mix(in srgb,var(--accent) 10%,var(--card)),var(--card))}
+.bandeau::after{content:"";position:absolute;right:-40px;bottom:-60px;width:220px;height:220px;border-radius:50%;
+ border:22px solid color-mix(in srgb,var(--accent) 12%,transparent);pointer-events:none}
+.bandeau .surtitre{font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.bandeau h1{font-size:clamp(1.6rem,4vw,2.3rem);margin:6px 0 4px;line-height:1.1}
+.bandeau .versions{color:var(--mut);font-size:.9rem;position:relative;z-index:1}
+
+/* titres de section numérotés, comme la guilde */
+main.cadre{counter-reset:sec}
+main.cadre h2{counter-increment:sec;display:flex;align-items:center;gap:10px;scroll-margin-top:64px}
+main.cadre h2::before{content:counter(sec,decimal-leading-zero);font-size:12px;font-weight:700;color:var(--on);
+ background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:6px;padding:2px 7px;letter-spacing:.05em;flex:none}
+main.cadre h2::after{content:"";flex:1;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),transparent);opacity:.6}
+main.cadre a{color:var(--accent)}
+main.cadre button.actif{background:var(--accent);border-color:var(--accent);color:var(--on)}
+
+.pied{margin-top:64px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--mut)}
+
+@media (max-width:860px){header.cadre{position:static}.wrap{display:block}
+ aside#menu{display:block;position:sticky;top:0;z-index:6;width:auto;max-height:70vh;padding:8px 16px;background:var(--bg);
+ border-bottom:1px solid var(--border)}aside#menu summary{margin:0;padding:6px 0}aside#menu nav{padding-bottom:6px}
+ .ctx{margin-left:0;padding-bottom:8px;flex-wrap:wrap}.ctx select{max-width:100%}}
+/* Page de la comparaison des talents. Couleurs : cadre commun (commun/cadre.css). */
+.faible { color:var(--faible); font-size:.85em; }
+.alerte { background:var(--avert-fond); color:var(--avert); padding:8px 12px; border-radius:8px; margin:8px 0;
+  font-size:.92rem; }
+.alerte ul { margin:4px 0 0; padding-left:20px; }
+.aide { color:var(--faible); font-size:.88rem; margin:12px 0; }
+.conseil, section.contenu { background:var(--carte); border-radius:12px; padding:12px 16px; margin:14px 0;
+  box-shadow:var(--ombre); }
+.conseil h2, section.contenu h2 { font-size:1.1rem; margin:0 0 8px; }
+.conseil ul { margin:0; padding-left:20px; }
+.contenu-nom { font-weight:600; }
+.tableau { overflow-x:auto; }
+table { border-collapse:collapse; width:100%; font-size:.92rem; }
+th, td { text-align:left; padding:8px; border-top:1px solid var(--ligne); vertical-align:top; }
+th { font-weight:600; color:var(--faible); font-size:.8rem; text-transform:uppercase; letter-spacing:.03em;
+  border-top:none; }
+td.n, th.n { text-align:center; white-space:nowrap; width:1%; }
+tr.porte td { background:var(--porte); }
+.build { font-weight:600; }
+.marque { background:var(--marque); color:var(--faible); border-radius:4px; padding:0 6px; font-size:.74rem;
+  font-weight:400; margin-left:4px; }
+.marque.retenu { color:var(--accent); }
+.diff summary { cursor:pointer; color:var(--faible); font-size:.85rem; }
+.diff ul { margin:4px 0; padding-left:18px; font-size:.85rem; }
+.diff li.plus { color:var(--plus); } .diff li.plus::marker { content:'+ '; }
+.diff li.moins { color:var(--moins); } .diff li.moins::marker { content:'− '; }
+.rang { display:inline-block; min-width:22px; text-align:center; background:var(--marque); border-radius:6px;
+  margin-right:6px; font-size:.8rem; padding:1px 4px; }
+.cartes { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px; }
+.carte { border:1px solid var(--ligne); border-radius:10px; padding:10px 12px; }
+.carte h3 { margin:0 0 2px; font-size:1rem; }
+.carte p { margin:6px 0; }
+.gagnant { font-weight:600; }
+a.lien { color:var(--accent); font-weight:600; text-decoration:none; }
+details summary { cursor:pointer; color:var(--faible); font-size:.88rem; }
+code.chaine { display:block; word-break:break-all; font-size:.75rem; background:var(--marque); padding:6px 8px;
+  border-radius:6px; margin-top:4px; user-select:all; }
+/* code couleur (comme la page Meilleur équipement) */
+.gain { display:inline-block; border-radius:999px; padding:1px 8px; font-weight:600; font-size:.88em;
+  white-space:nowrap; }
+.gain.fort { color:var(--good); background:color-mix(in srgb, var(--good) 16%, transparent); }
+.gain.moyen { color:var(--warn); background:color-mix(in srgb, var(--warn) 16%, transparent); }
+.gain.perte { color:var(--bad); background:color-mix(in srgb, var(--bad) 14%, transparent); }
+</style></head>
+<body>
+<header class="cadre"><span class="logo">Ragnarorc · Perso</span>
+<nav class="top"><a href="../catalogue/" data-local="catalogue_ragnarorc.html">CATALOGUE</a><a href="../talents/" data-local="talents_ragnarorc.html">BUILD WARCRAFT LOGS</a><a href="../references/" data-local="references_ragnarorc.html">BUILD DES GUIDES</a><a href="../comparaison-talents/" data-local="comparaison_talents_ragnarorc.html" class="on">COMPARAISON DES TALENTS</a><a href="../equipement/" data-local="equipement_ragnarorc.html">MEILLEUR ÉQUIPEMENT</a><a href="../objets/" data-local="objets_ragnarorc.html">OBJETS À VISER</a></nav><div class="ctx"><select id="theme" title="Couleurs"><optgroup label="Sombres"><option value="neon">Néon</option><option value="fleau">Fléau</option><option value="synthwave">Synthwave</option><option value="cyber">Cyberpunk</option><option value="braise">Braise</option><option value="givre">Givre (Liche)</option><option value="aurore">Aurore boréale</option><option value="sang">Sang</option><option value="abysse">Abysse</option></optgroup><optgroup label="Clairs"><option value="sunset">Coucher de soleil</option><option value="lagon">Lagon</option><option value="bonbon">Bonbon</option><option value="agrume">Agrume</option><option value="pop">Pop</option><option value="framboise">Framboise-menthe</option></optgroup><optgroup label="Sobres clairs"><option value="">Or</option><option value="encre">Encre</option><option value="ardoise" selected>Ardoise</option><option value="marine">Marine</option><option value="sauge">Sauge</option><option value="lin">Lin</option></optgroup><optgroup label="Sobres sombres"><option value="graphite">Graphite</option><option value="nuit">Nuit bleue</option><option value="mousse">Mousse</option><option value="bronze">Bronze</option><option value="prune">Prune</option></optgroup></select></div></header>
+<div class="wrap"><aside id="menu"></aside>
+<main class="cadre">
+<div class="bandeau"><div class="surtitre">Outil perso</div><h1>Comparaison des talents de Ragnarorc</h1><div class="versions">jeu 12.1.5.70448 · simc 5537d8813d du 18/10/2026 · export du 18/10/2026 20:35</div></div>
+
+<section class="conseil"><h2>Quel arbre de talents jouer ?</h2>
+<p>On prend tous les builds possibles : <strong>tes talents actuels</strong>, les 3 builds du <strong>top
+mondial</strong> (page « Build Warcraft Logs ») et ceux des <strong>guides</strong> Icy Veins et Wowhead (page
+« Build des guides »). On les simule sur <strong>ton équipement actuel</strong> (seuls les talents changent), chacun
+<strong>dans la situation pour laquelle il est fait</strong> : le build du top « boss seul » au raid, celui des boss
+à 2 cibles au cleave, celui des donjons en M+ ; un build « raid » des guides au raid et au cleave, un build « M+ » en
+M+ ; tes talents dans la situation du build du top qui leur ressemble le plus.</p><ul><li><strong>Raid</strong> : un boss seul, immobile, pendant environ 5 minutes</li><li><strong>Raid à 2 cibles</strong> : deux cibles immobiles, pendant environ 5 minutes</li><li><strong>Mythique+</strong> : un bout de donjon de 6 minutes : un boss, puis des vagues de 4 à 6 petits monstres et de 1 à 3 gros</li></ul>
+<p class="faible">Sous 0,3 % d'écart, deux builds sont égaux : c'est la précision de la simulation. Le gagnant de
+chaque situation est celui que la page « Meilleur équipement » utilise.</p></section>
+<section class="conseil"><h2>À jouer aujourd'hui</h2><div class="cartes"><div class='carte'><h3>Raid</h3><p class='faible'>un boss seul, immobile, pendant environ 5 minutes</p><p class='gagnant'>Icy Veins : Unholy Single-Target <span class='faible'>(San&#x27;layn)</span></p><p><span class='gain fort'>+5,2 %</span> sur tes talents actuels</p><p><a class='lien' href='https://www.wowhead.com/fr/talent-calc/blizzard/CwPAAAAAAAAAAAAAAAAAAAAAAAwMjZMDDz2MzMTjZmxYGDAAAAAAAAzDMMGAsMDzsZmxMzYgBmxiGLbA2GsBgZAMzMzMmBzMYmZMA'>Voir l'arbre ↗</a></p><details><summary>Chaîne à importer en jeu</summary><code class='chaine'>CwPAAAAAAAAAAAAAAAAAAAAAAAwMjZMDDz2MzMTjZmxYGDAAAAAAAAzDMMGAsMDzsZmxMzYgBmxiGLbA2GsBgZAMzMzMmBzMYmZMA</code></details><p class='faible'>À égalité avec lui (moins de 0,3 % d'écart) : Top mondial, boss seul (14 joueurs). N'importe lequel convient.</p></div><div class='carte'><h3>Raid à 2 cibles</h3><p class='faible'>deux cibles immobiles, pendant environ 5 minutes</p><p class='gagnant'>Icy Veins : Unholy Single-Target <span class='faible'>(San&#x27;layn)</span></p><p><span class='faible'>Tes talents actuels ne sont pas simulés ici : ils sont rangés dans la situation du build du top qui leur ressemble le plus.</span></p><p><a class='lien' href='https://www.wowhead.com/fr/talent-calc/blizzard/CwPAAAAAAAAAAAAAAAAAAAAAAAwMjZMDDz2MzMTjZmxYGDAAAAAAAAzDMMGAsMDzsZmxMzYgBmxiGLbA2GsBgZAMzMzMmBzMYmZMA'>Voir l'arbre ↗</a></p><details><summary>Chaîne à importer en jeu</summary><code class='chaine'>CwPAAAAAAAAAAAAAAAAAAAAAAAwMjZMDDz2MzMTjZmxYGDAAAAAAAAzDMMGAsMDzsZmxMzYgBmxiGLbA2GsBgZAMzMzMmBzMYmZMA</code></details><p class='faible'>À égalité avec lui (moins de 0,3 % d'écart) : Top mondial, boss à 2 cibles (25 joueurs). N'importe lequel convient.</p></div><div class='carte'><h3>Mythique+</h3><p class='faible'>un bout de donjon de 6 minutes : un boss, puis des vagues de 4 à 6 petits monstres et de 1 à 3 gros</p><p class='gagnant'>Icy Veins : Unholy Mythic+/Delves <span class='faible'>(San&#x27;layn)</span></p><p><span class='faible'>Tes talents actuels ne sont pas simulés ici : ils sont rangés dans la situation du build du top qui leur ressemble le plus.</span></p><p><a class='lien' href='https://www.wowhead.com/fr/talent-calc/blizzard/CwPAAAAAAAAAAAAAAAAAAAAAAAYmhZMzMDz2MzMTzmZGjZAAAAAAAAgZGzYAwyMmZ2MzYMjBGYGbassAYbwGGwMAMmZGzgZGMjxA'>Voir l'arbre ↗</a></p><details><summary>Chaîne à importer en jeu</summary><code class='chaine'>CwPAAAAAAAAAAAAAAAAAAAAAAAYmhZMzMDz2MzMTzmZGjZAAAAAAAAgZGzYAwyMmZ2MzYMjBGYGbassAYbwGGwMAMmZGzgZGMjxA</code></details></div></div></section>
+<section class='conseil'><h2>Les guides face au top</h2><p class='aide'>Les guides sont-ils aussi bons que ce que joue le top ? Pour chaque situation, le meilleur build des guides prévu pour elle, face au meilleur build du top mondial, sur ton équipement.</p><ul><li><span class='contenu-nom'>Raid</span> : <strong>Icy Veins : Unholy Single-Target</strong>, égal au meilleur build du top, Top mondial, boss seul (14 joueurs) (+0,1 %).</li><li><span class='contenu-nom'>Raid à 2 cibles</span> : <strong>Icy Veins : Unholy Single-Target</strong>, égal au meilleur build du top, Top mondial, boss à 2 cibles (25 joueurs) (+0,2 %).</li><li><span class='contenu-nom'>Mythique+</span> : <strong>Icy Veins : Unholy Mythic+/Delves</strong>, +2,6 % face au meilleur build du top, Top mondial, donjons (37 joueurs).</li></ul></section>
+<section class='contenu'><h2>Classement : Raid</h2><p class='faible'>Simulé : un boss seul, immobile, pendant environ 5 minutes.</p><div class='tableau'><table><thead><tr><th>Build</th><th class='n'>Écart au meilleur</th></tr></thead><tbody><tr><td><div class='build'><span class='rang'>1</span>Icy Veins : Unholy Single-Target<span class='marque retenu'>gagnant</span></div><div class='faible'>San&#x27;layn</div><div class="faible">aussi : Wowhead : San ST</div></td><td class='n'><span class='gain fort'>meilleur</span><div class='faible'>212,1 k</div></td></tr><tr><td><div class='build'><span class='rang'>2</span>Top mondial, boss seul (14 joueurs)</div><div class='faible'>San&#x27;layn</div><details class='diff'><summary>6 différences avec le meilleur</summary><ul><li class='plus'>Blood Draw</li><li class='plus'>Vampiric Aura</li><li class='plus'>Wraith Walk</li><li class='moins'>Bloody Fortitude</li><li class='moins'>Death Notes</li><li class='moins'>Runic Protection</li></ul></details></td><td class='n'><span class='gain fort'>égal (-0,1 %)</span><div class='faible'>211,9 k</div></td></tr><tr class='porte'><td><div class='build'><span class='rang'>3</span>Talents portés<span class='marque'>tes talents</span></div><div class='faible'>San&#x27;layn</div><details class='diff'><summary>14 différences avec le meilleur</summary><ul><li class='plus'>Asphyxiate</li><li class='plus'>Blood Bond</li><li class='plus'>Coldthirst</li><li class='plus'>Menacing Magus</li><li class='plus'>Morbidity</li><li class='plus'>Vestigial Shell</li><li class='plus'>Wraith Walk</li><li class='moins'>Coil of Devastation</li><li class='moins'>Death Defiance</li><li class='moins'>Death Pact</li><li class='moins'>Death&#x27;s Reach</li><li class='moins'>Suppression</li><li class='moins'>Unholy Devotion</li><li class='moins'>Unholy Endurance</li></ul></details></td><td class='n'><span class='gain perte'>-4,9 %</span><div class='faible'>201,7 k</div></td></tr><tr><td><div class='build'><span class='rang'>4</span>Wowhead : Rider ST</div><div class='faible'>Cavalier de l&#x27;Apocalypse</div><details class='diff'><summary>38 différences avec le meilleur</summary><ul><li class='plus'>Apocalypse Now</li><li class='plus'>Commander of the Dead (2)</li><li class='plus'>Death Charge</li><li class='plus'>Fury of the Horsemen</li><li class='plus'>Hungering Thirst</li><li class='plus'>Infected Claws</li><li class='plus'>Let Terror Reign</li><li class='plus'>Mawsworn Menace</li><li class='plus'>Mograine&#x27;s Might</li><li class='plus'>Morbidity</li><li class='plus'>Nazgrim&#x27;s Conquest</li><li class='plus'>Outnumber</li><li class='plus'>Pact of the Apocalypse</li><li class='plus'>Ride or Die!</li><li class='plus'>Subduing Grasp</li><li class='plus'>Trollbane&#x27;s Icy Fury</li><li class='plus'>Unholy Armaments</li><li class='plus'>Whitemane&#x27;s Famine</li><li class='plus'>Wraith Walk</li><li class='moins'>Blightburst</li><li class='moins'>Blightfall</li><li class='moins'>Blood-Soaked Ground</li><li class='moins'>Bloody Fortitude</li><li class='moins'>Commander of the Dead</li><li class='moins'>Death Defiance</li><li class='moins'>Death Pact</li><li class='moins'>Frenzied Bloodthirst</li><li class='moins'>Gift of the San&#x27;layn</li><li class='moins'>Incite Terror</li><li class='moins'>Inevitable</li><li class='moins'>Infliction of Sorrow</li><li class='moins'>Pact of the San&#x27;layn</li><li class='moins'>Scourging (2)</li><li class='moins'>The Blood is Life</li><li class='moins'>Thrill of Blood</li><li class='moins'>Transfusion</li><li class='moins'>Vampiric Speed</li><li class='moins'>Visceral Strength</li></ul></details></td><td class='n'><span class='gain perte'>-5,4 %</span><div class='faible'>200,7 k</div></td></tr></tbody></table></div></section><section class='contenu'><h2>Classement : Raid à 2 cibles</h2><p class='faible'>Simulé : deux cibles immobiles, pendant environ 5 minutes.</p><div class='tableau'><table><thead><tr><th>Build</th><th class='n'>Écart au meilleur</th></tr></thead><tbody><tr><td><div class='build'><span class='rang'>1</span>Icy Veins : Unholy Single-Target<span class='marque retenu'>gagnant</span></div><div class='faible'>San&#x27;layn</div><div class="faible">aussi : Wowhead : San ST</div></td><td class='n'><span class='gain fort'>meilleur</span><div class='faible'>300,3 k</div></td></tr><tr><td><div class='build'><span class='rang'>2</span>Top mondial, boss à 2 cibles (25 joueurs)</div><div class='faible'>San&#x27;layn</div><details class='diff'><summary>6 différences avec le meilleur</summary><ul><li class='plus'>Blood Draw</li><li class='plus'>Vampiric Aura</li><li class='plus'>Wraith Walk</li><li class='moins'>Bloody Fortitude</li><li class='moins'>Enfeeble</li><li class='moins'>Runic Protection</li></ul></details></td><td class='n'><span class='gain fort'>égal (-0,2 %)</span><div class='faible'>299,9 k</div></td></tr><tr><td><div class='build'><span class='rang'>3</span>Wowhead : Rider ST</div><div class='faible'>Cavalier de l&#x27;Apocalypse</div><details class='diff'><summary>38 différences avec le meilleur</summary><ul><li class='plus'>Apocalypse Now</li><li class='plus'>Commander of the Dead (2)</li><li class='plus'>Death Charge</li><li class='plus'>Fury of the Horsemen</li><li class='plus'>Hungering Thirst</li><li class='plus'>Infected Claws</li><li class='plus'>Let Terror Reign</li><li class='plus'>Mawsworn Menace</li><li class='plus'>Mograine&#x27;s Might</li><li class='plus'>Morbidity</li><li class='plus'>Nazgrim&#x27;s Conquest</li><li class='plus'>Outnumber</li><li class='plus'>Pact of the Apocalypse</li><li class='plus'>Ride or Die!</li><li class='plus'>Subduing Grasp</li><li class='plus'>Trollbane&#x27;s Icy Fury</li><li class='plus'>Unholy Armaments</li><li class='plus'>Whitemane&#x27;s Famine</li><li class='plus'>Wraith Walk</li><li class='moins'>Blightburst</li><li class='moins'>Blightfall</li><li class='moins'>Blood-Soaked Ground</li><li class='moins'>Bloody Fortitude</li><li class='moins'>Commander of the Dead</li><li class='moins'>Death Defiance</li><li class='moins'>Death Pact</li><li class='moins'>Frenzied Bloodthirst</li><li class='moins'>Gift of the San&#x27;layn</li><li class='moins'>Incite Terror</li><li class='moins'>Inevitable</li><li class='moins'>Infliction of Sorrow</li><li class='moins'>Pact of the San&#x27;layn</li><li class='moins'>Scourging (2)</li><li class='moins'>The Blood is Life</li><li class='moins'>Thrill of Blood</li><li class='moins'>Transfusion</li><li class='moins'>Vampiric Speed</li><li class='moins'>Visceral Strength</li></ul></details></td><td class='n'><span class='gain perte'>-6,6 %</span><div class='faible'>280,6 k</div></td></tr></tbody></table></div></section><section class='contenu'><h2>Classement : Mythique+</h2><p class='faible'>Simulé : un bout de donjon de 6 minutes : un boss, puis des vagues de 4 à 6 petits monstres et de 1 à 3 gros.</p><div class='tableau'><table><thead><tr><th>Build</th><th class='n'>Écart au meilleur</th></tr></thead><tbody><tr><td><div class='build'><span class='rang'>1</span>Icy Veins : Unholy Mythic+/Delves<span class='marque retenu'>gagnant</span></div><div class='faible'>San&#x27;layn</div></td><td class='n'><span class='gain fort'>meilleur</span><div class='faible'>274,5 k</div></td></tr><tr><td><div class='build'><span class='rang'>2</span>Top mondial, donjons (37 joueurs)</div><div class='faible'>San&#x27;layn</div><details class='diff'><summary>18 différences avec le meilleur</summary><ul><li class='plus'>Blightfall</li><li class='plus'>Bloody Fortitude</li><li class='plus'>Coldthirst</li><li class='plus'>Commander of the Dead</li><li class='plus'>Death Pact</li><li class='plus'>Ghoulish Frenzy</li><li class='plus'>March of Darkness</li><li class='plus'>Scourging (2)</li><li class='plus'>Suppression</li><li class='moins'>Coil of Devastation</li><li class='moins'>Commander of the Dead (2)</li><li class='moins'>Death Notes</li><li class='moins'>Grip of the Dead</li><li class='moins'>Outnumber</li><li class='moins'>Runic Protection</li><li class='moins'>Unholy Devotion</li><li class='moins'>Vampiric Aura</li><li class='moins'>Wraith Walk</li></ul></details></td><td class='n'><span class='gain perte'>-2,5 %</span><div class='faible'>267,6 k</div></td></tr><tr><td><div class='build'><span class='rang'>3</span>Wowhead : San AoE</div><div class='faible'>San&#x27;layn</div><details class='diff'><summary>16 différences avec le meilleur</summary><ul><li class='plus'>Blightfall</li><li class='plus'>Coldthirst</li><li class='plus'>Commander of the Dead</li><li class='plus'>Death Defiance</li><li class='plus'>Death Pact</li><li class='plus'>Ghoulish Frenzy</li><li class='plus'>Scourging (2)</li><li class='plus'>Suppression</li><li class='moins'>Coil of Devastation</li><li class='moins'>Commander of the Dead (2)</li><li class='moins'>Death Notes</li><li class='moins'>Grip of the Dead</li><li class='moins'>Outnumber</li><li class='moins'>Runic Protection</li><li class='moins'>Unholy Devotion</li><li class='moins'>Wraith Walk</li></ul></details></td><td class='n'><span class='gain perte'>-2,7 %</span><div class='faible'>267,1 k</div></td></tr><tr><td><div class='build'><span class='rang'>4</span>Wowhead : Rider M+/Delves</div><div class='faible'>Cavalier de l&#x27;Apocalypse</div><details class='diff'><summary>32 différences avec le meilleur</summary><ul><li class='plus'>A Feast of Souls</li><li class='plus'>Apocalypse Now</li><li class='plus'>Coldthirst</li><li class='plus'>Death Charge</li><li class='plus'>Hungering Thirst</li><li class='plus'>Let Terror Reign</li><li class='plus'>Mawsworn Menace</li><li class='plus'>Mograine&#x27;s Might</li><li class='plus'>Nazgrim&#x27;s Conquest</li><li class='plus'>Pact of the Apocalypse</li><li class='plus'>Ride or Die!</li><li class='plus'>Subduing Grasp</li><li class='plus'>Suppression</li><li class='plus'>Trollbane&#x27;s Icy Fury</li><li class='plus'>Unholy Armaments</li><li class='plus'>Whitemane&#x27;s Famine</li><li class='moins'>Blood Draw</li><li class='moins'>Blood Scent</li><li class='moins'>Desecrate</li><li class='moins'>Frenzied Bloodthirst</li><li class='moins'>Gift of the San&#x27;layn</li><li class='moins'>Grip of the Dead</li><li class='moins'>Incite Terror</li><li class='moins'>Inevitable</li><li class='moins'>Infliction of Sorrow</li><li class='moins'>Pact of the San&#x27;layn</li><li class='moins'>The Blood is Life</li><li class='moins'>Thrill of Blood</li><li class='moins'>Transfusion</li><li class='moins'>Vampiric Aura</li><li class='moins'>Vampiric Speed</li><li class='moins'>Visceral Strength</li></ul></details></td><td class='n'><span class='gain perte'>-10,3 %</span><div class='faible'>246,2 k</div></td></tr></tbody></table></div></section>
+<footer class="pied">Généré le 19/10/2026 à 18:51 · Version d8c7cc2</footer>
+</main></div>
+<script>// Cadre commun des pages perso (SFD_cadre_des_pages.md) : palette, menu « Sur cette page », onglets en local.
+// Même idée que le script des pages de l'outil de guilde, recodée. Chargé après le script de la page : le menu
+// reprend les titres de section qu'elle a déjà dessinés.
+(() => {
+  // palette, retenue par le navigateur sous une clé à part : la guilde, sur le même site, garde la sienne
+  const CLE = 'perso-theme';
+  const choix = document.getElementById('theme');
+  function appliquer(valeur) {
+    if (valeur) document.documentElement.dataset.theme = valeur;
+    else delete document.documentElement.dataset.theme;
+    try { localStorage.setItem(CLE, valeur); } catch (e) { /* stockage indisponible : la palette reste celle-ci */ }
+  }
+  try { const v = localStorage.getItem(CLE); if (v !== null) choix.value = v; } catch (e) { /* idem */ }
+  appliquer(choix.value);
+  choix.onchange = () => appliquer(choix.value);
+
+  // ouverte en fichier (rapports/<date>/), une page mène aux fichiers du même dossier
+  if (location.protocol === 'file:') {
+    document.querySelectorAll('nav.top a[data-local]').forEach(a => { a.href = a.dataset.local; });
+  }
+
+  // menu : un lien par titre de section, sans son sous-titre en gris (.faible) ; un titre sans identifiant en reçoit un
+  function texteDuTitre(h) {
+    const copie = h.cloneNode(true);
+    copie.querySelectorAll('.faible').forEach(e => e.remove());
+    return copie.textContent.trim();
+  }
+  const titres = [...document.querySelectorAll('main.cadre h2')];
+  const liens = titres.map((h, i) => {
+    if (!h.id) h.id = 'section-' + (i + 1);
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = texteDuTitre(h);
+    return a;
+  });
+  const menu = document.getElementById('menu');
+  const volet = document.createElement('details');
+  volet.open = !matchMedia('(max-width:860px)').matches;
+  volet.innerHTML = '<summary>Sur cette page</summary>';
+  const nav = document.createElement('nav');
+  liens.forEach(a => nav.appendChild(a));
+  volet.appendChild(nav);
+  menu.appendChild(volet);
+
+  // un lien vers une section repliée (volet <details>) la rouvre
+  function ouvrir(cible) {
+    for (let d = cible && cible.closest('details'); d; d = d.parentElement.closest('details')) d.open = true;
+  }
+  nav.addEventListener('click', e => {
+    const a = e.target.closest('a');
+    if (a) ouvrir(document.getElementById(a.getAttribute('href').slice(1)));
+  });
+
+  // section en cours surlignée pendant le défilement
+  function enCours() {
+    let courant = liens[0];
+    titres.forEach((h, i) => { if (h.offsetParent !== null && h.getBoundingClientRect().top < 140) courant = liens[i]; });
+    liens.forEach(a => a.classList.toggle('actif', a === courant));
+  }
+  addEventListener('scroll', enCours, {passive: true});
+  enCours();
+})();
+</script>
+</body></html>
