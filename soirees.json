@@ -1,6 +1,16 @@
 {
  "soirees": [
   {
+   "date": "2026-10-15",
+   "page": "raid_KgPbMTZk81Y63vC4.html",
+   "zone": "The Venomous Abyss",
+   "difficulte": "Héroïque",
+   "tues": 0,
+   "affrontes": 2,
+   "essais": 10,
+   "joueurs": []
+  },
+  {
    "date": "2026-10-08",
    "page": "raid_bmAZqJDHQ9jRv3Kf.html",
    "zone": "The Venomous Abyss",
