@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ga-genere" content="2026-10-21T15:19">
+<meta name="ga-version" content="5905d27+modifs">
+<title>Mon tank Jairtrude</title>
+<style>
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .badge { font-size: .74rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px;
+           padding: 2px 10px; background: var(--surface); }
+  .badge-verif.ok { color: var(--good); border-color: var(--good); }
+  .badge-verif.alerte { color: var(--warn); border-color: var(--warn); }
+  .badge-verif.non { font-style: italic; }
+  :root { --bg: #f7f6f3; --surface: #ffffff; --text: #1f2328; --muted: #5f6670; --border: #e1e0dc;
+          --accent: #b8860b; --good: #1f7a4d; --bad: #b23b2e; --warn: #9a6400; --row: #faf9f7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #16171a; --surface: #1f2125; --text: #e6e6e3; --muted: #9ba1a8; --border: #33363c;
+            --accent: #e3b341; --good: #5cc48f; --bad: #ef7a6c; --warn: #e0b04f; --row: #23252a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  h2 { font-size: 1.35rem; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.08rem; margin: 26px 0 8px; }
+  a { color: var(--accent); }
+  .meta { color: var(--muted); margin: 0 0 20px; font-size: .95rem; }
+  .lead { background: var(--surface); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 6px; }
+  .lead ul { margin: 6px 0 0; padding-left: 20px; }
+  .note { color: var(--muted); font-size: .92rem; }
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+  th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; vertical-align: top; }
+  td.wrap { white-space: normal; min-width: 240px; }
+  th { background: var(--row); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--good); font-weight: 600; } .mid { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; } .muted { color: var(--muted); }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 8px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  td details { background: none; border: 0; padding: 0; margin: 4px 0 0; }
+  td summary { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  td details p { margin: 4px 0; max-width: 46em; }
+  .faire { display: block; margin-top: 2px; }
+</style>
+<style>
+  .avec-nav { display: grid; grid-template-columns: 230px minmax(0, 1040px); gap: 28px; justify-content: center;
+              padding: 0 16px; }
+  .avec-nav main { max-width: none; margin: 0; padding: 32px 0 64px; }
+  .sommaire { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 32px 0 24px;
+              font-size: .9rem; }
+  .sommaire summary { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+                      font-size: .75rem; margin-bottom: 8px; cursor: pointer; list-style: none; }
+  .sommaire summary::-webkit-details-marker { display: none; }
+  .sommaire ul { list-style: none; margin: 0; padding: 0; }
+  .sommaire li { margin: 0; }
+  .sommaire a { display: block; padding: 4px 10px; border-left: 3px solid var(--border); color: var(--text);
+                text-decoration: none; line-height: 1.35; }
+  .sommaire li ul a { padding-left: 22px; color: var(--muted); font-size: .85rem; }
+  .sommaire a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .sommaire a.actif { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  /* sections bien séparées : un bandeau par grande partie */
+  .avec-nav main > h2, .avec-nav main section > h2 {
+    margin: 64px 0 18px; padding: 12px 16px; font-size: 1.45rem; background: var(--surface);
+    border: 1px solid var(--border); border-left: 6px solid var(--accent); border-radius: 10px; }
+  .avec-nav main > h2:first-of-type { margin-top: 36px; }
+  .avec-nav h2, .avec-nav h3 { scroll-margin-top: 16px; }
+  .avec-nav main > h3 { padding-bottom: 4px; border-bottom: 1px dashed var(--border); }
+  @media (max-width: 1100px) {
+    .avec-nav { display: block; padding: 0; }
+    .avec-nav main { padding: 16px 16px 64px; }
+    .sommaire { position: sticky; top: 0; z-index: 5; max-height: 70vh; padding: 8px 16px; background: var(--bg);
+                border-bottom: 1px solid var(--border); }
+    .sommaire summary { margin: 0; padding: 6px 0; }
+    .sommaire summary::after { content: " ▾"; }
+  }
+</style>
+<style>.ic{display:inline-block;width:1.2em;height:1.2em;border-radius:3px;background-size:cover;vertical-align:-.25em;margin-right:.3em;flex:none}.ic-spec{border-radius:50%}.ic-spec-PaladinProtection,.io-spec-PaladinProtection,.fi-spec-PaladinProtection{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACQAJAMBIgACEQEDEQH/xAAZAAEBAQADAAAAAAAAAAAAAAAHBgUCBAj/2gAIAQEAAAAAHma/Iwv1GYqZ8gV4vf8AStxrL39ghOWbjGwP/8QAFgEAAwAAAAAAAAAAAAAAAAAAAgQG/9oACAECEAAAAJETXFOoXpP/xAAXAQEBAQEAAAAAAAAAAAAAAAADAgQF/9oACAEDEAAAAOhQMubPQ//EACgQAAICAgMAAQMEAwEAAAAAAAECAwQFEQAGEhMhMVEHIjJiI0KRgf/aAAgBAQABPwDrnX6ljH2MrkX9uz+K0BbRnlc69E/heYv9Q8FXxuKxYwHueHyH+YqIVf7elUb9c7L3GKnj6Vq5hYJ4v5IHOv8A1Togc7TlutdvydORqEtev8XxTTuVDxyMdIQVJ2BzNYqfFZKeoX9BDtHX7Op+zDmS6piafTKQuxssEEIQzInp4XkIKv8AnQbmEw801iSewysy2ApdR/L9uwQOdggGQ6jTcoFLA+io0NqfPOtYSrHkY0yQLq1sJUpqnozTEA7b+q752npFC1k0LxgmOCOP9q/QBeR5StlcFnscIPnnbHFkgUgs/wDj8aGz9ww5irdWpIa5d9TFTFKBtCyoFYMfupB+/Jp0PU6STevJWZiFBJ0HI+gHOjeJe2U5nhlYwJZdt61XR0VUeT8E6Ohw5yrM8k/w/Ks0jOh/oTpf+gb5+mHYaE+TpTWG8XIgsXr1pX2PP152LDT4jLSbXxYin9Ta34lRz6WUA75blJwFGtXdw87uXcn0BCrbAQf6gnnWaUdLCZm25+ClbjFYOSfc3htvJs/8HMj363UtPBjpXSBCQNHZY7+5PKdqerYWSF/LA8myl7NR9da5OxcrPXeRfozxoQQGPLDSnE2WWaRGpAxwlTo+ST9G/POy9ly9mlSotP5rwwpGkajQAC74ef/EACcRAAIBAgUDBAMAAAAAAAAAAAECAwAEERIhMUEGIjIFEBNCUpHB/9oACAECAQE/AFu47wPcyBiqsTHjsBsCKEsRUuMxkTxb7ajYUnV1vGoSQSZ10aoYlhU2EmhRTl4xGPFLIlugkO+btUc8U3S17Oxl/M5v3Xqar89u2Azd2vPiatEVpYcVB7v57f/EACIRAAEDAwMFAAAAAAAAAAAAAAIAAQMRFCIQEhMhMWFicf/aAAgBAwEBPwAYWxBlb0bPz86K39lEee8VMTkJVXNGoe6md6jp/9k=)}</style>
+</head>
+<body>
+<div class="avec-nav">
+<nav class="sommaire"><details open><summary>Sur cette page</summary><ul><li><a href="#s-boss-par-boss">Boss par boss</a></li><li><a href="#s-corriger-en-priorit">À corriger en priorité</a></li><li><a href="#s-survie-boss-par-boss">Survie boss par boss</a></li><li><a href="#s-d-g-ts-second-plan">Dégâts (second plan)</a><ul><li class="sous"><a href="#s-rotation">Rotation</a></li><li class="sous"><a href="#s-build-et-stats">Build et stats</a></li><li class="sous"><a href="#s-quipement">Équipement</a></li></ul></li><li><a href="#s-progression">Progression</a><ul><li class="sous"><a href="#s-centiles-par-boss">Centiles par boss</a></li><li class="sous"><a href="#s-conseils-du-08-10">Conseils du 08/10</a></li></ul></li><li><a href="#s-m-thode">Méthode</a></li></ul></details></nav>
+<main>
+<p class="badges"><span class="badge">Généré le 21/10/2026 à 15:19</span><span class="badge" title="Commit du code guild_analyser qui a produit cette page">Version 5905d27+modifs</span><span class="badge badge-verif non" title="Pas encore relue par le vérificateur (intégrité des données, anomalies)">Non vérifié</span></p>
+<style>
+  main { max-width: 1100px; }
+  .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 16px 0; }
+  .carte { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .carte .val { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .carte .lib { color: var(--muted); font-size: .85rem; }
+  .prio { list-style: none; padding: 0; margin: 0; counter-reset: p; }
+  .prio > li { counter-increment: p; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+               padding: 14px 16px 12px 56px; margin: 12px 0; position: relative; }
+  .prio > li::before { content: counter(p); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px;
+                       border-radius: 50%; background: var(--accent); color: var(--surface); font-weight: 700;
+                       display: flex; align-items: center; justify-content: center; }
+  .prio h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .gain { float: right; margin-left: 10px; background: var(--row); border: 1px solid var(--border); border-radius: 999px;
+          padding: 2px 10px; font-size: .85rem; font-weight: 600; white-space: nowrap; }
+  .gain.nc { color: var(--muted); font-weight: 400; }
+  .gain.grave { color: var(--bad); border-color: var(--bad); }
+  .gain.ok { border-color: var(--good); }
+  .prio p { margin: 6px 0; }
+  .etiq { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; margin-right: 6px; }
+  pre.macro { background: var(--row); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin: 6px 0;
+              font-size: .88rem; white-space: pre-wrap; }
+  code { background: var(--row); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: .86em;
+         word-break: break-word; }
+  .moments a { margin-right: 4px; white-space: nowrap; display: inline-block; }
+  .boss-chip { display: inline-block; font-size: .8rem; color: var(--muted); border: 1px solid var(--border);
+               border-radius: 999px; padding: 0 8px; margin: 2px 4px 2px 0; }
+  .sort { border-bottom: 1px dotted var(--muted); cursor: help; }
+  .fr { color: var(--muted); }
+  .bandeau { background: color-mix(in srgb, var(--warn) 14%, var(--surface)); border: 1px solid var(--warn);
+             border-radius: 8px; padding: 8px 12px; margin: 8px 0; font-size: .92rem; }
+  .pc { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .gris { --pc: #7d838b; } .vert { --pc: #1b9a1b; } .bleu { --pc: #0070dd; } .violet { --pc: #a335ee; }
+  .orange { --pc: #e07800; } .rose { --pc: #d6559b; } .dore { --pc: #b8942a; }
+  .pc, .pc-t { color: var(--pc, var(--muted)); }
+  .verdict { font-weight: 700; }
+  table.boss-soiree td a, .liens a { white-space: nowrap; }
+  .e-pos { color: var(--good); font-weight: 600; } .e-mid { color: var(--warn); font-weight: 600; }
+  .e-neg { color: var(--bad); font-weight: 600; }
+  .methode .carte p { margin: 4px 0 0; font-size: .92rem; }
+  .methode summary { cursor: pointer; }
+  p.mode { margin: 4px 0 10px; }
+  .refs { display: grid; gap: 10px; margin: 12px 0 16px; }
+  .ref { display: grid; grid-template-columns: minmax(0, 1fr) 11rem; gap: 4px 16px; align-items: center;
+         background: var(--surface); border: 1px solid var(--border); border-left: 6px solid var(--muted);
+         border-radius: 10px; padding: 10px 14px; }
+  .ref.e-bad { border-left-color: var(--bad); } .ref.e-warn { border-left-color: var(--warn); }
+  .ref.e-good { border-left-color: var(--good); } .ref.moi { border-left-color: var(--accent); }
+  .ref .qui { font-size: 1.05rem; } .ref .qui b { font-size: 1.15rem; }
+  .ref .det { color: var(--muted); font-size: .85rem; } .ref .det b { color: var(--text); font-size: inherit; }
+  .ref .ecart { grid-row: span 2; text-align: right; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .ref .ecart .dps { font-size: 1.9rem; font-weight: 800; }
+  .ref .ecart .pc { font-size: 1.05rem; font-weight: 700; }
+  .ref .ecart .lib { color: var(--muted); font-size: .8rem; }
+  .ref.e-bad .ecart .dps, .ref.e-bad .ecart .pc { color: var(--bad); }
+  .ref.e-warn .ecart .dps, .ref.e-warn .ecart .pc { color: var(--warn); }
+  .ref.e-good .ecart .dps, .ref.e-good .ecart .pc { color: var(--good); }
+  .ref .barre { grid-column: 1; position: relative; height: 12px; background: var(--row); border-radius: 0 4px 4px 0; }
+  .ref .barre span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--muted); }
+  .ref.e-bad .barre span { background: var(--bad); } .ref.e-warn .barre span { background: var(--warn); }
+  .ref.e-good .barre span { background: var(--good); } .ref.moi .barre span { background: var(--accent); }
+  .ref .barre i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--text); }
+  .duo { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); column-gap: 0; row-gap: 4px;
+         margin: 8px 0; }
+  .duo-tete { font-weight: 700; padding: 4px 10px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .duo-tete.dm { text-align: right; border-bottom: 3px solid var(--accent); }
+  .duo-tete.dr { border-bottom: 3px solid var(--muted); }
+  .duo-minute { grid-column: 1 / -1; text-align: center; font-weight: 700; color: var(--muted); font-size: .85rem;
+                margin-top: 10px; border-top: 1px solid var(--border); padding-top: 4px; }
+  .duo-phase { grid-column: 1 / -1; text-align: center; font-style: italic; color: var(--muted); font-size: .88rem;
+               background: var(--row); border-radius: 6px; padding: 2px 8px; }
+  .duo-axe { background: linear-gradient(var(--border), var(--border)) center / 2px 100% no-repeat; }
+  .duo-c { padding: 3px 10px; border-radius: 6px; font-size: .92rem; }
+  .duo-c.cd:not(.vide) { background: color-mix(in srgb, var(--c) 12%, var(--surface)); }
+  .duo-c.dm { text-align: right; } .duo-c.dm.cd:not(.vide) { border-right: 4px solid var(--c); }
+  .duo-c.dr.cd:not(.vide) { border-left: 4px solid var(--c); }
+  .duo-c .t { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .85rem; }
+  .duo-c .absent { color: var(--muted); font-style: italic; font-size: .85rem; }
+  .duo-c .pourquoi { display: block; font-size: .85rem; color: var(--warn); }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases .mono { fill: var(--row); stroke: var(--border); } .phases .multi { fill: #eb6834; opacity: .55; }
+  .phases text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  section.boss > summary { font-size: 1.1rem; padding: 4px 0; }
+  section.boss { margin: 10px 0; }
+  details.boss { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px;
+                 margin: 10px 0; }
+  details.boss > summary { font-size: 1.08rem; }
+  .muted { color: var(--muted); }
+  @media (max-width: 600px) { .prio > li { padding-left: 16px; } .prio > li::before { position: static; margin-bottom: 6px; } }
+</style>
+<style>
+  .viz { --s1: #2a78d6; --s2: #eb6834; margin: 10px 0 4px; }
+  @media (prefers-color-scheme: dark) { .viz { --s1: #3987e5; --s2: #d95926; } }
+  .viz svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .viz text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  .viz text.lib { fill: var(--text); }
+  .viz .grille { stroke: var(--border); stroke-width: 1; }
+  .viz .s1 { fill: var(--s1); } .viz .s2 { fill: var(--s2); }
+  .viz .l1 { stroke: var(--s1); } .viz .l2 { stroke: var(--s2); }
+  .viz circle { stroke: var(--surface); stroke-width: 2; }
+  .viz [data-tip]:hover { opacity: .75; }
+  .viz .legende { display: flex; gap: 16px; flex-wrap: wrap; font-size: .88rem; color: var(--muted); margin: 0 0 4px; }
+  .viz .legende i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+  .viz .legende i.trou { border-radius: 2px; opacity: .45; }
+  #infobulle { position: fixed; pointer-events: none; display: none; z-index: 10; background: var(--surface);
+               color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px;
+               font-size: .85rem; box-shadow: 0 2px 8px rgba(0,0,0,.15); white-space: pre; }
+</style>
+<style>
+  .cause { display: flex; height: 10px; border-radius: 3px; overflow: hidden; background: var(--row); margin: 4px 0 2px; max-width: 420px; }
+  .cause span { display: block; height: 100%; }
+  .c-freq { background: #2a78d6; } .c-crit { background: #eb6834; } .c-coup { background: #9a6fd0; } .c-abs { background: #888; }
+  .pastille { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin: 0 4px 0 10px; }
+  .sorts-pourquoi { list-style: none; padding: 0; }
+  .sorts-pourquoi li { border-bottom: 1px solid var(--border); padding: 8px 0; }
+  .sorts-pourquoi .faits { color: var(--muted); font-size: .92rem; }
+  .centile { font-weight: 600; }
+  .c-legendaire { color: #e08a00; } .c-epique { color: #a335ee; } .c-rare { color: #0070dd; }
+  .c-peu { color: #1eaa1e; } .c-commun { color: var(--muted); }
+  .mecanisme { margin: 6px 0 0; padding: 6px 10px; border-left: 3px solid #eb6834; background: var(--row); font-size: .92rem; }
+  section.boss { border-top: 2px solid var(--border); margin-top: 28px; }
+</style>
+<style>
+  td.nu { color: var(--bad); font-weight: 600; }
+  .duo-c.coup { font-size: .88rem; }
+  .duo-c.coup.nu { color: var(--bad); font-weight: 600; }
+</style>
+<h1>Mon tank — Jairtrude</h1>
+<p class="meta"><i class="ic ic-spec ic-spec-PaladinProtection" title="Protection Paladin"></i>Paladin Protection · ilvl 326 · raid du 15/10/2026 · 0 boss tués, meilleur kill de chacun · <a href="https://www.warcraftlogs.com/reports/KgPbMTZk81Y63vC4">rapport Warcraft Logs</a> · <a href="https://murlok.io/paladin/protection/m+" title="Talents, statistiques et équipement des meilleurs joueurs de ta spé en Mythique+ (Murlok)">builds du top M+ (Murlok) ↗</a></p>
+<p class="mode"><span class="etiq">Niveau d'analyse</span><strong>avec équipement</strong> : rotation, simulations (builds, stats, potentiel, fautes de rotation) et analyse d&#x27;équipement.</p>
+<p class="note"><strong>Moyennes sur 0 boss</strong></p>
+<div class="cartes">
+<div class="carte"><div class="val bad">3</div><div class="lib">morts (kills, et wipes où tu tombes parmi les 3 premiers)</div></div>
+<div class="carte"><div class="val">—</div><div class="lib">de tes plus gros coups encaissés sous un défensif majeur</div></div>
+<div class="carte"><div class="val">—</div><div class="lib">du combat sous mitigation active</div></div>
+<div class="carte"><div class="val">0</div><div class="lib">relais tardifs (3 s de plus que le rythme normal des relais du boss)</div></div>
+<div class="carte"><div class="val muted">—</div><div class="lib">centile moyen au DPS</div></div>
+<div class="carte"><div class="val">65 k</div><div class="lib">DPS moyen (pas de top 3 trouvé)</div></div>
+</div>
+<div class="bandeau"><strong>Survie d'abord</strong> : les constats de survie (morts, défensifs, relais, mitigation) passent toujours devant ceux de dégâts. simc ne simule pas la survie : elle est comparée aux références et à l'autre tank, sans gain chiffré. Les mécaniques de raid punitives se jugent mal dans un log seul : le croisement avec Wipefest viendra plus tard.</div>
+<div class="bandeau"><strong>Spé vérifiée en partie</strong> — 9/10, Jairtrude et Louac : à lire avec prudence. Point ouvert : réductions des défensifs approximatives (verdict des morts) ; relais vérifié sur un seul boss à deux boss (The Twin Fangs) ; Wipefest pas encore croisé.</div>
+
+<h2 id="s-boss-par-boss">Boss par boss</h2>
+<div class="table-wrap">
+<table class="boss-soiree">
+<thead><tr><th>Boss</th><th class="num">Morts</th><th class="num">Gros coups sous défensif</th><th class="num">Mitigation active</th><th class="num">Relais tardifs / relais</th><th class="num">Centile DPS</th><th class="num">DPS</th><th class="num">Durée</th><th>Combat</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+<p class="note">Gros coups : tes coups encaissés d'au moins 75 % du plus gros (les tank busters). Relais : provocations où tu reprends le boss après le debuff de relais de l'autre tank. Centile au DPS (le classement Warcraft Logs des tanks), aux couleurs du site. Le nom du boss mène au détail de sa survie ; « Logs », « Wipefest » et « Analyzer » ouvrent le combat sur warcraftlogs.com, ses mécaniques sur wipefest.gg et ton analyse sur wowanalyzer.com.</p>
+<h2 id="s-corriger-en-priorit">À corriger en priorité</h2>
+<ol class="prio"><li><span class="gain grave">critique</span><span class="gain nc">gain non chiffré</span><h3>Parmi les 3 premiers morts sur 3 des 10 wipes</h3><span class="boss-chip">Kith&#x27;ix</span><span class="boss-chip">The Twin Fangs</span><p><span class="etiq">Cause</span>Kith&#x27;ix (essai 2) à 0:26 (1e mort sur 11), Kith&#x27;ix (essai 2) à 0:59 (3e mort sur 11), The Twin Fangs (essai 8) à 5:17 (3e mort sur 16). Coups fatals : Dark Devastation, Suffocation, Eternal Venom.<br><strong>Kith&#x27;ix (essai 2) à 0:26</strong> : 4 coups en 10 s (1.3 M), les plus gros : Dark Devastation 784 k à 0:26 (sous Holy Bulwark, Shield of the Righteous), Dark Devastation 248 k à 0:26 (sous Holy Bulwark, Shield of the Righteous), Melee 145 k à 0:18 (sous Holy Bulwark, Shield of the Righteous), Melee 138 k à 0:20 (sous Holy Bulwark, Shield of the Righteous). Défensifs prêts et pas lancés : Ardent Defender, Guardian of Ancient Kings, Holy Bulwark.<br><strong>Kith&#x27;ix (essai 2) à 0:59</strong> : 5 coups en 10 s (0.9 M), les plus gros : Venom Roar 429 k à 0:51 (sans défensif), Venom Roar 203 k à 0:51 (sans défensif), Melee 108 k à 0:49 (sous Shield of the Righteous), Dark Frenzy 71 k à 0:58 (sous Guardian of Ancient Kings). Défensifs prêts et pas lancés : Ardent Defender, Guardian of Ancient Kings, Holy Bulwark.<br><strong>The Twin Fangs (essai 8) à 5:17</strong> : 15 coups en 10 s (0.7 M), les plus gros : Toxic Fumes 62 k à 5:10 (sans défensif), Toxic Fumes 61 k à 5:12 (sans défensif), Toxic Fumes 55 k à 5:14 (sans défensif), Eternal Venom 52 k à 5:10 (sans défensif). Défensifs prêts et pas lancés : Ardent Defender, Guardian of Ancient Kings, Sentinel, Holy Bulwark.</p><p><span class="etiq">Conseil</span>Un tank mort fait tomber le raid. Pour chaque mort, le verdict dit si un défensif prêt aurait suffi, ou si c&#x27;est une mécanique à revoir (coup à éviter, relais) : dans ce cas, le défensif n&#x27;y aurait rien changé.</p><p class="note"><span class="etiq">Preuve</span>Morts des wipes (Warcraft Logs), sur tous les boss de la soirée.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/KgPbMTZk81Y63vC4?fight=2&amp;type=deaths">Kith&#x27;ix 0:26</a> <a href="https://www.warcraftlogs.com/reports/KgPbMTZk81Y63vC4?fight=2&amp;type=deaths">Kith&#x27;ix 0:59</a> <a href="https://www.warcraftlogs.com/reports/KgPbMTZk81Y63vC4?fight=13&amp;type=deaths">The Twin Fangs 5:17</a> </p></li></ol>
+
+<h2 id="s-survie-boss-par-boss">Survie boss par boss</h2>
+<h2 id="s-d-g-ts-second-plan">Dégâts (second plan)</h2><p class="note">La même analyse que le rapport DPS : rotation, cooldowns offensifs, simulations selon le niveau d'analyse.</p>
+<h3 id="s-rotation">Rotation</h3>
+<h4>Synthèse de la soirée</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">DPS</th><th class="num">vs équivalent</th><th class="num">vs top 3</th><th class="num">Multicible</th><th class="num">Cooldowns manqués</th><th class="num">vs potentiel simc</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+
+<p class="note">Potentiel simc : ton équipement simulé avec une rotation parfaite, à la durée du kill, chaque phase au nombre d'ennemis qu'elle a en moyenne (1, 2, ou 3 et plus). Un vrai combat (déplacements, phases, cibles qui changent) reste en dessous : l'écart sert surtout à comparer les boss entre eux et d'une soirée à l'autre.</p>
+<h3 id="s-build-et-stats">Build et stats</h3>
+<p class="note">Pas de simulation (mode rapide ou export de l'addon absent).</p>
+
+<h3 id="s-quipement">Équipement</h3>
+<p class="note">Pas d'analyse d'équipement (mode rapide ou export absent).</p>
+
+<h2 id="s-progression">Progression</h2>
+<h3 id="s-centiles-par-boss">Centiles par boss</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">07/10</th><th class="num">08/10</th><th class="num">15/10</th></tr></thead>
+<tbody>
+<tr><td>Nymrissa Wavecaller</td><td class="num">58 <span class="muted">· 30</span></td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>Nek&#x27;zali the Soulcoiler</td><td class="num">41 <span class="muted">· 18</span></td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>Entombed Sentinels</td><td class="num">54 <span class="muted">· 29</span></td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>Vashnik the Malignant</td><td class="num">41 <span class="muted">· 19</span></td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>The Lost Explorers</td><td class="num">34 <span class="muted">· 16</span></td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>Sszorak</td><td class="num">21 <span class="muted">· 9</span></td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>The Twin Fangs</td><td class="num">—</td><td class="num">65 <span class="muted">· 44</span></td><td class="num">—</td></tr>
+<tr><td><strong>Écart au potentiel simc</strong></td><td class="num">−54 %</td><td class="num">−41 %</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Centile global · centile à ton ilvl. Écart au potentiel : ton DPS rapporté à ce que ton équipement ferait avec une rotation parfaite (simulation).</p>
+<h3 id="s-conseils-du-08-10">Conseils du 08/10</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Conseil</th><th class="num">Gain alors</th><th class="num">Gain aujourd&#x27;hui</th><th>Statut</th></tr></thead>
+<tbody>
+<tr><td class="wrap">Build de Bolencia</td><td class="num">22,7 %</td><td class="num">—</td><td class="ok">corrigé</td></tr>
+<tr><td class="wrap">Objet des références : Zul&#x27;jin&#x27;s Guillotine Technique</td><td class="num">2,1 %</td><td class="num">—</td><td class="bad">toujours là</td></tr>
+<tr><td class="wrap">À viser : Darkmoon Dominion: Blood</td><td class="num">1,6 %</td><td class="num">—</td><td class="bad">toujours là</td></tr>
+<tr><td class="wrap">À viser : Loa Worshiper&#x27;s Band</td><td class="num">1,1 %</td><td class="num">—</td><td class="bad">toujours là</td></tr>
+<tr><td class="wrap">Consommable manquant : Rune d&#x27;augmentation</td><td class="num">0,8 %</td><td class="num">—</td><td class="ok">corrigé</td></tr>
+<tr><td class="wrap">Enchantement : Anneau 2</td><td class="num">0,6 %</td><td class="num">—</td><td class="ok">corrigé</td></tr>
+<tr><td class="wrap">À viser : Spellbreaker&#x27;s Girdle</td><td class="num">0,6 %</td><td class="num">—</td><td class="bad">toujours là</td></tr>
+<tr><td class="wrap">Enchantement : Anneau 1</td><td class="num">0,5 %</td><td class="num">—</td><td class="ok">corrigé</td></tr>
+
+</tbody>
+</table>
+</div>
+
+<p>4 corrigés, 0 en progrès, 4 toujours là.</p>
+
+<details class="methode"><summary><h2 id="s-m-thode" style="display:inline">Méthode</h2> <span class="muted">(cliquer pour déplier)</span></summary><div class="cartes"><div class="carte"><div class="lib"><strong>Combats analysés</strong></div><p>Ton meilleur kill de chaque boss ; pour les morts, tous les wipes de la soirée (comptées si tu es parmi les 3 premiers à tomber).</p></div><div class="carte"><div class="lib"><strong>Références</strong></div><p>Le top 3 mondial de ta spé et un tank équivalent, trouvés au classement Warcraft Logs des tanks (au DPS) ; et l&#x27;autre tank de la soirée sur le même combat, la comparaison la plus juste pour les relais.</p></div><div class="carte"><div class="lib"><strong>Gros coups</strong></div><p>Les coups encaissés d&#x27;au moins 75 % du plus gros du combat (avant absorption) : les tank busters, avec les buffs actifs à ce moment-là (défensif majeur, mitigation active, ou rien).</p></div><div class="carte"><div class="lib"><strong>Relais</strong></div><p>Le debuff de relais est reconnu sans liste écrite à la main : celui dont les stacks viennent de monter sur un tank (au moins 2 stacks) juste avant que l&#x27;autre provoque. Relais tardif : 3 s de plus que le délai médian des relais du combat, et au moins 4 s.</p></div><div class="carte"><div class="lib"><strong>Classement des constats</strong></div><p>Critique : ta mort. Grave : gros coups sans défensif, relais tardif, boss qui frappe un autre joueur. Puis mitigation et défensifs sous-utilisés ; les constats de dégâts viennent après.</p></div><div class="carte"><div class="lib"><strong>Limites</strong></div><p>simc ne simule pas la survie. Les mécaniques punitives (coups qui tuent d&#x27;un coup) et le bon moment d&#x27;un relais dépendent du boss : le log ne dit pas tout, Wipefest viendra en complément.</p></div></div></details>
+<div id="infobulle"></div>
+<script>
+(() => {
+  const bulle = document.getElementById("infobulle");
+  const montrer = (ev, texte) => {
+    bulle.textContent = texte; bulle.style.display = "block";
+    const x = Math.min(ev.clientX + 14, window.innerWidth - bulle.offsetWidth - 8);
+    bulle.style.left = x + "px"; bulle.style.top = (ev.clientY + 14) + "px";
+  };
+  const cacher = () => { bulle.style.display = "none"; };
+  document.querySelectorAll("[data-tip]").forEach(el => {
+    el.addEventListener("pointermove", ev => montrer(ev, el.dataset.tip));
+    el.addEventListener("pointerleave", cacher);
+  });
+  document.querySelectorAll("svg[data-courbes]").forEach(svg => {
+    const d = JSON.parse(svg.dataset.courbes), zone = svg.querySelector(".zone"), ligne = svg.querySelector(".reticule");
+    zone.addEventListener("pointermove", ev => {
+      const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY;
+      const q = p.matrixTransform(svg.getScreenCTM().inverse());
+      const i = Math.max(0, Math.min(d.t.length - 1, Math.round((q.x - d.x0) / d.dx)));
+      ligne.setAttribute("x1", d.x0 + i * d.dx); ligne.setAttribute("x2", d.x0 + i * d.dx); ligne.style.display = "";
+      montrer(ev, d.t[i] + "\n" + d.series.map(s => (s.v[i] == null ? "—" : s.v[i]) + " lancers/min  " + s.nom).join("\n"));
+    });
+    zone.addEventListener("pointerleave", () => { ligne.style.display = "none"; cacher(); });
+  });
+})();
+</script>
+<script>
+function ouvrirAncre() {
+  const d = location.hash && document.getElementById(location.hash.slice(1));
+  if (d && d.tagName === "DETAILS") { d.open = true; d.scrollIntoView(); }
+}
+addEventListener("hashchange", ouvrirAncre); addEventListener("DOMContentLoaded", ouvrirAncre);
+</script>
+
+</main>
+</div>
+<script>
+(function () {
+  var nav = document.querySelector('.sommaire'); if (!nav) return;
+  var det = nav.querySelector('details'), petit = window.matchMedia('(max-width: 1100px)');
+  if (petit.matches) det.open = false;
+  var liens = {}; nav.querySelectorAll('a').forEach(function (a) { liens[a.getAttribute('href').slice(1)] = a; });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A' && petit.matches) det.open = false; });
+  var titres = Array.prototype.filter.call(document.querySelectorAll('main h2[id], main h3[id]'),
+                                           function (h) { return liens[h.id]; });
+  function actif() {
+    var courant = titres[0];
+    titres.forEach(function (h) { if (h.getBoundingClientRect().top < 120) courant = h; });
+    Object.keys(liens).forEach(function (k) { liens[k].classList.toggle('actif', courant && k === courant.id); });
+  }
+  window.addEventListener('scroll', actif, {passive: true}); actif();
+})();
+</script>
+</body>
+</html>
