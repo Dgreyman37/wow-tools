@@ -217,14 +217,14 @@ button.chip{font:inherit;font-size:12px;border:0;cursor:pointer;color:var(--fg)}
 .saison h2{margin:0;font-size:1.2rem}.saison h2::before{content:none;display:none}
 .sa-info{color:var(--mut);font-size:.9rem}
 .sa-encours{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;
- background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+ background:color-mix(in srgb,var(--serie2) 18%,transparent);color:var(--serie2)}
 table.soirees{width:100%;border-collapse:collapse;margin-top:12px;font-size:.93rem}
 .soirees th{text-align:left;font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);
  padding:6px 10px;border-bottom:1px solid var(--border)}
 .soirees td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top}
 .soirees td.num,.soirees th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .soirees tbody tr:hover{background:var(--chip)}
-.soirees a.date{font-weight:700;color:inherit;text-decoration:none;white-space:nowrap}.soirees a.date:hover{color:var(--accent)}
+.soirees a.date{font-weight:700;color:var(--accent);text-decoration:none;white-space:nowrap}.soirees a.date:hover{color:var(--serie2)}
 .diff{color:var(--mut);font-size:.85rem}
 .tues b{color:var(--fg)}.tues.zero b{color:var(--mut)}
 .soirees details summary{cursor:pointer;color:var(--accent);white-space:nowrap;list-style:none}
@@ -266,6 +266,14 @@ table.soirees{width:100%;border-collapse:collapse;margin-top:12px;font-size:.93r
 .mobile{display:none}
 @media (max-width:700px){.mobile{display:inline}.soirees tr{position:relative}.survol{position:static}
  .bulle{left:0;right:0;min-width:0}.soirees td.c-joueurs{text-align:left}}
+/* couleur de contraste (--serie2 de la palette) : difficulté et avancée dans le raid */
+.dif{display:inline-block;font-size:.78rem;font-weight:700;padding:1px 9px;border-radius:999px;border:1px solid var(--border);color:var(--mut)}
+.dif-h{color:var(--serie2);border-color:color-mix(in srgb,var(--serie2) 55%,transparent);background:color-mix(in srgb,var(--serie2) 10%,transparent)}
+.dif-m{color:var(--on);background:var(--serie2);border-color:var(--serie2)}
+.tues .jauge{display:block;height:5px;width:56px;margin:5px 0 0 auto;border-radius:3px;
+ background:linear-gradient(90deg,var(--serie2) calc(var(--p)*100%),var(--border) 0)}
+.tues.complet .jauge{background:var(--good)}.tues.complet b{color:var(--good)}
+.hero-tag.forte{color:var(--serie2);border-color:var(--serie2)}
 </style>
 </head>
 <body>
@@ -323,11 +331,14 @@ function ligne(s,raid){
     +'</span></span>':'—';
   return `<tr class="soiree" data-noms="${esc(s.joueurs.map(j=>(j.personnage||j.nom).toLowerCase()).join(' '))}">`
     +`<td class="c-date">${lien?`<a class="date" href="${lien}">${esc(jour(s.date))}</a>`:esc(jour(s.date))}</td>`
-    +`<td class="c-raid">${esc(s.difficulte||'')}${s.zone&&s.zone!==raid?` <span class="diff">· ${esc(s.zone)}</span>`:''}</td>`
-    +`<td class="c-tues num tues${s.tues?'':' zero'}">${s.affrontes?`<b>${s.tues}</b> / ${s.affrontes}`:'—'}</td>`
+    +`<td class="c-raid">${difficultes(s.difficulte)}${s.zone&&s.zone!==raid?` <span class="diff">· ${esc(s.zone)}</span>`:''}</td>`
+    +`<td class="c-tues num tues${s.tues?'':' zero'}${s.affrontes&&s.tues===s.affrontes?' complet':''}">${s.affrontes?`<b>${s.tues}</b> / ${s.affrontes}<span class="jauge" style="--p:${s.tues/s.affrontes}"></span>`:'—'}</td>`
     +`<td class="c-essais num">${s.essais??'—'}</td>`
     +`<td class="c-joueurs num">${joueurs}</td></tr>`;
 }
+// difficulté en pastille : la couleur de contraste de la palette (--serie2) pour l'Héroïque, plus forte pour le Mythique
+const DIF={Normal:'n','Héroïque':'h',Mythique:'m'};
+const difficultes=d=>(d||'').split(', ').filter(Boolean).map(x=>`<span class="dif dif-${DIF[x]||'n'}">${esc(x)}</span>`).join(' ');
 function bloc(sa,liste,ouvert){
   const info=[sa.raid,sa.debut?(sa.fin?`du ${long(sa.debut)} au ${long(sa.fin)}`:`depuis le ${long(sa.debut)}`):null,liste.length?pl(liste.length,'soirée'):'aucune soirée publiée'].filter(Boolean).join(' · ');
   return `<details class="card saison"${ouvert?' open':''}><summary><h2>${esc(sa.nom)}</h2>`
