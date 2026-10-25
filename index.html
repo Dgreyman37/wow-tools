@@ -205,20 +205,67 @@ button.chip{font:inherit;font-size:12px;border:0;cursor:pointer;color:var(--fg)}
 /* barre : onglets à gauche, palette, joueur et soirée à droite */
 .ctx{justify-content:flex-end;margin-left:auto}
 @media (max-width:860px){.ctx{justify-content:flex-start;margin-left:0}}
-
-.accueil{max-width:960px;margin:0 auto}
-.soiree h2{margin:0;font-size:1.25rem}.soiree h2::before{content:none;display:none}.soiree h2 a{color:inherit;text-decoration:none}.soiree h2 a:hover{color:var(--accent)}
-.s-tete{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.soiree .hero-pastilles{margin:10px 0 6px}
-.s-role{display:flex;gap:12px;align-items:baseline;margin-top:10px}
-.s-lib{flex:0 0 78px;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
-.s-joueurs{display:flex;flex-wrap:wrap;gap:6px}
-.j-chip{font-size:.88rem;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--chip);color:var(--fg);
- border:1px solid var(--border);border-left:4px solid color-mix(in srgb,var(--classe) 78%,var(--fg));text-decoration:none}
-.j-chip:hover,.j-chip.trouve{border-color:var(--accent);border-left-color:color-mix(in srgb,var(--classe) 78%,var(--fg));color:var(--accent)}
+.accueil{max-width:1040px;margin:0 auto}
 #cherche{font:inherit;background:var(--chip);color:var(--fg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;
  width:min(320px,100%);margin-top:14px;position:relative;z-index:1}
-@media (max-width:640px){.s-role{flex-direction:column;gap:4px}.s-lib{flex:none}}
+.saison{margin-top:22px}
+.saison>summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.saison>summary::-webkit-details-marker{display:none}
+.saison>summary::after,.soirees details summary::after{content:none!important;display:none!important}
+.saison>summary::before{content:"▸";color:var(--mut);transition:transform .15s}
+.saison[open]>summary::before{transform:rotate(90deg)}
+.saison h2{margin:0;font-size:1.2rem}.saison h2::before{content:none;display:none}
+.sa-info{color:var(--mut);font-size:.9rem}
+.sa-encours{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;
+ background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+table.soirees{width:100%;border-collapse:collapse;margin-top:12px;font-size:.93rem}
+.soirees th{text-align:left;font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);
+ padding:6px 10px;border-bottom:1px solid var(--border)}
+.soirees td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.soirees td.num,.soirees th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.soirees tbody tr:hover{background:var(--chip)}
+.soirees a.date{font-weight:700;color:inherit;text-decoration:none;white-space:nowrap}.soirees a.date:hover{color:var(--accent)}
+.diff{color:var(--mut);font-size:.85rem}
+.tues b{color:var(--fg)}.tues.zero b{color:var(--mut)}
+.soirees details summary{cursor:pointer;color:var(--accent);white-space:nowrap;list-style:none}
+.soirees details summary::-webkit-details-marker{display:none}
+.soirees details summary::before{content:"▸ "}.soirees details[open] summary::before{content:"▾ "}
+.s-role{display:flex;gap:10px;align-items:baseline;margin-top:8px}
+.s-lib{flex:0 0 72px;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.s-joueurs{display:flex;flex-wrap:wrap;gap:5px}
+.j-chip{font-size:.84rem;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--chip);color:var(--fg);
+ border:1px solid var(--border);border-left:4px solid color-mix(in srgb,var(--classe) 78%,var(--fg));text-decoration:none}
+.j-chip:hover,.j-chip.trouve{border-color:var(--accent);border-left-color:color-mix(in srgb,var(--classe) 78%,var(--fg));color:var(--accent)}
+.vide{color:var(--mut);margin:10px 0 0}
+@media (max-width:700px){
+ .soirees thead{display:none}
+ .soirees tr{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:10px 4px;border-bottom:1px solid var(--border)}
+ .soirees td{border:0;padding:0}
+ .soirees td.c-raid{grid-column:1/-1;order:3}
+ .soirees td.c-tues{order:2;text-align:right}
+ .soirees td.c-essais{display:none}
+ .soirees td.c-joueurs{grid-column:1/-1;order:4}
+ .s-role{flex-direction:column;gap:3px}.s-lib{flex:none}
+}
+
+.sa-sous{font-size:.95rem;margin:22px 0 0;color:var(--mut);text-transform:uppercase;letter-spacing:.06em}.sa-sous::before{content:none;display:none}
+.pastille{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--classe);margin-right:8px;vertical-align:middle}
+.joueurs a.date{font-weight:600}
+@media (max-width:700px){.soirees.joueurs td:nth-child(2){grid-column:1/-1;order:3}}
+
+.pastille{box-shadow:0 0 0 1px color-mix(in srgb,var(--fg) 35%,transparent)}
+.survol{position:relative;display:inline-block;cursor:default;border-bottom:1px dotted var(--mut);outline:none}
+.bulle{display:none;position:absolute;right:0;top:calc(100% + 6px);z-index:5;min-width:250px;padding:10px 12px;text-align:left;
+ background:var(--card,var(--bg));border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.18);white-space:normal}
+.survol:hover .bulle,.survol:focus .bulle,.survol:focus-within .bulle{display:block}
+.b-role{display:block;margin-top:6px}.b-role:first-child{margin-top:0}
+.bulle .s-lib{display:block;margin-bottom:2px}
+.b-nom{display:flex;align-items:center;gap:0;padding:2px 0;color:var(--fg);text-decoration:none;font-weight:600;font-size:.88rem}
+.b-nom:hover{color:var(--accent)}
+.b-spe{margin-left:auto;padding-left:14px;color:var(--mut);font-weight:400;font-size:.8rem}
+.mobile{display:none}
+@media (max-width:700px){.mobile{display:inline}.soirees tr{position:relative}.survol{position:static}
+ .bulle{left:0;right:0;min-width:0}.soirees td.c-joueurs{text-align:left}}
 </style>
 </head>
 <body>
@@ -248,20 +295,76 @@ button.chip{font:inherit;font-size:12px;border:0;cursor:pointer;color:var(--fg)}
 </main>
 </div>
 <script type="application/json" id="ga-classes">{"DeathKnight": ["#C41E3A", "Chevalier de la mort"], "DemonHunter": ["#A330C9", "Chasseur de démons"], "Druid": ["#FF7C0A", "Druide"], "Evoker": ["#33937F", "Évocateur"], "Hunter": ["#AAD372", "Chasseur"], "Mage": ["#3FC7EB", "Mage"], "Monk": ["#00FF98", "Moine"], "Paladin": ["#F48CBA", "Paladin"], "Priest": ["#FFFFFF", "Prêtre"], "Rogue": ["#FFF468", "Voleur"], "Shaman": ["#0070DD", "Chaman"], "Warlock": ["#8788EE", "Démoniste"], "Warrior": ["#C69B6D", "Guerrier"]}</script>
-<script>
-const th=document.getElementById('theme');
+<script>const th=document.getElementById('theme');
 function setTheme(v){if(v)document.documentElement.dataset.theme=v;else delete document.documentElement.dataset.theme;try{localStorage.setItem('theme',v)}catch(e){}}
 try{const v=localStorage.getItem('theme');if(v!==null)th.value=v}catch(e){}
 setTheme(th.value);th.onchange=()=>setTheme(th.value);
 
 const CLASSES=JSON.parse(document.getElementById('ga-classes').textContent);
 const ROLES=[['tank','Tanks'],['soigneur','Soigneurs'],['DPS','DPS']];
-const JOURS=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+const JOURS=['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'];
 const MOIS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
 const esc=t=>String(t??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const quand=d=>{const x=new Date(d+'T12:00:00');return `${JOURS[x.getDay()]} ${x.getDate()} ${MOIS[x.getMonth()]} ${x.getFullYear()}`};
+const jour=d=>{const x=new Date(d+'T12:00:00');return `${JOURS[x.getDay()]} ${x.getDate()} ${MOIS[x.getMonth()]}`};
+const long=d=>{const x=new Date(d+'T12:00:00');return `${x.getDate()} ${MOIS[x.getMonth()]} ${x.getFullYear()}`};
 const pl=(n,mot)=>`${n} ${mot}${n>1?'s':''}`;
 
+function chip(j,date){
+  const c=CLASSES[j.classe]||[];const titre=[j.spec_fr,c[1]].filter(Boolean).join(' ');
+  return `<a class="j-chip" href="${esc(date)}/${encodeURI(j.page)}" data-nom="${esc(j.nom.toLowerCase())}"`
+    +`${titre?` title="${esc(titre)}"`:''} style="--classe:${c[0]||'var(--mut)'}">${esc(j.nom)}</a>`;
+}
+function ligne(s,raid){
+  const lien=s.page?`${esc(s.date)}/${encodeURI(s.page)}`:null;
+  const groupes=s.joueurs.some(j=>j.role)?ROLES.map(([r,l])=>[l,s.joueurs.filter(j=>j.role===r)]).filter(g=>g[1].length):[['Joueurs',s.joueurs]];
+  const joueurs=s.joueurs.length?`<span class="survol" tabindex="0">${s.joueurs.length}<span class="mobile"> joueurs</span><span class="bulle" role="tooltip">`
+    +groupes.map(([l,js])=>`<span class="b-role"><span class="s-lib">${l}</span>${js.map(j=>{const c=CLASSES[j.classe]||[];
+      return `<a class="b-nom" href="${esc(s.date)}/${encodeURI(j.page)}" style="--classe:${c[0]||'var(--mut)'}"><span class="pastille"></span>${esc(j.nom)}<span class="b-spe">${esc(j.spec_fr||'')}</span></a>`}).join('')}</span>`).join('')
+    +'</span></span>':'—';
+  return `<tr class="soiree" data-noms="${esc(s.joueurs.map(j=>j.nom.toLowerCase()).join(' '))}">`
+    +`<td class="c-date">${lien?`<a class="date" href="${lien}">${esc(jour(s.date))}</a>`:esc(jour(s.date))}</td>`
+    +`<td class="c-raid">${esc(s.difficulte||'')}${s.zone&&s.zone!==raid?` <span class="diff">· ${esc(s.zone)}</span>`:''}</td>`
+    +`<td class="c-tues num tues${s.tues?'':' zero'}">${s.affrontes?`<b>${s.tues}</b> / ${s.affrontes}`:'—'}</td>`
+    +`<td class="c-essais num">${s.essais??'—'}</td>`
+    +`<td class="c-joueurs num">${joueurs}</td></tr>`;
+}
+function bloc(sa,liste,ouvert){
+  const info=[sa.raid,sa.debut?(sa.fin?`du ${long(sa.debut)} au ${long(sa.fin)}`:`depuis le ${long(sa.debut)}`):null,liste.length?pl(liste.length,'soirée'):'aucune soirée publiée'].filter(Boolean).join(' · ');
+  return `<details class="card saison"${ouvert?' open':''}><summary><h2>${esc(sa.nom)}</h2>`
+    +`${sa.en_cours?'<span class="sa-encours">en cours</span>':''}<span class="sa-info">${esc(info)}</span></summary>`
+    +(liste.length?`<table class="soirees"><thead><tr><th>Soirée</th><th>Difficulté</th><th class="num">Boss tués</th><th class="num">Essais</th><th class="num">Joueurs</th></tr></thead>`
+      +`<tbody>${liste.map(s=>ligne(s,sa.raid)).join('')}</tbody></table>`:'<p class="vide">Aucune soirée publiée pour cette saison.</p>')
+    +(liste.length?tableJoueurs(liste):'')+'</details>';
+}
+const ROLE_FR={tank:'Tank',soigneur:'Soigneur',DPS:'DPS'};
+function tableJoueurs(liste){
+  const par={};
+  for(const s of liste)for(const j of s.joueurs){const x=par[j.nom]||(par[j.nom]={j,n:0,der:s});x.n++;if(s.date>x.der.date){x.der=s;x.j=j}}
+  const rang={tank:0,soigneur:1,DPS:2};
+  const ls=Object.values(par).sort((a,b)=>b.n-a.n||(rang[a.j.role]??3)-(rang[b.j.role]??3)||a.j.nom.localeCompare(b.j.nom));
+  return `<h3 class="sa-sous">Les joueurs de la saison</h3><table class="soirees joueurs"><thead><tr><th>Joueur</th><th>Rôle</th><th class="num">Soirées</th><th>Dernière soirée</th></tr></thead><tbody>`
+    +ls.map(({j,n,der})=>{const c=CLASSES[j.classe]||[];const t=[j.spec_fr,c[1]].filter(Boolean).join(' ');
+      return `<tr class="soiree" data-noms="${esc(j.nom.toLowerCase())}"><td><span class="pastille" style="--classe:${c[0]||'var(--mut)'}"></span><b>${esc(j.nom)}</b></td>`
+      +`<td class="diff">${esc(ROLE_FR[j.role]||'')}${t?` · ${esc(t)}`:''}</td><td class="num">${n} / ${liste.length}</td>`
+      +`<td><a class="date" href="${esc(der.date)}/${encodeURI(j.page)}">${esc(jour(der.date))} →</a></td></tr>`}).join('')+'</tbody></table>';
+}
+function afficher(d){
+  const soirees=(d.soirees||[]).sort((a,b)=>b.date.localeCompare(a.date));
+  const saisons=(d.saisons||[]).slice().sort((a,b)=>(b.debut||'').localeCompare(a.debut||''));
+  const zone=document.getElementById('soirees');
+  document.getElementById('nb').textContent=pl(soirees.length,'soirée')+' publiée'+(soirees.length>1?'s':'');
+  const autres=soirees.filter(s=>!saisons.some(sa=>sa.cle===s.saison));
+  zone.innerHTML=saisons.map((sa,i)=>bloc(sa,soirees.filter(s=>s.saison===sa.cle),i===0)).join('')
+    +(autres.length?bloc({nom:'Autres soirées'},autres,!saisons.length):'');
+  const champ=document.getElementById('cherche');
+  champ.oninput=()=>{const q=champ.value.trim().toLowerCase();let vues=0;
+    zone.querySelectorAll('.saison').forEach(b=>{let n=0;
+      b.querySelectorAll('.soiree').forEach(r=>{const ok=!q||r.dataset.noms.split(' ').some(x=>x.includes(q));r.hidden=!ok;if(ok)n++;
+        r.querySelectorAll('.j-chip').forEach(c=>c.classList.toggle('trouve',!!q&&c.dataset.nom.includes(q)));
+        const det=r.querySelector('details');if(det&&q)det.open=ok;});
+      if(q&&n)b.open=true;vues+=n});
+    document.getElementById('rien').hidden=vues>0};
+}
 // sans soirees.json : les dossiers de soirée du dépôt, par l'API publique de GitHub (dates et pages seulement)
 async function depuisGitHub(){
   const proprio=location.hostname.split('.')[0],parties=location.pathname.split('/').filter(Boolean);
@@ -269,56 +372,18 @@ async function depuisGitHub(){
   const api=`https://api.github.com/repos/${proprio}/${depot}/contents/${sous}`;
   const lire=async u=>{const r=await fetch(u);if(!r.ok)throw new Error(r.status);return r.json()};
   const dossiers=(await lire(api)).filter(x=>x.type==='dir'&&/^\d{4}-\d{2}-\d{2}$/.test(x.name));
-  return Promise.all(dossiers.map(async d=>{
+  return {soirees:await Promise.all(dossiers.map(async d=>{
     const f=await lire(`${api}${sous?'/':''}${d.name}`);
     const guilde=f.find(x=>/^raid_.*\.html$/.test(x.name));
     const joueurs=f.filter(x=>x.name.endsWith('_soiree.html')).map(x=>({nom:x.name.replace(/_soiree\.html$/,''),page:x.name}));
     return {date:d.name,page:guilde?guilde.name:null,joueurs};
-  }));
-}
-
-function chip(j,date){
-  const c=CLASSES[j.classe]||[];
-  const titre=[j.spec_fr,c[1]].filter(Boolean).join(' ');
-  return `<a class="j-chip" href="${esc(date)}/${encodeURI(j.page)}" data-nom="${esc(j.nom.toLowerCase())}"`
-    +`${titre?` title="${esc(titre)}"`:''} style="--classe:${c[0]||'var(--mut)'}">${esc(j.nom)}</a>`;
-}
-
-function carte(s){
-  const tags=[];
-  if(s.zone)tags.push(`<span class="hero-tag">${esc(s.zone)}${s.difficulte?` · ${esc(s.difficulte)}`:''}</span>`);
-  if(s.affrontes)tags.push(`<span class="hero-tag forte">${s.tues}/${s.affrontes} boss tués</span>`);
-  if(s.essais)tags.push(`<span class="hero-tag">${pl(s.essais,'essai')}</span>`);
-  if(s.joueurs&&s.joueurs.length)tags.push(`<span class="hero-tag">${pl(s.joueurs.length,'joueur')}</span>`);
-  const groupes=s.joueurs.some(j=>j.role)
-    ?ROLES.map(([r,lib])=>[lib,s.joueurs.filter(j=>j.role===r)]).filter(g=>g[1].length)
-    :[['Joueurs',s.joueurs]];
-  const titre=s.page?`<a href="${esc(s.date)}/${encodeURI(s.page)}">${esc(quand(s.date))}</a>`:esc(quand(s.date));
-  return `<article class="card soiree" data-noms="${esc(s.joueurs.map(j=>j.nom.toLowerCase()).join(' '))}">`
-    +`<div class="s-tete"><h2>${titre}</h2>${s.page?`<a class="bouton" href="${esc(s.date)}/${encodeURI(s.page)}">LA GUILDE →</a>`:''}</div>`
-    +`<div class="hero-pastilles">${tags.join('')}</div>`
-    +groupes.map(([lib,js])=>`<div class="s-role"><span class="s-lib">${lib}</span><div class="s-joueurs">${js.map(j=>chip(j,s.date)).join('')}</div></div>`).join('')
-    +'</article>';
-}
-
-function afficher(liste,source){
-  liste.sort((a,b)=>b.date.localeCompare(a.date));
-  const zone=document.getElementById('soirees');
-  document.getElementById('nb').textContent=pl(liste.length,'soirée')+' publiée'+(liste.length>1?'s':'');
-  if(!liste.length){zone.innerHTML='<p class="mut">Aucune soirée publiée pour l\'instant.</p>';return}
-  zone.innerHTML=liste.map(carte).join('');
-  document.getElementById('source').textContent=source;
-  const champ=document.getElementById('cherche');
-  champ.oninput=()=>{const q=champ.value.trim().toLowerCase();let vues=0;
-    zone.querySelectorAll('.soiree').forEach(a=>{const ok=!q||a.dataset.noms.split(' ').some(n=>n.includes(q));a.hidden=!ok;if(ok)vues++;
-      a.querySelectorAll('.j-chip').forEach(c=>c.classList.toggle('trouve',!!q&&c.dataset.nom.includes(q)))});
-    document.getElementById('rien').hidden=vues>0};
+  }))};
 }
 
 fetch('soirees.json',{cache:'no-store'})
   .then(r=>r.ok?r.json():Promise.reject(r.status))
-  .then(d=>afficher(d.soirees||[],'Liste mise à jour à chaque publication.'))
-  .catch(()=>depuisGitHub().then(l=>afficher(l,'Liste lue dans le dépôt GitHub (soirees.json absent).'))
+  .then(d=>{afficher(d);document.getElementById('source').textContent='Liste mise à jour à chaque publication.'})
+  .catch(()=>depuisGitHub().then(d=>{afficher(d);document.getElementById('source').textContent='Liste lue dans le dépôt GitHub (soirees.json absent).'})
     .catch(()=>{document.getElementById('soirees').innerHTML='<p class="mut">Liste des soirées indisponible pour le moment.</p>'}));
 </script>
 </body>

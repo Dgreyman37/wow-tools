@@ -1,7 +1,26 @@
 {
+ "saisons": [
+  {
+   "cle": "midnight-2",
+   "nom": "Midnight · Saison 2",
+   "raid": "The Venomous Abyss",
+   "debut": "2026-08-19",
+   "fin": null,
+   "en_cours": true
+  },
+  {
+   "cle": "midnight-1",
+   "nom": "Midnight · Saison 1",
+   "raid": "VS / DR / MQD",
+   "debut": "2026-03-17",
+   "fin": "2026-08-18",
+   "en_cours": false
+  }
+ ],
  "soirees": [
   {
    "date": "2026-10-22",
+   "saison": "midnight-2",
    "page": "raid_6kqwQJcXZrn4PWY1.html",
    "zone": "The Venomous Abyss",
    "difficulte": "Héroïque",
@@ -111,6 +130,7 @@
   },
   {
    "date": "2026-10-21",
+   "saison": "midnight-2",
    "page": "raid_gpWJDAvh61BxL27n.html",
    "zone": "The Venomous Abyss",
    "difficulte": "Héroïque",
@@ -206,6 +226,7 @@
   },
   {
    "date": "2026-10-15",
+   "saison": "midnight-2",
    "page": "raid_KgPbMTZk81Y63vC4.html",
    "zone": "The Venomous Abyss",
    "difficulte": "Héroïque",
@@ -315,6 +336,7 @@
   },
   {
    "date": "2026-10-08",
+   "saison": "midnight-2",
    "page": "raid_bmAZqJDHQ9jRv3Kf.html",
    "zone": "The Venomous Abyss",
    "difficulte": "Héroïque",
@@ -424,6 +446,7 @@
   },
   {
    "date": "2026-10-07",
+   "saison": "midnight-2",
    "page": "raid_LbDdNM6P3XFvRBw9.html",
    "zone": "The Venomous Abyss",
    "difficulte": "Héroïque",
@@ -514,6 +537,123 @@
      "classe": "Shaman",
      "spec_fr": "Élémentaire",
      "page": "Sinistra_soiree.html"
+    },
+    {
+     "nom": "Ærzä",
+     "role": "DPS",
+     "classe": "Druid",
+     "spec_fr": "Équilibre",
+     "page": "Ærzä_soiree.html"
+    }
+   ]
+  },
+  {
+   "date": "2026-08-19",
+   "saison": "midnight-2",
+   "page": "raid_c6B23MNLAkYVZyH8.html",
+   "zone": "The Venomous Abyss",
+   "difficulte": "Normal",
+   "tues": 4,
+   "affrontes": 5,
+   "essais": 17,
+   "joueurs": [
+    {
+     "nom": "Jairtrude",
+     "role": "tank",
+     "classe": "Paladin",
+     "spec_fr": "Protection",
+     "page": "Jairtrude_soiree.html"
+    },
+    {
+     "nom": "Louac",
+     "role": "tank",
+     "classe": "Paladin",
+     "spec_fr": "Protection",
+     "page": "Louac_soiree.html"
+    },
+    {
+     "nom": "Ingolmo",
+     "role": "soigneur",
+     "classe": "Priest",
+     "spec_fr": "Sacré",
+     "page": "Ingolmo_soiree.html"
+    },
+    {
+     "nom": "Jalyne",
+     "role": "soigneur",
+     "classe": "Shaman",
+     "spec_fr": "Restauration",
+     "page": "Jalyne_soiree.html"
+    },
+    {
+     "nom": "Natryum",
+     "role": "soigneur",
+     "classe": "Priest",
+     "spec_fr": "Discipline",
+     "page": "Natryum_soiree.html"
+    },
+    {
+     "nom": "Côrnus",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévastation",
+     "page": "Côrnus_soiree.html"
+    },
+    {
+     "nom": "Gonzoshen",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Précision",
+     "page": "Gonzoshen_soiree.html"
+    },
+    {
+     "nom": "Kaelhdyr",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévastation",
+     "page": "Kaelhdyr_soiree.html"
+    },
+    {
+     "nom": "Leberlynoix",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "page": "Leberlynoix_soiree.html"
+    },
+    {
+     "nom": "Lodan",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévastation",
+     "page": "Lodan_soiree.html"
+    },
+    {
+     "nom": "Mécafree",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "page": "Mécafree_soiree.html"
+    },
+    {
+     "nom": "Métaforme",
+     "role": "DPS",
+     "classe": "Druid",
+     "spec_fr": "Farouche",
+     "page": "Métaforme_soiree.html"
+    },
+    {
+     "nom": "Météion",
+     "role": "DPS",
+     "classe": "Evoker",
+     "spec_fr": "Dévastation",
+     "page": "Météion_soiree.html"
+    },
+    {
+     "nom": "Orviden",
+     "role": "DPS",
+     "classe": "Warlock",
+     "spec_fr": "Destruction",
+     "page": "Orviden_soiree.html"
     },
     {
      "nom": "Ærzä",
