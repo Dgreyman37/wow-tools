@@ -548,6 +548,151 @@
    ]
   },
   {
+   "date": "2026-08-20",
+   "saison": "midnight-2",
+   "page": "raid_wFQAxKpMc1q4YVba.html",
+   "zone": "The Venomous Abyss",
+   "difficulte": "Normal",
+   "tues": 2,
+   "affrontes": 3,
+   "essais": 21,
+   "joueurs": [
+    {
+     "nom": "Jairtrude",
+     "role": "tank",
+     "classe": "Paladin",
+     "spec_fr": "Protection",
+     "page": "Jairtrude_soiree.html"
+    },
+    {
+     "nom": "Louac",
+     "role": "tank",
+     "classe": "Paladin",
+     "spec_fr": "Protection",
+     "page": "Louac_soiree.html"
+    },
+    {
+     "nom": "Ingolmo-Sacré",
+     "role": "soigneur",
+     "classe": "Priest",
+     "spec_fr": "Sacré",
+     "page": "Ingolmo-Sacré_soiree.html"
+    },
+    {
+     "nom": "Jalyne",
+     "role": "soigneur",
+     "classe": "Shaman",
+     "spec_fr": "Restauration",
+     "page": "Jalyne_soiree.html"
+    },
+    {
+     "nom": "Natryum-Discipline",
+     "role": "soigneur",
+     "classe": "Priest",
+     "spec_fr": "Discipline",
+     "page": "Natryum-Discipline_soiree.html"
+    },
+    {
+     "nom": "Nyktalgiaa",
+     "role": "soigneur",
+     "classe": "Shaman",
+     "spec_fr": "Restauration",
+     "page": "Nyktalgiaa_soiree.html"
+    },
+    {
+     "nom": "Côrnus",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévastation",
+     "page": "Côrnus_soiree.html"
+    },
+    {
+     "nom": "Gonzoshen-Maîtrise des bêtes",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "page": "Gonzoshen-Maîtrise_des_bêtes_soiree.html"
+    },
+    {
+     "nom": "Gonzoshen-Précision",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Précision",
+     "page": "Gonzoshen-Précision_soiree.html"
+    },
+    {
+     "nom": "Ingolmo-Ombre",
+     "role": "DPS",
+     "classe": "Priest",
+     "spec_fr": "Ombre",
+     "page": "Ingolmo-Ombre_soiree.html"
+    },
+    {
+     "nom": "Kaelhdyr",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévastation",
+     "page": "Kaelhdyr_soiree.html"
+    },
+    {
+     "nom": "Lodan",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévastation",
+     "page": "Lodan_soiree.html"
+    },
+    {
+     "nom": "Mécafree",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "page": "Mécafree_soiree.html"
+    },
+    {
+     "nom": "Métaforme",
+     "role": "DPS",
+     "classe": "Druid",
+     "spec_fr": "Farouche",
+     "page": "Métaforme_soiree.html"
+    },
+    {
+     "nom": "Météion",
+     "role": "DPS",
+     "classe": "Evoker",
+     "spec_fr": "Dévastation",
+     "page": "Météion_soiree.html"
+    },
+    {
+     "nom": "Natryum-Ombre",
+     "role": "DPS",
+     "classe": "Priest",
+     "spec_fr": "Ombre",
+     "page": "Natryum-Ombre_soiree.html"
+    },
+    {
+     "nom": "Orviden-Affliction",
+     "role": "DPS",
+     "classe": "Warlock",
+     "spec_fr": "Affliction",
+     "page": "Orviden-Affliction_soiree.html"
+    },
+    {
+     "nom": "Orviden-Destruction",
+     "role": "DPS",
+     "classe": "Warlock",
+     "spec_fr": "Destruction",
+     "page": "Orviden-Destruction_soiree.html"
+    },
+    {
+     "nom": "Ragnarorc",
+     "role": "DPS",
+     "classe": "DeathKnight",
+     "spec_fr": "Impie",
+     "page": "Ragnarorc_soiree.html"
+    }
+   ]
+  },
+  {
    "date": "2026-08-19",
    "saison": "midnight-2",
    "page": "raid_c6B23MNLAkYVZyH8.html",
