@@ -615,6 +615,178 @@
    ]
   },
   {
+   "date": "2026-09-06",
+   "saison": "midnight-2",
+   "page": "raid_cByA8672VthwPTKR.html",
+   "zone": "The Venomous Abyss",
+   "difficulte": "Héroïque",
+   "tues": 0,
+   "affrontes": 1,
+   "essais": 19,
+   "joueurs": [
+    {
+     "nom": "Jairtrude",
+     "personnage": "Jairtrude",
+     "role": "tank",
+     "classe": "Paladin",
+     "spec_fr": "Protection",
+     "page": "Jairtrude_soiree.html"
+    },
+    {
+     "nom": "Louac",
+     "personnage": "Louac",
+     "role": "tank",
+     "classe": "Paladin",
+     "spec_fr": "Protection",
+     "page": "Louac_soiree.html"
+    },
+    {
+     "nom": "Acronøs",
+     "personnage": "Acronøs",
+     "role": "DPS",
+     "classe": "Warrior",
+     "spec_fr": "Armes",
+     "page": "Acronøs_soiree.html"
+    },
+    {
+     "nom": "Beæsti",
+     "personnage": "Beæsti",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "page": "Beæsti_soiree.html"
+    },
+    {
+     "nom": "Côrnus",
+     "personnage": "Côrnus",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévastation",
+     "page": "Côrnus_soiree.html"
+    },
+    {
+     "nom": "Deaddrath",
+     "personnage": "Deaddrath",
+     "role": "DPS",
+     "classe": "Mage",
+     "spec_fr": "Arcanes",
+     "page": "Deaddrath_soiree.html"
+    },
+    {
+     "nom": "Fairycham",
+     "personnage": "Fairycham",
+     "role": "DPS",
+     "classe": "Shaman",
+     "spec_fr": "Élémentaire",
+     "page": "Fairycham_soiree.html"
+    },
+    {
+     "nom": "Fondorlatos",
+     "personnage": "Fondorlatos",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "page": "Fondorlatos_soiree.html"
+    },
+    {
+     "nom": "Gonzoshen-Maîtrise des bêtes",
+     "personnage": "Gonzoshen",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "page": "Gonzoshen-Maîtrise_des_bêtes_soiree.html"
+    },
+    {
+     "nom": "Gonzoshen-Précision",
+     "personnage": "Gonzoshen",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Précision",
+     "page": "Gonzoshen-Précision_soiree.html"
+    },
+    {
+     "nom": "Infernos",
+     "personnage": "Infernos",
+     "role": "DPS",
+     "classe": "Warrior",
+     "spec_fr": "Fureur",
+     "page": "Infernos_soiree.html"
+    },
+    {
+     "nom": "Kaelhdyr",
+     "personnage": "Kaelhdyr",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévastation",
+     "page": "Kaelhdyr_soiree.html"
+    },
+    {
+     "nom": "Mécafree",
+     "personnage": "Mécafree",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "page": "Mécafree_soiree.html"
+    },
+    {
+     "nom": "Métaforme",
+     "personnage": "Métaforme",
+     "role": "DPS",
+     "classe": "Druid",
+     "spec_fr": "Farouche",
+     "page": "Métaforme_soiree.html"
+    },
+    {
+     "nom": "Ragnarorc",
+     "personnage": "Ragnarorc",
+     "role": "DPS",
+     "classe": "DeathKnight",
+     "spec_fr": "Impie",
+     "page": "Ragnarorc_soiree.html"
+    },
+    {
+     "nom": "Ryozumk",
+     "personnage": "Ryozumk",
+     "role": "DPS",
+     "classe": "Monk",
+     "spec_fr": "Marche-vent",
+     "page": "Ryozumk_soiree.html"
+    },
+    {
+     "nom": "Sanni",
+     "personnage": "Sanni",
+     "role": "DPS",
+     "classe": "Mage",
+     "spec_fr": "Arcanes",
+     "page": "Sanni_soiree.html"
+    },
+    {
+     "nom": "Sima",
+     "personnage": "Sima",
+     "role": "DPS",
+     "classe": "Warrior",
+     "spec_fr": "Armes",
+     "page": "Sima_soiree.html"
+    },
+    {
+     "nom": "Tûpepatest",
+     "personnage": "Tûpepatest",
+     "role": "DPS",
+     "classe": "Monk",
+     "spec_fr": "Marche-vent",
+     "page": "Tûpepatest_soiree.html"
+    },
+    {
+     "nom": "Чсвова",
+     "personnage": "Чсвова",
+     "role": "DPS",
+     "classe": "Mage",
+     "spec_fr": "Arcanes",
+     "page": "Чсвова_soiree.html"
+    }
+   ]
+  },
+  {
    "date": "2026-09-03",
    "saison": "midnight-2",
    "page": "raid_PHgr78ZvRdaTWxjt.html",
