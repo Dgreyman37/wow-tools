@@ -321,7 +321,7 @@ function ligne(s,raid){
     +groupes.map(([l,js])=>`<span class="b-role"><span class="s-lib">${l}</span>${js.map(j=>{const c=CLASSES[j.classe]||[];
       return `<a class="b-nom" href="${esc(s.date)}/${encodeURI(j.page)}" style="--classe:${c[0]||'var(--mut)'}"><span class="pastille"></span>${esc(j.nom)}<span class="b-spe">${esc(j.spec_fr||'')}</span></a>`}).join('')}</span>`).join('')
     +'</span></span>':'—';
-  return `<tr class="soiree" data-noms="${esc(s.joueurs.map(j=>j.nom.toLowerCase()).join(' '))}">`
+  return `<tr class="soiree" data-noms="${esc(s.joueurs.map(j=>(j.personnage||j.nom).toLowerCase()).join(' '))}">`
     +`<td class="c-date">${lien?`<a class="date" href="${lien}">${esc(jour(s.date))}</a>`:esc(jour(s.date))}</td>`
     +`<td class="c-raid">${esc(s.difficulte||'')}${s.zone&&s.zone!==raid?` <span class="diff">· ${esc(s.zone)}</span>`:''}</td>`
     +`<td class="c-tues num tues${s.tues?'':' zero'}">${s.affrontes?`<b>${s.tues}</b> / ${s.affrontes}`:'—'}</td>`
@@ -338,14 +338,21 @@ function bloc(sa,liste,ouvert){
 }
 const ROLE_FR={tank:'Tank',soigneur:'Soigneur',DPS:'DPS'};
 function tableJoueurs(liste){
-  const par={};
-  for(const s of liste)for(const j of s.joueurs){const x=par[j.nom]||(par[j.nom]={j,n:0,der:s});x.n++;if(s.date>x.der.date){x.der=s;x.j=j}}
+  // un joueur = un personnage, même s'il a joué deux spés (fiches « Nom-Spé ») : une soirée comptée une fois
+  const par={},perso=j=>j.personnage||j.nom;
+  for(const s of liste)for(const j of s.joueurs){
+    const x=par[perso(j)]||(par[perso(j)]={nom:perso(j),soirees:new Set(),specs:{},der:s,j});
+    x.soirees.add(s.date);const k=[j.role,j.spec_fr].join('|');x.specs[k]=(x.specs[k]||0)+1;
+    if(s.date>x.der.date){x.der=s;x.j=j}}
   const rang={tank:0,soigneur:1,DPS:2};
-  const ls=Object.values(par).sort((a,b)=>b.n-a.n||(rang[a.j.role]??3)-(rang[b.j.role]??3)||a.j.nom.localeCompare(b.j.nom));
+  for(const x of Object.values(par)){x.n=x.soirees.size;x.ks=Object.keys(x.specs).sort((a,b)=>x.specs[b]-x.specs[a]);x.role=x.ks[0].split('|')[0]}
+  const ls=Object.values(par).sort((a,b)=>b.n-a.n||(rang[a.role]??3)-(rang[b.role]??3)||a.nom.localeCompare(b.nom));
   return `<h3 class="sa-sous">Les joueurs de la saison</h3><table class="soirees joueurs"><thead><tr><th>Joueur</th><th>Rôle</th><th class="num">Soirées</th><th>Dernière soirée</th></tr></thead><tbody>`
-    +ls.map(({j,n,der})=>{const c=CLASSES[j.classe]||[];const t=[j.spec_fr,c[1]].filter(Boolean).join(' ');
-      return `<tr class="soiree" data-noms="${esc(j.nom.toLowerCase())}"><td><span class="pastille" style="--classe:${c[0]||'var(--mut)'}"></span><b>${esc(j.nom)}</b></td>`
-      +`<td class="diff">${esc(ROLE_FR[j.role]||'')}${t?` · ${esc(t)}`:''}</td><td class="num">${n} / ${liste.length}</td>`
+    +ls.map(({nom,n,der,j,ks,role})=>{const c=CLASSES[j.classe]||[];const spe=k=>k.split('|')[1];
+      const t=[spe(ks[0]),c[1]].filter(Boolean).join(' ');
+      const aussi=ks.slice(1).map(k=>(k.split('|')[0]!==role?`${ROLE_FR[k.split('|')[0]]||''} `:'')+spe(k)).filter(x=>x.trim());
+      return `<tr class="soiree" data-noms="${esc(nom.toLowerCase())}"><td><span class="pastille" style="--classe:${c[0]||'var(--mut)'}"></span><b>${esc(nom)}</b></td>`
+      +`<td class="diff">${esc(ROLE_FR[role]||'')}${t?` · ${esc(t)}`:''}${aussi.length?`<span class="b-spe"> (aussi ${esc(aussi.join(', '))})</span>`:''}</td><td class="num">${n} / ${liste.length}</td>`
       +`<td><a class="date" href="${esc(der.date)}/${encodeURI(j.page)}">${esc(jour(der.date))} →</a></td></tr>`}).join('')+'</tbody></table>';
 }
 function afficher(d){
