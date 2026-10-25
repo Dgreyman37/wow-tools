@@ -615,6 +615,170 @@
    ]
   },
   {
+   "date": "2026-09-13",
+   "saison": "midnight-2",
+   "page": "raid_Cx7qJMjwDHGtbdZX.html",
+   "zone": "The Venomous Abyss",
+   "difficulte": "Héroïque",
+   "tues": 0,
+   "affrontes": 1,
+   "essais": 21,
+   "joueurs": [
+    {
+     "nom": "Jairtrude",
+     "personnage": "Jairtrude",
+     "role": "tank",
+     "classe": "Paladin",
+     "spec_fr": "Protection",
+     "page": "Jairtrude_soiree.html"
+    },
+    {
+     "nom": "Louac",
+     "personnage": "Louac",
+     "role": "tank",
+     "classe": "Paladin",
+     "spec_fr": "Protection",
+     "page": "Louac_soiree.html"
+    },
+    {
+     "nom": "Agorâ",
+     "personnage": "Agorâ",
+     "role": "soigneur",
+     "classe": "Shaman",
+     "spec_fr": "Restauration",
+     "page": "Agorâ_soiree.html"
+    },
+    {
+     "nom": "Bigshøtx",
+     "personnage": "Bigshøtx",
+     "role": "soigneur",
+     "classe": "Shaman",
+     "spec_fr": "Restauration",
+     "page": "Bigshøtx_soiree.html"
+    },
+    {
+     "nom": "Ingolmo",
+     "personnage": "Ingolmo",
+     "role": "soigneur",
+     "classe": "Priest",
+     "spec_fr": "Sacré",
+     "page": "Ingolmo_soiree.html"
+    },
+    {
+     "nom": "Jalyne",
+     "personnage": "Jalyne",
+     "role": "soigneur",
+     "classe": "Shaman",
+     "spec_fr": "Restauration",
+     "page": "Jalyne_soiree.html"
+    },
+    {
+     "nom": "Maggmar",
+     "personnage": "Maggmar",
+     "role": "soigneur",
+     "classe": "Paladin",
+     "spec_fr": "Sacré",
+     "page": "Maggmar_soiree.html"
+    },
+    {
+     "nom": "Byvako",
+     "personnage": "Byvako",
+     "role": "DPS",
+     "classe": "DeathKnight",
+     "spec_fr": "Impie",
+     "page": "Byvako_soiree.html"
+    },
+    {
+     "nom": "Châckí",
+     "personnage": "Châckí",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Précision",
+     "page": "Châckí_soiree.html"
+    },
+    {
+     "nom": "Côrnus",
+     "personnage": "Côrnus",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévastation",
+     "page": "Côrnus_soiree.html"
+    },
+    {
+     "nom": "Devourmom",
+     "personnage": "Devourmom",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévoreur",
+     "page": "Devourmom_soiree.html"
+    },
+    {
+     "nom": "Gonzoshen",
+     "personnage": "Gonzoshen",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "page": "Gonzoshen_soiree.html"
+    },
+    {
+     "nom": "Kaelhdyr",
+     "personnage": "Kaelhdyr",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévastation",
+     "page": "Kaelhdyr_soiree.html"
+    },
+    {
+     "nom": "Krakedoole",
+     "personnage": "Krakedoole",
+     "role": "DPS",
+     "classe": "Shaman",
+     "spec_fr": "Élémentaire",
+     "page": "Krakedoole_soiree.html"
+    },
+    {
+     "nom": "Mécafree",
+     "personnage": "Mécafree",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "page": "Mécafree_soiree.html"
+    },
+    {
+     "nom": "Métaforme",
+     "personnage": "Métaforme",
+     "role": "DPS",
+     "classe": "Druid",
+     "spec_fr": "Farouche",
+     "page": "Métaforme_soiree.html"
+    },
+    {
+     "nom": "Phz",
+     "personnage": "Phz",
+     "role": "DPS",
+     "classe": "Paladin",
+     "spec_fr": "Vindicte",
+     "page": "Phz_soiree.html"
+    },
+    {
+     "nom": "Scorpionitor",
+     "personnage": "Scorpionitor",
+     "role": "DPS",
+     "classe": "Rogue",
+     "spec_fr": "Assassinat",
+     "page": "Scorpionitor_soiree.html"
+    },
+    {
+     "nom": "Ywi",
+     "personnage": "Ywi",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévastation",
+     "page": "Ywi_soiree.html"
+    }
+   ]
+  },
+  {
    "date": "2026-09-10",
    "saison": "midnight-2",
    "page": "raid_KL1h8CZFp4Jn2Xyj.html",
