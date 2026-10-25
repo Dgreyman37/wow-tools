@@ -929,6 +929,46 @@
      "page": "Louac_soiree.html"
     },
     {
+     "nom": "Ingolmo",
+     "personnage": "Ingolmo",
+     "role": "soigneur",
+     "classe": "Priest",
+     "spec_fr": "Sacré",
+     "page": "Ingolmo_soiree.html"
+    },
+    {
+     "nom": "Jalyne",
+     "personnage": "Jalyne",
+     "role": "soigneur",
+     "classe": "Shaman",
+     "spec_fr": "Restauration",
+     "page": "Jalyne_soiree.html"
+    },
+    {
+     "nom": "Naoîmi",
+     "personnage": "Naoîmi",
+     "role": "soigneur",
+     "classe": "Priest",
+     "spec_fr": "Sacré",
+     "page": "Naoîmi_soiree.html"
+    },
+    {
+     "nom": "Pawwni",
+     "personnage": "Pawwni",
+     "role": "soigneur",
+     "classe": "Paladin",
+     "spec_fr": "Sacré",
+     "page": "Pawwni_soiree.html"
+    },
+    {
+     "nom": "Турбитоник",
+     "personnage": "Турбитоник",
+     "role": "soigneur",
+     "classe": "Paladin",
+     "spec_fr": "Sacré",
+     "page": "Турбитоник_soiree.html"
+    },
+    {
      "nom": "Acronøs",
      "personnage": "Acronøs",
      "role": "DPS",
