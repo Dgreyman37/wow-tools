@@ -1,0 +1,867 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ga-genere" content="2026-10-25T20:16">
+<meta name="ga-version" content="b3f96b5">
+<title>Mon DPS Orviden</title>
+<style>
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .badge { font-size: .74rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px;
+           padding: 2px 10px; background: var(--surface); }
+  .badge-verif.ok { color: var(--good); border-color: var(--good); }
+  .badge-verif.alerte { color: var(--warn); border-color: var(--warn); }
+  .badge-verif.non { font-style: italic; }
+  :root { --bg: #f7f6f3; --surface: #ffffff; --text: #1f2328; --muted: #5f6670; --border: #e1e0dc;
+          --accent: #b8860b; --good: #1f7a4d; --bad: #b23b2e; --warn: #9a6400; --row: #faf9f7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #16171a; --surface: #1f2125; --text: #e6e6e3; --muted: #9ba1a8; --border: #33363c;
+            --accent: #e3b341; --good: #5cc48f; --bad: #ef7a6c; --warn: #e0b04f; --row: #23252a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  h2 { font-size: 1.35rem; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.08rem; margin: 26px 0 8px; }
+  a { color: var(--accent); }
+  .meta { color: var(--muted); margin: 0 0 20px; font-size: .95rem; }
+  .lead { background: var(--surface); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 6px; }
+  .lead ul { margin: 6px 0 0; padding-left: 20px; }
+  .note { color: var(--muted); font-size: .92rem; }
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+  th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; vertical-align: top; }
+  td.wrap { white-space: normal; min-width: 240px; }
+  th { background: var(--row); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--good); font-weight: 600; } .mid { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; } .muted { color: var(--muted); }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 8px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  td details { background: none; border: 0; padding: 0; margin: 4px 0 0; }
+  td summary { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  td details p { margin: 4px 0; max-width: 46em; }
+  .faire { display: block; margin-top: 2px; }
+</style>
+<style>
+  .avec-nav { display: grid; grid-template-columns: 230px minmax(0, 1040px); gap: 28px; justify-content: center;
+              padding: 0 16px; }
+  .avec-nav main { max-width: none; margin: 0; padding: 32px 0 64px; }
+  .sommaire { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 32px 0 24px;
+              font-size: .9rem; }
+  .sommaire summary { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+                      font-size: .75rem; margin-bottom: 8px; cursor: pointer; list-style: none; }
+  .sommaire summary::-webkit-details-marker { display: none; }
+  .sommaire ul { list-style: none; margin: 0; padding: 0; }
+  .sommaire li { margin: 0; }
+  .sommaire a { display: block; padding: 4px 10px; border-left: 3px solid var(--border); color: var(--text);
+                text-decoration: none; line-height: 1.35; }
+  .sommaire li ul a { padding-left: 22px; color: var(--muted); font-size: .85rem; }
+  .sommaire a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .sommaire a.actif { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  /* sections bien séparées : un bandeau par grande partie */
+  .avec-nav main > h2, .avec-nav main section > h2 {
+    margin: 64px 0 18px; padding: 12px 16px; font-size: 1.45rem; background: var(--surface);
+    border: 1px solid var(--border); border-left: 6px solid var(--accent); border-radius: 10px; }
+  .avec-nav main > h2:first-of-type { margin-top: 36px; }
+  .avec-nav h2, .avec-nav h3 { scroll-margin-top: 16px; }
+  .avec-nav main > h3 { padding-bottom: 4px; border-bottom: 1px dashed var(--border); }
+  @media (max-width: 1100px) {
+    .avec-nav { display: block; padding: 0; }
+    .avec-nav main { padding: 16px 16px 64px; }
+    .sommaire { position: sticky; top: 0; z-index: 5; max-height: 70vh; padding: 8px 16px; background: var(--bg);
+                border-bottom: 1px solid var(--border); }
+    .sommaire summary { margin: 0; padding: 6px 0; }
+    .sommaire summary::after { content: " ▾"; }
+  }
+</style>
+<style>.ic{display:inline-block;width:1.2em;height:1.2em;border-radius:3px;background-size:cover;vertical-align:-.25em;margin-right:.3em;flex:none}.ic-spec{border-radius:50%}.ic-ability_warlock_chaosbolt,.io-ability_warlock_chaosbolt,.fi-ability_warlock_chaosbolt{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwADAQAAAAAAAAAAAAAAAAYHBAUIA//EAC4QAAEDAwMCBQMEAwAAAAAAAAECAwQABREGEiETMQdBUWFxIjKBFBVCUmKRwf/EABoBAAMBAAMAAAAAAAAAAAAAAAMFBgQAAQL/xAArEQABAwIFAgQHAAAAAAAAAAABAgMRACEEEjFBsQVRE2GhwRQicYGRotH/2gAMAwEAAhEDEQA/AOOcuSX8rWpbji/qUokkknuT51VNA+HUaUl243R6Qu3sAh5xhgOJAxncCSAfjg1qvCyHbLjdYFtbhMi4yXtgfcSXNnodpOKsWl4Me7SZ9ig3+59RxCv29hpgKbmOJXt2LSMBO/kjyA7nikfVMepsFAkd/wC0NwrghGoE3+vJ2/Nbmz6RmaL1BaYF4gJWmYEP28qQgbUj6lZSnODgdufuqNeMF6VcA5blwlLQ0olLr6iXEOfyO7z8xnzGM8pBqs3G0aitKbTqG96g/WXAKcitwpJU6YqQCjprGc5POAOwGTWk1zCieIF9dlwobTSWEhbzDT4RhAGFFRUAR6ClGFxKUOh0/Mm8mdCD79xY8+cKwy7iHFGc5y5UwSTbaK5zjXC4QkFqPMlx0k7ilt1SBn1wD8UU6a2sECNdWoq32WCzHQgAErKgCeSeMn/gFFVKMW2tIUKMsFCilViK8tFXSObxLkCAlM99Sug5HOxMdO0g7R78V0l4dWyRDuEafEKo7UBLKo5bilwkdHeVqSMFQWcg8/SB7YqN2vTOk4bT8mw3166SGwEqW9AW02SSBlCj359aeLXrO5R7ehiBNUwY8dTDyjg7WBk5/AKh+alesK+KBS1bYyDwfKshT4jiEM3M3F+1te1Z2tNSR71qsvsK4ddW4nkEqWoAZ+Mjv6CkW43eQ/dIGl7NIQty5zA4+WSCFgqwlJP9cAq9MUt3y4uwoJw2uPLuKMNIWcOBpXAJHluGef8AI0ovSLlY75IiOPFiXjoKcSrlCVAZAPlkcH2rXgulpSgAHQWB8rT9jxTUQ08ViZ0J3iI9QPWvPW0xMvVlzdaWXWRIUhpQOQUJO1JHtgZ/NFY+pk2xm8Os2l4vxkJSnqrP3r2jcRx2znFFU7OUNpAMCNxegukFZKtarl8uEkQnkhSUp64ASlIAAwTgAfFYM9RjaJjSWjh6a8Oqo88JJIAHbGQP9UUVKspAyADVXtQulAeGtW8HgVK7zKkv3d1999x15TmVOLUSo/JNNGsdOwIPh7p3UDSpC51yW6JBcXlJwARgYoop/iFFDjITYEx+prmYkSaRaKKK213X/9k=)}.ic-inv_11_0_misc_organmass_color3,.io-inv_11_0_misc_organmass_color3,.fi-inv_11_0_misc_organmass_color3{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAUDBgIEBwj/xAAuEAABAwMDAQYFBQAAAAAAAAABAgMEAAUREiExBhNBUWFxkQcUFSLBIzJCgaH/xAAZAQADAQEBAAAAAAAAAAAAAAADBAUBAgb/xAAjEQACAQMDBQEBAAAAAAAAAAABAgADBBESIUEFMVFxsfDx/9oADAMBAAIRAxEAPwDys25Iubqko1OOLytSlK91KP5rGZZpEUZUUk/570/+GsFqRcpQkJQphloOupXwsBQ0pPkVFOfSu3dQ9KC2Q4bt0uBS9Ijpfwc/ppVnAwPxxtXm+o9ZSyrLT8xFQScIMzzt0hbUXLqWJb5y5DEVayZC2W9a22wCpSgPIDnuHjU/UNtY+YL8Bh4xik7JcL4QRz9+lOfHjbNdFud5+lqmw2H0pRJZWwpwAaihXIB5GQB/VUtt0JW0Y2pthn7lKJOSM7D1J2A780zbXla4qawMDxx7m1S1NckYMTwLjNhsdlFmyo6M5KWnVJBPjsfIUVqK1LcWop0kqOUju8qKpwe3Jlv+F8hpcy8wE6kvybPILZ5BcbUh1I9m1D1Ipt1F1veb2ECXIcfWlIbTnkADASPAeVVvpWXbIvTz76gWn3XUsPuoXqfcRnV2baMbasDKs92/ODsvOwTZ13gstxTICkBpCyvs9yDz/M4x4AAnbYVHubdKlcuydjge/wB8jC1NCkCY2WPIvd1iwgvS664BrcOQlPeav/xE6NsvSq40SBIcu8V9gOyFEFJCxzjO+2TgjiuZ2a6Lky33GtLJYZLqQ3tpSkcewpy5e5QtxuD7r8nDDLiUOK+wlS1AA43wNPAI9qoUrd0cMDgAbjz/ACRro1WbRjfbk7cyszYvycx+MFauzcUnJHO9FQyJTkl9yQ8rU66orWeMknJoo+8dFNsb94pddUwl2IjGgPago/uBGRzUzkl36P2JUSkyCrcnnFFFFIBMpMozNFskZIUQTscGrNdJshmw21hpwobfgpDyRwvS6vGfSiiumgaqhnUEcn5F8KOmQ0VrWsEKxsfIUUUVoAm4E//Z)}.ic-inv_shadowflame_missile,.io-inv_shadowflame_missile,.fi-inv_shadowflame_missile{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAgGBwMEBQL/xAAxEAABAwMBBgQFBAMAAAAAAAABAgMEAAURBhIhMUFRYQcTFCIIMkJSgRUjM3FisfH/xAAZAQADAQEBAAAAAAAAAAAAAAAFBgcEAQP/xAAuEQABAgQEBAUEAwAAAAAAAAABAhEAAwQhBTFBYQYSUXEUQpGxwSIyUoGh4fD/2gAMAwEAAhEDEQA/AFXtlykx2JLbbqz6o/vk7yvnx41kYtTjkhDmMoJyO/avOnrfJn3CNBiMlx55eEjkO5pgtI6C/SrSbk8hDknZ2I3mDKUK5rxRuuxmiw2nT4kuryp/z2fPsdYacKwybXp+r7Us37uw92isYWj3NpMdbYkXN9O0GgrCWEfcs9f9Vbvhb4VR1OouFxJkoaGU5HsCgfpHMf3UmsOiUQIcVtYffuE9zbcbP8jo+5Z+lPPHSpd4h32HpTTggsrAcCNl3y8FXZA7k1L8b4zrapqKgVeYSCRmdC2oGgD9ySSzQijpqYJTLDrOugAzPQ98unWOG9crQy6tmM4tSEKKSQ5sjI6DpRS16j1vcnrxIcjBltBUfaGgoA/3RRBHAxWkKSSxAzUHy1YR5Kx2jSopIJbVom3ww2uFKdlr9Opc5S0ttuFHtaa+rB+47h+KaaJpJsSWVuoBYax5bR5kde1VR8JWnmmoTbroShO9xRO7J/5V/ag1HY7OlSnX23Fp4ICxSzxhKVV4lOmpWyQeUbsGPL6W7mBa58+nTLpZAJUzlt/6jQusVcaI/IjNtiWtGylZTvJ5fgUqXjrcTbnvSqeMh7aPnPBXyA/OU/5Ebs8qs/xQ8YvTsONRnAjIIGFAK/HSlb1zd513e9e95fvO220VbSQAfq67xzrfwTwzPM41KksgCz5m3ttpr0jYpM7DqNYmsFqawzA36bCNR22vXFZmsmNa47vuYYdcJV5fI5O8560VF7jJlz5i5U6SXH18Se3ADtRVB8NW/m2zP/Jv6wnKqFkkuYYTReqLvadMpZhOpbSCRnfnHHka4101Le5zpVIuDqsngDgUUV2ioaZc+fMVLBVzG5G8VHmKJSSm1h7RWGsZ0pV2fbLytkEDjv4da0NQyVKuJYbbbYZRgBDYIHDjRRRyQSKct1HzE5xOYszZt/MPmMECG3KbWta3EkL2fbjoO1FFFDVqPMbwHJvH/9k=)}.ic-spec-WarlockDestruction,.io-spec-WarlockDestruction,.fi-spec-WarlockDestruction{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACQAJAMBIgACEQEDEQH/xAAaAAADAQADAAAAAAAAAAAAAAAGBwgFAgQJ/9oACAEBAAAAAEcWD7DSlFoB5rrurzmfls7nDGoCGNYW9BpKx9X/xAAWAQEBAQAAAAAAAAAAAAAAAAADBQL/2gAIAQIQAAAAiEizb8k8/wD/xAAaAQABBQEAAAAAAAAAAAAAAAADAAECBAYF/9oACAEDEAAAANMUUVzH0l3/xAAqEAACAgECBgEDBQEAAAAAAAABAgMEBQAGERIhMUFRByJCcRMjUmGC0f/aAAgBAQABPwDA7Jzu4Xd6sTt5dzq9g8Vs6tz3FWzkiP24m6pGdYrb25t5XZnhjaYoAXPRVQHsNS4TGbAplpnS1mZEJRF6xwD+Wrl+xPZllkPF3PMx9k6218n7fwu1EprERZTj/vWXytnM5ee7O5cu/Hr4GtqfI229rbQEFavLNkJHZ5UPReY6v2M9vjM2JoK/KJXHT7EA9nTx7MwJFC3G9qwg4yyoenMfGqGGuXn5E/JJ6KAO5J1cMC8KtVeKqeDyeZD7/HrW0fjXL5tUtTgwUwerkfUwHhdbx3BjttV3w+IRIpgnCZ07xg/YPbHzp5ed2Zu5Os5m4okONx3SLtJIO7n/AJr4o+PLWStwZW7XBqKfpDfeRreOfo4PETRhwjhDyhR79ay872Lkz8xZpHJJ7kknVHZWUt11mEbANqv9VqPj5Yao2HobYhFdVUQ005Bw/rW+dxZW9bZbE/MFPTWyMdVvX/1LClisiga3FmchDlJYopeREAVVHYDX/8QAJxEAAQIDBwQDAAAAAAAAAAAAAgEDAAQREhMhMTJBQgUUImEVM3H/2gAIAQIBAT8ARZqacK2RA2Oocq+qw/aLAyFuWHVsn5CToUS7k3yHitnNIWZcFq+dGlfrb3WG2vkZ2rp1aa48bXuO7lEwvgw9x1xVEmKLTxWJdEDpBqKU8FyiXbbVhqoDpTaP/8QAJxEAAgECBAQHAAAAAAAAAAAAAQIDAAQREiEiBRMxURQzQUJTcbH/2gAIAQMBAT8ACRWpZUgXE7VYnH7aoVKzOcmJ13dWY0Y58TjcID2xqaK0iLRwtmyeZI34KV5ks2mK5Q21e5rwPEDryjrUOsOvzirjXidkntCjb6dKkZs7bj1r/9k=)}.ic-spell_fire_burnout,.io-spell_fire_burnout,.fi-spell_fire_burnout{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAcFBggDBP/EACwQAAIBAwIFBAIBBQAAAAAAAAECAwQFEQAhBhITMVEHQWFxIoEUFjJSkcH/xAAZAQADAAMAAAAAAAAAAAAAAAAFBgcCAwT/xAAsEQABAwMCAwYHAAAAAAAAAAABAAIDBBEhBTESE0EGFCKRocFRcYGx0eHw/9oADAMBAAIRAxEAPwD1+nnEdpuvGVoqZDFSXaCdS7QjFPWjHKxA26cuDn/FsY76Y0dmvFdY+J6e1iMVtxu/RMrNyiOJVGXJ74A7Ae+s/cCX5qayfx6QmGo63V6iwK/UGwCknsARnbzrUHC1d1rXO7uqNURR1Rw25ygD/wCttRPWo+7zhzRjbOdjfy87eipFVHJBE2Vub2t9Df3v+ln71O9HeILXAlxStorlSK/JIIC2Ytu3Ljbt3H70kq+0SLcHtNXEryyZEe5BVhvynIz21u+4NHUGVsqwmwpQnlXYZHbSP9SuHKD+oKe5R08atCGLAbknlOBn70b0jWpCOCTPwOy2UrXVQtJk9cdPksyxWtp1JJyVJQnBycedGrjWUot7JEyLzSKZT33yx/5jRpvFZcXXK/S/EbKf9Ma+nSqo6FpY2RZzyT7jKnup8520+uFrstLJTIC08kICMCf7lYboB77Hv51kCx101pkUpGapQ22WwyH9edODhbjwQKhk61OGAAkcgsp8Z9s6VO0GkSSP42Z/KYqSRlZBynCxHTP3WgiskUmIlFXQP+UcpflC/BPsR2xqu8bwU1XaZykCx1EMijCNzBw22dR9BxNSVdICHQGQfm7MFB+vH3qM4lvEdCZ+eQdJYxKpDBg6gE4B+9v3pbpaaSN4B6LKDT5WyZwR6+39dJnjGRZ+I6uSDLxcwVT8AY2+NtGoW5XENWOeYAk5IHnRp/jjeGAWRIwwDBKo9mlfrFAxGOxHfVitdwqmxGzggnBJG+jRozVtFzhJugyPAYAd7q20tbU06BI5DgedcL/ebibRLTmobp8wOPHx9baNGgLI2c0YVRrsUJI3S+qamRXHY5GTnRo0aZWsbYYUflqJQ8gOK//Z)}.ic-spell_fire_felcano,.io-spell_fire_felcano,.fi-spell_fire_felcano{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwEBAQEAAAAAAAAAAAAAAAYHBQQCCP/EACwQAAEDAwMDBAIBBQAAAAAAAAECAwQABREGEiETMUEHIlFxFGGhFjKB4fD/xAAZAQACAwEAAAAAAAAAAAAAAAAEBQIDBgf/xAAmEQABAgYCAQQDAAAAAAAAAAABAgMABBESITEFQWFRcYHwssLh/9oADAMBAAIRAxEAPwD3pS1QY0Nlgx2drrKQ4tbQcODznnkqJ5znzTjYdLWmY42ZkCE4txRIKmxuHg5rK05bVrhxFvt7VdNBIyfgVQdKxY8VKp0oHptqGzBxlQP78VxzlH1NsqdKiM0jG1Wt8IT7kn07jklaHtRtjaE2iCk4xvMdIyMk/H7/AIpKumnLfCdJatMfGc5MdJT3+vqrpctQW9VnZ6qek2rJJ7pSAMnn4qfXiILqwJNrkMTmArG1p5JI7HgZ/wB0oROtS8zY28VoIBuyBcakjOMfEM5uWwC0q7GhulN0iC67jRV30u/joZU42FKS0npAnJGcJwPH8UVpep8CQ1qUBTCm8sJISRjA3KorcSr4Uygg9esDIBtFYqVqkwYtgjzZ8luLHZYb6zq+cHAAAHlR8CuWDq0XvV0SBCiRpFhZiuyH5TmSW0oOFYx8nCc85zkV8uX3VOrtbh2XKnIhWC3bEIYbCww2DxuSnu6s4PuUcnPgcVVPSfVjtu0dfHbHDj2aBES2w1cLgoOKmvBeXRgcK9gUcI4SPOeaWcvwzyGS4TVRNLQcJuPZ7VnQBHwCYLTKBpQJFRs9+aZ6hiu/q3bpLzyZrLsm1OupPRCil5lHIUE444AyM98jzSLetQq0pqX861rizVIPubEpZSpOAU7kpKSeCDg5rk9RI2l5lksWobMlNqVfR1ZLbsg9KInJTuwRkJJScfv7pQ1LMtlz1A83cC9YZCEoSglBe6qUgJClJScpVtAUcHHfgUXxfFSwSC22QkghST4NNDzUEje/MCqZdcXVWT6/fohr1Z6gXW43NEiVc233SyncFQC50icnZvQQFgZ74z45xklSK6xFtzFpjXq1SGgTtWmSE5GT3BHB/wCzRWja4aVSgJFAPb+Q1Sw5QVMZt1vl0vCWUzpa1ssoCGWE+1ptI4ASkcD771vaYuEv+iNWNLfW4hmEwGUuKKg1ukJSrZn+3IUocfJoop3MtoSiwDAUn8hBxAthk9W5clu5acsrTqm4SLYwyW08b0bwcH/Iz91MZTq3JTy1qJUpaiSTyeTRRVPEISJVsgbH7KiDAFggZG9JUpRJJ+aKKKLO4sj/2Q==)}.ic-spell_fire_fireball,.io-spell_fire_fireball,.fi-spell_fire_fireball{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAcECAIFBgP/xAAtEAACAQMDAwMDAwUAAAAAAAABAgMEBREABhIHITETFGEiUYEIMkFxkaGx0f/EABkBAQADAQEAAAAAAAAAAAAAAAYCAwQFB//EACYRAAIBAwIGAgMAAAAAAAAAAAECEQADBCExBRITQZHwUWFxweH/2gAMAwEAAhEDEQA/AOz6B9JOnu6OlNmut227Sy1jwqJJBGAXOPJ+dbPenQHY3tuFpsFPDKckMFHft4Gpv6WLzSwdKbXBU1IRUiVcH78R/H99NS13iiuUppePpyq5Koe5x99F8zJTIHRW7ysTAg6yPe9dSzauY7dXkkDXbTWqnVnQuw2Mx190pKhopCViRuIBPzgYGl51S6d0VJSTXKyQR08ECcplkUqVwfOMfbH51cTqGtFcYi1VeqSClgWVHp/dIPVPLj5Pz2PnGD2zpM9XYYLfY7jaJnqoqiCldmhmHJJUQ92R/DjBz/w6NNd4hiZikszLMSdvAP6pfgvh5lnkdAGM7CI8j2ap5WQIJyMK3yNGva7PGbhMYuLIWJBXxo16AhJUGh14KtxgPmnbsXdLttSnt0da9L6UYR+MmOWAMeP6ac3TTeFwEPpUtTSU+YVxPIplVArBmLYIKjGfzqoNiui08fD1gDzIIz30ydp7ze3saSOVQkoxOj9gw/Oh3EeFEXTcUd5pxiZNjIw1tECYAq1W96zbFXt6orHhq5KX28l1lSOWMwIpbi0hVhy4Ox+oKQOxPnvpXRWi3zx2q2vVSVFPcrp6NBKkBjnjoUjkCl5FyyqzyAFiOyZyfGM2vNuk2lV11HWU1PMaZFqIpSqMsRARkIwfUhI4sRkFSCw8nWxirrftHZG4bC18opLtUr9dRBKcpSGEejCuTkqCWGBn93zq5b4ZQzb/AI3P8rnJjNZlFnfTXb7932+6qLvOhjoNz19LAUMcc7hWVuQYcjggjAPbHfAzo1nvalnptyVKTgDIV0CNyUKVBABH28aNJ7TTbUz2o7kwt5wBpJrnYYVfEhZwx+rIP86kyzzP++RmOMZJ0aNXPvWSyxAYA1IiuFwWMw++qCjDBDPn/epVRe7jJbFp5phIKbCQuRhlXzjIxnuT3OT86NGom2h7CpreuSRzHzWvuF1rqmRDPOZDGgRSwzhck4/zo0aNTCgCAKzl2nev/9k=)}.ic-spell_fire_firebolt,.io-spell_fire_firebolt,.fi-spell_fire_firebolt{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAwADAQEAAAAAAAAAAAAAAAYHAwQIAgX/xAAqEAACAQIFAgYDAQEAAAAAAAABAgMEEQAFBhIhBzETFCJBUWEVMoEksf/EABkBAAMAAwAAAAAAAAAAAAAAAAQFBgECA//EACkRAAEDBAEDAgcBAAAAAAAAAAECAxEABCExQQUSYVGBBhMicZGh0fD/2gAMAwEAAhEDEQA/AOQaCFJGF13OWso+cUPp/o6rzfMbJQfkYGUmRYI2fYI2G9dvBBsf27D77YRcop/Fk2ys6xdiygHafk/WLloHT2vsvz/JKu9XBBVwtJDVGnIZEdWsQTwyiwJS9j74S9VuC02e1QBg7qm6JaoWoKWmf751inPop0llzaqkqdV1FFPG1R/nWFU9IW5YAkX4uhFgRe/OKrrDoFo6XJ2q8vo0ppYlBWMNdZLA3LF7nceDwQLj37F70jFS02n9xMh8NlKTIiq7i1/Xt9Nm7m3fse2DU2oDl1O7VTqvhxLdVa7EWLM5HtcCyj25xLLv0obLjpkkYiRHAge2PWjXLm4XchNvIAJwczznGZn24rgzXGlstpdQTQxr5SwsYW5KEEi3cc8c/d8GM3VrPPyWs6ielVYoVRVUILA9yT98k8nBigtF3BYQSo6FE3ibVL6wUjdI2l1njzKmaCV4SHuZVH68dr+39+cdfafpq2XM6Wky81EDzUNPHOaaczrTRrEPDdpNoKAKCxTceSQcRPT/AE/oqDSNLqrOM2ENPzenoY/Myi/IMm02jvbjcf5hqzHrBTp09q48hrq6Sd2ipBFUkJuhCksAikANcDkjC7qi1XqwllJI0TwD5NF2DCbO3+tQ7vM6xoRmP2Y2DVn1z1Tymhy7wKbOYpayJDJ5SaTY8kKgHxyvNhcH/trYhPVbqyub0zRZXBUuk88cgMExVbFb2bjdyLDsL84l2aa1q5lDRsI6pqZaeqq3RGnkA7pvA/TsPkgWPGE2ozGZppJEmffIfU97Fvrj2+sdrL4dR8wOvZUPU/72pQ/1Zm0R2W4GZzzEz+fMfatzP5nbNJbTvMoNlZjc2wY+dH6l3OSSTe98GKdKQkAVOrWtxRXO6oWa6ozPT2RQZTkQp8virKUebliS8s9ybhmYnj6FhhCqMwqZmklkZC8jbmIUDm3ew4wYMC2LLYa7wnJ2eTk7o/q1y6XQjuMADHGhWi7s5uxJxkjiU2vfBgwecUlRk5r1I5QhV4AGDBgxgCtiTX//2Q==)}.ic-spell_fire_immolation,.io-spell_fire_immolation,.fi-spell_fire_immolation{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAcIBQL/xAAoEAABAwMDBAIDAQEAAAAAAAABAgMEBQYRABIhBxMxQSJRCBShccH/xAAZAQACAwEAAAAAAAAAAAAAAAAEBQMGBwL/xAAtEQABAwMCBAUDBQAAAAAAAAABAgMRAAQhBVESMUFhBhRxgaETIkKxwdHh8P/aAAwDAQACEQMRAD8A07GsWhQGaN+xGR+sYrMRTjqclS1q7jrg/wB3gD6AGk5ffVC/aTccqp0GmQ6Lb8WpPw22G4YejPuIWd6XHHAS4SD4yMA/EJ1UFuRY66FaECp9x96Y4Ex221BPxbQVLUon0EpT45JPrnSA/LyXV6XNmUJilLptryZjkxGRxOnrShTrwyTwNw4GBkq9njOtCUV3SkvgK499gTON849+VXPUli4SmDHCk59Dg9+WfimP0avKPf8AYL9YbtWhTbgZqjUeTTITZaUzGVtSXfkVFQ8nPgY54Gs2+7ZLF3Uxt6nMCnif8nSkFRJUdp445AAB8Z1J9k3JULUueBcFKdQiZCfQ60FJKkkpOcKHGR9jOraeVPuzpnQbmhxqZEXOgIkqjxEgNtOF0lR2g5wpXPvkkE58za5p5sVh9oQkyPQH+MR81J4av0F0NLjMiTv07f4g9Kk+6aNCTWHWpEM95olpzBI5SSP+aNNnqtacFy525JEuO8/EbW8lBABXyknBB87Ro0wtdXYWylRWoGNqOuGWFOqPAOewra/IOv1ajWpaNSp5daapUntNFoEOrdKUr7iVeNu344Hvz50m+vHU17qGYC1NPsRoiFlpp97uudx1W9w5wMJHCUpAwAAPvVKdNrgF0WVIpVVgxqzDQz22Yq2wtaEqwkEHBKcA+f8APGpx67dJnrFr7DkWoioUSSPhL2be2Uj5Nr8gKAxj0cjH1ofQnrcvBp5PC4iYO4pfqtu+ykswDAx2BySD7iZ9RyNKNOcjB/mrr/G2nmm9CbeXGY3vVBTz70juJSGklavauSAUJGxPOVBWPJ1DEZvuyUNAKypQT8Rk8n696uXotBkQ+h9JaqMJ2nyAlSFKUVEONpWrtLCc8Z3ckDB4OTxozxesizAGc8t8EdMwJn2pLozJW5PISBPvNLXrDcE5i95EYyyjstoRynOeM5/ujWR1Tfgpu99xctiaXkJWFJGdg5GzI84x/dGltgw35VuU9BWnhFugcKokdv6rr8dqvPitJebeUVLUAoFRwpOFHacHxn1rC/KC7qvXJlKp8n9dmIiK3KLTDe0LdWCCtXJyQEpA+gNGjR9m2k6ssxvVJ1hR8m2qc/TH6UqrIZafuaIl5AWkKCsHwSCNVH1Gu2syrZltrdbQGpP6zZQjBQyOe2n6TltBx7I0aNSa5m5bB2/eu/DSElKCR+SvhNTvXa5UJc8rccSChIQNqcDA0aNGnDbLYQPtFJ7nULpTyiXDMnrX/9k=)}.ic-spell_shadow_scourgebuild,.io-spell_shadow_scourgebuild,.fi-spell_shadow_scourgebuild{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAYFBwECAwT/xAAuEAACAgEDAwMEAQMFAAAAAAABAgMEBQAREgYhMQcTQRQiUWEVIzKBcaGxs8H/xAAYAQADAQEAAAAAAAAAAAAAAAABAwQAAv/EACQRAAEEAQMDBQAAAAAAAAAAAAEAAgMRBBIhIjFRYUGxwdHw/9oADAMBAAIRAxEAPwBPxsss/VEmHapi6HT1Wi91Y4qkVdZYxArR8pAASPckTkdySAxP40vr0l0NcSxlreQfPSQWEV3gSSGud9xxVdw8sILRj3FMbbnsCDvretUt5XLY3HQtHKl/GUDIkyF4gfpV5EqPkBfjb4307em3pi/VeXmkr2LNaojTRSVpB7icyvBJI5dhzXYNuGAPyCRto4+KZTqb23+7RmnEYpyheoa1fpGljTVpw00MC/V4+KpFDA8sg3H9ZQ8rxqNx9zkkgdwSRpWe1A1l7EHTvT0NuR+cliWo9qVm/JaZyAf8D9DVr9T0Ml0ubPSp9xsRckSlctGpyNhW5NKRw8hzI7bbAKUU99VLka0dDMW8dXe5PUrsprz2IisjRkfaJNhtzHzt57Ht3Gmz44jIaR+KXHNqGoKM6mvx+1ipbkEE9qWjzmk4L9ze9KPA2A2AA8fGjUH6hScXwi8fGMX/ALpdGodPhVX5VmPUvfx9e5iLEsV6tjsakUkHcsGqjdSPDqewKnzp66P6rwdGZEgu4/C9RwCOKw9SFpIp5GYFoe5PEE7LyA7n52HeO6fXF1q+V+ozlKs0aUYIY5pQkhK1FGyJ/cx7eAvz+tK1Kiq+oVJ6cM0NaTH2ms2HqvGpiHHdlDqCQrcW3H4O37uxp3QNFHkfZTTRCQ9Nk4eoWf6Z96vNa6vkyWZRXkaWE8aatvsPdHc+Nl5A7nbv86qjGy5iv77Xb9ppJpTIxNgupG/kHfbY+de/1PqRyVmkVKsU75m19U6gIGYyOqkkD4AGw2/313fC4Ov6cZPJWshJflqvFTrrHC8UCTOvP7A4DSsq9ySFUFk2Ukg6M2USeR39CPlcshAGySeupbUz4iRGck4/Zjx33ImlH/mjTDexhenj1twSxSJA+yzRMrcTNKy7jyOzDzo1GXPs7qoV2SflvUjq+eewtbJ/xodtnNCJYHf9tIo5n/Lf6baYfQzLXI8h1PkZn+rtSYwwtJZJkJV3HLuT87DRo0xgACVZWPUvJ2bOIyfucAXue6xUbfcZCdLmO9TesMfgq2FpZJYalUuYgIlLB3ILuWO5LHYdz+B+NGjWIB6rNNKCyGezd+01q3lbksreWMpH/GjRo0KWsr//2Q==)}.ic-spell_shadow_soulleech_3,.io-spell_shadow_soulleech_3,.fi-spell_shadow_soulleech_3{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwADAQAAAAAAAAAAAAAAAAQGAQUHA//EACsQAAEDAwMCBQQDAAAAAAAAAAECAwQABREGEiExQRMUIlFhByRxkUKB0f/EABgBAQEBAQEAAAAAAAAAAAAAAAYEBQMC/8QAKREAAQIFAgYBBQAAAAAAAAAAAQIDAAQFESESQQYTMVFh8cEkgaHR4f/aAAwDAQACEQMRAD8A4ROXEgWhc9lvIbIQ4kHGFHoa9vpnqUOXmTDlgJiS2Ftb1jJCjgjJHbjFTaIzl5bctTTmxwTFurKgdpGAOce2KrLHpSfpyemTJMVLjTHmW2pCVIS8jg9SOARkA14qNYdZZckuZi5097XFrnexHWOE9VHWmlyYXi5A72uN98jHYRodS22/2+8yVTnHGypzflCvQpJ6FJ9sVstNgTYy3HXd6UHBWocg4ztUfx0NO/VHX51kGH3bVDgONIKEJjowdpx6T2OPfAqCsuoJtsiTIERtopmcKUpOVA9OP3Wjw3VHE2M0LYOOudov4en9KvqRgfrH5i0m6egyHvFXFQ6SBhWeoorFmenS7e2qOhbbTYDY3p5VgDJ/eaKahqXcGvl3v4/kMQ1KrGrR18RIaduSoE1TzoO8KO7Pv81T6s1tcdS3J2U+40p2UERwkJwlCAAEpSOwGKWn2ASlSXI3qRKTvBA4beTyAfhQz/dQqPMMuIUAoFKtwBHXFBavQDLzGtYuc2PfPzg+oF1Sglh0OLF73zt19H1HYHHtN6WmMabumn/FDzH3VxdTuUpxXQt9vDB44/NcvurkZ2SX2WAwredyEnKfgg1u4zMrUshtCbuy446MttyXNgQvunngZ9+hprWsC2W+z2+CpcV69t7vOrjKylKP4JJHBX7kVG2Q2fMSosgxTWS0wJlualRU7mXQFJ2vKGDgZGPzmioG1XGTEieC2+6Eg9Eq4FFMG6q2Ei6IQpqzYSAURU6fkvMlaAvckEjCuewpKFa4UnUBadayhMYKABxzjNFFbU2AthnVnI+Y12jzJVnXnO/3hLW1ng2+e2IiFNpWjeUg8Z5/ypmNlUvwyo4KsfNFFCaohKJlQSLZgtUkJS+sJFsw484Yyg00lO0DPNFFFdATaJwcR//Z)}.ic-spell_shadow_summonimp,.io-spell_shadow_summonimp,.fi-spell_shadow_summonimp{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwEBAQEAAAAAAAAAAAAAAAYHBQgCBP/EAC8QAAEDAwQBAwIEBwAAAAAAAAECAwQFBhEAEiExBxMiQTJRCBUjYRYXcYGRkqH/xAAYAQEAAwEAAAAAAAAAAAAAAAAGAwQHBf/EAC8RAAEDAgQDBQkBAAAAAAAAAAECAxEAIQQFEkEGMVETIjJhgRQ1UnGRobGy0fD/2gAMAwEAAhEDEQA/AES/fDVwtUOJeVPpsSFS6nh5yKiStxUILBOTuOVEjkkHgk6PH0+ZVKvV/wAwuF6nmj05aqW2p4IacfQgbEODpbZGUkde5R7516u/yFWGqqulxJ5VCchRwhoJU4laVDjGSBwBgA4HBPOdffTY0WJJgXJDmJeemxkpaVUYLT6EPpc2OIWOAlSMpUnvgnsHR5xbmkDfbeq2CdabVrxSJQQR5zFNtarHj+tWpbVRtipT4VZb94agArXEGdx9YbT7kqwhJzzkdgZGLL8gzLURRZtPLM2mtLkU8IJKXKgQTvfcWlKlKSVDBJ5PYxxljoSP5WXhGrUZblTptST6b7604Wh8HJ4HAz8DvjA71reW7Dt6+p9CvKhVIQIM8qjy1x0BSWX1HPqFPQWrGwk45CSdQrbb0ntLp3Bvbp/ulR5ephUuIJPw9Zm3n9aTnr8sKqqEuuUaoxppGFppqES2CPulwqQr56UnIxg6NaT1n+MaHspv55XpbjSf1HGUtgFeTnOU9/fRrke05WLJBjy1RSxvC8TrSFJZUQeVh/ah9Jpky5r2iwYuEBqlxWjuIAznaMf7H/uqdbVsoMKTT4z8WSlyU+xNYceUn2sxg6lasZLboQVAKHHtwQQTqbW1c0e0Lvn1Z4Aluhkx0nPufGUNg/tuUCf6am1Or1Xp1TXVIVSkMzXN4ceSvJc3pIXuz2FBRBz99KThlPDnAgRRxuCiDcHaun2nLzFuT5NQWmTR2o5fLNRQj1n0BTYBRt2ndl1opOefjTN4jqgpFRS1LgvxqZVT6E+JKwW8jn1Er+kqAIJ6OOfgHUd8EVu5L0r9egVKXKqDk+KuU+tSd21TWFJwkcJBVjgAchP21YL4veVSLabpLDcdECT+ut1bQX6v07QARj4GuRmL6sOdAGpUib7EG/2q7lOQKzLEpZYUEG5nYREz6VLLylRnrkmObFr3OHCyclQ+FH9yOf76NT+5rueTXZYaUoH1Dv8AUA3bvnvRqJGWPqSFAc62JPEGXYVIYW7JQACQmQYEc5E8ulLN6uqelw3VYCnIqSrHA+tWsE9Zx3o0aWo8ArD2/AKtv4W6jLpP8XT4Lpakt0opbcHaPeDkfvnTv5meW747tupnah6osOuvJQkJQlW8fSB0MjOPuTjGjRoVmXvX1T+taHw0hKcB2gHelYneOzVXOrkVMmXJcccc3B5Q7HP+Ro0aNM0DuihLt3FfM/k1/9k=)}.ic-spell_shadow_summoninfernal,.io-spell_shadow_summoninfernal,.fi-spell_shadow_summoninfernal{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAYHCAUJ/8QAMRAAAQMDAwMCBAQHAAAAAAAAAQIDBAUGEQASIQciMRNBCFGBoRQVMmEWM0JDcXKS/8QAGQEAAgMBAAAAAAAAAAAAAAAABQYCAwQA/8QAKhEAAQMDAwMBCQAAAAAAAAAAAQIDEQAEBRIxQRMhIvAGMmGBkbHB0eH/2gAMAwEAAhEDEQA/AKb0uo7jNLjwyhILbYOE/IfLVWjVOjUSAlVTq1OgtkdqpEpDYP1URrPnWO+risjp9BqNqMN4nLVFeqBSVfhhtBTtB43HnuPjGsk4mVWoIbSp6RIeWe9WVqJPJI+vP76RcLggFG8dO8mP3XNxEivQ6r3r06r2ylpvC35EiQ6GmkJmp71kZCc+AflqYdT+nhFvVBLLIbdCgpS1cEpGe3P1+2s7U6wHXrIlVJbzqGkTENuvKYw2wvgD1j+pCe7GSMZPnVEsnqDetFp38OXnHnz6CEegZf8ANfh+wVu8qbGBweQPBPjWt1thRK2FeST9dqi8xqOqKktQo8ymTnorUyS0ArJDbykgn54B/bRqjX3QzDuWQwpSJGMEOIVkKB8HRo2jIDSJNU9YDitIdG3G6nbzdOqUdEpk4Gx1AUknyBg8caj/AMUvTGhQL5gOWZBTTp8iIuVKjNYQw5tJ7kj+hfao8cHj3OrX0fTHdbakxA4IzfA9RBSr76m3xX1b8t6m0x11Cksi3nyFD+4r1FDA/wAZH/XOhVldqNooNnzHG/repW4Vok1nObe1XioTEkxI0p4JShTs1k+vs28JKgQSnHsc6ePh9cFxdSaJSlU1a4rCVPPp3F5tAbyoK787ATtScec41wLZr0FT8E1KmsS5DiAwp9TYK0pUvwCf04BznVJ6MUeTZN00kUOcmUqvyER5jZj8xmUEr27s+4Pnz26qybzLDDgLelUGDwSAZPwgCRP577u5rtdRaMtV0yHMoUVgKUT5J50adr2iynLgeU3QH5CMDDn4pKc+fYjRpYt8zblpJLg29c0GW2Qo06dI5q6nYlIq7zTLT86I2+6lpO1AUpIJ2jJwNMdz23QrqpK6dcFLjz47iNhDie5IJB7VDuTyB4I8aNGsGLUpu8uAgxBP3NMBA6aail+9DbGoDDVRpSakypJKg0ZO9HH+wJ++u50kpUOQI9Qeb3yIqSttXjuUCkqOPfHGjRqHtNcvLsiVKJ+dVIA6opC6+9U7is2+UUmlRKU6wuE2+VSY6lr3KUsHkKHHA0aNGmrA4THO4xha2UklIkx/aGO++a//2Q==)}</style>
+</head>
+<body>
+<div class="avec-nav">
+<nav class="sommaire"><details open><summary>Sur cette page</summary><ul><li><a href="#s-boss-par-boss">Boss par boss</a></li><li><a href="#s-corriger-en-priorit">À corriger en priorité</a></li><li><a href="#s-rotation">Rotation</a><ul><li class="sous"><a href="#s-synth-se-de-la-soir-e">Synthèse de la soirée</a></li><li class="sous"><a href="#s-d-tail-de-chaque-boss">Détail de chaque boss</a></li></ul></li><li><a href="#s-build-et-stats">Build et stats</a></li><li><a href="#s-quipement">Équipement</a></li><li><a href="#s-progression">Progression</a><ul><li class="sous"><a href="#s-centiles-par-boss">Centiles par boss</a></li><li class="sous"><a href="#s-conseils-du-03-09">Conseils du 03/09</a></li></ul></li><li><a href="#s-m-thode">Méthode</a></li></ul></details></nav>
+<main>
+<p class="badges"><span class="badge">Généré le 25/10/2026 à 20:16</span><span class="badge" title="Commit du code guild_analyser qui a produit cette page">Version b3f96b5</span><span class="badge badge-verif non" title="Pas encore relue par le vérificateur (intégrité des données, anomalies)">Non vérifié</span></p>
+<style>
+  main { max-width: 1100px; }
+  .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 16px 0; }
+  .carte { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .carte .val { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .carte .lib { color: var(--muted); font-size: .85rem; }
+  .prio { list-style: none; padding: 0; margin: 0; counter-reset: p; }
+  .prio > li { counter-increment: p; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+               padding: 14px 16px 12px 56px; margin: 12px 0; position: relative; }
+  .prio > li::before { content: counter(p); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px;
+                       border-radius: 50%; background: var(--accent); color: var(--surface); font-weight: 700;
+                       display: flex; align-items: center; justify-content: center; }
+  .prio h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .gain { float: right; margin-left: 10px; background: var(--row); border: 1px solid var(--border); border-radius: 999px;
+          padding: 2px 10px; font-size: .85rem; font-weight: 600; white-space: nowrap; }
+  .gain.nc { color: var(--muted); font-weight: 400; }
+  .gain.grave { color: var(--bad); border-color: var(--bad); }
+  .gain.ok { border-color: var(--good); }
+  .prio p { margin: 6px 0; }
+  .etiq { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; margin-right: 6px; }
+  pre.macro { background: var(--row); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin: 6px 0;
+              font-size: .88rem; white-space: pre-wrap; }
+  code { background: var(--row); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: .86em;
+         word-break: break-word; }
+  .moments a { margin-right: 4px; white-space: nowrap; display: inline-block; }
+  .boss-chip { display: inline-block; font-size: .8rem; color: var(--muted); border: 1px solid var(--border);
+               border-radius: 999px; padding: 0 8px; margin: 2px 4px 2px 0; }
+  .sort { border-bottom: 1px dotted var(--muted); cursor: help; }
+  .fr { color: var(--muted); }
+  .bandeau { background: color-mix(in srgb, var(--warn) 14%, var(--surface)); border: 1px solid var(--warn);
+             border-radius: 8px; padding: 8px 12px; margin: 8px 0; font-size: .92rem; }
+  .pc { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .gris { --pc: #7d838b; } .vert { --pc: #1b9a1b; } .bleu { --pc: #0070dd; } .violet { --pc: #a335ee; }
+  .orange { --pc: #e07800; } .rose { --pc: #d6559b; } .dore { --pc: #b8942a; }
+  .pc, .pc-t { color: var(--pc, var(--muted)); }
+  .verdict { font-weight: 700; }
+  table.boss-soiree td a, .liens a { white-space: nowrap; }
+  .e-pos { color: var(--good); font-weight: 600; } .e-mid { color: var(--warn); font-weight: 600; }
+  .e-neg { color: var(--bad); font-weight: 600; }
+  .methode .carte p { margin: 4px 0 0; font-size: .92rem; }
+  .methode summary { cursor: pointer; }
+  p.mode { margin: 4px 0 10px; }
+  .refs { display: grid; gap: 10px; margin: 12px 0 16px; }
+  .ref { display: grid; grid-template-columns: minmax(0, 1fr) 11rem; gap: 4px 16px; align-items: center;
+         background: var(--surface); border: 1px solid var(--border); border-left: 6px solid var(--muted);
+         border-radius: 10px; padding: 10px 14px; }
+  .ref.e-bad { border-left-color: var(--bad); } .ref.e-warn { border-left-color: var(--warn); }
+  .ref.e-good { border-left-color: var(--good); } .ref.moi { border-left-color: var(--accent); }
+  .ref .qui { font-size: 1.05rem; } .ref .qui b { font-size: 1.15rem; }
+  .ref .det { color: var(--muted); font-size: .85rem; } .ref .det b { color: var(--text); font-size: inherit; }
+  .ref .ecart { grid-row: span 2; text-align: right; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .ref .ecart .dps { font-size: 1.9rem; font-weight: 800; }
+  .ref .ecart .pc { font-size: 1.05rem; font-weight: 700; }
+  .ref .ecart .lib { color: var(--muted); font-size: .8rem; }
+  .ref.e-bad .ecart .dps, .ref.e-bad .ecart .pc { color: var(--bad); }
+  .ref.e-warn .ecart .dps, .ref.e-warn .ecart .pc { color: var(--warn); }
+  .ref.e-good .ecart .dps, .ref.e-good .ecart .pc { color: var(--good); }
+  .ref .barre { grid-column: 1; position: relative; height: 12px; background: var(--row); border-radius: 0 4px 4px 0; }
+  .ref .barre span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--muted); }
+  .ref.e-bad .barre span { background: var(--bad); } .ref.e-warn .barre span { background: var(--warn); }
+  .ref.e-good .barre span { background: var(--good); } .ref.moi .barre span { background: var(--accent); }
+  .ref .barre i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--text); }
+  .duo { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); column-gap: 0; row-gap: 4px;
+         margin: 8px 0; }
+  .duo-tete { font-weight: 700; padding: 4px 10px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .duo-tete.dm { text-align: right; border-bottom: 3px solid var(--accent); }
+  .duo-tete.dr { border-bottom: 3px solid var(--muted); }
+  .duo-minute { grid-column: 1 / -1; text-align: center; font-weight: 700; color: var(--muted); font-size: .85rem;
+                margin-top: 10px; border-top: 1px solid var(--border); padding-top: 4px; }
+  .duo-phase { grid-column: 1 / -1; text-align: center; font-style: italic; color: var(--muted); font-size: .88rem;
+               background: var(--row); border-radius: 6px; padding: 2px 8px; }
+  .duo-axe { background: linear-gradient(var(--border), var(--border)) center / 2px 100% no-repeat; }
+  .duo-c { padding: 3px 10px; border-radius: 6px; font-size: .92rem; }
+  .duo-c.cd:not(.vide) { background: color-mix(in srgb, var(--c) 12%, var(--surface)); }
+  .duo-c.dm { text-align: right; } .duo-c.dm.cd:not(.vide) { border-right: 4px solid var(--c); }
+  .duo-c.dr.cd:not(.vide) { border-left: 4px solid var(--c); }
+  .duo-c .t { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .85rem; }
+  .duo-c .absent { color: var(--muted); font-style: italic; font-size: .85rem; }
+  .duo-c .pourquoi { display: block; font-size: .85rem; color: var(--warn); }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases .mono { fill: var(--row); stroke: var(--border); } .phases .multi { fill: #eb6834; opacity: .55; }
+  .phases text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  section.boss > summary { font-size: 1.1rem; padding: 4px 0; }
+  section.boss { margin: 10px 0; }
+  details.boss { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px;
+                 margin: 10px 0; }
+  details.boss > summary { font-size: 1.08rem; }
+  .muted { color: var(--muted); }
+  @media (max-width: 600px) { .prio > li { padding-left: 16px; } .prio > li::before { position: static; margin-bottom: 6px; } }
+</style>
+<style>
+  .viz { --s1: #2a78d6; --s2: #eb6834; margin: 10px 0 4px; }
+  @media (prefers-color-scheme: dark) { .viz { --s1: #3987e5; --s2: #d95926; } }
+  .viz svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .viz text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  .viz text.lib { fill: var(--text); }
+  .viz .grille { stroke: var(--border); stroke-width: 1; }
+  .viz .s1 { fill: var(--s1); } .viz .s2 { fill: var(--s2); }
+  .viz .l1 { stroke: var(--s1); } .viz .l2 { stroke: var(--s2); }
+  .viz circle { stroke: var(--surface); stroke-width: 2; }
+  .viz [data-tip]:hover { opacity: .75; }
+  .viz .legende { display: flex; gap: 16px; flex-wrap: wrap; font-size: .88rem; color: var(--muted); margin: 0 0 4px; }
+  .viz .legende i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+  .viz .legende i.trou { border-radius: 2px; opacity: .45; }
+  #infobulle { position: fixed; pointer-events: none; display: none; z-index: 10; background: var(--surface);
+               color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px;
+               font-size: .85rem; box-shadow: 0 2px 8px rgba(0,0,0,.15); white-space: pre; }
+</style>
+<style>
+  .cause { display: flex; height: 10px; border-radius: 3px; overflow: hidden; background: var(--row); margin: 4px 0 2px; max-width: 420px; }
+  .cause span { display: block; height: 100%; }
+  .c-freq { background: #2a78d6; } .c-crit { background: #eb6834; } .c-coup { background: #9a6fd0; } .c-abs { background: #888; }
+  .pastille { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin: 0 4px 0 10px; }
+  .sorts-pourquoi { list-style: none; padding: 0; }
+  .sorts-pourquoi li { border-bottom: 1px solid var(--border); padding: 8px 0; }
+  .sorts-pourquoi .faits { color: var(--muted); font-size: .92rem; }
+  .centile { font-weight: 600; }
+  .c-legendaire { color: #e08a00; } .c-epique { color: #a335ee; } .c-rare { color: #0070dd; }
+  .c-peu { color: #1eaa1e; } .c-commun { color: var(--muted); }
+  .mecanisme { margin: 6px 0 0; padding: 6px 10px; border-left: 3px solid #eb6834; background: var(--row); font-size: .92rem; }
+  section.boss { border-top: 2px solid var(--border); margin-top: 28px; }
+</style>
+<h1>Mon DPS — Orviden</h1>
+<p class="meta"><i class="ic ic-spec ic-spec-WarlockDestruction" title="Destruction Warlock"></i>Démoniste Destruction · ilvl 307 · raid du 09/09/2026 · 9 boss tués, meilleur kill de chacun · <a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk">rapport Warcraft Logs</a> · <a href="https://murlok.io/warlock/destruction/m+" title="Talents, statistiques et équipement des meilleurs joueurs de ta spé en Mythique+ (Murlok)">builds du top M+ (Murlok) ↗</a></p>
+<p class="mode"><span class="etiq">Niveau d'analyse</span><strong>léger</strong> : rotation lue dans le log seulement : ni top mondial, ni joueur équivalent, ni simulation (fiche des PU).</p>
+<p class="note"><strong>Moyennes sur 9 boss</strong> (détail boss par boss juste en dessous)</p>
+<div class="cartes">
+<div class="carte"><div class="val">150 k</div><div class="lib">DPS moyen (pas de top 3 trouvé)</div></div>
+<div class="carte"><div class="val"><span class="pc violet" title="centile 78 : très bon">78</span> <span class="ok" style="font-size:.9rem">+44 depuis le 03/09 (1 boss communs)</span></div><div class="lib"><span class="verdict pc-t violet">très bon</span> · centile moyen (tous ilvl) : tu fais mieux que 78 % des joueurs</div></div>
+<div class="carte"><div class="val"><span class="pc bleu" title="centile 74 : bon">74</span></div><div class="lib"><span class="verdict pc-t bleu">bon</span> · centile moyen à ton ilvl : tu fais mieux que 74 % des joueurs</div></div>
+<div class="carte"><div class="val">≈ 0,0 %</div><div class="lib">à gagner par le jeu (estimé)</div></div>
+<div class="carte"><div class="val muted">—</div><div class="lib">écart à ton potentiel simc (sans simulation)</div></div>
+</div>
+<div class="bandeau"><strong>Spé pas encore vérifiée</strong> : ce rapport repose sur des règles génériques qui n'ont pas encore été contrôlées sur des logs de cette spé (familiers, incantations, ressource, cooldowns propres à la classe). À lire avec prudence.</div>
+
+<h2 id="s-boss-par-boss">Boss par boss</h2>
+<div class="table-wrap">
+<table class="boss-soiree">
+<thead><tr><th>Boss</th><th class="num">Centile</th><th class="num">À ton ilvl</th><th class="num">DPS</th><th class="num">Durée</th><th class="num">Rang</th><th class="num">vs top 3</th><th class="num">vs potentiel simc</th><th class="num">Wipes</th><th>Combat</th></tr></thead>
+<tbody>
+<tr><td><a href="#boss-nymrissa-wavecaller">Nymrissa Wavecaller</a></td><td class="num"><span class="pc violet" title="centile 80 : très bon">80</span></td><td class="num"><span class="pc violet" title="centile 86 : très bon">86</span></td><td class="num">140 k</td><td class="num">6:07</td><td class="num">≈ 2 448 / 12 243</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=1" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/1" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/1/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-nek-zali-the-soulcoiler">Nek&#x27;zali the Soulcoiler</a></td><td class="num"><span class="pc violet" title="centile 87 : très bon">87</span></td><td class="num"><span class="pc violet" title="centile 82 : très bon">82</span></td><td class="num">129 k</td><td class="num">3:57</td><td class="num">≈ 2 791 / 21 476</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=4" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/4" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/4/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-the-lost-explorers">The Lost Explorers</a></td><td class="num"><span class="pc violet" title="centile 75 : très bon">75</span></td><td class="num"><span class="pc bleu" title="centile 69 : bon">69</span></td><td class="num">201 k</td><td class="num">3:24</td><td class="num">≈ 6 426 / 25 704</td><td class="num">—</td><td class="num">—</td><td class="num">3</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=10" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/10" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/10/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-sszorak">Sszorak</a></td><td class="num"><span class="pc violet" title="centile 89 : très bon">89</span></td><td class="num"><span class="pc violet" title="centile 83 : très bon">83</span></td><td class="num">128 k</td><td class="num">4:29</td><td class="num">≈ 2 358 / 21 442</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=13" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/13" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/13/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-entombed-sentinels">Entombed Sentinels</a></td><td class="num"><span class="pc bleu" title="centile 60 : bon">60</span></td><td class="num"><span class="pc bleu" title="centile 53 : bon">53</span></td><td class="num">139 k</td><td class="num">3:54</td><td class="num">≈ 11 844 / 29 611</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=16" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/16" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/16/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-vashnik-the-malignant">Vashnik the Malignant</a></td><td class="num"><span class="pc violet" title="centile 92 : très bon">92</span></td><td class="num"><span class="pc violet" title="centile 90 : très bon">90</span></td><td class="num">148 k</td><td class="num">3:30</td><td class="num">≈ 1 727 / 21 599</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=20" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/20" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/20/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-the-twin-fangs">The Twin Fangs</a></td><td class="num"><span class="pc bleu" title="centile 64 : bon">64</span></td><td class="num"><span class="pc bleu" title="centile 56 : bon">56</span></td><td class="num">170 k</td><td class="num">5:58</td><td class="num">≈ 8 884 / 24 680</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=24" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/24" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/24/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-the-coiled-altar">The Coiled Altar</a></td><td class="num"><span class="pc violet" title="centile 94 : très bon">94</span></td><td class="num"><span class="pc violet" title="centile 94 : très bon">94</span></td><td class="num">172 k</td><td class="num">4:35</td><td class="num">≈ 1 077 / 17 960</td><td class="num">—</td><td class="num">—</td><td class="num">3</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=31" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/31" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/31/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-ula-tek">Ula&#x27;tek</a></td><td class="num"><span class="pc bleu" title="centile 61 : bon">61</span></td><td class="num"><span class="pc bleu" title="centile 57 : bon">57</span></td><td class="num">122 k</td><td class="num">5:03</td><td class="num">≈ 7 410 / 19 000</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=32" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/32" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/32/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Centiles aux couleurs de Warcraft Logs : gris sous 25, vert 25 à 49, bleu 50 à 74, violet 75 à 94, orange 95 à 98, rose 99, doré 100. Écarts : en vert au-dessus de la référence, en orange jusqu'à 15 % en dessous, en rouge au-delà ; face au top 3, un écart de 30 à 40 % reste courant. Pas d'écart à l'équivalent ici : il est choisi pour faire environ 25 % de plus que toi, son écart vaut donc toujours environ −20 % (il sert à comparer la rotation, dans le détail de chaque boss). Le nom du boss mène à son détail ; « Logs », « Wipefest » et « Analyzer » ouvrent le combat sur warcraftlogs.com, ses mécaniques sur wipefest.gg et ton analyse sur wowanalyzer.com.</p>
+<h2 id="s-corriger-en-priorit">À corriger en priorité</h2>
+<ol class="prio"><li><span class="gain nc">gain non chiffré</span><h3><i class="ic ic-spell_shadow_summoninfernal"></i>Potion hors de Summon Infernal</h3><span class="boss-chip">Nymrissa Wavecaller</span><span class="boss-chip">Sszorak</span><span class="boss-chip">The Coiled Altar</span><span class="boss-chip">Ula&#x27;tek</span><p><span class="etiq">Cause</span>1 sur 2 hors de Summon Infernal (Invocation : infernal).</p><p><span class="etiq">Conseil</span>Boire la potion au début de Summon Infernal.</p><p class="note"><span class="etiq">Preuve</span>Règle vérifiée lancer par lancer sur le log : 1 faute sur 2 occasions.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=1&amp;type=casts&amp;source=4&amp;start=616344&amp;end=626344">Nymrissa Wavecaller 5:44</a> <a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=13&amp;type=casts&amp;source=4&amp;start=2437225&amp;end=2447225">Sszorak 0:00</a> <a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=31&amp;type=casts&amp;source=4&amp;start=5856106&amp;end=5866106">The Coiled Altar 0:00</a> <a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=32&amp;type=casts&amp;source=4&amp;start=6380273&amp;end=6390273">Ula&#x27;tek 0:00</a> </p></li><li><span class="gain nc">gain non chiffré</span><h3><i class="ic ic-spell_shadow_summoninfernal"></i>Bijou hors de Summon Infernal</h3><span class="boss-chip">Nek&#x27;zali the Soulcoiler</span><span class="boss-chip">The Lost Explorers</span><span class="boss-chip">Sszorak</span><span class="boss-chip">Entombed Sentinels</span><span class="boss-chip">Vashnik the Malignant</span><span class="boss-chip">The Twin Fangs</span><span class="boss-chip">The Coiled Altar</span><span class="boss-chip">Ula&#x27;tek</span><p><span class="etiq">Cause</span>1 sur 1 hors de Summon Infernal (Invocation : infernal).</p><p><span class="etiq">Conseil</span>Activer le bijou au début de Summon Infernal : leurs bonus se multiplient.</p><pre class="macro">#showtooltip
+/use 13
+/use 14
+/cast Invocation : infernal</pre><p><span class="etiq">Affichage</span>Macro qui colle les bijoux au gros cooldown (les bijoux sans effet à activer sont ignorés).</p><p class="note"><span class="etiq">Preuve</span>Règle vérifiée lancer par lancer sur le log : 1 faute sur 1 occasion.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=4&amp;type=casts&amp;source=4&amp;start=1218957&amp;end=1228957">Nek&#x27;zali the Soulcoiler 1:29</a> <a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=10&amp;type=casts&amp;source=4&amp;start=2049456&amp;end=2059456">The Lost Explorers 2:09</a> <a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=13&amp;type=casts&amp;source=4&amp;start=2481835&amp;end=2491835">Sszorak 0:47</a> <a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=13&amp;type=casts&amp;source=4&amp;start=2680955&amp;end=2690955">Sszorak 4:06</a> <a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=16&amp;type=casts&amp;source=4&amp;start=3352306&amp;end=3362306">Entombed Sentinels 3:38</a> <a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=20&amp;type=casts&amp;source=4&amp;start=3832725&amp;end=3842725">Vashnik the Malignant 1:59</a> <a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=24&amp;type=casts&amp;source=4&amp;start=4253490&amp;end=4263490">The Twin Fangs 1:04</a> <a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=24&amp;type=casts&amp;source=4&amp;start=4440090&amp;end=4450090">The Twin Fangs 4:10</a> </p></li></ol>
+
+<h2 id="s-rotation">Rotation</h2>
+<h3 id="s-synth-se-de-la-soir-e">Synthèse de la soirée</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">DPS</th><th class="num">vs équivalent</th><th class="num">vs top 3</th><th class="num">Multicible</th><th class="num">Cooldowns manqués</th><th class="num">vs potentiel simc</th></tr></thead>
+<tbody>
+<tr><td>Nymrissa Wavecaller</td><td class="num">140 k</td><td class="num">—</td><td class="num">—</td><td class="num">36 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Nek&#x27;zali the Soulcoiler</td><td class="num">129 k</td><td class="num">—</td><td class="num">—</td><td class="num">20 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>The Lost Explorers</td><td class="num">201 k</td><td class="num">—</td><td class="num">—</td><td class="num">93 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Sszorak</td><td class="num">128 k</td><td class="num">—</td><td class="num">—</td><td class="num">0 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Entombed Sentinels</td><td class="num">139 k</td><td class="num">—</td><td class="num">—</td><td class="num">16 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Vashnik the Malignant</td><td class="num">148 k</td><td class="num">—</td><td class="num">—</td><td class="num">10 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>The Twin Fangs</td><td class="num">170 k</td><td class="num">—</td><td class="num">—</td><td class="num">11 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>The Coiled Altar</td><td class="num">172 k</td><td class="num">—</td><td class="num">—</td><td class="num">0 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Ula&#x27;tek</td><td class="num">122 k</td><td class="num">—</td><td class="num">—</td><td class="num">16 %</td><td class="num">0</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+
+<p class="note">Potentiel simc : ton équipement simulé avec une rotation parfaite, à la durée du kill, chaque phase au nombre d'ennemis qu'elle a en moyenne (1, 2, ou 3 et plus). Un vrai combat (déplacements, phases, cibles qui changent) reste en dessous : l'écart sert surtout à comparer les boss entre eux et d'une soirée à l'autre.</p>
+<h3 id="s-d-tail-de-chaque-boss">Détail de chaque boss</h3>
+<details class="boss" id="boss-nymrissa-wavecaller"><summary><strong>Nymrissa Wavecaller</strong> · 140 k · — face à l'équivalent · 36 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=1" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/1" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/1/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Orviden</b> (toi) <span class="det">· 140 k</span><div class="det"><b>rang ≈ 2 448</b> / 12 243 · centile 80 (86 à ton ilvl)</div></div><div class="ecart"><div class="dps">140 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>Power Infusion 4 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="66.9" height="18"><title>Monocible : 0:00 → 0:33 (1,1 ennemis)</title></rect><rect class="multi" x="266.9" y="4" width="42.6" height="18"><title>Multicible : 0:33 → 0:54 (4,6 ennemis)</title></rect><rect class="mono" x="309.4" y="4" width="40.5" height="18"><title>Monocible : 0:54 → 1:14 (1,3 ennemis)</title></rect><rect class="multi" x="350.0" y="4" width="50.7" height="18"><title>Multicible : 1:14 → 1:39 (6,2 ennemis)</title></rect><rect class="mono" x="400.6" y="4" width="81.1" height="18"><title>Monocible : 1:39 → 2:19 (1,1 ennemis)</title></rect><rect class="multi" x="481.7" y="4" width="50.7" height="18"><title>Multicible : 2:19 → 2:44 (4,0 ennemis)</title></rect><rect class="mono" x="532.3" y="4" width="36.5" height="18"><title>Monocible : 2:44 → 3:02 (1,1 ennemis)</title></rect><rect class="multi" x="568.8" y="4" width="50.7" height="18"><title>Multicible : 3:02 → 3:27 (4,6 ennemis)</title></rect><rect class="mono" x="619.5" y="4" width="95.2" height="18"><title>Monocible : 3:27 → 4:14 (1,2 ennemis)</title></rect><rect class="multi" x="714.7" y="4" width="30.4" height="18"><title>Multicible : 4:14 → 4:29 (5,5 ennemis)</title></rect><rect class="mono" x="745.1" y="4" width="56.7" height="18"><title>Monocible : 4:29 → 4:57 (1,2 ennemis)</title></rect><rect class="multi" x="801.9" y="4" width="44.6" height="18"><title>Multicible : 4:57 → 5:19 (5,6 ennemis)</title></rect><rect class="mono" x="846.4" y="4" width="97.6" height="18"><title>Monocible : 5:19 → 6:07 (1,2 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Summon Infernal</td><td class="num">0 / 3</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Summon Infernal</td><td class="num">1 / 2</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(234 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée Niveau 16 requis Mord l’ennemi et lui inflige ([30% of Spell Power]) points de dégâts d’Ombre. (Clic droit pour activer / désactiver)"><i class="ic ic-spell_shadow_soulleech_3"></i>Shadow Bite <span class="fr">(Morsure de l&#x27;ombre)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="1.5 s d&#x27;incantation Requiert Démoniste Brûle l’ennemi, ce qui lui inflige ([93.5505% of Spell Power]) points de dégâts de Feu immédiatement puis ([350.814% of Spell Power]) supplémentaires en 18 s. Les dégâts périodiques génèrent 1 fragment d’éclat d’âme et ont 50% de chances d’en générer 1 de plus en cas de coup critique."><i class="ic ic-spell_fire_immolation"></i>Immolate <span class="fr">(Immolation)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Génère 1 fragment d’éclat d’âme toutes les 1 s et lance Trait du chaos sur la cible à 80 % d’efficacité. Dure 8 s."><i class="ic ic-spell_fire_felcano"></i>Summon Overfiend <span class="fr">(Invocation d’ennemi supérieur)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous déversez un torrent de venin corrosif qui inflige ( 14670 * 1 / 0.200000003) points de dégâts de nature à votre cible. Les dégâts sont augmentés de 1 % par tranche de 1 % de points de vie restants de votre adversaire. Vous convertissez les fluides vitaux des cibles adverses que vous avez terrassées en venin supplémentaire, qui réduit ce temps de recharge de 5 s."><i class="ic ic-inv_11_0_misc_organmass_color3"></i>Vexhul&#x27;s Everflowing Gland <span class="fr">(Glande ruisselante de Vexhul)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous lancez une braise déchiquetée provenant de Nihilam sur la cible, ce qui inflige ([187.5% of Spell Power]) points de dégâts d’ombreflamme et ([162.5% of Spell Power]) points de dégâts d’ombreflamme supplémentaires à tous les personnages adverses à moins de 10 m. Les dégâts sont réduits au-delà de 8 cibles."><i class="ic ic-inv_shadowflame_missile"></i>Echo of Sargeras <span class="fr">(Écho de Sargeras)</span></span></td><td class="num">7 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 2 min de recharge Requiert Démoniste Invoque du Néant distordu un infernal qui inflige ([60% of Spell Power]) points de dégâts de Feu et étourdit les ennemis dans la zone pendant 2 s. L’infernal reste à votre service pendant 30 s. Il inflige [([55% of Spell Power]) * (105) / 100] points de dégâts aux ennemis proches toutes les 2 s et génère 1 fragment d’éclat d’âme toutes les 1 s."><i class="ic ic-spell_shadow_summoninfernal"></i>Summon Infernal <span class="fr">(Invocation : infernal)</span></span></td><td class="num">7 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(133 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée 2 min de recharge Requiert Démoniste Invoque du Néant distordu un infernal qui inflige ([60% of Spell Power]) points de dégâts de Feu et étourdit les ennemis dans la zone pendant 2 s. L’infernal reste à votre service pendant 30 s. Il inflige [([55% of Spell Power]) * (105) / 100] points de dégâts aux ennemis proches toutes les 2 s et génère 1 fragment d’éclat d’âme toutes les 1 s."><i class="ic ic-spell_shadow_summoninfernal"></i>Summon Infernal <span class="fr">(Invocation : infernal)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="1.5 s d&#x27;incantation Requiert Démoniste Brûle l’ennemi, ce qui lui inflige ([93.5505% of Spell Power]) points de dégâts de Feu immédiatement puis ([350.814% of Spell Power]) supplémentaires en 18 s. Les dégâts périodiques génèrent 1 fragment d’éclat d’âme et ont 50% de chances d’en générer 1 de plus en cas de coup critique."><i class="ic ic-spell_fire_immolation"></i>Immolate <span class="fr">(Immolation)</span></span></td><td class="num">8 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-nek-zali-the-soulcoiler"><summary><strong>Nek&#x27;zali the Soulcoiler</strong> · 129 k · — face à l'équivalent · 20 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=4" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/4" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/4/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Orviden</b> (toi) <span class="det">· 129 k</span><div class="det"><b>rang ≈ 2 791</b> / 21 476 · centile 87 (82 à ton ilvl)</div></div><div class="ecart"><div class="dps">129 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>Power Infusion 6 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="188.0" height="18"><title>Monocible : 0:00 → 1:00 (1,0 ennemis)</title></rect><rect class="multi" x="388.0" y="4" width="50.1" height="18"><title>Multicible : 1:00 → 1:16 (4,8 ennemis)</title></rect><rect class="mono" x="438.1" y="4" width="184.8" height="18"><title>Monocible : 1:16 → 2:15 (1,1 ennemis)</title></rect><rect class="multi" x="622.9" y="4" width="37.6" height="18"><title>Multicible : 2:15 → 2:27 (4,0 ennemis)</title></rect><rect class="mono" x="660.5" y="4" width="162.9" height="18"><title>Monocible : 2:27 → 3:19 (1,1 ennemis)</title></rect><rect class="multi" x="823.4" y="4" width="62.7" height="18"><title>Multicible : 3:19 → 3:39 (5,2 ennemis)</title></rect><rect class="mono" x="886.0" y="4" width="58.0" height="18"><title>Monocible : 3:39 → 3:57 (1,1 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Summon Infernal</td><td class="num">1 / 1</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Summon Infernal</td><td class="num">0 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(190 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée Niveau 16 requis Mord l’ennemi et lui inflige ([30% of Spell Power]) points de dégâts d’Ombre. (Clic droit pour activer / désactiver)"><i class="ic ic-spell_shadow_soulleech_3"></i>Shadow Bite <span class="fr">(Morsure de l&#x27;ombre)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="1.5 s d&#x27;incantation Requiert Démoniste Brûle l’ennemi, ce qui lui inflige ([93.5505% of Spell Power]) points de dégâts de Feu immédiatement puis ([350.814% of Spell Power]) supplémentaires en 18 s. Les dégâts périodiques génèrent 1 fragment d’éclat d’âme et ont 50% de chances d’en générer 1 de plus en cas de coup critique."><i class="ic ic-spell_fire_immolation"></i>Immolate <span class="fr">(Immolation)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Génère 1 fragment d’éclat d’âme toutes les 1 s et lance Trait du chaos sur la cible à 80 % d’efficacité. Dure 8 s."><i class="ic ic-spell_fire_felcano"></i>Summon Overfiend <span class="fr">(Invocation d’ennemi supérieur)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous déversez un torrent de venin corrosif qui inflige ( 14670 * 1 / 0.200000003) points de dégâts de nature à votre cible. Les dégâts sont augmentés de 1 % par tranche de 1 % de points de vie restants de votre adversaire. Vous convertissez les fluides vitaux des cibles adverses que vous avez terrassées en venin supplémentaire, qui réduit ce temps de recharge de 5 s."><i class="ic ic-inv_11_0_misc_organmass_color3"></i>Vexhul&#x27;s Everflowing Gland <span class="fr">(Glande ruisselante de Vexhul)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 2 min de recharge Requiert Démoniste Invoque du Néant distordu un infernal qui inflige ([60% of Spell Power]) points de dégâts de Feu et étourdit les ennemis dans la zone pendant 2 s. L’infernal reste à votre service pendant 30 s. Il inflige [([55% of Spell Power]) * (105) / 100] points de dégâts aux ennemis proches toutes les 2 s et génère 1 fragment d’éclat d’âme toutes les 1 s."><i class="ic ic-spell_shadow_summoninfernal"></i>Summon Infernal <span class="fr">(Invocation : infernal)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous lancez une braise déchiquetée provenant de Nihilam sur la cible, ce qui inflige ([187.5% of Spell Power]) points de dégâts d’ombreflamme et ([162.5% of Spell Power]) points de dégâts d’ombreflamme supplémentaires à tous les personnages adverses à moins de 10 m. Les dégâts sont réduits au-delà de 8 cibles."><i class="ic ic-inv_shadowflame_missile"></i>Echo of Sargeras <span class="fr">(Écho de Sargeras)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="3 s d&#x27;incantation 45 s de recharge Requiert Démoniste Niveau 15 requis Vous brûlez l’âme de l’adversaire, ce qui lui inflige ([3867.4% of Spell Power]) points de dégâts de feu et lui applique Immolation . Génère 1 éclat d’âme."><i class="ic ic-spell_fire_firebolt"></i>Soul Fire <span class="fr">(Feu de l’âme)</span></span></td><td class="num">9 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(48 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée 2 min de recharge Requiert Démoniste Invoque du Néant distordu un infernal qui inflige ([60% of Spell Power]) points de dégâts de Feu et étourdit les ennemis dans la zone pendant 2 s. L’infernal reste à votre service pendant 30 s. Il inflige [([55% of Spell Power]) * (105) / 100] points de dégâts aux ennemis proches toutes les 2 s et génère 1 fragment d’éclat d’âme toutes les 1 s."><i class="ic ic-spell_shadow_summoninfernal"></i>Summon Infernal <span class="fr">(Invocation : infernal)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous lancez une braise déchiquetée provenant de Nihilam sur la cible, ce qui inflige ([187.5% of Spell Power]) points de dégâts d’ombreflamme et ([162.5% of Spell Power]) points de dégâts d’ombreflamme supplémentaires à tous les personnages adverses à moins de 10 m. Les dégâts sont réduits au-delà de 8 cibles."><i class="ic ic-inv_shadowflame_missile"></i>Echo of Sargeras <span class="fr">(Écho de Sargeras)</span></span></td><td class="num">10 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2 s d&#x27;incantation Requiert Démoniste Niveau 10 requis Attire sur l’ennemi des flammes qui lui infligent ([438.084% of Spell Power]) points de dégâts de feu. Génère 2 fragments d’éclats d’âme, plus 1 en cas de coup critique."><i class="ic ic-spell_fire_burnout"></i>Incinerate <span class="fr">(Incinérer)</span></span></td><td class="num">11 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-the-lost-explorers"><summary><strong>The Lost Explorers</strong> · 201 k · — face à l'équivalent · 93 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=10" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/10" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/10/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Orviden</b> (toi) <span class="det">· 201 k</span><div class="det"><b>rang ≈ 6 426</b> / 25 704 · centile 75 (69 à ton ilvl)</div></div><div class="ecart"><div class="dps">201 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="multi" x="200.0" y="4" width="692.5" height="18"><title>Multicible : 0:00 → 3:10 (3,0 ennemis)</title></rect><rect class="mono" x="892.5" y="4" width="51.5" height="18"><title>Monocible : 3:10 → 3:24 (1,9 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Summon Infernal</td><td class="num">1 / 2</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Summon Infernal</td><td class="num">0 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(14 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée Niveau 16 requis Mord l’ennemi et lui inflige ([30% of Spell Power]) points de dégâts d’Ombre. (Clic droit pour activer / désactiver)"><i class="ic ic-spell_shadow_soulleech_3"></i>Shadow Bite <span class="fr">(Morsure de l&#x27;ombre)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 2 min de recharge Requiert Démoniste Invoque du Néant distordu un infernal qui inflige ([60% of Spell Power]) points de dégâts de Feu et étourdit les ennemis dans la zone pendant 2 s. L’infernal reste à votre service pendant 30 s. Il inflige [([55% of Spell Power]) * (105) / 100] points de dégâts aux ennemis proches toutes les 2 s et génère 1 fragment d’éclat d’âme toutes les 1 s."><i class="ic ic-spell_shadow_summoninfernal"></i>Summon Infernal <span class="fr">(Invocation : infernal)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="1.5 s d&#x27;incantation Requiert Démoniste Brûle l’ennemi, ce qui lui inflige ([93.5505% of Spell Power]) points de dégâts de Feu immédiatement puis ([350.814% of Spell Power]) supplémentaires en 18 s. Les dégâts périodiques génèrent 1 fragment d’éclat d’âme et ont 50% de chances d’en générer 1 de plus en cas de coup critique."><i class="ic ic-spell_fire_immolation"></i>Immolate <span class="fr">(Immolation)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="3 s d&#x27;incantation Requiert Démoniste Déchaîne une explosion chaotique qui inflige [2 * ([429.049% of Spell Power])] points de dégâts du Chaos. Vos chances de coup critique augmentent ses dégâts."><i class="ic ic-ability_warlock_chaosbolt"></i>Chaos Bolt <span class="fr">(Trait du chaos)</span></span></td><td class="num">10 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 12.96 s de recharge 2 Charges Requiert Démoniste Provoque au niveau de la cible une explosion infligeant ([359.309% of Spell Power]) points de dégâts de Feu. [ Retour de flamme : Réduit le temps d’incantation de votre prochain sort Incinérer ou Trait du chaos de 30% pendant 10 s ] Génère 5 fragments d’éclat d’âme."><i class="ic ic-spell_fire_fireball"></i>Conflagrate <span class="fr">(Conflagration)</span></span></td><td class="num">11 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(190 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée Niveau 16 requis Mord l’ennemi et lui inflige ([30% of Spell Power]) points de dégâts d’Ombre. (Clic droit pour activer / désactiver)"><i class="ic ic-spell_shadow_soulleech_3"></i>Shadow Bite <span class="fr">(Morsure de l&#x27;ombre)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Génère 1 fragment d’éclat d’âme toutes les 1 s et lance Trait du chaos sur la cible à 80 % d’efficacité. Dure 8 s."><i class="ic ic-spell_fire_felcano"></i>Summon Overfiend <span class="fr">(Invocation d’ennemi supérieur)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous déversez un torrent de venin corrosif qui inflige ( 14670 * 1 / 0.200000003) points de dégâts de nature à votre cible. Les dégâts sont augmentés de 1 % par tranche de 1 % de points de vie restants de votre adversaire. Vous convertissez les fluides vitaux des cibles adverses que vous avez terrassées en venin supplémentaire, qui réduit ce temps de recharge de 5 s."><i class="ic ic-inv_11_0_misc_organmass_color3"></i>Vexhul&#x27;s Everflowing Gland <span class="fr">(Glande ruisselante de Vexhul)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="3 s d&#x27;incantation 45 s de recharge Requiert Démoniste Niveau 15 requis Vous brûlez l’âme de l’adversaire, ce qui lui inflige ([3867.4% of Spell Power]) points de dégâts de feu et lui applique Immolation . Génère 1 éclat d’âme."><i class="ic ic-spell_fire_firebolt"></i>Soul Fire <span class="fr">(Feu de l’âme)</span></span></td><td class="num">9 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="1.5 s d&#x27;incantation Requiert Démoniste Brûle l’ennemi, ce qui lui inflige ([93.5505% of Spell Power]) points de dégâts de Feu immédiatement puis ([350.814% of Spell Power]) supplémentaires en 18 s. Les dégâts périodiques génèrent 1 fragment d’éclat d’âme et ont 50% de chances d’en générer 1 de plus en cas de coup critique."><i class="ic ic-spell_fire_immolation"></i>Immolate <span class="fr">(Immolation)</span></span></td><td class="num">12 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 2 min de recharge Requiert Démoniste Invoque du Néant distordu un infernal qui inflige ([60% of Spell Power]) points de dégâts de Feu et étourdit les ennemis dans la zone pendant 2 s. L’infernal reste à votre service pendant 30 s. Il inflige [([55% of Spell Power]) * (105) / 100] points de dégâts aux ennemis proches toutes les 2 s et génère 1 fragment d’éclat d’âme toutes les 1 s."><i class="ic ic-spell_shadow_summoninfernal"></i>Summon Infernal <span class="fr">(Invocation : infernal)</span></span></td><td class="num">13 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 12.96 s de recharge 2 Charges Requiert Démoniste Provoque au niveau de la cible une explosion infligeant ([359.309% of Spell Power]) points de dégâts de Feu. [ Retour de flamme : Réduit le temps d’incantation de votre prochain sort Incinérer ou Trait du chaos de 30% pendant 10 s ] Génère 5 fragments d’éclat d’âme."><i class="ic ic-spell_fire_fireball"></i>Conflagrate <span class="fr">(Conflagration)</span></span></td><td class="num">14 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-sszorak"><summary><strong>Sszorak</strong> · 128 k · — face à l'équivalent · 0 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=13" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/13" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/13/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Orviden</b> (toi) <span class="det">· 128 k</span><div class="det"><b>rang ≈ 2 358</b> / 21 442 · centile 89 (83 à ton ilvl)</div></div><div class="ecart"><div class="dps">128 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="744.0" height="18"><title>Monocible : 0:00 → 4:29 (1,0 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Summon Infernal</td><td class="num">2 / 3</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Summon Infernal</td><td class="num">1 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(269 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée 2 min de recharge Requiert Démoniste Invoque du Néant distordu un infernal qui inflige ([60% of Spell Power]) points de dégâts de Feu et étourdit les ennemis dans la zone pendant 2 s. L’infernal reste à votre service pendant 30 s. Il inflige [([55% of Spell Power]) * (105) / 100] points de dégâts aux ennemis proches toutes les 2 s et génère 1 fragment d’éclat d’âme toutes les 1 s."><i class="ic ic-spell_shadow_summoninfernal"></i>Summon Infernal <span class="fr">(Invocation : infernal)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Génère 1 fragment d’éclat d’âme toutes les 1 s et lance Trait du chaos sur la cible à 80 % d’efficacité. Dure 8 s."><i class="ic ic-spell_fire_felcano"></i>Summon Overfiend <span class="fr">(Invocation d’ennemi supérieur)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="1.5 s d&#x27;incantation Requiert Démoniste Brûle l’ennemi, ce qui lui inflige ([93.5505% of Spell Power]) points de dégâts de Feu immédiatement puis ([350.814% of Spell Power]) supplémentaires en 18 s. Les dégâts périodiques génèrent 1 fragment d’éclat d’âme et ont 50% de chances d’en générer 1 de plus en cas de coup critique."><i class="ic ic-spell_fire_immolation"></i>Immolate <span class="fr">(Immolation)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous déversez un torrent de venin corrosif qui inflige ( 14670 * 1 / 0.200000003) points de dégâts de nature à votre cible. Les dégâts sont augmentés de 1 % par tranche de 1 % de points de vie restants de votre adversaire. Vous convertissez les fluides vitaux des cibles adverses que vous avez terrassées en venin supplémentaire, qui réduit ce temps de recharge de 5 s."><i class="ic ic-inv_11_0_misc_organmass_color3"></i>Vexhul&#x27;s Everflowing Gland <span class="fr">(Glande ruisselante de Vexhul)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Invoque à votre service un diablotin qui lance des éclairs de feu.">Familier : <i class="ic ic-spell_shadow_summonimp"></i>Summon Imp <span class="fr">(Invocation de diablotin)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous lancez une braise déchiquetée provenant de Nihilam sur la cible, ce qui inflige ([187.5% of Spell Power]) points de dégâts d’ombreflamme et ([162.5% of Spell Power]) points de dégâts d’ombreflamme supplémentaires à tous les personnages adverses à moins de 10 m. Les dégâts sont réduits au-delà de 8 cibles."><i class="ic ic-inv_shadowflame_missile"></i>Echo of Sargeras <span class="fr">(Écho de Sargeras)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-entombed-sentinels"><summary><strong>Entombed Sentinels</strong> · 139 k · — face à l'équivalent · 16 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=16" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/16" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/16/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Orviden</b> (toi) <span class="det">· 139 k</span><div class="det"><b>rang ≈ 11 844</b> / 29 611 · centile 60 (53 à ton ilvl)</div></div><div class="ecart"><div class="dps">139 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>Power Infusion 13 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="244.0" height="18"><title>Monocible : 0:00 → 1:17 (2,1 ennemis)</title></rect><rect class="multi" x="444.0" y="4" width="44.4" height="18"><title>Multicible : 1:17 → 1:31 (3,0 ennemis)</title></rect><rect class="mono" x="488.4" y="4" width="117.3" height="18"><title>Monocible : 1:31 → 2:08 (2,0 ennemis)</title></rect><rect class="multi" x="605.7" y="4" width="34.9" height="18"><title>Multicible : 2:08 → 2:19 (3,0 ennemis)</title></rect><rect class="mono" x="640.5" y="4" width="123.6" height="18"><title>Monocible : 2:19 → 2:58 (2,0 ennemis)</title></rect><rect class="multi" x="764.1" y="4" width="41.2" height="18"><title>Multicible : 2:58 → 3:11 (3,0 ennemis)</title></rect><rect class="mono" x="805.3" y="4" width="138.7" height="18"><title>Monocible : 3:11 → 3:54 (1,9 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Summon Infernal</td><td class="num">1 / 3</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Summon Infernal</td><td class="num">0 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(197 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Génère 1 fragment d’éclat d’âme toutes les 1 s et lance Trait du chaos sur la cible à 80 % d’efficacité. Dure 8 s."><i class="ic ic-spell_fire_felcano"></i>Summon Overfiend <span class="fr">(Invocation d’ennemi supérieur)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 2 min de recharge Requiert Démoniste Invoque du Néant distordu un infernal qui inflige ([60% of Spell Power]) points de dégâts de Feu et étourdit les ennemis dans la zone pendant 2 s. L’infernal reste à votre service pendant 30 s. Il inflige [([55% of Spell Power]) * (105) / 100] points de dégâts aux ennemis proches toutes les 2 s et génère 1 fragment d’éclat d’âme toutes les 1 s."><i class="ic ic-spell_shadow_summoninfernal"></i>Summon Infernal <span class="fr">(Invocation : infernal)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Invoque à votre service un diablotin qui lance des éclairs de feu.">Familier : <i class="ic ic-spell_shadow_summonimp"></i>Summon Imp <span class="fr">(Invocation de diablotin)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous déversez un torrent de venin corrosif qui inflige ( 14670 * 1 / 0.200000003) points de dégâts de nature à votre cible. Les dégâts sont augmentés de 1 % par tranche de 1 % de points de vie restants de votre adversaire. Vous convertissez les fluides vitaux des cibles adverses que vous avez terrassées en venin supplémentaire, qui réduit ce temps de recharge de 5 s."><i class="ic ic-inv_11_0_misc_organmass_color3"></i>Vexhul&#x27;s Everflowing Gland <span class="fr">(Glande ruisselante de Vexhul)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="1.5 s d&#x27;incantation Requiert Démoniste Brûle l’ennemi, ce qui lui inflige ([93.5505% of Spell Power]) points de dégâts de Feu immédiatement puis ([350.814% of Spell Power]) supplémentaires en 18 s. Les dégâts périodiques génèrent 1 fragment d’éclat d’âme et ont 50% de chances d’en générer 1 de plus en cas de coup critique."><i class="ic ic-spell_fire_immolation"></i>Immolate <span class="fr">(Immolation)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="3 s d&#x27;incantation 45 s de recharge Requiert Démoniste Niveau 15 requis Vous brûlez l’âme de l’adversaire, ce qui lui inflige ([3867.4% of Spell Power]) points de dégâts de feu et lui applique Immolation . Génère 1 éclat d’âme."><i class="ic ic-spell_fire_firebolt"></i>Soul Fire <span class="fr">(Feu de l’âme)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous lancez une braise déchiquetée provenant de Nihilam sur la cible, ce qui inflige ([187.5% of Spell Power]) points de dégâts d’ombreflamme et ([162.5% of Spell Power]) points de dégâts d’ombreflamme supplémentaires à tous les personnages adverses à moins de 10 m. Les dégâts sont réduits au-delà de 8 cibles."><i class="ic ic-inv_shadowflame_missile"></i>Echo of Sargeras <span class="fr">(Écho de Sargeras)</span></span></td><td class="num">8 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(38 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée 2 min de recharge Requiert Démoniste Invoque du Néant distordu un infernal qui inflige ([60% of Spell Power]) points de dégâts de Feu et étourdit les ennemis dans la zone pendant 2 s. L’infernal reste à votre service pendant 30 s. Il inflige [([55% of Spell Power]) * (105) / 100] points de dégâts aux ennemis proches toutes les 2 s et génère 1 fragment d’éclat d’âme toutes les 1 s."><i class="ic ic-spell_shadow_summoninfernal"></i>Summon Infernal <span class="fr">(Invocation : infernal)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Invoque à votre service un diablotin qui lance des éclairs de feu.">Familier : <i class="ic ic-spell_shadow_summonimp"></i>Summon Imp <span class="fr">(Invocation de diablotin)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="1.5 s d&#x27;incantation Requiert Démoniste Brûle l’ennemi, ce qui lui inflige ([93.5505% of Spell Power]) points de dégâts de Feu immédiatement puis ([350.814% of Spell Power]) supplémentaires en 18 s. Les dégâts périodiques génèrent 1 fragment d’éclat d’âme et ont 50% de chances d’en générer 1 de plus en cas de coup critique."><i class="ic ic-spell_fire_immolation"></i>Immolate <span class="fr">(Immolation)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous lancez une braise déchiquetée provenant de Nihilam sur la cible, ce qui inflige ([187.5% of Spell Power]) points de dégâts d’ombreflamme et ([162.5% of Spell Power]) points de dégâts d’ombreflamme supplémentaires à tous les personnages adverses à moins de 10 m. Les dégâts sont réduits au-delà de 8 cibles."><i class="ic ic-inv_shadowflame_missile"></i>Echo of Sargeras <span class="fr">(Écho de Sargeras)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-vashnik-the-malignant"><summary><strong>Vashnik the Malignant</strong> · 148 k · — face à l'équivalent · 10 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=20" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/20" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/20/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Orviden</b> (toi) <span class="det">· 148 k</span><div class="det"><b>rang ≈ 1 727</b> / 21 599 · centile 92 (90 à ton ilvl)</div></div><div class="ecart"><div class="dps">148 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>Power Infusion 14 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="88.4" height="18"><title>Monocible : 0:00 → 0:25 (1,0 ennemis)</title></rect><rect class="multi" x="288.4" y="4" width="42.4" height="18"><title>Multicible : 0:25 → 0:37 (4,0 ennemis)</title></rect><rect class="mono" x="330.8" y="4" width="258.1" height="18"><title>Monocible : 0:37 → 1:50 (1,1 ennemis)</title></rect><rect class="multi" x="589.0" y="4" width="28.3" height="18"><title>Multicible : 1:50 → 1:58 (3,6 ennemis)</title></rect><rect class="mono" x="617.2" y="4" width="326.8" height="18"><title>Monocible : 1:58 → 3:30 (1,5 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Summon Infernal</td><td class="num">1 / 2</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Summon Infernal</td><td class="num">0 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(190 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée 2 min de recharge Requiert Démoniste Invoque du Néant distordu un infernal qui inflige ([60% of Spell Power]) points de dégâts de Feu et étourdit les ennemis dans la zone pendant 2 s. L’infernal reste à votre service pendant 30 s. Il inflige [([55% of Spell Power]) * (105) / 100] points de dégâts aux ennemis proches toutes les 2 s et génère 1 fragment d’éclat d’âme toutes les 1 s."><i class="ic ic-spell_shadow_summoninfernal"></i>Summon Infernal <span class="fr">(Invocation : infernal)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="1.5 s d&#x27;incantation Requiert Démoniste Brûle l’ennemi, ce qui lui inflige ([93.5505% of Spell Power]) points de dégâts de Feu immédiatement puis ([350.814% of Spell Power]) supplémentaires en 18 s. Les dégâts périodiques génèrent 1 fragment d’éclat d’âme et ont 50% de chances d’en générer 1 de plus en cas de coup critique."><i class="ic ic-spell_fire_immolation"></i>Immolate <span class="fr">(Immolation)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Génère 1 fragment d’éclat d’âme toutes les 1 s et lance Trait du chaos sur la cible à 80 % d’efficacité. Dure 8 s."><i class="ic ic-spell_fire_felcano"></i>Summon Overfiend <span class="fr">(Invocation d’ennemi supérieur)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Invoque à votre service un diablotin qui lance des éclairs de feu.">Familier : <i class="ic ic-spell_shadow_summonimp"></i>Summon Imp <span class="fr">(Invocation de diablotin)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous déversez un torrent de venin corrosif qui inflige ( 14670 * 1 / 0.200000003) points de dégâts de nature à votre cible. Les dégâts sont augmentés de 1 % par tranche de 1 % de points de vie restants de votre adversaire. Vous convertissez les fluides vitaux des cibles adverses que vous avez terrassées en venin supplémentaire, qui réduit ce temps de recharge de 5 s."><i class="ic ic-inv_11_0_misc_organmass_color3"></i>Vexhul&#x27;s Everflowing Gland <span class="fr">(Glande ruisselante de Vexhul)</span></span></td><td class="num">7 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="3 s d&#x27;incantation 45 s de recharge Requiert Démoniste Niveau 15 requis Vous brûlez l’âme de l’adversaire, ce qui lui inflige ([3867.4% of Spell Power]) points de dégâts de feu et lui applique Immolation . Génère 1 éclat d’âme."><i class="ic ic-spell_fire_firebolt"></i>Soul Fire <span class="fr">(Feu de l’âme)</span></span></td><td class="num">8 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous lancez une braise déchiquetée provenant de Nihilam sur la cible, ce qui inflige ([187.5% of Spell Power]) points de dégâts d’ombreflamme et ([162.5% of Spell Power]) points de dégâts d’ombreflamme supplémentaires à tous les personnages adverses à moins de 10 m. Les dégâts sont réduits au-delà de 8 cibles."><i class="ic ic-inv_shadowflame_missile"></i>Echo of Sargeras <span class="fr">(Écho de Sargeras)</span></span></td><td class="num">9 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(20 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Invoque à votre service un diablotin qui lance des éclairs de feu.">Familier : <i class="ic ic-spell_shadow_summonimp"></i>Summon Imp <span class="fr">(Invocation de diablotin)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée Requiert Démoniste Niveau 25 requis Vous frappez une cible et lui infligez ([496.8% of Spell Power]) points de dégâts d’ombreflamme. Utilisable uniquement sur les cibles disposant de moins de 20 % de points de vie. Restitue 1 éclat d’âme et met fin à son temps de recharge si la cible meurt dans les 5 s."><i class="ic ic-spell_shadow_scourgebuild"></i>Shadowburn <span class="fr">(Brûlure de l’ombre)</span></span></td><td class="num">8 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 2 min de recharge Requiert Démoniste Invoque du Néant distordu un infernal qui inflige ([60% of Spell Power]) points de dégâts de Feu et étourdit les ennemis dans la zone pendant 2 s. L’infernal reste à votre service pendant 30 s. Il inflige [([55% of Spell Power]) * (105) / 100] points de dégâts aux ennemis proches toutes les 2 s et génère 1 fragment d’éclat d’âme toutes les 1 s."><i class="ic ic-spell_shadow_summoninfernal"></i>Summon Infernal <span class="fr">(Invocation : infernal)</span></span></td><td class="num">10 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 12.96 s de recharge 2 Charges Requiert Démoniste Provoque au niveau de la cible une explosion infligeant ([359.309% of Spell Power]) points de dégâts de Feu. [ Retour de flamme : Réduit le temps d’incantation de votre prochain sort Incinérer ou Trait du chaos de 30% pendant 10 s ] Génère 5 fragments d’éclat d’âme."><i class="ic ic-spell_fire_fireball"></i>Conflagrate <span class="fr">(Conflagration)</span></span></td><td class="num">13 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-the-twin-fangs"><summary><strong>The Twin Fangs</strong> · 170 k · — face à l'équivalent · 11 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=24" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/24" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/24/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Orviden</b> (toi) <span class="det">· 170 k</span><div class="det"><b>rang ≈ 8 884</b> / 24 680 · centile 64 (56 à ton ilvl)</div></div><div class="ecart"><div class="dps">170 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>Power Infusion 14 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="93.4" height="18"><title>Monocible : 0:00 → 0:45 (2,0 ennemis)</title></rect><rect class="multi" x="293.4" y="4" width="18.7" height="18"><title>Multicible : 0:45 → 0:54 (3,3 ennemis)</title></rect><rect class="mono" x="312.1" y="4" width="373.5" height="18"><title>Monocible : 0:54 → 3:54 (2,1 ennemis)</title></rect><rect class="multi" x="685.6" y="4" width="33.2" height="18"><title>Multicible : 3:54 → 4:10 (4,1 ennemis)</title></rect><rect class="mono" x="718.8" y="4" width="128.7" height="18"><title>Monocible : 4:10 → 5:12 (2,0 ennemis)</title></rect><rect class="multi" x="847.4" y="4" width="29.1" height="18"><title>Multicible : 5:12 → 5:26 (3,7 ennemis)</title></rect><rect class="mono" x="876.5" y="4" width="67.5" height="18"><title>Monocible : 5:26 → 5:58 (1,6 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Summon Infernal</td><td class="num">2 / 3</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Summon Infernal</td><td class="num">0 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(320 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Vous déversez un torrent de venin corrosif qui inflige ( 14670 * 1 / 0.200000003) points de dégâts de nature à votre cible. Les dégâts sont augmentés de 1 % par tranche de 1 % de points de vie restants de votre adversaire. Vous convertissez les fluides vitaux des cibles adverses que vous avez terrassées en venin supplémentaire, qui réduit ce temps de recharge de 5 s."><i class="ic ic-inv_11_0_misc_organmass_color3"></i>Vexhul&#x27;s Everflowing Gland <span class="fr">(Glande ruisselante de Vexhul)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Génère 1 fragment d’éclat d’âme toutes les 1 s et lance Trait du chaos sur la cible à 80 % d’efficacité. Dure 8 s."><i class="ic ic-spell_fire_felcano"></i>Summon Overfiend <span class="fr">(Invocation d’ennemi supérieur)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Invoque à votre service un diablotin qui lance des éclairs de feu.">Familier : <i class="ic ic-spell_shadow_summonimp"></i>Summon Imp <span class="fr">(Invocation de diablotin)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="3 s d&#x27;incantation 45 s de recharge Requiert Démoniste Niveau 15 requis Vous brûlez l’âme de l’adversaire, ce qui lui inflige ([3867.4% of Spell Power]) points de dégâts de feu et lui applique Immolation . Génère 1 éclat d’âme."><i class="ic ic-spell_fire_firebolt"></i>Soul Fire <span class="fr">(Feu de l’âme)</span></span></td><td class="num">7 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 2 min de recharge Requiert Démoniste Invoque du Néant distordu un infernal qui inflige ([60% of Spell Power]) points de dégâts de Feu et étourdit les ennemis dans la zone pendant 2 s. L’infernal reste à votre service pendant 30 s. Il inflige [([55% of Spell Power]) * (105) / 100] points de dégâts aux ennemis proches toutes les 2 s et génère 1 fragment d’éclat d’âme toutes les 1 s."><i class="ic ic-spell_shadow_summoninfernal"></i>Summon Infernal <span class="fr">(Invocation : infernal)</span></span></td><td class="num">8 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="1.5 s d&#x27;incantation Requiert Démoniste Brûle l’ennemi, ce qui lui inflige ([93.5505% of Spell Power]) points de dégâts de Feu immédiatement puis ([350.814% of Spell Power]) supplémentaires en 18 s. Les dégâts périodiques génèrent 1 fragment d’éclat d’âme et ont 50% de chances d’en générer 1 de plus en cas de coup critique."><i class="ic ic-spell_fire_immolation"></i>Immolate <span class="fr">(Immolation)</span></span></td><td class="num">8 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous lancez une braise déchiquetée provenant de Nihilam sur la cible, ce qui inflige ([187.5% of Spell Power]) points de dégâts d’ombreflamme et ([162.5% of Spell Power]) points de dégâts d’ombreflamme supplémentaires à tous les personnages adverses à moins de 10 m. Les dégâts sont réduits au-delà de 8 cibles."><i class="ic ic-inv_shadowflame_missile"></i>Echo of Sargeras <span class="fr">(Écho de Sargeras)</span></span></td><td class="num">14 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(39 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Invoque à votre service un diablotin qui lance des éclairs de feu.">Familier : <i class="ic ic-spell_shadow_summonimp"></i>Summon Imp <span class="fr">(Invocation de diablotin)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous lancez une braise déchiquetée provenant de Nihilam sur la cible, ce qui inflige ([187.5% of Spell Power]) points de dégâts d’ombreflamme et ([162.5% of Spell Power]) points de dégâts d’ombreflamme supplémentaires à tous les personnages adverses à moins de 10 m. Les dégâts sont réduits au-delà de 8 cibles."><i class="ic ic-inv_shadowflame_missile"></i>Echo of Sargeras <span class="fr">(Écho de Sargeras)</span></span></td><td class="num">9 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2 s d&#x27;incantation Requiert Démoniste Niveau 10 requis Attire sur l’ennemi des flammes qui lui infligent ([438.084% of Spell Power]) points de dégâts de feu. Génère 2 fragments d’éclats d’âme, plus 1 en cas de coup critique."><i class="ic ic-spell_fire_burnout"></i>Incinerate <span class="fr">(Incinérer)</span></span></td><td class="num">10 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-the-coiled-altar"><summary><strong>The Coiled Altar</strong> · 172 k · — face à l'équivalent · 0 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=31" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/31" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/31/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Orviden</b> (toi) <span class="det">· 172 k</span><div class="det"><b>rang ≈ 1 077</b> / 17 960 · centile 94 (94 à ton ilvl)</div></div><div class="ecart"><div class="dps">172 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>Power Infusion 5 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="744.0" height="18"><title>Monocible : 0:00 → 4:35 (1,4 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Summon Infernal</td><td class="num">1 / 3</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Summon Infernal</td><td class="num">1 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(276 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Vous déversez un torrent de venin corrosif qui inflige ( 14670 * 1 / 0.200000003) points de dégâts de nature à votre cible. Les dégâts sont augmentés de 1 % par tranche de 1 % de points de vie restants de votre adversaire. Vous convertissez les fluides vitaux des cibles adverses que vous avez terrassées en venin supplémentaire, qui réduit ce temps de recharge de 5 s."><i class="ic ic-inv_11_0_misc_organmass_color3"></i>Vexhul&#x27;s Everflowing Gland <span class="fr">(Glande ruisselante de Vexhul)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Génère 1 fragment d’éclat d’âme toutes les 1 s et lance Trait du chaos sur la cible à 80 % d’efficacité. Dure 8 s."><i class="ic ic-spell_fire_felcano"></i>Summon Overfiend <span class="fr">(Invocation d’ennemi supérieur)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Invoque à votre service un diablotin qui lance des éclairs de feu.">Familier : <i class="ic ic-spell_shadow_summonimp"></i>Summon Imp <span class="fr">(Invocation de diablotin)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 2 min de recharge Requiert Démoniste Invoque du Néant distordu un infernal qui inflige ([60% of Spell Power]) points de dégâts de Feu et étourdit les ennemis dans la zone pendant 2 s. L’infernal reste à votre service pendant 30 s. Il inflige [([55% of Spell Power]) * (105) / 100] points de dégâts aux ennemis proches toutes les 2 s et génère 1 fragment d’éclat d’âme toutes les 1 s."><i class="ic ic-spell_shadow_summoninfernal"></i>Summon Infernal <span class="fr">(Invocation : infernal)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="1.5 s d&#x27;incantation Requiert Démoniste Brûle l’ennemi, ce qui lui inflige ([93.5505% of Spell Power]) points de dégâts de Feu immédiatement puis ([350.814% of Spell Power]) supplémentaires en 18 s. Les dégâts périodiques génèrent 1 fragment d’éclat d’âme et ont 50% de chances d’en générer 1 de plus en cas de coup critique."><i class="ic ic-spell_fire_immolation"></i>Immolate <span class="fr">(Immolation)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="3 s d&#x27;incantation 45 s de recharge Requiert Démoniste Niveau 15 requis Vous brûlez l’âme de l’adversaire, ce qui lui inflige ([3867.4% of Spell Power]) points de dégâts de feu et lui applique Immolation . Génère 1 éclat d’âme."><i class="ic ic-spell_fire_firebolt"></i>Soul Fire <span class="fr">(Feu de l’âme)</span></span></td><td class="num">10 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous lancez une braise déchiquetée provenant de Nihilam sur la cible, ce qui inflige ([187.5% of Spell Power]) points de dégâts d’ombreflamme et ([162.5% of Spell Power]) points de dégâts d’ombreflamme supplémentaires à tous les personnages adverses à moins de 10 m. Les dégâts sont réduits au-delà de 8 cibles."><i class="ic ic-inv_shadowflame_missile"></i>Echo of Sargeras <span class="fr">(Écho de Sargeras)</span></span></td><td class="num">12 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-ula-tek"><summary><strong>Ula&#x27;tek</strong> · 122 k · — face à l'équivalent · 16 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=32" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/32" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/32/Orviden/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Orviden</b> (toi) <span class="det">· 122 k</span><div class="det"><b>rang ≈ 7 410</b> / 19 000 · centile 61 (57 à ton ilvl)</div></div><div class="ecart"><div class="dps">122 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>Power Infusion 15 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="71.1" height="18"><title>Monocible : 0:00 → 0:29 (1,8 ennemis)</title></rect><rect class="multi" x="271.1" y="4" width="22.1" height="18"><title>Multicible : 0:29 → 0:38 (3,7 ennemis)</title></rect><rect class="mono" x="293.2" y="4" width="392.3" height="18"><title>Monocible : 0:38 → 3:18 (1,9 ennemis)</title></rect><rect class="multi" x="685.4" y="4" width="100.5" height="18"><title>Multicible : 3:18 → 3:59 (5,9 ennemis)</title></rect><rect class="mono" x="786.0" y="4" width="158.0" height="18"><title>Monocible : 3:59 → 5:03 (1,3 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Summon Infernal</td><td class="num">1 / 3</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Summon Infernal</td><td class="num">1 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(253 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Génère 1 fragment d’éclat d’âme toutes les 1 s et lance Trait du chaos sur la cible à 80 % d’efficacité. Dure 8 s."><i class="ic ic-spell_fire_felcano"></i>Summon Overfiend <span class="fr">(Invocation d’ennemi supérieur)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Invoque à votre service un diablotin qui lance des éclairs de feu.">Familier : <i class="ic ic-spell_shadow_summonimp"></i>Summon Imp <span class="fr">(Invocation de diablotin)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="1.5 s d&#x27;incantation Requiert Démoniste Brûle l’ennemi, ce qui lui inflige ([93.5505% of Spell Power]) points de dégâts de Feu immédiatement puis ([350.814% of Spell Power]) supplémentaires en 18 s. Les dégâts périodiques génèrent 1 fragment d’éclat d’âme et ont 50% de chances d’en générer 1 de plus en cas de coup critique."><i class="ic ic-spell_fire_immolation"></i>Immolate <span class="fr">(Immolation)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous déversez un torrent de venin corrosif qui inflige ( 14670 * 1 / 0.200000003) points de dégâts de nature à votre cible. Les dégâts sont augmentés de 1 % par tranche de 1 % de points de vie restants de votre adversaire. Vous convertissez les fluides vitaux des cibles adverses que vous avez terrassées en venin supplémentaire, qui réduit ce temps de recharge de 5 s."><i class="ic ic-inv_11_0_misc_organmass_color3"></i>Vexhul&#x27;s Everflowing Gland <span class="fr">(Glande ruisselante de Vexhul)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 2 min de recharge Requiert Démoniste Invoque du Néant distordu un infernal qui inflige ([60% of Spell Power]) points de dégâts de Feu et étourdit les ennemis dans la zone pendant 2 s. L’infernal reste à votre service pendant 30 s. Il inflige [([55% of Spell Power]) * (105) / 100] points de dégâts aux ennemis proches toutes les 2 s et génère 1 fragment d’éclat d’âme toutes les 1 s."><i class="ic ic-spell_shadow_summoninfernal"></i>Summon Infernal <span class="fr">(Invocation : infernal)</span></span></td><td class="num">7 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="3 s d&#x27;incantation 45 s de recharge Requiert Démoniste Niveau 15 requis Vous brûlez l’âme de l’adversaire, ce qui lui inflige ([3867.4% of Spell Power]) points de dégâts de feu et lui applique Immolation . Génère 1 éclat d’âme."><i class="ic ic-spell_fire_firebolt"></i>Soul Fire <span class="fr">(Feu de l’âme)</span></span></td><td class="num">9 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous lancez une braise déchiquetée provenant de Nihilam sur la cible, ce qui inflige ([187.5% of Spell Power]) points de dégâts d’ombreflamme et ([162.5% of Spell Power]) points de dégâts d’ombreflamme supplémentaires à tous les personnages adverses à moins de 10 m. Les dégâts sont réduits au-delà de 8 cibles."><i class="ic ic-inv_shadowflame_missile"></i>Echo of Sargeras <span class="fr">(Écho de Sargeras)</span></span></td><td class="num">9 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(50 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée 2 min de recharge Requiert Démoniste Invoque du Néant distordu un infernal qui inflige ([60% of Spell Power]) points de dégâts de Feu et étourdit les ennemis dans la zone pendant 2 s. L’infernal reste à votre service pendant 30 s. Il inflige [([55% of Spell Power]) * (105) / 100] points de dégâts aux ennemis proches toutes les 2 s et génère 1 fragment d’éclat d’âme toutes les 1 s."><i class="ic ic-spell_shadow_summoninfernal"></i>Summon Infernal <span class="fr">(Invocation : infernal)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="1.5 s d&#x27;incantation Requiert Démoniste Brûle l’ennemi, ce qui lui inflige ([93.5505% of Spell Power]) points de dégâts de Feu immédiatement puis ([350.814% of Spell Power]) supplémentaires en 18 s. Les dégâts périodiques génèrent 1 fragment d’éclat d’âme et ont 50% de chances d’en générer 1 de plus en cas de coup critique."><i class="ic ic-spell_fire_immolation"></i>Immolate <span class="fr">(Immolation)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Invoque à votre service un diablotin qui lance des éclairs de feu.">Familier : <i class="ic ic-spell_shadow_summonimp"></i>Summon Imp <span class="fr">(Invocation de diablotin)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Vous lancez une braise déchiquetée provenant de Nihilam sur la cible, ce qui inflige ([187.5% of Spell Power]) points de dégâts d’ombreflamme et ([162.5% of Spell Power]) points de dégâts d’ombreflamme supplémentaires à tous les personnages adverses à moins de 10 m. Les dégâts sont réduits au-delà de 8 cibles."><i class="ic ic-inv_shadowflame_missile"></i>Echo of Sargeras <span class="fr">(Écho de Sargeras)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+
+<h2 id="s-build-et-stats">Build et stats</h2>
+<p class="note">Pas de simulation (mode rapide ou export de l'addon absent).</p>
+
+<h2 id="s-quipement">Équipement</h2>
+<p class="note">Pas d'analyse d'équipement (mode rapide ou export absent).</p>
+
+<h2 id="s-progression">Progression</h2>
+<h3 id="s-centiles-par-boss">Centiles par boss</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">20/08</th><th class="num">27/08</th><th class="num">02/09</th><th class="num">03/09</th><th class="num">09/09</th></tr></thead>
+<tbody>
+<tr><td>The Twin Fangs</td><td class="num">44 <span class="muted">· 61</span></td><td class="num">—</td><td class="num">29 <span class="muted">· 37</span></td><td class="num">—</td><td class="num">64 <span class="muted">· 56</span></td></tr>
+<tr><td>Nymrissa Wavecaller</td><td class="num">—</td><td class="num">67 <span class="muted">· 80</span></td><td class="num">79 <span class="muted">· 87</span></td><td class="num">—</td><td class="num">80 <span class="muted">· 86</span></td></tr>
+<tr><td>The Coiled Altar</td><td class="num">—</td><td class="num">57 <span class="muted">· 73</span></td><td class="num">69 <span class="muted">· 79</span></td><td class="num">—</td><td class="num">94 <span class="muted">· 94</span></td></tr>
+<tr><td>Nek&#x27;zali the Soulcoiler</td><td class="num">—</td><td class="num">—</td><td class="num">75 <span class="muted">· 83</span></td><td class="num">—</td><td class="num">87 <span class="muted">· 82</span></td></tr>
+<tr><td>Entombed Sentinels</td><td class="num">—</td><td class="num">—</td><td class="num">41 <span class="muted">· 52</span></td><td class="num">16 <span class="muted">· 26</span></td><td class="num">60 <span class="muted">· 53</span></td></tr>
+<tr><td>Vashnik the Malignant</td><td class="num">—</td><td class="num">—</td><td class="num">57 <span class="muted">· 69</span></td><td class="num">—</td><td class="num">92 <span class="muted">· 90</span></td></tr>
+<tr><td>The Lost Explorers</td><td class="num">—</td><td class="num">—</td><td class="num">46 <span class="muted">· 58</span></td><td class="num">—</td><td class="num">75 <span class="muted">· 69</span></td></tr>
+<tr><td>Sszorak</td><td class="num">—</td><td class="num">—</td><td class="num">54 <span class="muted">· 63</span></td><td class="num">—</td><td class="num">89 <span class="muted">· 83</span></td></tr>
+<tr><td>Ula&#x27;tek</td><td class="num">—</td><td class="num">—</td><td class="num">46 <span class="muted">· 57</span></td><td class="num">—</td><td class="num">61 <span class="muted">· 57</span></td></tr>
+<tr><td><strong>Écart au potentiel simc</strong></td><td class="num">−24 %</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Centile global · centile à ton ilvl. Écart au potentiel : ton DPS rapporté à ce que ton équipement ferait avec une rotation parfaite (simulation).</p>
+<h3 id="s-conseils-du-03-09">Conseils du 03/09</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Conseil</th><th class="num">Gain alors</th><th class="num">Gain aujourd&#x27;hui</th><th>Statut</th></tr></thead>
+<tbody>
+<tr><td class="wrap">Temps globaux dépensés en sorts utilitaires</td><td class="num">1,0 %</td><td class="num">—</td><td class="ok">corrigé</td></tr>
+
+</tbody>
+</table>
+</div>
+
+<p>1 corrigé, 0 en progrès, 0 toujours là.</p>
+
+<details class="methode"><summary><h2 id="s-m-thode" style="display:inline">Méthode</h2> <span class="muted">(cliquer pour déplier)</span></summary><div class="cartes"><div class="carte"><div class="lib"><strong>Combats analysés</strong></div><p>Pour chaque boss, ton meilleur kill de la soirée (centile le plus haut).</p></div><div class="carte"><div class="lib"><strong>Top 3</strong></div><p>Les trois premiers de ta spé au classement héroïque du boss, logs postérieurs au 09/09 à 06 h (maintenance du mercredi, ou dernier correctif de tes sorts intégré à simc).</p></div><div class="carte"><div class="lib"><strong>Joueur équivalent</strong></div><p>Même tranche d&#x27;ilvl, raid de taille (±5) et de durée (±25 %) proches, sans Évocateur Augmentation, 10 à 45 % de DPS en plus ; parmi les plus proches de +25 %, le plus proche en talents et bijoux. Critères élargis (tranches voisines, ±8 joueurs, ±35 %) si personne après le correctif.</p></div><div class="carte"><div class="lib"><strong>Phases</strong></div><p>Multicible quand 3 ennemis ou plus sont attaqués par le raid (seuil de la rotation simc).</p></div><div class="carte"><div class="lib"><strong>Règles de rotation</strong></div><p>Conditions de la rotation simc vérifiées lancer par lancer ; retenues seulement si tu fais nettement moins bien que les références.</p></div><div class="carte"><div class="lib"><strong>Gains</strong></div><p>Estimés à partir des écarts mesurés, puis validés en simulation pour les plus gros (fautes imitées dans simc à ton rythme et à celui des références ; gain = écart des deux).</p></div><div class="carte"><div class="lib"><strong>Limites</strong></div><p>Une référence joue un autre combat que le tien (raid, durée, adds) : un écart est une piste, pas une preuve. Avec moins de 0,5 % d&#x27;écart, une simulation n&#x27;est pas significative.</p></div></div></details>
+<div id="infobulle"></div>
+<script>
+(() => {
+  const bulle = document.getElementById("infobulle");
+  const montrer = (ev, texte) => {
+    bulle.textContent = texte; bulle.style.display = "block";
+    const x = Math.min(ev.clientX + 14, window.innerWidth - bulle.offsetWidth - 8);
+    bulle.style.left = x + "px"; bulle.style.top = (ev.clientY + 14) + "px";
+  };
+  const cacher = () => { bulle.style.display = "none"; };
+  document.querySelectorAll("[data-tip]").forEach(el => {
+    el.addEventListener("pointermove", ev => montrer(ev, el.dataset.tip));
+    el.addEventListener("pointerleave", cacher);
+  });
+  document.querySelectorAll("svg[data-courbes]").forEach(svg => {
+    const d = JSON.parse(svg.dataset.courbes), zone = svg.querySelector(".zone"), ligne = svg.querySelector(".reticule");
+    zone.addEventListener("pointermove", ev => {
+      const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY;
+      const q = p.matrixTransform(svg.getScreenCTM().inverse());
+      const i = Math.max(0, Math.min(d.t.length - 1, Math.round((q.x - d.x0) / d.dx)));
+      ligne.setAttribute("x1", d.x0 + i * d.dx); ligne.setAttribute("x2", d.x0 + i * d.dx); ligne.style.display = "";
+      montrer(ev, d.t[i] + "\n" + d.series.map(s => (s.v[i] == null ? "—" : s.v[i]) + " lancers/min  " + s.nom).join("\n"));
+    });
+    zone.addEventListener("pointerleave", () => { ligne.style.display = "none"; cacher(); });
+  });
+})();
+</script>
+<script>
+function ouvrirAncre() {
+  const d = location.hash && document.getElementById(location.hash.slice(1));
+  if (d && d.tagName === "DETAILS") { d.open = true; d.scrollIntoView(); }
+}
+addEventListener("hashchange", ouvrirAncre); addEventListener("DOMContentLoaded", ouvrirAncre);
+</script>
+
+</main>
+</div>
+<script>
+(function () {
+  var nav = document.querySelector('.sommaire'); if (!nav) return;
+  var det = nav.querySelector('details'), petit = window.matchMedia('(max-width: 1100px)');
+  if (petit.matches) det.open = false;
+  var liens = {}; nav.querySelectorAll('a').forEach(function (a) { liens[a.getAttribute('href').slice(1)] = a; });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A' && petit.matches) det.open = false; });
+  var titres = Array.prototype.filter.call(document.querySelectorAll('main h2[id], main h3[id]'),
+                                           function (h) { return liens[h.id]; });
+  function actif() {
+    var courant = titres[0];
+    titres.forEach(function (h) { if (h.getBoundingClientRect().top < 120) courant = h; });
+    Object.keys(liens).forEach(function (k) { liens[k].classList.toggle('actif', courant && k === courant.id); });
+  }
+  window.addEventListener('scroll', actif, {passive: true}); actif();
+})();
+</script>
+</body>
+</html>

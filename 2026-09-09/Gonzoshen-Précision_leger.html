@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ga-genere" content="2026-10-25T20:15">
+<meta name="ga-version" content="b3f96b5">
+<title>Mon DPS Gonzoshen-Précision</title>
+<style>
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .badge { font-size: .74rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px;
+           padding: 2px 10px; background: var(--surface); }
+  .badge-verif.ok { color: var(--good); border-color: var(--good); }
+  .badge-verif.alerte { color: var(--warn); border-color: var(--warn); }
+  .badge-verif.non { font-style: italic; }
+  :root { --bg: #f7f6f3; --surface: #ffffff; --text: #1f2328; --muted: #5f6670; --border: #e1e0dc;
+          --accent: #b8860b; --good: #1f7a4d; --bad: #b23b2e; --warn: #9a6400; --row: #faf9f7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #16171a; --surface: #1f2125; --text: #e6e6e3; --muted: #9ba1a8; --border: #33363c;
+            --accent: #e3b341; --good: #5cc48f; --bad: #ef7a6c; --warn: #e0b04f; --row: #23252a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  h2 { font-size: 1.35rem; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.08rem; margin: 26px 0 8px; }
+  a { color: var(--accent); }
+  .meta { color: var(--muted); margin: 0 0 20px; font-size: .95rem; }
+  .lead { background: var(--surface); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 6px; }
+  .lead ul { margin: 6px 0 0; padding-left: 20px; }
+  .note { color: var(--muted); font-size: .92rem; }
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+  th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; vertical-align: top; }
+  td.wrap { white-space: normal; min-width: 240px; }
+  th { background: var(--row); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--good); font-weight: 600; } .mid { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; } .muted { color: var(--muted); }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 8px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  td details { background: none; border: 0; padding: 0; margin: 4px 0 0; }
+  td summary { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  td details p { margin: 4px 0; max-width: 46em; }
+  .faire { display: block; margin-top: 2px; }
+</style>
+<style>
+  .avec-nav { display: grid; grid-template-columns: 230px minmax(0, 1040px); gap: 28px; justify-content: center;
+              padding: 0 16px; }
+  .avec-nav main { max-width: none; margin: 0; padding: 32px 0 64px; }
+  .sommaire { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 32px 0 24px;
+              font-size: .9rem; }
+  .sommaire summary { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+                      font-size: .75rem; margin-bottom: 8px; cursor: pointer; list-style: none; }
+  .sommaire summary::-webkit-details-marker { display: none; }
+  .sommaire ul { list-style: none; margin: 0; padding: 0; }
+  .sommaire li { margin: 0; }
+  .sommaire a { display: block; padding: 4px 10px; border-left: 3px solid var(--border); color: var(--text);
+                text-decoration: none; line-height: 1.35; }
+  .sommaire li ul a { padding-left: 22px; color: var(--muted); font-size: .85rem; }
+  .sommaire a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .sommaire a.actif { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  /* sections bien séparées : un bandeau par grande partie */
+  .avec-nav main > h2, .avec-nav main section > h2 {
+    margin: 64px 0 18px; padding: 12px 16px; font-size: 1.45rem; background: var(--surface);
+    border: 1px solid var(--border); border-left: 6px solid var(--accent); border-radius: 10px; }
+  .avec-nav main > h2:first-of-type { margin-top: 36px; }
+  .avec-nav h2, .avec-nav h3 { scroll-margin-top: 16px; }
+  .avec-nav main > h3 { padding-bottom: 4px; border-bottom: 1px dashed var(--border); }
+  @media (max-width: 1100px) {
+    .avec-nav { display: block; padding: 0; }
+    .avec-nav main { padding: 16px 16px 64px; }
+    .sommaire { position: sticky; top: 0; z-index: 5; max-height: 70vh; padding: 8px 16px; background: var(--bg);
+                border-bottom: 1px solid var(--border); }
+    .sommaire summary { margin: 0; padding: 6px 0; }
+    .sommaire summary::after { content: " ▾"; }
+  }
+</style>
+<style>.ic{display:inline-block;width:1.2em;height:1.2em;border-radius:3px;background-size:cover;vertical-align:-.25em;margin-right:.3em;flex:none}.ic-spec{border-radius:50%}.ic-ability_hunter_assassinate2,.io-ability_hunter_assassinate2,.fi-ability_hunter_assassinate2{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAcCBQYECP/EAC8QAAIBAwMCBAUDBQAAAAAAAAECAwQFEQAGEiExEyJBUQcUFVJxQmGBCCORscH/xAAZAQADAQEBAAAAAAAAAAAAAAADBAUGAAL/xAAtEQABAgQDBwIHAAAAAAAAAAABAhEAAwQhBTFhEhRBUXGh8BMiI1KBgqLB0f/aAAwDAQACEQMRAD8A8d+I8tRzZ2kkdiWLHJYk9z76vbfQvDNJUS+RVXqT+nP/AHPQDUto2+PKV8qF5ZJPAo4h15SerH9lyP5I0wJNs3+ooRVWLbt1uKCUwUk8FFJLE0oPGWTKggsD5V9u/fSM6aSvYTGpwrDUiRvM5QDXAtyOouQHA6ZPbFVNRDTgyVgSoljP9ql5eRD9z/j/AHq22zap7vWrU3quajiZC0jKMOid/DjHozD19B++mZfvhnt3au1qSaqhuCXlI0WpledTGlYFDvEECZyueJPLuGPppY7yqaq3VbU9XTFZjGp8LJHJWXkpJ9Bhs47nPprhJSykksr+9h48GNYmakqKrcumZJzVmwsAHsA7xtYPiLUWmIW7atmf6XT+SMRvhQR36gjkfc9cnPXRpcR2+jMMcl8q2hqpFDCJW4CNPReI7fjRqcaeme4fVie8NppprB1BOhWhLfaRbpwi/wDh7FO1Ba6ajpPmbhcKn5KgTj3nYjj+AGYEn2XXpGP6ft2GzUNHfmFkp43t1NTRSSmWrjg6PMAjADnJ4rEMp5c1wR0AWv8ATLaEFiTdNak0a2pZoKExRlpXqqgceUYHdki54H3Op6Aa024tzUFFPT/XLlQ2Wqp6VKWmtdHiuuLpxIC8BhIe5JaRwR06Y1bo5aUbS1HMmM9i9QuYJVOm4SlLdSAT+onundNNJt+57orKOKSgtUUKWu2R5EOZnK5YgcugVy2MEkYyNI3cdZcdw7gO4K+jgoZ5kV4qVAV4IihVfDE+HGAB5mOSe2mNu+/mWzm309LT2W3VTRlpZpPna6oZHLqAyhYYzk5wikn3Pqu90XChtUEiyM8VZKQ/hO3OoY/fKT647Bu3oo0tV1HqK2EXi5heDbjIVUVg2CL3IyzGvCwLdCzCqWkQlnngSSV2LM8pQFj7jxDyI/fpo1kKmqimmaVuTMxyWdizH8nRrzu0z5j59YVOOU6S3pA68/xjZ2r4hbot2xorDRVwgtsMkimCNeIlLkFmcjqx6AdTgAAY1wWfeV4afwhHb0XP6KONT/kDOjRo+yFAgxO32opZktMlZSCAbc3Oj94leN831pjBG8ELAYEyITIoPfDMTx/jGsjVO8jtJI7O7ElmY5JPudGjRJSEoHtDQpX1tRVK+MsqY2c+ecY59GjRokIR/9k=)}.ic-ability_hunter_mastermarksman,.io-ability_hunter_mastermarksman,.fi-ability_hunter_mastermarksman{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAQUBAQAAAAAAAAAAAAAAAAQFBgcIAQP/xAAuEAACAQMDAwMDAgcAAAAAAAABAgMEBREABiESEzEHIkEUMlEWIyYzQlNhcXL/xAAZAQEAAwEBAAAAAAAAAAAAAAAEAgMFAQb/xAAsEQABAgQEAwgDAAAAAAAAAAABAgMABBFBEiExURNx8AUVIjIzYZGhgbHh/9oADAMBAAIRAxEAPwCC7Ot1JuunuLXShSlnJ70jDCJEikmU4PxgeM8YOnNLOlVa6e3bdt9CLZNKHiuV1Z40qx/R2oE/cKjJ9zFQc8Z0o2ZFV7ijsW36+lWKlene4XQLEAaiCFlCRvjyryEdWfIjI1NPUSutNmYVtyqwBBL1ZV+l5XAy3znpBwoA84PwMay5OUMwvxHI6R6FKSXMJNANT1XrlEAudo3PcUmNyXbNWbdc6ijpoZYpaVu2nThY3PUojGfaGBxzzjXraLJHuHctWGtUdJ9PF3LjQTwgzUqZyZoun2spI4kT2/HGcaYE3Hu3c1cblaLDUz2qorfpkdWJHdc4CZJxnkcH86SUu4b7G9RVxQzCssqtV0zMpBMI4npnx5VgD7T4YA6nMSaUIKQrCq2xtl19RYcDiC40vGBkdwf7nQ/igjl/uu56a6ywWYPS0SYWNScdQHHVyec/nRpt9Qf1VcNxvP8AQvNAI1FMzof5XlQP8c6NFb4eEVP3FSkOA+Uw+Wne1PuLccd8qqSvWtns0kHYoq+WmXvQydYCqrYwUbPR9uVY4yTqYbL2RSerVsluT3z+IqacstJcJD2miPBUAcq2SeR86zhti7mili/dkiZHEkU0f3QSA5DgfP4I+QSNWraN0WueaOqqXW017HqeVXdaeVjx1JKn2/8ALYI/J1pIaAQUpOEjSunI+0Rl5ht5tbLpoF3G46NxkdxGkts+ntj9PduU1XfKSgsVotNQa94I7i9TNW1YUqrOxAAAzwignIXOANZj3BdqepfcNbPFWIHjndVSqeL92Vj0oxUjq5YDB083Hc1oraaZ6rdfdmpqyWKJTUNWPIBgCRFGfuPhsfHnVcbjvCdA7cUsEEUncjhlYd2ST+5J5xjnpX48nXCkrPEeIKrAW99AOVImEsSDC2WVYiulTnbO5JrXUnaLIm9eLvtqnotvWWKleit1LHTq1RAtQ7Mo9xLuSfuzgeAMAaNZ/qJhLM0hZsscnOjVIkk0zJ+TAu8lWA+ITwSvHkocEadNtXi5W25QS0VXJC3cXx4PPyPB0aNOUkFJrAWCQ4nmP3Fxeuu+LvNZNvUdNTWy3JXW/wCrqnoqRYnllZ2DMWH56B4x86o2aWR19zE/70aNDkkjhAw/tL11JsNITk86NGjToyo//9k=)}.ic-ability_hunter_rapidkilling,.io-ability_hunter_rapidkilling,.fi-ability_hunter_rapidkilling{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAgIDAQEAAAAAAAAAAAAAAAYCCAQFBwMJ/8QAMBAAAQMDAwMCBAUFAAAAAAAAAQIDBAUGEQASIQcTMSJBFFFhgQgVIzKRQlJiccH/xAAbAQABBAMAAAAAAAAAAAAAAAAEAgMFBgABB//EACgRAAEDAgQGAgMAAAAAAAAAAAEAAhEDIQQFQVESEzFhofAigbHB0f/aAAwDAQACEQMRAD8A47AoUyQtxqYkg4U44tZOAPdRPv8A9J1K2qTClVFxGVM7EgHjctQPg49hp5utBhwWITbwQl0OS5Ssc9pvISP53a9LUshyFOROelqXKlI9bwJQNufSBjwMD+MaDr1ywSLrq2WZLQc5r6h+I637aa+6RB0rNsS4ih2pEoslYK9zWQR9dPdiU2kXNcMqnRGWlLpexJdTnsyHTglCR4SUg/cnGBrC6owK3aduKuunV+LHap7AaEMsLc+LcdXt2+2DgDBGf6tNn4WqNXbbkSrYua0p1Nkri/nM2oyn0rbc7hw2QR+0nCwUK5G3J1lAve3id4UdnGOwdB5o4dpbE9STO0TMeE1Io8tCQlKXEj5AaNdwRTYLyQ6G0K3c5Hv9dGjLKpHNBNwq2XvazFftiimHHWHp9MehBUdpCnFuAk7PVx6vGfPPz1HplRHpPS2no3SES3Y8RxTgdUXkn4hsOBJPOMHb9MnSEnrTTIFpSqc486oQHhIpxa4W/JzwkHyEDkk8ZB+2kgfiLuaJa0KkUuk06BIgL7jcxJU4pWXCvbtVxtwQMf4jQHKdxmd/fyrDise2nTDA+8EWJ6SSP5v9KzHVw0eudXLctWeWWbftVhd03E+r9qA2CI7a8fM5URzkeNbTqJf1rOotebUKnVqM3cC1IbYcfcjHtJypLjqEcpKlBsDf4SvkZzijVS6pXrVBcH5jWlvrrz7D9VWEIS5I7Iw0ncBkIT/aOOB51Bm8Zkt+gNV0yJlMpK3OzlX6m1xfcUCs8qwrn/WinSBAVawrGGoH1Ha+k9h+l9BJV8tW5HhU6oGfIe+GS53TsUXEkqwrII+Xy0apDcHVyq1aomRJLkrYhLTbm7blCRgce2jTXKqG8qXaMqAh9zuAYK5u60FuDctZOPJOpNR2lKcBB9KuNGjT9RQtES+6xHG0sPkNjGUjP30LWpTSWio7QOBo0a01IfaQE0UWnxVwEKUgknRo0aWj2Mbwiy//2Q==)}.ic-ability_hunter_steadyshot,.io-ability_hunter_steadyshot,.fi-ability_hunter_steadyshot{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgMAAwAAAAAAAAAAAAAAAAYFBwgBAgT/xAAwEAACAQMDAwIDBwUAAAAAAAABAgMEBREABhIHIUETIhQxUQgVI0JSYYEWMjOCwf/EABgBAQEBAQEAAAAAAAAAAAAAAAQDBgUC/8QAKBEAAgEDAgUDBQAAAAAAAAAAAQIAAxExBEEFISJRYRMygXGRocHR/9oADAMBAAIRAxEAPwDJsK+nA085LyPl3Zjkkn9/rqNUNUTl2wB/cceANaI6bW/Y0d3+Gsey7r1Drab3yuKTlAAAe5MmEQE+WHyXySMM/U+7Wi17ekoKrpn0+oHr8fB0slak9X6gUBVijpEDIeRPuLKCTg6VqKqqttl/JnpqgLBFEgOlfSyk2vuu01u5qiee9ejDVU1mp6dkKNIgdVeSTirMEOWA9qAnk2RxNm3K7S7k3ZFYHulKtLwY1K03aGKNV5ysrYy4WLA5kAZbsAPmt0FyGxduPaJ4rFVbmv8AVzpJSc5KkRkI3JI43LMq80ALFsue/uyMVjvLfd125NeNr0EFKtdWUT0l6uPMvPJNMyyTIrA4CqPwsDzzPkay76EcX1QqNzVcds7fO/bxOlSrHToVXJiNuO+Vlbfq2ro7hUw08szGFYpWReAOF7A/pA0agnljjIUsFwPlnGjW7QUUULYcofp3mnrnVXOyWVbXVb72/wBOretPxS20kIkqUQkkllXJDEHOWPM/LGk+WhsuypJ911El5+9KqnkWmNUQ1aqho3NRKACsbMp4qg/xg+8knSl0521EaZt/7teAUI5mjjqFEvrzKVAd0JBMY5Eg/mKEeNS63Cq3ntHfu67jTj4qtlpbZblVeB5S1AlkVQuAzNxXP0BGsvXB1bmnTPSDzOx8fXv9pNUFBfUYXJx/Z33FatwU24ttbjmqKqO8120p77T1r+/EyiaTiqtnjwRQBjvyIbzpG6zU1XaN+VdHJA8P4NO0AK4zGYUwR9e/LJ/Vy851qHcMNNWXq91FZVwCl2dtNrD6voDj8RPEfViXBxlEKKcdwW1VH2nqg3LbGztx3GmKXT4ZaOR8d5UWFG7/AL8sn/Y6fQ0/pe1uUMKxZuoEXlAfCyt7nOCe/fudGuJayZnJBCj6AaNUvS7GWukubrxVON5zWCFUgtlEAsFNHkIoQcF7E+FUDH8/PXv2C7Udinqojy/p+xm/UMTjlGK+WYResy/mKqBx8DHnRo1XRoo4dRIGbk+TE63Hz+o6bgpxTbI6Y2GGWUUu4rgKm6tyzJUyMySMWbzksf4AHjVe/ayr6l92WuyclWipqNKmONRjDzAM5/4B4GjRqdTNpzxkSp1pIFGOGf3OjRo05aa2xHBRbE//2Q==)}.ic-ability_upgrademoonglaive,.io-ability_upgrademoonglaive,.fi-ability_upgrademoonglaive{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAYHCAIDBAX/xAAtEAABAwMDBAEDAwUAAAAAAAABAgMEAAURBhIhBxMxMkEiUWEUQnEIJFKBwf/EABkBAAMAAwAAAAAAAAAAAAAAAAMEBQABAv/EACsRAAEDAgMGBgMAAAAAAAAAAAEAAgMEERIhMRNBYXGh8BQyUYGxwSJS8f/aAAwDAQACEQMRAD8Ap9FhPP5O3CR8mtYYWZHawTg81OGmele+2RJ97v8Ab7VGlgFpLqVqedzjG1tIyBz5Vtz8ZHNdOoekltt93gRIt1cbdluISXJsUsNgqOAlJK1ZUQCQCRnwKcdHA2wL896qmjgBa3aDFv706qItP6flTrqmOxGW+VD6UJSSf5P4H3qxfTfpwzpHTL+p782GpwZWITagFFCinh4gjjA9c+SQfAOdvTPSWmYVycuOmr1IuzsZSGluCW1HTJUV7djTSilawV4SDkFR9Qquu4a6lxbfbzq9l1UCKtTslyRJ/ubpIRlSWkpxkMpV20qWQknad2VDaBunDrRU4vi4WP8AEXExo2VMLk6n079fZRH1zt8GL1TvDbEVljd2XXGmkBKW3VsoW4kD8LUqikXWGppV71LPu7ygt6W+t5xSj5UpRJ/1zRTYqIWDCd3BZ4unZ+JsbZXsp80P1lu7elTP1BZ7Sba0ktIDkVCO8rPCW9u05xnKiTitdznaV1pcY8TTUuTbjLiqcYtbSA40y+nepaV8DKV8EEeu3PzUE3O5XTU0uLbYocW02A0y0kfSPwB8f9pheuMXRlqctVncS7c5DZbmzUL9UH2aaPwn/JQ9vA48qy0sUnlGmh3X65Dqcl21sD8y0YQMzpc8gvWjS7pZr8tqV+vjJjoIVEYYUlxl3dkuhZAA8nBzkZxxjNdPXaXdJltt8mTEdaU+hye58pZ7ytyWxwP24UfuVE+ScNXTp+7ao0XbpU9EabDsc1uQ8mQkqdejpSe6ACMLAQoZTkfSM4JHDJ/UXZITfSa3IskiRLhMXJxpx959T6y2ps9k71c7QnKQPOBzml4o3MqNmenEZfOiDHAI5jECTiGXvmqlbgKKyfZLby2yfU4orZLgbKS4lpIKcLI4bbpQyogDciS4plbv7ggJyQk/Gfk+ccfelyMtUycyh85DrgCsfbPj+KKKe/UcvpU5zZsbRpZTJbNWXfTes/0FoUwxEtyVMMM9vKSMHcVg+xXk7ifI48cU9Tru8qI/p8R4yLXdLYp9cYJUUsKDZdHaySRhaeMk4ClDwaKKHMLOYR3omq3zRHff7VYL8kIur4TwCrNFFFLzm0ruZUerFp38z8r/2Q==)}.ic-ability_whirlwind,.io-ability_whirlwind,.fi-ability_whirlwind{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAYHCAX/xAAvEAABAwMDAgUDAwUAAAAAAAABAgMEBQYRABIhB0ETIjFRYRQjMnGBoQgWJDNi/8QAGAEBAQEBAQAAAAAAAAAAAAAABgUEAgP/xAAnEQABAgUEAQQDAAAAAAAAAAABAgMABBEhMQUSQVFhInHw8RQjkf/aAAwDAQACEQMRAD8Azz0x6f3Bf1VXTqBEQGYzfizZ0hXhxobeCSt1eOOATgZJwcDg40R026TUez7ciPPw5dXuS4fFciym2ENuwqcgAeI2hw4bW6VAZPmCV9iCNJ/WGsjpp0gtjpNba/pZNWpyKtcUtryuvqc/FokcgcHP/KUj0J0/dLJwTSpFcceJkrpEVY3ZKS6+lCu/crBJx2z7a6lmTMuBFaA9ZjwnZj8VhToFad/yGCNREfRtzP8ADbpe1SFTKxDbikODhKGktJBfIwQQlOPZZxjS5e1l2reaZFPqERuK9HSWWpjcIMy4zwPBWkHlHoShZUSDnIOuhTWWDS1OuOpEIEkKWtQCcnbx3B4GNvKlkkZ2p12KQxUa03EltohKJWuE7Il1FtqQ4hCjt3tkD7icjODyFHueEDjC5UIaUN6DUEnI6OL9Hq1jBJEwiaK3Gf1uJoQBWh4IzY8+YxPe9vy7VuWVQ6u2hMmOR52zlt1BGUuIPdKgQR/POjWm+ptBp0i4kCq0+M++1HS2FgoWNu5RxkEg8k6NYl6UoqO02iu1rbZQC4n1c+8S3+p4OSL2pFWIUY0+34imVk5Cg2koOMcex/f51S+nL0SJY8Juo1GLAkpp0YfeeCCFhKsbxn0Sk59O/wA6QbIrFv8AUSxIfTu76kmlVmm7v7eq7xw3gj/Q6T24A59QBjlOCk3BaFxRnWYTFIkykw2iw4/DYUtlwhRO5KgPOkgpUD3BB1D06dMq4kOZTXNqi9CDjqvNbQinpETjCwk2NPPNxSNNJjt1BpiUJaXYbaNsdUdweGMAfiE5H6kkq9+DrhXfUI8eowKYzlbr5BUVK3bcqGOPQDHYADUk6Xm6bSlvypUVUelvtKD8KQopU6rGULSgcpKVY8xxkZHOdNVK+peqLtZqbqjKdJ2pOBsB+O3HAHYavvT41RKWGs7gVEYASQc8knj3gq1pp0pannlVG0hIpQkqBGPGSY6d4TfHq/ibW15bHJQkn1Pxo0n9Qrug0CtMwX2HH3lRUPObFY2biSlJ+du0/vo1tcm0BRFYzS8g6WkkJ4iQwJCkuxXFNtuYeQSlacpVhQOCO4Ppq7XPcVaFu9RbjNQeXPdqkUNlZ3Ij5wPtIPCfKdo9cJAHbRo0PmQCpIPy4huySASPljEsolerM254Tk6pSpZZKnEB1wlOQkkeUcfxpxptdmrfSpaWV7UKXhSSQdqFKwefQ4GfjRo1ekgENkJt9Qc1P1ujdf7ESOsVOZUai9UJbniSJKvFdWR+Sjyf09sdho0aNTCSTWLiUgAR/9k=)}.ic-artifactability_balancedruid_moonandstars,.io-artifactability_balancedruid_moonandstars,.fi-artifactability_balancedruid_moonandstars{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAcFBggE/8QAKhAAAgECBQQCAgIDAAAAAAAAAQIDBBEABQYSIQcTIjFBYTJRCBRxgbH/xAAZAQADAQEBAAAAAAAAAAAAAAADBAUGAQL/xAAoEQABAwMDAwQDAQAAAAAAAAABAgMRAAQhBTFBE1GRFGFxgRKhsfD/2gAMAwEAAhEDEQA/AKP0J6WUmsEfOdRPUHLlduzCjbTKR+TMfdieMN3VvRfRceWhE0rFKpXyko3dJUJPtSTyQPg3vziS6DxUiaDy6aFO5JEskDkchGVrkH/III+sM+eeCaHYWIuh8h6H194a1K8dYunLdKiAgxG22JPed/sY7luFLKyJrB/Vbp/FoetZJaxqmllJ/qMBZnX35fHzbj39YWtQ7b9qISLX2KPQAuTjSn8r44K6uy3LqeoiD08jSSB3A7SFQAW/Vz/zGep6KHaHlqGjj3dsMik7iR6B+QByT94rhh5+2bdUkJChvsDBifj9dpxXF3QKYnI3io+DMK6BStPVVMKsdxWKVlBP74ODA89OGtGwVBwNykk/eDA/S2XLp8UDrOHinN016nag0tmEMlBHvjzELahqEbt1Y3FVKgWN77gGX0bjn1hgan6s57WUiHKKSpyWIIzGOCoM0lVJeyhGA4W5txxfjccVX+KTT1C5vV1tRR11FlMKT0uX1CpNJFO7hDPHGfMKEZgwWwYsAeQMNuuirNNQZ3TLV5fUVD5e22tgpIVakawClHIVTtBYc/ibKov7uWT1tcvepeYSpYwD32yoZBInEz7cRI1rU19QMTG0keY78cVnLVUmYRyz1mcTx1mbSuoaG5kMTkH82P5PYfHAt/vFPzitkaREmZqh42JJmBKg/K7PVvVxiY1DmsVMyxUcQip2k7gPcJmkX4ZnPIJA+ALcYrkKxzXu/kbkE35P6v8AeCa1egq6DZ4EzjwPAyMDCQOaOnW6lI/JYj/ff9+SaiqnY8pICi3Hgu0H7tgx1GnIYjtuCDYgLgxjSlc7VS6HtVi6d6yzfRGX5nm2RpR/3alI6JpKiAS7YSTI6qrePkY1BJBNhxY84tev+peqNSamk09WyUNPk1S9OGoqWkSJFLoj3DDzurXZbsbEn94MGPTa1A4JFJqZbUsKUkE0rN8ks7d2V5CGIuxuTzjtpBeZUuQGIBwYMNNqKlBRMmm2hG1TUw8tlgO3dLgWLWJ5P7ODBgxo0oSUjFPjav/Z)}.ic-inv_ability_hunter_deathchakram,.io-inv_ability_hunter_deathchakram,.fi-inv_ability_hunter_deathchakram{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwEAAwAAAAAAAAAAAAAAAAUHBgMECP/EAC4QAAEDAwMCBgEDBQAAAAAAAAECAwQFBhEAEiEHExQiMUFRYRUycaEkM0KBgv/EABoBAAMBAAMAAAAAAAAAAAAAAAECBAMABQb/xAAnEQABAwMCBAcAAAAAAAAAAAABAAIRAyExQVFhcaHRBBNCgZHB8P/aAAwDAQACEQMRAD8AytHt+gdO4zMquRma/dMtrxKY8k/08NvG7eoeq1HGRnn4+dLeod+X7UKxEoVLTPdTGbQ/Lap6nGUOBaAoIJQcJQAeDnJOTwMDTPqtWKEXRechpVQg1gs+CZbfLK1YSQWir1bDZSrfjzEhCOMq0pZYjpgURX5SqP2vU2wpUUO9xUcJIS4xnAKyhfOByUEcfPbUzALnD9x79F52pJe0NzfINzGBGoEwLAnWyZ0qoiPANZdgV+O4yttEtmVU5jUqKtZAbWHQ5tdZUrCQvblJxuSR5tNLhsxHUSgyavSA7Wp8RvdIiy0oRVI6QcZS6gASkA+ykhxPsVcApabDo9UuSjQIzsibAXIDM5hiW64yGtwLQCnAggnBJSPTB046Q3ZQm+olPfoqHaWl2YYT0XxZfbG5WxSmlq820jCtqsj/ACSfKUkOFyWYHujQquaIeDJvjAxBm+QeBEc1C/C1mES3TZz7cdR3ABxSDn05A9+NGrz1D6aXVctzyKzaa2G0OqW3UkFGQJrbi23SAOAFBCV4Hus6NEPGyuD2kZU5ui1p9Te/Hh+TEiSpAmSYjI7gbeKdpfS1wog552c+vB402te0bqtpqRDjV6C9DWAt5ruFyPIHsrYton63IyR8g6x9jdTKwYzNEqcKlV2O3/ZYqIAI+m3MgpP+9UenXhCYb8NI6dXnCBOUtQ5zjrWflAcSQCfrQpvAuBKm8RQqub5bjbkD9rsXMmq1JFQpdDqNQp0WWvCHGWVLUG1JT3WgCApCCrcR5txGMgaW9OenDFKuq21Rpk2ZUHavH7LuwMtM9taXHFbUk7traVZBPAPIGRrV0+dXqkzmidO6gwztz+Qu+sqbis/faBSFYyPY5+NaS0objFuT7qkVg1qozYy6fTZzccMRu0SO54NkDyMJIKQvALqufQDKGoRbonZTDGzJ0k7xvk/JW36QVNU+nV+bHWtLEivy3WwCf0qKVD0/fRqM3Z1PqdgVBm0baZ7zdPYSmYpCcgSVEqWM55ICkg/YOjXA0wpySTICg1p0KnSm3nZDa3O0ogJKsBX745/nVwoNHhUe30y4XiEE89tMhaGx/wAoKf50aNLUs4ALWu4mpErn6LBzqBfbFKuB9401DLshURhfbbdLYUoJWf1KSSOec/Y1r7ouGoIoNXr6OyiTT4a3IjaUYaZ2DCEpT7JT7DRo0vrWbsDn2Xlhp+VUFOS5Mt8vOuFbikrxvUeSo/JJOjRo1UrIC//Z)}.ic-inv_trickshot,.io-inv_trickshot,.fi-inv_trickshot{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwADAQAAAAAAAAAAAAAAAAYHAQUIBP/EADEQAAIBAwQCAQEFCAMAAAAAAAECAwQFEQAGEiEHEzEUIiMyQVEIFRZCYWJxgZGx0f/EABgBAQEBAQEAAAAAAAAAAAAAAAMCAQQA/8QAJhEAAQMCBQMFAAAAAAAAAAAAAQACAxEhEhMxQfAEUWEigZGxwf/aAAwDAQACEQMRAD8AZ7n4G3Rerve5au82KjprjWyVEZjp5Jp4VMmQAQFGCmAVJxkA9EHOkrvE3iPZpWo3h5Yb3wEN6YGgic4OQAiiR+8f703y75sPlLxfIa5KdDTqqXq3tK6ehn6jqFZDzERboOO0J75AMrcw7z8S11nqzcoK2ep2+nc8rMGmpPkBZuPXE4IWUYVsFTwfKjhyWNFWmy6o5HuIBPPdVKbdn7PVCXaz7J3BvCfkx+ruk0iwO/4iWLt9o5J+Y/zP668sPnqusl3ipNpbC2xt2iglSKVKSlEk83Y9kIkwPkhVyFJyPg9ak1lgr7rDPLYLXAtNSkAvPVRNKgx1lCwVF/u4kZ65Z1uLkt0gtIuVDZWlvlGnu+rorUWjYLks8kjqn3gXLcouYJBJwftaiuF1k7i0N9V0w3zeu8ty3We7XyitEVZIeJRb7W0fFVGFBihmCKQBj4B67Geyalsnkq/Qzys1FaH9zmUCot0UjKD/AChmUsQPyySfy0aoxz7faPOh8pp8c7pkst9ipLRVwirWpM8dzaFQGhZOEkNUrfih44LRjPeDkEZ057u3DTWy+wbr2HVXC2mASobPVolRTJG8TfUpnJ9iKVB9bcwF4sp4rhJRtWvu9VuGKtoYIsRhkqJAfVwhILOzSL2vFB04GQegDniaXb6ie1RW6vgRqpaCcVdLDVIqK4jbEPswcKDlQwBAyeORyOqkLmur4QxtxMvqs3/aW1972CHe+wOG2qwuIKyhM3qoYqz1q7xxS5zADkFWY+o54kocclLbe39zwzXt7nbqikutDOq1clzYCWGHALhFdgWLFo+WMko2RkFtW99z7d3PVms2zZbdbr9WoYbjt6RkipbwVyvqU4HorFDFUfH288GyGA1od4jZUm25LHQW7dNObZWJLT0lyqaZ2pZnVAUdHAkRY3ITEbMTgkjjhtab3boflUCa4XKOU/ja67mkqLnQVdHHTmZlDVUpjMp6LOi4yEJJxnvH/OjTTdLve6Ovlp7XUT1Sg5qJTykLTEZbJCnvsf8Ag+NGqzH7FeympM8evmx1w4qC9VCrEDtlCs3E/qMgHH9B+mqfLFHcprxXV6e/0R/SxwMSIhFwBK8Rjo/50aNFPYnnZLCLDm6ne5GRfKFWHgilj/ejIyOOmUzFMdYI6xgggggEEHvXSflmwUP8IWu9Vz1FwuyPUW2Svnk41FRHEv3TyPHxLyKDx5H5H4uXzo0aCpEQp2H4n6kCrVGyFp2MNOohjByEjJUDPZ/70aNGtBKNf//Z)}.ic-spec-HunterMarksmanship,.io-spec-HunterMarksmanship,.fi-spec-HunterMarksmanship{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACQAJAMBIgACEQEDEQH/xAAZAAADAQEBAAAAAAAAAAAAAAAEBQYHCAH/2gAIAQEAAAAAYrExY9gerYUEHJHzO7RcuS8p/Mu6UQc7/wD/xAAZAQADAAMAAAAAAAAAAAAAAAAAAQMCBAb/2gAIAQIQAAAA5q4Oiy1//8QAGAEBAAMBAAAAAAAAAAAAAAAABQAEBgf/2gAIAQMQAAAAZWlVfLuA9Q//xAArEAACAgEDAwMEAQUAAAAAAAABAgMEBQAGERIhMRMUQSJCUYEHJGFykaH/2gAIAQEAAT8AitVMxQudFWeT4dVQMUJ8eDyefzpMCcFiDZcRTwSkPLKORJDx28HyF1kczkTFWoo0sldl4RYuet+e4BI8g6qbC3POhmZIKispKxN3bt/iDqbaW6Kj+iKYk6fuiccaoJjMdc9xWdInXkdT9QjkV+5DBeQCNZ6KHMUHmqM5fzPXRw6zBRwHQjyw+QfOsdgrGHwmNzHuElmVjIycdo1b7Bqj/ItSzbqVESURPYCrMeAvJ1kt1QwWmirqkiJ26u4BIPxrCRUK2ElqW+iednZzIGP6AOsTjMndyqwG0aicO5lJHSCo7AFdZ8ZHGmDHWrrWYJT6zhD1Bh45JH/Rr0+iepFAAR6q+mpHIJY8Ad/I0Nn4gAe6Fmeb75PU6f0ANUKGTbZNWdDRZfakqpg5l7A+X/OtoY+zlczNVa6qf0vXy6k/6AI1vDb9rHWoFklklhK8K8akHrB8a2Lty02Vr5PIVniq1wXhEo4Z5PAPB+Brce98djcrNWKiRlALFeOxOtkkzbNqxyd1HqL+uTrDTS0s5jJIHKsbTwk/lOfGlCu8MzKOozov9gFQkAa3hkrNLE5C1CVEkUDFeRyORoSOfrdi7v8AW7N3JJ1//8QAJhEAAQMBBQkAAAAAAAAAAAAAAgABAxEEEiMxwQUTISJBQmFykf/aAAgBAgEBPwCHZ0EURSWUicH47snq9PDoGq2J0WAmiMXHmH5RPeIxrqrgIs4/bRdyfNf/xAAmEQABAwMDAgcAAAAAAAAAAAACAQMEABESBSEyE0EiM2Fyc5Gy/9oACAEDAQE/ABnOmYMvLgmSZOWoJ0poCbgNDZLkTgpuvqtJr+r24t/SUIobU1xW7qPIl3tde1QH4sXR31PHIxURIVTLfttvXSlrumW9RPK1v41/VDyb9yVHEeg14U4JX//Z)}</style>
+</head>
+<body>
+<div class="avec-nav">
+<nav class="sommaire"><details open><summary>Sur cette page</summary><ul><li><a href="#s-boss-par-boss">Boss par boss</a></li><li><a href="#s-corriger-en-priorit">À corriger en priorité</a></li><li><a href="#s-rotation">Rotation</a><ul><li class="sous"><a href="#s-synth-se-de-la-soir-e">Synthèse de la soirée</a></li><li class="sous"><a href="#s-d-tail-de-chaque-boss">Détail de chaque boss</a></li></ul></li><li><a href="#s-build-et-stats">Build et stats</a></li><li><a href="#s-quipement">Équipement</a></li><li><a href="#s-progression">Progression</a><ul><li class="sous"><a href="#s-centiles-par-boss">Centiles par boss</a></li><li class="sous"><a href="#s-conseils-du-06-09">Conseils du 06/09</a></li></ul></li><li><a href="#s-m-thode">Méthode</a></li></ul></details></nav>
+<main>
+<p class="badges"><span class="badge">Généré le 25/10/2026 à 20:15</span><span class="badge" title="Commit du code guild_analyser qui a produit cette page">Version b3f96b5</span><span class="badge badge-verif non" title="Pas encore relue par le vérificateur (intégrité des données, anomalies)">Non vérifié</span></p>
+<style>
+  main { max-width: 1100px; }
+  .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 16px 0; }
+  .carte { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .carte .val { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .carte .lib { color: var(--muted); font-size: .85rem; }
+  .prio { list-style: none; padding: 0; margin: 0; counter-reset: p; }
+  .prio > li { counter-increment: p; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+               padding: 14px 16px 12px 56px; margin: 12px 0; position: relative; }
+  .prio > li::before { content: counter(p); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px;
+                       border-radius: 50%; background: var(--accent); color: var(--surface); font-weight: 700;
+                       display: flex; align-items: center; justify-content: center; }
+  .prio h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .gain { float: right; margin-left: 10px; background: var(--row); border: 1px solid var(--border); border-radius: 999px;
+          padding: 2px 10px; font-size: .85rem; font-weight: 600; white-space: nowrap; }
+  .gain.nc { color: var(--muted); font-weight: 400; }
+  .gain.grave { color: var(--bad); border-color: var(--bad); }
+  .gain.ok { border-color: var(--good); }
+  .prio p { margin: 6px 0; }
+  .etiq { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; margin-right: 6px; }
+  pre.macro { background: var(--row); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin: 6px 0;
+              font-size: .88rem; white-space: pre-wrap; }
+  code { background: var(--row); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: .86em;
+         word-break: break-word; }
+  .moments a { margin-right: 4px; white-space: nowrap; display: inline-block; }
+  .boss-chip { display: inline-block; font-size: .8rem; color: var(--muted); border: 1px solid var(--border);
+               border-radius: 999px; padding: 0 8px; margin: 2px 4px 2px 0; }
+  .sort { border-bottom: 1px dotted var(--muted); cursor: help; }
+  .fr { color: var(--muted); }
+  .bandeau { background: color-mix(in srgb, var(--warn) 14%, var(--surface)); border: 1px solid var(--warn);
+             border-radius: 8px; padding: 8px 12px; margin: 8px 0; font-size: .92rem; }
+  .pc { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .gris { --pc: #7d838b; } .vert { --pc: #1b9a1b; } .bleu { --pc: #0070dd; } .violet { --pc: #a335ee; }
+  .orange { --pc: #e07800; } .rose { --pc: #d6559b; } .dore { --pc: #b8942a; }
+  .pc, .pc-t { color: var(--pc, var(--muted)); }
+  .verdict { font-weight: 700; }
+  table.boss-soiree td a, .liens a { white-space: nowrap; }
+  .e-pos { color: var(--good); font-weight: 600; } .e-mid { color: var(--warn); font-weight: 600; }
+  .e-neg { color: var(--bad); font-weight: 600; }
+  .methode .carte p { margin: 4px 0 0; font-size: .92rem; }
+  .methode summary { cursor: pointer; }
+  p.mode { margin: 4px 0 10px; }
+  .refs { display: grid; gap: 10px; margin: 12px 0 16px; }
+  .ref { display: grid; grid-template-columns: minmax(0, 1fr) 11rem; gap: 4px 16px; align-items: center;
+         background: var(--surface); border: 1px solid var(--border); border-left: 6px solid var(--muted);
+         border-radius: 10px; padding: 10px 14px; }
+  .ref.e-bad { border-left-color: var(--bad); } .ref.e-warn { border-left-color: var(--warn); }
+  .ref.e-good { border-left-color: var(--good); } .ref.moi { border-left-color: var(--accent); }
+  .ref .qui { font-size: 1.05rem; } .ref .qui b { font-size: 1.15rem; }
+  .ref .det { color: var(--muted); font-size: .85rem; } .ref .det b { color: var(--text); font-size: inherit; }
+  .ref .ecart { grid-row: span 2; text-align: right; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .ref .ecart .dps { font-size: 1.9rem; font-weight: 800; }
+  .ref .ecart .pc { font-size: 1.05rem; font-weight: 700; }
+  .ref .ecart .lib { color: var(--muted); font-size: .8rem; }
+  .ref.e-bad .ecart .dps, .ref.e-bad .ecart .pc { color: var(--bad); }
+  .ref.e-warn .ecart .dps, .ref.e-warn .ecart .pc { color: var(--warn); }
+  .ref.e-good .ecart .dps, .ref.e-good .ecart .pc { color: var(--good); }
+  .ref .barre { grid-column: 1; position: relative; height: 12px; background: var(--row); border-radius: 0 4px 4px 0; }
+  .ref .barre span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--muted); }
+  .ref.e-bad .barre span { background: var(--bad); } .ref.e-warn .barre span { background: var(--warn); }
+  .ref.e-good .barre span { background: var(--good); } .ref.moi .barre span { background: var(--accent); }
+  .ref .barre i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--text); }
+  .duo { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); column-gap: 0; row-gap: 4px;
+         margin: 8px 0; }
+  .duo-tete { font-weight: 700; padding: 4px 10px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .duo-tete.dm { text-align: right; border-bottom: 3px solid var(--accent); }
+  .duo-tete.dr { border-bottom: 3px solid var(--muted); }
+  .duo-minute { grid-column: 1 / -1; text-align: center; font-weight: 700; color: var(--muted); font-size: .85rem;
+                margin-top: 10px; border-top: 1px solid var(--border); padding-top: 4px; }
+  .duo-phase { grid-column: 1 / -1; text-align: center; font-style: italic; color: var(--muted); font-size: .88rem;
+               background: var(--row); border-radius: 6px; padding: 2px 8px; }
+  .duo-axe { background: linear-gradient(var(--border), var(--border)) center / 2px 100% no-repeat; }
+  .duo-c { padding: 3px 10px; border-radius: 6px; font-size: .92rem; }
+  .duo-c.cd:not(.vide) { background: color-mix(in srgb, var(--c) 12%, var(--surface)); }
+  .duo-c.dm { text-align: right; } .duo-c.dm.cd:not(.vide) { border-right: 4px solid var(--c); }
+  .duo-c.dr.cd:not(.vide) { border-left: 4px solid var(--c); }
+  .duo-c .t { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .85rem; }
+  .duo-c .absent { color: var(--muted); font-style: italic; font-size: .85rem; }
+  .duo-c .pourquoi { display: block; font-size: .85rem; color: var(--warn); }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases .mono { fill: var(--row); stroke: var(--border); } .phases .multi { fill: #eb6834; opacity: .55; }
+  .phases text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  section.boss > summary { font-size: 1.1rem; padding: 4px 0; }
+  section.boss { margin: 10px 0; }
+  details.boss { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px;
+                 margin: 10px 0; }
+  details.boss > summary { font-size: 1.08rem; }
+  .muted { color: var(--muted); }
+  @media (max-width: 600px) { .prio > li { padding-left: 16px; } .prio > li::before { position: static; margin-bottom: 6px; } }
+</style>
+<style>
+  .viz { --s1: #2a78d6; --s2: #eb6834; margin: 10px 0 4px; }
+  @media (prefers-color-scheme: dark) { .viz { --s1: #3987e5; --s2: #d95926; } }
+  .viz svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .viz text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  .viz text.lib { fill: var(--text); }
+  .viz .grille { stroke: var(--border); stroke-width: 1; }
+  .viz .s1 { fill: var(--s1); } .viz .s2 { fill: var(--s2); }
+  .viz .l1 { stroke: var(--s1); } .viz .l2 { stroke: var(--s2); }
+  .viz circle { stroke: var(--surface); stroke-width: 2; }
+  .viz [data-tip]:hover { opacity: .75; }
+  .viz .legende { display: flex; gap: 16px; flex-wrap: wrap; font-size: .88rem; color: var(--muted); margin: 0 0 4px; }
+  .viz .legende i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+  .viz .legende i.trou { border-radius: 2px; opacity: .45; }
+  #infobulle { position: fixed; pointer-events: none; display: none; z-index: 10; background: var(--surface);
+               color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px;
+               font-size: .85rem; box-shadow: 0 2px 8px rgba(0,0,0,.15); white-space: pre; }
+</style>
+<style>
+  .cause { display: flex; height: 10px; border-radius: 3px; overflow: hidden; background: var(--row); margin: 4px 0 2px; max-width: 420px; }
+  .cause span { display: block; height: 100%; }
+  .c-freq { background: #2a78d6; } .c-crit { background: #eb6834; } .c-coup { background: #9a6fd0; } .c-abs { background: #888; }
+  .pastille { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin: 0 4px 0 10px; }
+  .sorts-pourquoi { list-style: none; padding: 0; }
+  .sorts-pourquoi li { border-bottom: 1px solid var(--border); padding: 8px 0; }
+  .sorts-pourquoi .faits { color: var(--muted); font-size: .92rem; }
+  .centile { font-weight: 600; }
+  .c-legendaire { color: #e08a00; } .c-epique { color: #a335ee; } .c-rare { color: #0070dd; }
+  .c-peu { color: #1eaa1e; } .c-commun { color: var(--muted); }
+  .mecanisme { margin: 6px 0 0; padding: 6px 10px; border-left: 3px solid #eb6834; background: var(--row); font-size: .92rem; }
+  section.boss { border-top: 2px solid var(--border); margin-top: 28px; }
+</style>
+<h1>Mon DPS — Gonzoshen-Précision</h1>
+<p class="meta"><i class="ic ic-spec ic-spec-HunterMarksmanship" title="Marksmanship Hunter"></i>Chasseur Précision · ilvl 315 · raid du 09/09/2026 · 1 boss tué · <a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk">rapport Warcraft Logs</a> · <a href="https://murlok.io/hunter/marksmanship/m+" title="Talents, statistiques et équipement des meilleurs joueurs de ta spé en Mythique+ (Murlok)">builds du top M+ (Murlok) ↗</a></p>
+<p class="mode"><span class="etiq">Niveau d'analyse</span><strong>léger</strong> : rotation lue dans le log seulement : ni top mondial, ni joueur équivalent, ni simulation (fiche des PU).</p>
+<p class="note"><strong>Moyennes sur 1 boss</strong></p>
+<div class="cartes">
+<div class="carte"><div class="val">118 k</div><div class="lib">DPS moyen (pas de top 3 trouvé)</div></div>
+<div class="carte"><div class="val"><span class="pc gris" title="centile 16 : à travailler">16</span></div><div class="lib"><span class="verdict pc-t gris">à travailler</span> · centile moyen (tous ilvl) : tu fais mieux que 16 % des joueurs</div></div>
+<div class="carte"><div class="val"><span class="pc gris" title="centile 14 : à travailler">14</span></div><div class="lib"><span class="verdict pc-t gris">à travailler</span> · centile moyen à ton ilvl : tu fais mieux que 14 % des joueurs</div></div>
+<div class="carte"><div class="val">≈ 0,0 %</div><div class="lib">à gagner par le jeu (estimé)</div></div>
+<div class="carte"><div class="val muted">—</div><div class="lib">écart à ton potentiel simc (sans simulation)</div></div>
+</div>
+<div class="bandeau"><strong>Spé pas encore vérifiée</strong> : ce rapport repose sur des règles génériques qui n'ont pas encore été contrôlées sur des logs de cette spé (familiers, incantations, ressource, cooldowns propres à la classe). À lire avec prudence.</div>
+
+<h2 id="s-boss-par-boss">Boss par boss</h2>
+<div class="table-wrap">
+<table class="boss-soiree">
+<thead><tr><th>Boss</th><th class="num">Centile</th><th class="num">À ton ilvl</th><th class="num">DPS</th><th class="num">Durée</th><th class="num">Rang</th><th class="num">vs top 3</th><th class="num">vs potentiel simc</th><th class="num">Wipes</th><th>Combat</th></tr></thead>
+<tbody>
+<tr><td><a href="#boss-nek-zali-the-soulcoiler">Nek&#x27;zali the Soulcoiler</a></td><td class="num"><span class="pc gris" title="centile 16 : à travailler">16</span></td><td class="num"><span class="pc gris" title="centile 14 : à travailler">14</span></td><td class="num">118 k</td><td class="num">7:22</td><td class="num">≈ 22 584 / 26 886</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=35" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/35" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/35/Gonzoshen/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Centiles aux couleurs de Warcraft Logs : gris sous 25, vert 25 à 49, bleu 50 à 74, violet 75 à 94, orange 95 à 98, rose 99, doré 100. Écarts : en vert au-dessus de la référence, en orange jusqu'à 15 % en dessous, en rouge au-delà ; face au top 3, un écart de 30 à 40 % reste courant. Pas d'écart à l'équivalent ici : il est choisi pour faire environ 25 % de plus que toi, son écart vaut donc toujours environ −20 % (il sert à comparer la rotation, dans le détail de chaque boss). Le nom du boss mène à son détail ; « Logs », « Wipefest » et « Analyzer » ouvrent le combat sur warcraftlogs.com, ses mécaniques sur wipefest.gg et ton analyse sur wowanalyzer.com.</p>
+<div class="bandeau"><strong>Correctifs récents de tes sorts</strong> (données de simc) : <span class="sort" title="Lorsque Flèches multiples touche au moins 3 cibles, votre prochaine Visée ou Tir rapide rebondit et touche jusqu’à 5 cibles supplémentaires en leur infligeant 75% des dégâts normaux."><i class="ic ic-inv_trickshot"></i>Trick Shots <span class="fr">(Tirs piégés)</span></span> Base Value (60 -&gt; 75) le 22/09 ; <span class="sort" title="Requiert Chasseur Niveau 50 requis Requiert Arme à distance Fait s’abattre pendant 6 s une salve de flèches qui inflige jusqu’à [([185% of Attack Power]) * 12] points de dégâts physiques aux ennemis dans la zone et bénéficie des effets de Tirs piégés tant que Salve est active."><i class="ic ic-ability_hunter_rapidkilling"></i>Volley <span class="fr">(Salve)</span></span> AP Coefficient (1.68 -&gt; 1.85) le 22/09 ; <span class="sort" title="Le fait d’invoquer une Bête féroce 8 fois fait retentir Cor de vaillance, invoquant Hati ou Fenryr au combat. Hati Augmente les dégâts de vos familiers de 4 %. Fenryr Bondit sur votre cible principale, appliquant un saignement important qui lui inflige ([800% of Attack Power]) points de dégâts en 8 s et vous confère 4 % de Hâte."><i class="ic ic-inv_ability_hunter_deathchakram"></i>Moonlight Chakram <span class="fr">(Chakram du clair de lune)</span></span> PvP Coefficient (0.7 -&gt; 0.595) le 22/09. Références prises après le 09/09 à 06 h.</div>
+<h2 id="s-corriger-en-priorit">À corriger en priorité</h2>
+<ol class="prio"></ol>
+
+<h2 id="s-rotation">Rotation</h2>
+<h3 id="s-synth-se-de-la-soir-e">Synthèse de la soirée</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">DPS</th><th class="num">vs équivalent</th><th class="num">vs top 3</th><th class="num">Multicible</th><th class="num">Cooldowns manqués</th><th class="num">vs potentiel simc</th></tr></thead>
+<tbody>
+<tr><td>Nek&#x27;zali the Soulcoiler</td><td class="num">118 k</td><td class="num">—</td><td class="num">—</td><td class="num">26 %</td><td class="num">0</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+
+<p class="note">Potentiel simc : ton équipement simulé avec une rotation parfaite, à la durée du kill, chaque phase au nombre d'ennemis qu'elle a en moyenne (1, 2, ou 3 et plus). Un vrai combat (déplacements, phases, cibles qui changent) reste en dessous : l'écart sert surtout à comparer les boss entre eux et d'une soirée à l'autre.</p>
+<h3 id="s-d-tail-de-chaque-boss">Détail de chaque boss</h3>
+<details class="boss" id="boss-nek-zali-the-soulcoiler"><summary><strong>Nek&#x27;zali the Soulcoiler</strong> · 118 k · — face à l'équivalent · 26 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/6ZP7pf3YBHbjwazk?fight=35" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/6ZP7pf3YBHbjwazk/fight/35" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/6ZP7pf3YBHbjwazk/35/Gonzoshen/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Gonzoshen</b> (toi) <span class="det">· 118 k</span><div class="det"><b>rang ≈ 22 584</b> / 26 886 · centile 16 (14 à ton ilvl)</div></div><div class="ecart"><div class="dps">118 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">14</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="97.4" height="18"><title>Monocible : 0:00 → 0:58 (1,1 ennemis)</title></rect><rect class="multi" x="297.4" y="4" width="38.6" height="18"><title>Multicible : 0:58 → 1:21 (4,0 ennemis)</title></rect><rect class="mono" x="336.1" y="4" width="78.9" height="18"><title>Monocible : 1:21 → 2:08 (1,0 ennemis)</title></rect><rect class="multi" x="415.0" y="4" width="21.8" height="18"><title>Multicible : 2:08 → 2:21 (3,5 ennemis)</title></rect><rect class="mono" x="436.8" y="4" width="144.5" height="18"><title>Monocible : 2:21 → 3:47 (1,0 ennemis)</title></rect><rect class="multi" x="581.3" y="4" width="26.9" height="18"><title>Multicible : 3:47 → 4:03 (5,1 ennemis)</title></rect><rect class="mono" x="608.2" y="4" width="57.1" height="18"><title>Monocible : 4:03 → 4:37 (1,2 ennemis)</title></rect><rect class="multi" x="665.3" y="4" width="38.6" height="18"><title>Multicible : 4:37 → 5:00 (4,3 ennemis)</title></rect><rect class="mono" x="703.9" y="4" width="52.1" height="18"><title>Monocible : 5:00 → 5:31 (1,2 ennemis)</title></rect><rect class="multi" x="756.0" y="4" width="26.9" height="18"><title>Multicible : 5:31 → 5:47 (3,8 ennemis)</title></rect><rect class="mono" x="782.8" y="4" width="47.0" height="18"><title>Monocible : 5:47 → 6:15 (1,1 ennemis)</title></rect><rect class="multi" x="829.9" y="4" width="18.5" height="18"><title>Multicible : 6:15 → 6:26 (4,1 ennemis)</title></rect><rect class="mono" x="848.4" y="4" width="38.6" height="18"><title>Monocible : 6:26 → 6:49 (1,0 ennemis)</title></rect><rect class="multi" x="887.0" y="4" width="23.5" height="18"><title>Multicible : 6:49 → 7:03 (4,2 ennemis)</title></rect><rect class="mono" x="910.5" y="4" width="33.5" height="18"><title>Monocible : 7:03 → 7:22 (1,2 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Trueshot</td><td class="num">0 / 5</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(327 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Requiert Arme à distance Un tir assuré qui inflige ([480% of Attack Power]) points de dégâts physiques. [ Précision : Réduit le temps de recharge de Visée de 2.0 s ] Utilisable en cours de déplacement. Génère 20 points de focalisation."><i class="ic ic-ability_hunter_steadyshot"></i>Steady Shot <span class="fr">(Tir assuré)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 10 s de recharge 1 Charge Requiert Chasseur Requiert Arme à distance Vous tentez d’achever une cible blessée en lui infligeant ([1050% of Attack Power]) points de dégâts physiques. Utilisable uniquement sur les adversaires disposant de moins de 20 % de leurs points de vie."><i class="ic ic-ability_hunter_assassinate2"></i>Kill Shot <span class="fr">(Tir mortel)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Requiert Chasseur Niveau 50 requis Requiert Arme à distance Fait s’abattre pendant 6 s une salve de flèches qui inflige jusqu’à [([185% of Attack Power]) * 12] points de dégâts physiques aux ennemis dans la zone et bénéficie des effets de Tirs piégés tant que Salve est active."><i class="ic ic-ability_hunter_rapidkilling"></i>Volley <span class="fr">(Salve)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Le fait d’invoquer une Bête féroce 8 fois fait retentir Cor de vaillance, invoquant Hati ou Fenryr au combat. Hati Augmente les dégâts de vos familiers de 4 %. Fenryr Bondit sur votre cible principale, appliquant un saignement important qui lui inflige ([800% of Attack Power]) points de dégâts en 8 s et vous confère 4 % de Hâte."><i class="ic ic-inv_ability_hunter_deathchakram"></i>Moonlight Chakram <span class="fr">(Chakram du clair de lune)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Un barrage de 4 projectiles lunaires est invoqué lors de la consommation de Marque de sentinelle, chaque projectile infligeant ([200% of Attack Power]) points de dégâts des arcanes aux adversaires à moins de 10 m."><i class="ic ic-artifactability_balancedruid_moonandstars"></i>Lunar Storm <span class="fr">(Tempête lunaire)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(116 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Requiert Arme à distance Un tir assuré qui inflige ([480% of Attack Power]) points de dégâts physiques. [ Précision : Réduit le temps de recharge de Visée de 2.0 s ] Utilisable en cours de déplacement. Génère 20 points de focalisation."><i class="ic ic-ability_hunter_steadyshot"></i>Steady Shot <span class="fr">(Tir assuré)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Requiert Chasseur Niveau 50 requis Requiert Arme à distance Fait s’abattre pendant 6 s une salve de flèches qui inflige jusqu’à [([185% of Attack Power]) * 12] points de dégâts physiques aux ennemis dans la zone et bénéficie des effets de Tirs piégés tant que Salve est active."><i class="ic ic-ability_hunter_rapidkilling"></i>Volley <span class="fr">(Salve)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 10 s de recharge 1 Charge Requiert Chasseur Requiert Arme à distance Vous tentez d’achever une cible blessée en lui infligeant ([1050% of Attack Power]) points de dégâts physiques. Utilisable uniquement sur les adversaires disposant de moins de 20 % de leurs points de vie."><i class="ic ic-ability_hunter_assassinate2"></i>Kill Shot <span class="fr">(Tir mortel)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Requiert Arme à distance Attaque automatiquement la cible jusqu&#x27;à annulation."><i class="ic ic-ability_whirlwind"></i>Auto Shot <span class="fr">(Tir automatique)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée Requiert Chasseur Niveau 10 requis Requiert Arme à distance Vous tirez plusieurs projectiles et infligez ([313.6% of Attack Power]) points de dégâts physiques à la cible et à l’ensemble des adversaires à moins de 10 m. Dégâts réduits au-delà de 5 cibles. [ Tirs mortels : Flèches multiples a 30 % de chances de réduire le temps de recharge de Tir rapide de 5.0 s ]"><i class="ic ic-ability_upgrademoonglaive"></i>Multi-Shot <span class="fr">(Flèches multiples)</span></span></td><td class="num">7 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Les coups critiques de vos techniques à distance font saigner la cible, qui subit des dégâts supplémentaires correspondant à 10 % des dégâts infligés en 6 s."><i class="ic ic-ability_hunter_mastermarksman"></i>Master Marksman <span class="fr">(Maître tireur)</span></span></td><td class="num">8 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+
+<h2 id="s-build-et-stats">Build et stats</h2>
+<p class="note">Pas de simulation (mode rapide ou export de l'addon absent).</p>
+
+<h2 id="s-quipement">Équipement</h2>
+<p class="note">Pas d'analyse d'équipement (mode rapide ou export absent).</p>
+
+<h2 id="s-progression">Progression</h2>
+<h3 id="s-centiles-par-boss">Centiles par boss</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">20/08</th><th class="num">26/08</th><th class="num">27/08</th><th class="num">06/09</th><th class="num">09/09</th></tr></thead>
+<tbody>
+<tr><td>Sszorak</td><td class="num">31 <span class="muted">· 52</span></td><td class="num">39 <span class="muted">· 58</span></td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>Nek&#x27;zali the Soulcoiler</td><td class="num">—</td><td class="num">36 <span class="muted">· 54</span></td><td class="num">—</td><td class="num">—</td><td class="num">16 <span class="muted">· 14</span></td></tr>
+<tr><td>The Lost Explorers</td><td class="num">—</td><td class="num">18 <span class="muted">· 26</span></td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>Entombed Sentinels</td><td class="num">—</td><td class="num">43 <span class="muted">· 64</span></td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>Vashnik the Malignant</td><td class="num">—</td><td class="num">19 <span class="muted">· 26</span></td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>The Twin Fangs</td><td class="num">—</td><td class="num">36 <span class="muted">· 55</span></td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>Nymrissa Wavecaller</td><td class="num">—</td><td class="num">—</td><td class="num">47 <span class="muted">· 62</span></td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>The Coiled Altar</td><td class="num">—</td><td class="num">—</td><td class="num">38 <span class="muted">· 61</span></td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><strong>Écart au potentiel simc</strong></td><td class="num">−21 %</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Centile global · centile à ton ilvl. Écart au potentiel : ton DPS rapporté à ce que ton équipement ferait avec une rotation parfaite (simulation).</p>
+<h3 id="s-conseils-du-06-09">Conseils du 06/09</h3>
+<p>Aucun conseil chiffré à au moins 0,5 % la fois précédente.</p>
+
+<details class="methode"><summary><h2 id="s-m-thode" style="display:inline">Méthode</h2> <span class="muted">(cliquer pour déplier)</span></summary><div class="cartes"><div class="carte"><div class="lib"><strong>Combats analysés</strong></div><p>Pour chaque boss, ton meilleur kill de la soirée (centile le plus haut).</p></div><div class="carte"><div class="lib"><strong>Top 3</strong></div><p>Les trois premiers de ta spé au classement héroïque du boss, logs postérieurs au 09/09 à 06 h (maintenance du mercredi, ou dernier correctif de tes sorts intégré à simc).</p></div><div class="carte"><div class="lib"><strong>Joueur équivalent</strong></div><p>Même tranche d&#x27;ilvl, raid de taille (±5) et de durée (±25 %) proches, sans Évocateur Augmentation, 10 à 45 % de DPS en plus ; parmi les plus proches de +25 %, le plus proche en talents et bijoux. Critères élargis (tranches voisines, ±8 joueurs, ±35 %) si personne après le correctif.</p></div><div class="carte"><div class="lib"><strong>Phases</strong></div><p>Multicible quand 3 ennemis ou plus sont attaqués par le raid (seuil de la rotation simc).</p></div><div class="carte"><div class="lib"><strong>Règles de rotation</strong></div><p>Conditions de la rotation simc vérifiées lancer par lancer ; retenues seulement si tu fais nettement moins bien que les références.</p></div><div class="carte"><div class="lib"><strong>Gains</strong></div><p>Estimés à partir des écarts mesurés, puis validés en simulation pour les plus gros (fautes imitées dans simc à ton rythme et à celui des références ; gain = écart des deux).</p></div><div class="carte"><div class="lib"><strong>Limites</strong></div><p>Une référence joue un autre combat que le tien (raid, durée, adds) : un écart est une piste, pas une preuve. Avec moins de 0,5 % d&#x27;écart, une simulation n&#x27;est pas significative.</p></div></div></details>
+<div id="infobulle"></div>
+<script>
+(() => {
+  const bulle = document.getElementById("infobulle");
+  const montrer = (ev, texte) => {
+    bulle.textContent = texte; bulle.style.display = "block";
+    const x = Math.min(ev.clientX + 14, window.innerWidth - bulle.offsetWidth - 8);
+    bulle.style.left = x + "px"; bulle.style.top = (ev.clientY + 14) + "px";
+  };
+  const cacher = () => { bulle.style.display = "none"; };
+  document.querySelectorAll("[data-tip]").forEach(el => {
+    el.addEventListener("pointermove", ev => montrer(ev, el.dataset.tip));
+    el.addEventListener("pointerleave", cacher);
+  });
+  document.querySelectorAll("svg[data-courbes]").forEach(svg => {
+    const d = JSON.parse(svg.dataset.courbes), zone = svg.querySelector(".zone"), ligne = svg.querySelector(".reticule");
+    zone.addEventListener("pointermove", ev => {
+      const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY;
+      const q = p.matrixTransform(svg.getScreenCTM().inverse());
+      const i = Math.max(0, Math.min(d.t.length - 1, Math.round((q.x - d.x0) / d.dx)));
+      ligne.setAttribute("x1", d.x0 + i * d.dx); ligne.setAttribute("x2", d.x0 + i * d.dx); ligne.style.display = "";
+      montrer(ev, d.t[i] + "\n" + d.series.map(s => (s.v[i] == null ? "—" : s.v[i]) + " lancers/min  " + s.nom).join("\n"));
+    });
+    zone.addEventListener("pointerleave", () => { ligne.style.display = "none"; cacher(); });
+  });
+})();
+</script>
+<script>
+function ouvrirAncre() {
+  const d = location.hash && document.getElementById(location.hash.slice(1));
+  if (d && d.tagName === "DETAILS") { d.open = true; d.scrollIntoView(); }
+}
+addEventListener("hashchange", ouvrirAncre); addEventListener("DOMContentLoaded", ouvrirAncre);
+</script>
+
+</main>
+</div>
+<script>
+(function () {
+  var nav = document.querySelector('.sommaire'); if (!nav) return;
+  var det = nav.querySelector('details'), petit = window.matchMedia('(max-width: 1100px)');
+  if (petit.matches) det.open = false;
+  var liens = {}; nav.querySelectorAll('a').forEach(function (a) { liens[a.getAttribute('href').slice(1)] = a; });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A' && petit.matches) det.open = false; });
+  var titres = Array.prototype.filter.call(document.querySelectorAll('main h2[id], main h3[id]'),
+                                           function (h) { return liens[h.id]; });
+  function actif() {
+    var courant = titres[0];
+    titres.forEach(function (h) { if (h.getBoundingClientRect().top < 120) courant = h; });
+    Object.keys(liens).forEach(function (k) { liens[k].classList.toggle('actif', courant && k === courant.id); });
+  }
+  window.addEventListener('scroll', actif, {passive: true}); actif();
+})();
+</script>
+</body>
+</html>
