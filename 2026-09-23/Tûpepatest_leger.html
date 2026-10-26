@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ga-genere" content="2026-10-26T11:13">
+<meta name="ga-version" content="58ba446">
+<title>Mon DPS Tûpepatest</title>
+<style>
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .badge { font-size: .74rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px;
+           padding: 2px 10px; background: var(--surface); }
+  .badge-verif.ok { color: var(--good); border-color: var(--good); }
+  .badge-verif.alerte { color: var(--warn); border-color: var(--warn); }
+  .badge-verif.non { font-style: italic; }
+  :root { --bg: #f7f6f3; --surface: #ffffff; --text: #1f2328; --muted: #5f6670; --border: #e1e0dc;
+          --accent: #b8860b; --good: #1f7a4d; --bad: #b23b2e; --warn: #9a6400; --row: #faf9f7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #16171a; --surface: #1f2125; --text: #e6e6e3; --muted: #9ba1a8; --border: #33363c;
+            --accent: #e3b341; --good: #5cc48f; --bad: #ef7a6c; --warn: #e0b04f; --row: #23252a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  h2 { font-size: 1.35rem; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.08rem; margin: 26px 0 8px; }
+  a { color: var(--accent); }
+  .meta { color: var(--muted); margin: 0 0 20px; font-size: .95rem; }
+  .lead { background: var(--surface); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 6px; }
+  .lead ul { margin: 6px 0 0; padding-left: 20px; }
+  .note { color: var(--muted); font-size: .92rem; }
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+  th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; vertical-align: top; }
+  td.wrap { white-space: normal; min-width: 240px; }
+  th { background: var(--row); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--good); font-weight: 600; } .mid { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; } .muted { color: var(--muted); }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 8px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  td details { background: none; border: 0; padding: 0; margin: 4px 0 0; }
+  td summary { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  td details p { margin: 4px 0; max-width: 46em; }
+  .faire { display: block; margin-top: 2px; }
+</style>
+<style>
+  .avec-nav { display: grid; grid-template-columns: 230px minmax(0, 1040px); gap: 28px; justify-content: center;
+              padding: 0 16px; }
+  .avec-nav main { max-width: none; margin: 0; padding: 32px 0 64px; }
+  .sommaire { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 32px 0 24px;
+              font-size: .9rem; }
+  .sommaire summary { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+                      font-size: .75rem; margin-bottom: 8px; cursor: pointer; list-style: none; }
+  .sommaire summary::-webkit-details-marker { display: none; }
+  .sommaire ul { list-style: none; margin: 0; padding: 0; }
+  .sommaire li { margin: 0; }
+  .sommaire a { display: block; padding: 4px 10px; border-left: 3px solid var(--border); color: var(--text);
+                text-decoration: none; line-height: 1.35; }
+  .sommaire li ul a { padding-left: 22px; color: var(--muted); font-size: .85rem; }
+  .sommaire a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .sommaire a.actif { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  /* sections bien séparées : un bandeau par grande partie */
+  .avec-nav main > h2, .avec-nav main section > h2 {
+    margin: 64px 0 18px; padding: 12px 16px; font-size: 1.45rem; background: var(--surface);
+    border: 1px solid var(--border); border-left: 6px solid var(--accent); border-radius: 10px; }
+  .avec-nav main > h2:first-of-type { margin-top: 36px; }
+  .avec-nav h2, .avec-nav h3 { scroll-margin-top: 16px; }
+  .avec-nav main > h3 { padding-bottom: 4px; border-bottom: 1px dashed var(--border); }
+  @media (max-width: 1100px) {
+    .avec-nav { display: block; padding: 0; }
+    .avec-nav main { padding: 16px 16px 64px; }
+    .sommaire { position: sticky; top: 0; z-index: 5; max-height: 70vh; padding: 8px 16px; background: var(--bg);
+                border-bottom: 1px solid var(--border); }
+    .sommaire summary { margin: 0; padding: 6px 0; }
+    .sommaire summary::after { content: " ▾"; }
+  }
+</style>
+<style>.ic{display:inline-block;width:1.2em;height:1.2em;border-radius:3px;background-size:cover;vertical-align:-.25em;margin-right:.3em;flex:none}.ic-spec{border-radius:50%}.ic-ability_monk_cranekick_new,.io-ability_monk_cranekick_new,.fi-ability_monk_cranekick_new{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAYFBwIECAP/xAAwEAACAQMDAgUCBAcAAAAAAAABAgMEBREABhIhMQcTFCJBFVEWI3GBCCQyQmFiY//EABkBAAIDAQAAAAAAAAAAAAAAAAMFAQIGBP/EACoRAAEDAgQEBgMAAAAAAAAAAAEAAgMRIQQSEzEjobHRBRQiQVFxgeHw/9oADAMBAAIRAxEAPwBb3x4VVsUFHcrdTSj19KKwQkEFMnDIR1ORkdc+4MDjuNLeyqm5fiSj25UqBJPL5MNQzcXpc9Wfl8xqoLFW6YHx31cWx9+2q/bFtANSJb7aKnypaQMRK9NI3FmA6l1ClMkdmTr07w/ibFQVK0sFkDR3zcIaiV4oyZVpM/zMmMZGQvDI6nEi/fWMYH6wieKtPJZJgOuIZBVhFfqgv05rw2vvalul0SoqZJ7dZ/M8u1x+pBlnjXlmaTHU4ZgAo9q5fiCy8gzbluljNU1lWRKqtKEVFFBxYxxr/UJy3sjxkDHucMwAXPTVT1UsNm3Cv0tbaLtErPJX1BDU9jhT2oiqOjSqvEFzn8xyqAtljM+HENBV0FWLUlxeQusprZI2k9Q65JD8QQhBYsEye/LJPYuLw0TeLv8AACnG4aKPiEVtZo2b99lD3ay0dJWvHbZdwxRnrJHE8Soj9iByZWIGBgsASPgdtGm2Y0VTKxrKIGdPY4ZwpB74IJB+c/vo1wjxOUWy9e6WedmFsvXuq5m2dPaLslfU1dXb6Chbz6qphyrooyOCf9HOEA/2JPQHWrd90VF3vouJZqCeI+VB5MpAihUYSNSM9lJBb5OWOSx05+Id/uN621UOUitlpM8DLSzQ5leN1OJX5e4YGWwTl14kDAGk2eYWC4VIskFFSNS1LLHOUWec8T0YyPkA4AboABnpp0x2SMalytJDNoxAP9Ttqpl27FdKWxU1DT2yzWtowJ5KqqT1dXUuQWRvTtlUIBHHzAAoOehJJgL3um4x1J9RU3i4VVOvlILnJGaaBPukEfsYg9uQwO+CcY3djyXe9XL0tBFV3KtnJfKe5pmJ6sXYgZyerE/Or5s/gttkQwjc9F9dvc6hPSLUMlPFkdc8SGIA/vOM46D7jZPJnIIoECN2IfKaijf78nkqLqNwXOGit0t33IKd6mlEsEc8bSuIeTKhyBhQeJYD7EH50ajPFYJTeJF+pqSSK50sFWYaeaMjiI0VVWMY6AJjgB8cf30akxsr+1R0ZBNuay2nB+Iq1LTcpppI5ZjV+cHzKsqge4Mc5yAAQ2QcD7asPwNstv3z4rXWLcEbyJQ00klOIJDDxaOZI1PsxnoSf1JOjRoZJyhWivLT2C6Ouhntf0m0U9VLItTO0RqJgrzIoAIIYjGevcgn9+uqi/ih3Dc9o7bttDYpjTmveqhnqCzGcj8uMtzznlxd+pzgnIwQMGjRI7uCZSWBXNdLIwpo/wDIyc/qdGjRqDulK//Z)}.ic-ability_monk_hurricanestrike,.io-ability_monk_hurricanestrike,.fi-ability_monk_hurricanestrike{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAYFBwgDBP/EAC8QAAEDAwIFAwMDBQAAAAAAAAECAwQABREGIRITMUFhByJRFDJxQmKRI1KBsfD/xAAZAQADAAMAAAAAAAAAAAAAAAACBAYDBQf/xAApEQABAwIDBwUBAAAAAAAAAAABAAIDESEEEjEFFCJBUXGRBhNhgfCh/9oADAMBAAIRAxEAPwDOGhLBAnNuXTVcaUq1zEuNtT48kFbD4OcqTuSogHAVgH53zTUn6LXVyjWy5yBHvMZpUWHPCCMrSf6aXuvGgnYEbo4huQMUrwmlWyKLUhxwOrUM8IJCXSEncdtt8+AK9luS9a5rUxKkmchzPOCDvvkDz/ulpi4Go1TWHa2QCuhSmbtd48l5krLDqVKS6nh93EMggnrnNbI9OlJtenrTYHCTLhWxh6Wkj3JU4OLf4PXbxSFB9ObfedYWnXz8dp21ORlPSw1sXXgPa5j+c/uSMjerEslrfjRJtzllJul7fMuSlSgEx2gAltvP7U7f5pKbENnaHN5X++i5p64jikO6gXbe3Mmw/mvcLPnq3ehpnVCbW3IdMksfUTOUvCQ864twjbrhKkjPiikrXth1bL1ldZU/T10D7slajwRlrTjO3CoAgjGMEGinoYG+23MbqqwWzGNw7BKKuoKm2vj9RRqry9D1E9JKlLQ48rmhQySknf8AB+CPgVKM3OaiRJhBbj0Z9wHg7KUfsUPO/ajUcKM7d3DJtM2NKcXlTfIKcq7hKe+/xVjaZ0JLcEJ29MLgspSOTCbPFLcSeyyMBlOPjfG29ZJSGHMU+cWyKIZldXpCtTukIMPmoMOIgh72g85wkngSodQP1EdzjsTXH1lvrNp05OxLZbmOx3FkA/CMDzgbY84pc1FquFou0tsJU2y4lPDHitnhSj/v5qqrdPd1nruIbtNKIUNz66c4T9rTfuCM9itQSkDzWqYAGFrBauv7x9qfi2NJtDE71OeCvn47LUEa73SLY7IzMAfmC1RfqllwoJd5SQvISMZzRUNZNQW+7QzdbmXW1y1lxlJb4iG9gCfyQT+CDRQl4qrZrA0AUVU3hiJadXiRAiNNvuvhrnLKnFoBznhKycVN+oNylWC0cVvWEuFIKnF+5RJ6knuaKKaxBq6MHnVRMnFJGCqg1hKeubL0iYsrc5PNB+FcGds+almY0e0WiDAhspS3JhpmzFnJXKWf0rV/YOgSMdT3OaKKF1mWVeBRjQOi4vaov0l1Tyrk8gqOeFv2pT4AHQDpRRRS1AhzHqv/2Q==)}.ic-ability_monk_leeroftheox,.io-ability_monk_leeroftheox,.fi-ability_monk_leeroftheox{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAcDBggCBf/EACwQAAICAQMDAwQABwAAAAAAAAECAwQFAAYREhMhBzFBFCJRYQgVFjJCcoH/xAAZAQACAwEAAAAAAAAAAAAAAAABAgADBAX/xAAkEQABBAAGAQUAAAAAAAAAAAABAAIDEQQSITFBUSIyM0Jhsf/aAAwDAQACEQMRAD8AUFW/uHMeoePxKfQLetT16/YccrF0yEr3iPYAksV9wB8Ea0JahmyGXxuaxeD7WewqJBmqkEhYy1pF+3t9QBcAgg8gMPuU+U85+xm28t6d73gmcI0cqpPUWSQdErMT21EvAUrIvWqv9vD8BgpHBe2y7dbMqN24HNZyjmIimNyNe26WVSPr6li4ZQyfcxVZPJUnyCPbhYvDF2IZK2srQa3uz+it75AK1xyDIWncq5epWHyOd25XwuLiMLXJVSedyAsEAIMhPP6A4A9z+gdJ713uyPs/C5zbOPip4OlL2I5WQ96QcSKGCgdPbdUJ8nlg4J4DDTx3xSyE1KtjamXuUosiGjlKoskjhkPUql/EZ6eotJwSoHgckazv6oZ+pYpSbX2xLkbuNpdFStYu2Q5ksRgqleFeAOjgBi3woJYjkc1nDOmmje34nnqtfpEShjHA8qn4nc+6DiqggrwX4lhVUniKEFQOAD5BBA4BBHPj/ujXWH9FLdzF1r1uxTjNmMSxmxfSsXQ+zqjRs3QfPDNwWHnpAI0a6hbFeqy+fShymTGW9OPpC7S0hVllxsEnLyVu63EsAPyBYjjIJ8nrGr/6a762VtKfKYfcWRs1nneH62dqheJ5YkTupGy8kuGUDyACeSDpRbc3Ri6VLadGWOYmplTayMxHCrH3g8aj8gEF2P6A+NWjFVYcPgxZ3VgnzFKGR48jGtgSQ3IByUtxSJyVYPLEnUrcEeG8nVkjWZKOyDXHMnvmf4gPS3Ldt6mZuLZqd3trLjJE7iMhDBPf7j/iD8/gedZ/n/l0248ZeqpOmOZLcTpajCSQS9wNKpCkjkxNyCCfH+p1PhbuyrN1qmD9OreLyk0/erW7FmWVqkCkGaRFkHRykYZlLchTwfjXlbqsTbfqW+ur2GbKVzj6ssweV4oI5Y5ZZR/cBL1+5A5LHjkDSxMY0kC9kXuNKLfG64TuWzPnMVYzmUsdM9mU3XgWAuAywqqDjhEKDk+eefxo1WN65Wlkt25LIYoTJSsSK8Kyjh1HQo6W/JBBHPzxz86NP4DSglFnkrxOOJCoJ45I0xvQPI3f6viwMc7R1bMU8ylQC0MixEkqDypDgdLqwZXXjkEhSDRqMAdodkT6LTBzeRu0NlboyMb1T9EQy10oV4Ipm7igGURRoZACQ3QT0EqOVI8az3Znns2JrVmaSaxK5eWWRup5GJ8sx+To0aph9sHtFvK6rQrIhZifB48aNGjTqL//2Q==)}.ic-ability_monk_standingkick,.io-ability_monk_standingkick,.fi-ability_monk_standingkick{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwEBAQEAAAAAAAAAAAAAAAYHBQIECP/EADAQAAICAQMCBAMHBQAAAAAAAAECAwQRAAUGEiEHEyIxFEFRCCNCUmGR0SQyYnHB/8QAGgEAAgMBAQAAAAAAAAAAAAAABAUBAgYDB//EACgRAAEEAQIEBgMAAAAAAAAAAAEAAgMRBCExBUFhsRITUXGhwRUi0f/aAAwDAQACEQMRAD8AiNDl42K5cG5Uvj5Zq8bV5FIUwSEdRbHs2eo+/fPfS3S3JY7kc1SBxPJXeKVWXrBY98KBg4/5ph3a/wCGd6RbE23czQSDqQrarHAzjHSR8sfXWc6+Gvdkm5oB+VoKjD9+oany23a5mR+1rncNvoQ26tydLc1BEX4tElDWVhIwkgXuABjBH5gQcAg6zuT8dt7HPF53RZp2gz07qIRHYUHBwD3V1PZkPdT2OqVxbjNbf9hvb1xU2KlfitU7rIbE4NizE4JaONECqE6VkJYk4KkYIbW34fQbdzClb4BuLQjeYGD1jMHevvEPvG7hfXHYVCMTx9yv94cKdVbIxzi0HbfupMbqDjzXz9FuM9JfLr27VdGJbphsNGp74zgHHsBo0ycr43xLbt/ubfa5BuO3z1ZWgkryUls+WyEqQsqOiyLkHDBRn6aNWtTSbN94oNz363Hue5Vtjlv3JLG3WrkTfCzq+PunlXPlNn8y4/XWnxrwdv1NyMnJIYNyEaiWHatrtpPNcHv1MyEiGDHdpGPsCACSNLm87xyiwJI739GepJJROgmmdlKuocH0j8Pox2HY/TTg/j5zCts25UE27YKM91MmapVMMbHsCTEPSz985PYHPY5xobAEwhDZgARQ09BX86ozijsZ+S58BJB119d+/snb7PW5Qnn/ADa7flgn3zz4oJIkj6IPggvSsUafJPwY9wAue+dTPxG43Jx3kO5bXSlkjn2CQPRsxOyu+3SsTA4IOeqInyyf41r+BG3Wae8Wd7mf79kaJ5XOWZmYSSdX6KAoP+TN9NM+9fCc3j23fUsw0bMVuejDNYjYx2KxIV4ZSuSC2SynHYkfXOkJzhjcTk1/Q1fQ1oPiinf4h2RwxjwKeLrqL39+a93gVb47vPBiOU09suXqd2aBZr1SKeVo2IlGWcE4zKcaNLnFePJxaG9tu/b3HtFk2utI4pFdJkEaIJQSCfUUJ747/LRoPJmidK5zJDRPK6+AjMaGcQtDohddFOOXMm183XjaxLZ26xDWkdJmYPnyyVHWhVmC9RA6iT3+fbXEU6WeYbFsCVYYKcspUFep3j6jl+hpC2CSAc/I+2NGjWjje44YcTr4T2KRSsaM0tA08Q7hVRsUONboaYEIgpOsYX8IJx+/cnPuT3OTpcsu1Xwb2uxCel5LNgsf1Ei4/wBY6Ro0axWKS5tncvH2vQ8gBtNGwB+lWuSQVZ7VeSzTrTua6+qRMn3J/n99GjRpcJHgUCh6C//Z)}.ic-ability_monk_summontigerstatue,.io-ability_monk_summontigerstatue,.fi-ability_monk_summontigerstatue{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAYFBwIDCAT/xAAtEAABBAEDAwMDAwUAAAAAAAABAgMEBREABhIHITETIkEUFTIIFjM0YWKBof/EABkBAAIDAQAAAAAAAAAAAAAAAAMEAAIFBv/EACkRAAIBAgUDAgcAAAAAAAAAAAECEQADBCExQWESFHEVUUKBkaHB0fD/2gAMAwEAAhEDEQA/AOYIaXJlGzHhvtc3VH6kuOgK5KPfOe5+P+6trob0xv8AeaHKGTRLjxalxx42SzxbC1gAIVke4jz7f96Q+ktLT7s3VFj3kxMCtqYipkx1tAQtxttQARy+CSoDmfAyfjXWaOotva3MWs29TUcCkjMtvIspCiuIy16ZU9K4ghTiBxIRz4cgtv5X26T1AYdVuWhLgADdYgfCd+rnUTxWLfwzXibRMCZ9jMnfxO2QOm9QnTqTtTYsR2BtpFzbwY8kQry4XHMKNAJPN3kteHCsgJHFKRn2Dl3GfV0W3FO2fHvp2+Il7AZsrBP2+VMhOKiNwW+ZbQlxOQnJcWQCPnyc6R7PcU63Zmbg33Bpn7S1tURaWYYgZfipiqbUX1NAkOtoKkJWCeSSHRz4jta9RvDes9+XXxDtncEmRZTkKiSprzKnyylv1mYrYC0htIIILqwVclKSAkjWO+Ie+xZzM00MMtnJP2eaVIPUgQnJhjRrW7+qluSVznkOBDpWrI9JOfa0lPFKR/iT86NUh1G3cavdcmLtl6btuP8AlJqJrfqGFIyeaEKx3QcBQ8fl40aICkaUsbdwmaev0y7VTE2LNkqlOQ7ncsJ2S2VReSXaxl5LbzSXCRxUslSjxBPBKfGdMu6pO3Yu16/9zwXbGviOhlVdDmmGh6YGmnlS5LySFKShLiQnuAgqIA/Ea5+2N1atNuuoceqK2xU3W/bA8CtiSI2MBsOIPjsATjJHzqdc6sbQtKd6rvdoWTjDq1LWG7BKuZUUqJPsSUnKUgccYCUDBCQNBQW2jqbL501ca8pPSh8yPyas2p6ow4TIvNu1Oy4CCv7ayluC+vKUt/07b6kjtggntglfznGtext2xG0CRCr2qGaw6qG5MrlMImqjOektgB5aFFTKAXhhA5kNtJPYK1WHRepTuKduWup7JiJRvMnnV2bpcWrP8TgWEBvmleAD2UQSADk6z3ZtfdkDY9opEKQtyOWES1NJJV6WXCo4GTgcmuRHjlg/I0wLIZOoLkJ04pc3ilwozZmNef7naDUx1Xg2e4d3Ls5NbMuXlNJQqcXExXJHElIW43gDmQBkjse2jVWVG/t31FazXQLhQiMghlDjSHOAJJwCoEgZJOPHc6NV7lPb7CidriBoR9TSoBl0jJ8+dZhSuaRnyNGjSArTOlSFRaWNPaMWNVNehy2Vc23WlYKVAHBH99S73UDfLtO5VO7tuVwlhSVMqlqIKSckZznBycjONGjUDsMgaG1pGILKCfApeiI9RrJUpODjCTjRo0arRK//2Q==)}.ic-ability_monk_tigerpalm,.io-ability_monk_tigerpalm,.fi-ability_monk_tigerpalm{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAcEBQYIAf/EAC4QAAEDAwMDAwIGAwAAAAAAAAECAwQFBhEAEiEHE0ExMlEiYQgUI0KBkRWx8P/EABoBAAEFAQAAAAAAAAAAAAAAAAMBBAUGBwL/xAAnEQACAAQFBAIDAAAAAAAAAAABAgADESEEBRIxUQYiMkEjYUKBsf/aAAwDAQACEQMRAD8ATnV/p1cT13Ta3SYS50KYpKwWTuUnI9CP402fw+U6pUOwWGaq07Hc7riktqBStKSfv6H41gOhnUqrIq8C26owZrClbGHSgqWg+AofuT/rTlqzcuivKqa7kkzaa8paV0+dF7xZKU7iUOIUlQBB4GFqz+1Q08laU+TcRk+aJmU9FyecVDLRla/cFsL3APNo8gmqRauqjXKSXH9y6RU3kbEz20jCmlH2l8DaoYxvST5BzU3elxu6KHSZ63H6Jc7DkCRFc+psSu2ey6nIO1RAQnjAI2n1GdZ68r5hv3LOrSCH4KZgWtbZ3fptrCWinJx9CUoWnGDkn03Eaj3vdVZrNOQZtSyHHWn1U1EVpLcD60mOplxJ3bm1FAVn3BSsY0BpzFQOIm5fTSJiDPFtS0YC3dyODW9vYqOIUMmwL7p06VDpsacY7bpCVsvKQlfAwrGR4x/WPGjXUL05FSbjVRuN+WTOjNSeype4tFaAopz5wSdGueyICd17mOGmNJaWhKmh33ForqVEt6Ct6RDQyy68gtl+Pht5IPwrwR86oerVQXRrXNPW6/KQ6RLgT6m/vdC0bwtAWNqThJIwoKJSrII8IOzbsdi0afb0uoOxmpQzGkbiew5n0+yT5+NMHoFdU6RMmdP686JkSWy6GQ+EuttObTg8g8D3ZHkffRCwmCm0SeDybE5LNmYiY2tUIN99NhqBv43BWu1fqJkWwqXUrAhywuof5uoxTKaw6rs9wncE9rgHx/w1jpZrciSujzKeIUxhJU6haz3HW28KIQCOScfPA0yanKvGDMXTFwEvu0oJ3iFIaKWk7AQQVKGQpJCgPdjHA1iqjWFTJTUt90tvRUvHctJSpRWgpSjB5IyrJzwAn19NANALRdZc9HWqmo9Q6rLiT51g228hpyeBTko7rCMgYWsBB2+UjCeeeOdGovSe9IdldN6HAqUl1xcxhc5oOLB2NLdWEgA5wMJzj5J0aUERmGYYFHxcxherH8QffMcfuNp/OKZ52pUQP70+fw2W7TFVqbWHmlPSYjX6O9X0jPrwMZ440aNKnkIvXVkxky5tJpWg/RIrDqorMKsWO5ddYpsGpVGoqdaJksJWiO0gqQltpJ9oASOeVHyTxrmK7YcZi4J0eM0I7QfW0Etk8J3YHJyT/OdGjQa3MPVUIqhRS0MTroyin3mzTYmW4sOAyww367EJ3ADRo0aLSKvgyTJBP3/Wj//Z)}.ic-ability_monk_touchofkarma,.io-ability_monk_touchofkarma,.fi-ability_monk_touchofkarma{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAYHCAEEBQP/xAAvEAABAwMCBAUDBAMAAAAAAAABAgMEAAURBiEHEjFBCBMiMmEUQlEWI3GBkaGx/8QAGAEAAwEBAAAAAAAAAAAAAAAAAwQFBgL/xAAiEQACAwABBAIDAAAAAAAAAAABAgADESEEBRIxUWGBkfD/2gAMAwEAAhEDEQA/AEt/XkezMuQ4b7LTpPI7NXhR8xX2I/J+R/mkibqudIn5WuQ4sHHM8sk7/AOB/VWO8CNt0TdtJXG4KtsV/U0WUWpDkhCVrbZIy2Wwfak+rJG5IOe1M/E/w7W/VPEZi+W6QzbLbKHNcktp9YWO7Y9uVd+wIJ3ziqtncHdveSWnRqo0DTIB0lJvdy5I1tgy58lxhsJajoUs+o5JOM7bdT+etS3BY13pmzJe1ZY3XLGpSQ6zIeQVoz3T6iUrHxU0wYWmuHNqhae0zbWUzZZDMZjn/cfUB73VnflAGST2GB2FIfErhNq7Uql3a4a3jSn2vWmM8ypiIwgbnlwVcuMdSCTjc0aruLEgPwv3u/j4gLehUg+PJ+oqu6Ng3Ai4WpN1kxJQ81t2C/5YVnb1pI2cGMHGxwD3opFtGs7nZo64MO4p8tDqvUyrKFkbcySeoOAQaKsgORoYSUVsBycXwN2C/wB04iLvFqluw4FvZP1zqRlLqVHZnHQlWM79AMjer5DbaqQeFbilB4URL3pTU1qmBtcj6kSGQk8qwkIKSDjKSAMEfNNT/H+9ag4kR7pZFLt1miNqQIj6goPt9VqcxtzHAxj2/wBmsotD2NgmlNyVjy9yVeIOmLv+vbVeFTpDUBUhCXZrKsKjj5P2g9M9N63ONsPTEXQdwn6n1LeUwUMqKY7Nz8v6lWDythIHrJOOufz0rU05x/0BcYAGoJibFJKB5jUkFbSsj7VpByP5AqsPic1hw2v+oI/6Bt8gylrzKmIJbivDlxhDR6HOMqAHTvXbGwkBxmQCVIulDoPzv9+4qwJy3Y4WgKIz8HFFb+mb1BtNnajIQ2hSvW5zshwqUe4P4wBj+PmirC2t4iKsg31PTXDLc1mCh8Z5leUVDYnlAwonurBx84Hfele2OOREXZLLih5TKgkk77qSk/6NFFAuGWcQlfKTmaqlyElpIcOPpmv+VjRMZmUmfIkp84xGQ+2lXt5irG/5HxRRS7c2CGHFU7rKAtHOrJUdyaKKKoADIkTzP//Z)}.ic-inv_121_trinket_raid_ulatek_heart,.io-inv_121_trinket_raid_ulatek_heart,.fi-inv_121_trinket_raid_ulatek_heart{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAYHBQQI/8QALBAAAQMDAwMDAwUBAAAAAAAAAQIDBAAFEQYSIQdBUTFhcRMiQggVMkORkv/EABkBAAMBAQEAAAAAAAAAAAAAAAIDBQYEAf/EACYRAAEDBAEEAQUAAAAAAAAAAAEAAhEDBCExEgUiQVEGQqHB0fH/2gAMAwEAAhEDEQA/AIOh5LjheSN6hypKjuJHcg96b7e9DuWlZ9vUw49KWgSIZQQNjiBkqHGSdueO4zS/pidpiRbFQrow204fuYmIWUPMK7pcH5t++CR7jin+1WaFpa327qNpm4IuluhPhqXAkBJUy+obc7gcKSckjHkevOIHUr5tIcHtIM9vokZAkSBJxmPXkTzkgbWJp6Rb51xN2mx1ORIUFOSnACX1g7AM8E7snHjJ7UuXu4rkPLitOBpOdzpzwB70+v3rT0iwJ0dZYZspvN0Dz02e4jZHUPQDB5QlOQCcevpWMmz6Dsyn0iVI1LJb4WreY8Z1WTgj8ikeSaTb9Rl7i6m7kdDeBiT4EmdnwDCFrmlKsGbEjMfTbkPAZydrykZPnAIFFZt6usV64uqWyyjBwG4zCUttjslPHIHnmirzeZEkfc/pMhaHSedbYN4S5dW2H4H9rT0RD5P/AEQR8inXq2/aor7N00u+hFku7YQ9HjoU2gPs+uU4AwQoHvg5qU6Fvltsl5YmXKxxbtFCwXGXkblYz+JJwD8gir2tuZ1l0HMctdij2hFqXvtAU7lT6x/NHACQkp447496zXWIoXLLh4PDRJI45wMbkGM+Bn2gqDyorcC9uTcJLx3qOGUnk/OPFWS6XfSeiumMK0NOxlahcjfWcSYqX3G3FpBBWTgJODxk8eDU26ZaIv8AqfWyIEu3SWI8JzfPcfQUJZSk5KTnucYwM/5XZ1k6l6hu92nWCVAs8BqK6phQhNpdUQnjAeV92PjFeXFIXl3St2GWs7nQ4DH04zI2YEe9IWtypvMlNuyVuyHHHnVkqWpJwCTRXApwA+KK1IwICeucfZIU2DkJWQM/NXT9OWr9QRr1+yCepy3iMpxDDgBSggpHHcDn0ooqR1umypY1A4A4P4Qv0rVrG8T02xTrTv0nCnO5A5BxjPPevIevGDGvUgGQ/IWVElx5W5ZOe570UVH+KMaym7iI/pSqO1jwIqJLSnHFuAhWOCPA9qKKK2ULpX//2Q==)}.ic-inv_ability_conduitofthecelestialsmonk_celestialconduit,.io-inv_ability_conduitofthecelestialsmonk_celestialconduit,.fi-inv_ability_conduitofthecelestialsmonk_celestialconduit{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAcGCAMEBQL/xAAxEAABAwMDAwIEBAcAAAAAAAABAgMEBQYRABIhBxMxIjJBQlFxFBUzgVJTYWJjkdH/xAAZAQACAwEAAAAAAAAAAAAAAAADBAECBgX/xAAtEQACAAUBBAkFAAAAAAAAAAABAgADBBEhMQUSUYEGIkFhcZGhsfATI0JSwf/aAAwDAQACEQMRAD8Ar/YlsLkRBU3wVLW7s7ileouEbtqR7lKxzwPvpzUSiXNDipmOVJcGC02FvKnbSGzznJJ9PH1UCfprNadsx7MjNPz3mjPQhKTEiPHlZ5HdeHOAOO237sElWM65N4XG6w+mZctXaFTUAqLEjsB4U9OOChr9NLp+q+EDnClcixlrvdY54RgqqqfaU4ohBXwueQI5k+8blXl2iw7+MrndcfdCXG2FBSXJIxhLnbzlKcHhS9uRnGdcm5KGq6KM/DtmqRoEZCTupkZgRt4/yEetR5PuyOdQ1FboUiU8qREmsqcUVF9bqpK3SeSpwKCcqP1Sf2OpVb9PLDzdQp7xfbfTmO+2VYDny+RlJ3YylWCRkfHQnfcOBaJm0BogJiswYab2V5dmnMDS1oRVSarFuz36XIclwnG1ZKA4UhWfChg4IIxyPOjVpLwo041fuRabRZTbjYVmWyFqQrnKUnHtzk/dR0aliykgiH6fpZKmSlZgLkftb0tGv1UqL8XqDXaBLTVoiO8p9qVTm0BaY2cehSgUlHhJP9BzjjUPu/p62myJ92WnWKtU005baqjGqUVppSGnCU91K0K9Z3gAjAJCs/DT0uuiUqsR2a/Ukx5FKSgZkKXtVT14A7aiMZbUANp8kY+ZAzybpqtNty1arSqFQvzxufCWiapxRJTFJKkuhhIy4gfzk5CfmCTxoryyrEjSEtnVxWYFp1wbk94sTcYvknlm4BirNBardcrkSjUuO25OmvpYjI4SFLPgZJwPvp+welKaJVSxAvSsKkx3CmQ/HhNR47Sh7kpK1KUvByAcDxnjSn6XXHAtG+WbiRTWnFQHC6ymS93G2yMjCduCT5wTk8DjOTp6s3nZ/UKNLYarH5I/KaW4/HfUSzlXyh0coyf4wPPk+dWUp+fl/L9kO7enVolblMosdSQDjuBxfOnHjEM6kXbX2rnVDt2mVKXCjMNoD8OO1IbdJTv3bgeMpWnj/ujU1gw4lowWKRHZkw2dndQGEJId3E5cKgcKJOeRkYwB40as4DsWJyfnCMdKrpEhBKSkDAYuSQT3kbpsTra5tHjp3dlSqN53TS5DML8DGCEJjhn0LbUClTa0kkKScZ55yTzqI9R4rfT/AKn2xbdvKeRQq24zINPdeUUQHXNuXIqwQ4woZ8pXz4ORxo0aZfrSVY65947WyftVs2SmFAU27LmWST43z48747xtCi1xjqJMlsqaqVsTO2zOjBLLkwYzmQlIDalf3JQlR+JJ1X2DIfakMSWXXGngU7VoUUlP2I0aNDnKN4D5rGm2W7OWVjcAgeYUn1MNqwr1uhu30paq7zae6r0pSnH+iOP2wPj5J0aNGkGYg2EDnUkj6jdQa8I//9k=)}.ic-inv_ability_monk_jadefirestomp,.io-inv_ability_monk_jadefirestomp,.fi-inv_ability_monk_jadefirestomp{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAgICAwAAAAAAAAAAAAAAAAYDBQIIAQQH/8QALRAAAgEDAwMDAwQDAQAAAAAAAQIDBAURAAYhEjFBBxMiFFFhFXGBoTJCYnL/xAAaAQACAgMAAAAAAAAAAAAAAAADBQECAAQG/8QALREAAQMCBAMGBwAAAAAAAAAAAQACAxEhBDFRcQUSYRMiQZGhsRQyQoHR0vD/2gAMAwEAAhEDEQA/ANabRWteb+KzcMctwjSjaE+2qqwxGViPgZDEHJznHOdY0NNJQpUQVNHDOtTGI3YoGdRkHKE/4njvqenoaiBomnp3iSoiSdEZcZj56WH/ACcHB86Y47b9eKVqOCaeqbqjWJD1NKWI6Qq9/wAf3rQkmPNZc/isY2J3K35SPKl9bX+26od9D9ZslHfQxmq6OQW2vmxhpsL1QSsPuUDIT5MY++ovSxfq7pdrA5CfrFqnpI+rsZgBLGD+7xAfyNMm6XorRajtuhkSbpmE10njYMk9QqkLGhHdIwWGf9mZj2A1H6b2Gqm3Pa7lSxhGjr4ZS6j4Rwp85JGPhQqnJPbVhP3SCFDMU0YNzMh9PuPUVpoRsE+hrVgpI4446yHjLexWvEHP3KgYzjA/jRplTbj3aeqrrc9LFTS1EjRxyyhGRSxKjkjwRzo1PxDUZ3EcLXvOvufwvUPTnYrbnsYYWtpI2iVY6ySd1+mIHSqOzgKYv/JIB0peo9fedoXm8bVttJNZvopngqahGJqqtMgAl+CkbcEKgAIPJOr2u3nYr1tuCkud0vu3ZabLRvalFZSuTjJYGQ57DBIUjnjnhk2XcLnuvb0VZea61brpoGdYpbrtuoeakXBAAqYioyBz05YIex86GWgGpSnBQtjcZsRe9aOyB00O/p4rX6iDR1cZrlk+kDBJAi4ZM+R9yO+NbC2jZqxenE9JPXx2ynu88MUcjvhqunQM8gXjPts3tEnyeOcaoNvbn9ONs3OtqbTHQpV087JBUTW2e6MV6R84lmeOOM56l+QZvjnONcT+pW3r1uerkulZebtIwJp6m6saeFFAyU9imVuM8gZ6cdx98JFMro/E45JwHxWI0Ft9/evRUW7NqrbL1JSSxVRKqOke8aYKO2AvQ5I47lsn8aNQX6+bouVyetXcdmRJeUFHcKaNOnx8SMg/g4PbRqwjFMkuidimsDTI23V36pR9P7bTX7diUNeCYaePI6AAZMP2c4+Q/fxx203+o9bUVm902fIY47RT+2RDBCkXVlc4boAGPGMf3zo0aK8XTDGEniTgcmx1HQkCpHVIlwrpvfanjWOGFQFWONelVBAPjv8AucnXW/UXtilKelo3dlkQyywh3w4AOCexGMgjkEnB0aNCGaZxtHaNb4FYR1rEEVFPSVTqce5PAruR+TjJ/nRo0aMm3YR6f3mv/9k=)}.ic-spec-MonkWindwalker,.io-spec-MonkWindwalker,.fi-spec-MonkWindwalker{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACQAJAMBIgACEQEDEQH/xAAaAAACAwEBAAAAAAAAAAAAAAAFBwEDBgQI/9oACAEBAAAAAEWTmjPtlliT3mN1DNngmanRhcdOAK0cnF//xAAXAQADAQAAAAAAAAAAAAAAAAACAwQA/9oACAECEAAAAK8NYsU2T//EABcBAAMBAAAAAAAAAAAAAAAAAAADBAL/2gAIAQMQAAAAlNzinrp//8QAMRAAAgICAgECAwQLAQAAAAAAAQIDBAURABIhBkEiQlExMnKyBxATFBUzQ2FicYHB/9oACAEBAAE/AKeAyWQgW1XMc3dyGBkAk7/aQQ5HD6XsxT1qtmGarO+lBlQiOVj7Kx+bkuMjsVIJOywpHWEhc+eqmUxiM6Hl9jxyX0rlmhSeDG2EiK+WnAi/P15eqzY+y9aWdFkX76oe4B/2vjn6OsIkdZ8pd/kN5SJ2Aj0p0Hblr1/h8rTbHrDHKwk2yTRuIniTwSjnXV0Pzcr28Ji7UtuCKs73LX8QQysZRXiI6EhAQHdSHI5d9W+mfUyGCBmd+wZRKhikXsNhlL8zuJs4zJ2K88bH4i0bsQxdCTptjlq1TxvRYpfgppXjQBQWMxQa6AAgsu9KfbmGy0Uxmh/dhWhiSRvjBdmnVtsZn3vbfM/tzMJWqQUJSKnx1NIIFUuyKWYAKo9/c/dHK+dgsyulqBYpHES2Zl2I3b+mZNfMPkk8HmJx+Fy1NZLkUBngZoXZ/Bbqewbxr7QeYzMrNksVK3WUrRnm0dHUxHTZ/DzF2bLiSKl0TowYA/TRBI99/XjUp4v2hgMCFmbsQhC9Quzvf5eUrkFgZkSrsvVm7N4JIHkbJ9wQPPG9Vx1YKYc93krRu+iPB11/85WszVLCTwtp4ztfp9CD/Yg8xE8keYiCHQd2Qj/E75jbM0VfKSI5DCuAD+JwOJamir2I0OhLpHPuVU71/wB9/wBX/8QAIhEAAgIABAcAAAAAAAAAAAAAAQIAEQMSUnIQEyExgbHh/9oACAECAQE/AAiVQTqYFsW695kTTGwCTat9gwG8aZyk1rMMnMN0s5BtPvh//8QAJBEAAQMDAQkAAAAAAAAAAAAAAQACEQMSIVEQEzFCU3Kx4eL/2gAIAQMBAT8Al0yTgIyMMPBXu1Ta4iHN9ZhGu360W+d0nKoBa/tQAufjmHjZ/9k=)}</style>
+</head>
+<body>
+<div class="avec-nav">
+<nav class="sommaire"><details open><summary>Sur cette page</summary><ul><li><a href="#s-boss-par-boss">Boss par boss</a></li><li><a href="#s-corriger-en-priorit">À corriger en priorité</a></li><li><a href="#s-rotation">Rotation</a><ul><li class="sous"><a href="#s-synth-se-de-la-soir-e">Synthèse de la soirée</a></li><li class="sous"><a href="#s-d-tail-de-chaque-boss">Détail de chaque boss</a></li></ul></li><li><a href="#s-build-et-stats">Build et stats</a></li><li><a href="#s-quipement">Équipement</a></li><li><a href="#s-progression">Progression</a><ul><li class="sous"><a href="#s-centiles-par-boss">Centiles par boss</a></li><li class="sous"><a href="#s-conseils-du-17-09">Conseils du 17/09</a></li></ul></li><li><a href="#s-m-thode">Méthode</a></li></ul></details></nav>
+<main>
+<p class="badges"><span class="badge">Généré le 26/10/2026 à 11:13</span><span class="badge" title="Commit du code guild_analyser qui a produit cette page">Version 58ba446</span><span class="badge badge-verif non" title="Pas encore relue par le vérificateur (intégrité des données, anomalies)">Non vérifié</span></p>
+<style>
+  main { max-width: 1100px; }
+  .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 16px 0; }
+  .carte { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .carte .val { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .carte .lib { color: var(--muted); font-size: .85rem; }
+  .prio { list-style: none; padding: 0; margin: 0; counter-reset: p; }
+  .prio > li { counter-increment: p; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+               padding: 14px 16px 12px 56px; margin: 12px 0; position: relative; }
+  .prio > li::before { content: counter(p); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px;
+                       border-radius: 50%; background: var(--accent); color: var(--surface); font-weight: 700;
+                       display: flex; align-items: center; justify-content: center; }
+  .prio h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .gain { float: right; margin-left: 10px; background: var(--row); border: 1px solid var(--border); border-radius: 999px;
+          padding: 2px 10px; font-size: .85rem; font-weight: 600; white-space: nowrap; }
+  .gain.nc { color: var(--muted); font-weight: 400; }
+  .gain.grave { color: var(--bad); border-color: var(--bad); }
+  .gain.ok { border-color: var(--good); }
+  .prio p { margin: 6px 0; }
+  .etiq { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; margin-right: 6px; }
+  pre.macro { background: var(--row); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin: 6px 0;
+              font-size: .88rem; white-space: pre-wrap; }
+  code { background: var(--row); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: .86em;
+         word-break: break-word; }
+  .moments a { margin-right: 4px; white-space: nowrap; display: inline-block; }
+  .boss-chip { display: inline-block; font-size: .8rem; color: var(--muted); border: 1px solid var(--border);
+               border-radius: 999px; padding: 0 8px; margin: 2px 4px 2px 0; }
+  .sort { border-bottom: 1px dotted var(--muted); cursor: help; }
+  .fr { color: var(--muted); }
+  .bandeau { background: color-mix(in srgb, var(--warn) 14%, var(--surface)); border: 1px solid var(--warn);
+             border-radius: 8px; padding: 8px 12px; margin: 8px 0; font-size: .92rem; }
+  .pc { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .gris { --pc: #7d838b; } .vert { --pc: #1b9a1b; } .bleu { --pc: #0070dd; } .violet { --pc: #a335ee; }
+  .orange { --pc: #e07800; } .rose { --pc: #d6559b; } .dore { --pc: #b8942a; }
+  .pc, .pc-t { color: var(--pc, var(--muted)); }
+  .verdict { font-weight: 700; }
+  table.boss-soiree td a, .liens a { white-space: nowrap; }
+  .e-pos { color: var(--good); font-weight: 600; } .e-mid { color: var(--warn); font-weight: 600; }
+  .e-neg { color: var(--bad); font-weight: 600; }
+  .methode .carte p { margin: 4px 0 0; font-size: .92rem; }
+  .methode summary { cursor: pointer; }
+  p.mode { margin: 4px 0 10px; }
+  .refs { display: grid; gap: 10px; margin: 12px 0 16px; }
+  .ref { display: grid; grid-template-columns: minmax(0, 1fr) 11rem; gap: 4px 16px; align-items: center;
+         background: var(--surface); border: 1px solid var(--border); border-left: 6px solid var(--muted);
+         border-radius: 10px; padding: 10px 14px; }
+  .ref.e-bad { border-left-color: var(--bad); } .ref.e-warn { border-left-color: var(--warn); }
+  .ref.e-good { border-left-color: var(--good); } .ref.moi { border-left-color: var(--accent); }
+  .ref .qui { font-size: 1.05rem; } .ref .qui b { font-size: 1.15rem; }
+  .ref .det { color: var(--muted); font-size: .85rem; } .ref .det b { color: var(--text); font-size: inherit; }
+  .ref .ecart { grid-row: span 2; text-align: right; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .ref .ecart .dps { font-size: 1.9rem; font-weight: 800; }
+  .ref .ecart .pc { font-size: 1.05rem; font-weight: 700; }
+  .ref .ecart .lib { color: var(--muted); font-size: .8rem; }
+  .ref.e-bad .ecart .dps, .ref.e-bad .ecart .pc { color: var(--bad); }
+  .ref.e-warn .ecart .dps, .ref.e-warn .ecart .pc { color: var(--warn); }
+  .ref.e-good .ecart .dps, .ref.e-good .ecart .pc { color: var(--good); }
+  .ref .barre { grid-column: 1; position: relative; height: 12px; background: var(--row); border-radius: 0 4px 4px 0; }
+  .ref .barre span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--muted); }
+  .ref.e-bad .barre span { background: var(--bad); } .ref.e-warn .barre span { background: var(--warn); }
+  .ref.e-good .barre span { background: var(--good); } .ref.moi .barre span { background: var(--accent); }
+  .ref .barre i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--text); }
+  .duo { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); column-gap: 0; row-gap: 4px;
+         margin: 8px 0; }
+  .duo-tete { font-weight: 700; padding: 4px 10px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .duo-tete.dm { text-align: right; border-bottom: 3px solid var(--accent); }
+  .duo-tete.dr { border-bottom: 3px solid var(--muted); }
+  .duo-minute { grid-column: 1 / -1; text-align: center; font-weight: 700; color: var(--muted); font-size: .85rem;
+                margin-top: 10px; border-top: 1px solid var(--border); padding-top: 4px; }
+  .duo-phase { grid-column: 1 / -1; text-align: center; font-style: italic; color: var(--muted); font-size: .88rem;
+               background: var(--row); border-radius: 6px; padding: 2px 8px; }
+  .duo-axe { background: linear-gradient(var(--border), var(--border)) center / 2px 100% no-repeat; }
+  .duo-c { padding: 3px 10px; border-radius: 6px; font-size: .92rem; }
+  .duo-c.cd:not(.vide) { background: color-mix(in srgb, var(--c) 12%, var(--surface)); }
+  .duo-c.dm { text-align: right; } .duo-c.dm.cd:not(.vide) { border-right: 4px solid var(--c); }
+  .duo-c.dr.cd:not(.vide) { border-left: 4px solid var(--c); }
+  .duo-c .t { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .85rem; }
+  .duo-c .absent { color: var(--muted); font-style: italic; font-size: .85rem; }
+  .duo-c .pourquoi { display: block; font-size: .85rem; color: var(--warn); }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases .mono { fill: var(--row); stroke: var(--border); } .phases .multi { fill: #eb6834; opacity: .55; }
+  .phases text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  section.boss > summary { font-size: 1.1rem; padding: 4px 0; }
+  section.boss { margin: 10px 0; }
+  details.boss { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px;
+                 margin: 10px 0; }
+  details.boss > summary { font-size: 1.08rem; }
+  .muted { color: var(--muted); }
+  @media (max-width: 600px) { .prio > li { padding-left: 16px; } .prio > li::before { position: static; margin-bottom: 6px; } }
+</style>
+<style>
+  .viz { --s1: #2a78d6; --s2: #eb6834; margin: 10px 0 4px; }
+  @media (prefers-color-scheme: dark) { .viz { --s1: #3987e5; --s2: #d95926; } }
+  .viz svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .viz text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  .viz text.lib { fill: var(--text); }
+  .viz .grille { stroke: var(--border); stroke-width: 1; }
+  .viz .s1 { fill: var(--s1); } .viz .s2 { fill: var(--s2); }
+  .viz .l1 { stroke: var(--s1); } .viz .l2 { stroke: var(--s2); }
+  .viz circle { stroke: var(--surface); stroke-width: 2; }
+  .viz [data-tip]:hover { opacity: .75; }
+  .viz .legende { display: flex; gap: 16px; flex-wrap: wrap; font-size: .88rem; color: var(--muted); margin: 0 0 4px; }
+  .viz .legende i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+  .viz .legende i.trou { border-radius: 2px; opacity: .45; }
+  #infobulle { position: fixed; pointer-events: none; display: none; z-index: 10; background: var(--surface);
+               color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px;
+               font-size: .85rem; box-shadow: 0 2px 8px rgba(0,0,0,.15); white-space: pre; }
+</style>
+<style>
+  .cause { display: flex; height: 10px; border-radius: 3px; overflow: hidden; background: var(--row); margin: 4px 0 2px; max-width: 420px; }
+  .cause span { display: block; height: 100%; }
+  .c-freq { background: #2a78d6; } .c-crit { background: #eb6834; } .c-coup { background: #9a6fd0; } .c-abs { background: #888; }
+  .pastille { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin: 0 4px 0 10px; }
+  .sorts-pourquoi { list-style: none; padding: 0; }
+  .sorts-pourquoi li { border-bottom: 1px solid var(--border); padding: 8px 0; }
+  .sorts-pourquoi .faits { color: var(--muted); font-size: .92rem; }
+  .centile { font-weight: 600; }
+  .c-legendaire { color: #e08a00; } .c-epique { color: #a335ee; } .c-rare { color: #0070dd; }
+  .c-peu { color: #1eaa1e; } .c-commun { color: var(--muted); }
+  .mecanisme { margin: 6px 0 0; padding: 6px 10px; border-left: 3px solid #eb6834; background: var(--row); font-size: .92rem; }
+  section.boss { border-top: 2px solid var(--border); margin-top: 28px; }
+</style>
+<h1>Mon DPS — Tûpepatest</h1>
+<p class="meta"><i class="ic ic-spec ic-spec-MonkWindwalker" title="Windwalker Monk"></i>Moine Marche-vent · ilvl 320 · raid du 23/09/2026 · 8 boss tués, meilleur kill de chacun · <a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj">rapport Warcraft Logs</a> · <a href="https://murlok.io/monk/windwalker/m+" title="Talents, statistiques et équipement des meilleurs joueurs de ta spé en Mythique+ (Murlok)">builds du top M+ (Murlok) ↗</a></p>
+<p class="mode"><span class="etiq">Niveau d'analyse</span><strong>léger</strong> : rotation lue dans le log seulement : ni top mondial, ni joueur équivalent, ni simulation (fiche des PU).</p>
+<p class="note"><strong>Moyennes sur 8 boss</strong> (détail boss par boss juste en dessous)</p>
+<div class="cartes">
+<div class="carte"><div class="val">160 k</div><div class="lib">DPS moyen (pas de top 3 trouvé)</div></div>
+<div class="carte"><div class="val"><span class="pc bleu" title="centile 72 : bon">72</span> <span class="ok" style="font-size:.9rem">+0 depuis le 17/09 (2 boss communs)</span></div><div class="lib"><span class="verdict pc-t bleu">bon</span> · centile moyen (tous ilvl) : tu fais mieux que 72 % des joueurs</div></div>
+<div class="carte"><div class="val"><span class="pc bleu" title="centile 60 : bon">60</span></div><div class="lib"><span class="verdict pc-t bleu">bon</span> · centile moyen à ton ilvl : tu fais mieux que 60 % des joueurs</div></div>
+<div class="carte"><div class="val">≈ 0,5 %</div><div class="lib">à gagner par le jeu (estimé)</div></div>
+<div class="carte"><div class="val muted">—</div><div class="lib">écart à ton potentiel simc (sans simulation)</div></div>
+</div>
+<div class="bandeau"><strong>Spé pas encore vérifiée</strong> : ce rapport repose sur des règles génériques qui n'ont pas encore été contrôlées sur des logs de cette spé (familiers, incantations, ressource, cooldowns propres à la classe). À lire avec prudence.</div>
+
+<h2 id="s-boss-par-boss">Boss par boss</h2>
+<div class="table-wrap">
+<table class="boss-soiree">
+<thead><tr><th>Boss</th><th class="num">Centile</th><th class="num">À ton ilvl</th><th class="num">DPS</th><th class="num">Durée</th><th class="num">Rang</th><th class="num">vs top 3</th><th class="num">vs potentiel simc</th><th class="num">Wipes</th><th>Combat</th></tr></thead>
+<tbody>
+<tr><td><a href="#boss-nymrissa-wavecaller">Nymrissa Wavecaller</a></td><td class="num"><span class="pc violet" title="centile 79 : très bon">79</span></td><td class="num"><span class="pc bleu" title="centile 68 : bon">68</span></td><td class="num">164 k</td><td class="num">4:51</td><td class="num">≈ 3 577 / 17 034</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=2" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/pMy87dgnCtHvBNaj/fight/2" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/pMy87dgnCtHvBNaj/2/T%C3%BBpepatest/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-nek-zali-the-soulcoiler">Nek&#x27;zali the Soulcoiler</a></td><td class="num"><span class="pc orange" title="centile 98 : excellent">98</span></td><td class="num"><span class="pc violet" title="centile 86 : très bon">86</span></td><td class="num">169 k</td><td class="num">3:20</td><td class="num">≈ 446 / 22 302</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=5" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/pMy87dgnCtHvBNaj/fight/5" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/pMy87dgnCtHvBNaj/5/T%C3%BBpepatest/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-the-coiled-altar">The Coiled Altar</a></td><td class="num"><span class="pc violet" title="centile 94 : très bon">94</span></td><td class="num"><span class="pc bleu" title="centile 71 : bon">71</span></td><td class="num">186 k</td><td class="num">4:10</td><td class="num">≈ 1 029 / 17 151</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=12" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/pMy87dgnCtHvBNaj/fight/12" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/pMy87dgnCtHvBNaj/12/T%C3%BBpepatest/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-ula-tek">Ula&#x27;tek</a></td><td class="num"><span class="pc violet" title="centile 76 : très bon">76</span></td><td class="num"><span class="pc bleu" title="centile 58 : bon">58</span></td><td class="num">145 k</td><td class="num">6:09</td><td class="num">≈ 3 957 / 16 490</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=15" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/pMy87dgnCtHvBNaj/fight/15" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/pMy87dgnCtHvBNaj/15/T%C3%BBpepatest/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-entombed-sentinels">Entombed Sentinels</a></td><td class="num"><span class="pc bleu" title="centile 72 : bon">72</span></td><td class="num"><span class="pc bleu" title="centile 69 : bon">69</span></td><td class="num">150 k</td><td class="num">6:34</td><td class="num">≈ 6 524 / 23 301</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=24" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/pMy87dgnCtHvBNaj/fight/24" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/pMy87dgnCtHvBNaj/24/T%C3%BBpepatest/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-vashnik-the-malignant">Vashnik the Malignant</a></td><td class="num"><span class="pc bleu" title="centile 53 : bon">53</span></td><td class="num"><span class="pc vert" title="centile 41 : moyen">41</span></td><td class="num">178 k</td><td class="num">6:10</td><td class="num">≈ 10 599 / 22 553</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=34" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/pMy87dgnCtHvBNaj/fight/34" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/pMy87dgnCtHvBNaj/34/T%C3%BBpepatest/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-the-lost-explorers">The Lost Explorers</a></td><td class="num"><span class="pc vert" title="centile 28 : moyen">28</span></td><td class="num"><span class="pc gris" title="centile 14 : à travailler">14</span></td><td class="num">121 k</td><td class="num">6:39</td><td class="num">≈ 16 572 / 23 018</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=38" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/pMy87dgnCtHvBNaj/fight/38" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/pMy87dgnCtHvBNaj/38/T%C3%BBpepatest/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-sszorak">Sszorak</a></td><td class="num"><span class="pc violet" title="centile 76 : très bon">76</span></td><td class="num"><span class="pc violet" title="centile 77 : très bon">77</span></td><td class="num">170 k</td><td class="num">5:44</td><td class="num">≈ 3 992 / 16 635</td><td class="num">—</td><td class="num">—</td><td class="num">6</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=50" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/pMy87dgnCtHvBNaj/fight/50" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/pMy87dgnCtHvBNaj/50/T%C3%BBpepatest/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Centiles aux couleurs de Warcraft Logs : gris sous 25, vert 25 à 49, bleu 50 à 74, violet 75 à 94, orange 95 à 98, rose 99, doré 100. Écarts : en vert au-dessus de la référence, en orange jusqu'à 15 % en dessous, en rouge au-delà ; face au top 3, un écart de 30 à 40 % reste courant. Pas d'écart à l'équivalent ici : il est choisi pour faire environ 25 % de plus que toi, son écart vaut donc toujours environ −20 % (il sert à comparer la rotation, dans le détail de chaque boss). Le nom du boss mène à son détail ; « Logs », « Wipefest » et « Analyzer » ouvrent le combat sur warcraftlogs.com, ses mécaniques sur wipefest.gg et ton analyse sur wowanalyzer.com.</p>
+<div class="bandeau"><strong>Correctifs récents de tes sorts</strong> (données de simc) : <span class="sort" title="Vos attaques automatiques ont 30 % de chances d’être remplacées par un coup de pied qui inflige ([581.256% of Attack Power]) points de dégâts physiques à la cible. Dégâts augmentés quand vous utilisez une arme à deux mains."><i class="ic ic-ability_monk_standingkick"></i>Dual Threat <span class="fr">(Double menace)</span></span> AP Coefficient (4.8438 -&gt; 5.81256), PvP Coefficient (1 -&gt; 0.8333) le 22/09 ; <span class="sort" title="[ Tisse-brume : Après que vous avez reçu l’aide de Xuen, le temps d’incantation de votre prochaine Brume enveloppante est réduit de 50 % et Niuzao confère un bouclier absorbant 0 points de dégâts à 5 personnages alliés proches ] [ Marche-vent : Après que vous avez reçu l’aide de Xuen, votre prochaine Frappe du voile noir restitue 2 charges d’Enseignements du monastère et Niuzao piétine l’emplacement de votre cible, ce qui inflige ([200% of Attack Power]) points de dégâts aux adversaires proches, réduits au-delà de 5 cibles ]"><i class="ic ic-ability_monk_leeroftheox"></i>Strength of the Black Ox <span class="fr">(Force du Buffle noir)</span></span> PvP Coefficient (1 -&gt; 1.25) le 24/10. Références prises après le 23/09 à 06 h.</div>
+<h2 id="s-corriger-en-priorit">À corriger en priorité</h2>
+<ol class="prio"><li><span class="gain">+1 k · +0,5 % estimé</span><h3>Temps globaux dépensés en sorts utilitaires</h3><span class="boss-chip">Entombed Sentinels</span><span class="boss-chip">Vashnik the Malignant</span><span class="boss-chip">The Lost Explorers</span><p><span class="etiq">Cause</span>Tiger&#x27;s Lust (Soif du tigre) : 4 lancers, contre 0 chez les références (ramenés à ta durée de combat). Soit environ 4 temps globaux de recharge sans dégâts.</p><p><span class="etiq">Conseil</span>Ne les lancer que quand la mécanique l&#x27;exige : chaque temps global pris à la rotation est perdu pour les dégâts. À vérifier aux moments indiqués : certains peuvent être une consigne du raid ou imposés par le boss.</p><p class="note"><span class="etiq">Preuve</span>Lancers du log ; sorts de classe sans aucun dégât, qui prennent un temps global (données de simc), hors interruptions, cooldowns, bijoux et potion. Gain estimé : un temps global (1 s) au DPS moyen par lancer en trop.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=24&amp;type=casts&amp;source=3&amp;start=4497835&amp;end=4507835">Entombed Sentinels 2:37 Vivify (Vivifier)</a> <a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=24&amp;type=casts&amp;source=3&amp;start=4500385&amp;end=4510385">Entombed Sentinels 2:40 Vivify (Vivifier)</a> <a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=24&amp;type=casts&amp;source=3&amp;start=4501695&amp;end=4511695">Entombed Sentinels 2:41 Vivify (Vivifier)</a> <a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=24&amp;type=casts&amp;source=3&amp;start=4502975&amp;end=4512975">Entombed Sentinels 2:42 Vivify (Vivifier)</a> <a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=24&amp;type=casts&amp;source=3&amp;start=4523905&amp;end=4533905">Entombed Sentinels 3:03 Vivify (Vivifier)</a> <a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=24&amp;type=casts&amp;source=3&amp;start=4604205&amp;end=4614205">Entombed Sentinels 4:24 Vivify (Vivifier)</a> <a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=34&amp;type=casts&amp;source=3&amp;start=5454562&amp;end=5464562">Vashnik the Malignant 0:38 Tiger&#x27;s Lust (Soif du tigre)</a> <a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=34&amp;type=casts&amp;source=3&amp;start=5511852&amp;end=5521852">Vashnik the Malignant 1:35 Tiger&#x27;s Lust (Soif du tigre)</a> </p></li><li><span class="gain nc">gain non chiffré</span><h3><i class="ic ic-ability_monk_summontigerstatue"></i>Bijou hors de Invoke Xuen, the White Tiger</h3><span class="boss-chip">Ula&#x27;tek</span><span class="boss-chip">Vashnik the Malignant</span><p><span class="etiq">Cause</span>2 sur 3 hors de Invoke Xuen, the White Tiger (Invocation de Xuen, le Tigre blanc).</p><p><span class="etiq">Conseil</span>Activer le bijou au début de Invoke Xuen, the White Tiger : leurs bonus se multiplient.</p><pre class="macro">#showtooltip
+/use 13
+/use 14
+/cast Invocation de Xuen, le Tigre blanc</pre><p><span class="etiq">Affichage</span>Macro qui colle les bijoux au gros cooldown (les bijoux sans effet à activer sont ignorés).</p><p class="note"><span class="etiq">Preuve</span>Règle vérifiée lancer par lancer sur le log : 2 fautes sur 3 occasions.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=15&amp;type=casts&amp;source=3&amp;start=2782613&amp;end=2792613">Ula&#x27;tek 1:51</a> <a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=15&amp;type=casts&amp;source=3&amp;start=2953833&amp;end=2963833">Ula&#x27;tek 4:43</a> <a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=34&amp;type=casts&amp;source=3&amp;start=5694142&amp;end=5704142">Vashnik the Malignant 4:37</a> </p></li><li><span class="gain nc">gain non chiffré</span><h3><i class="ic ic-ability_monk_summontigerstatue"></i>Potion hors de Invoke Xuen, the White Tiger</h3><span class="boss-chip">Vashnik the Malignant</span><p><span class="etiq">Cause</span>1 sur 2 hors de Invoke Xuen, the White Tiger (Invocation de Xuen, le Tigre blanc).</p><p><span class="etiq">Conseil</span>Boire la potion au début de Invoke Xuen, the White Tiger.</p><p class="note"><span class="etiq">Preuve</span>Règle vérifiée lancer par lancer sur le log : 1 faute sur 2 occasions.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=34&amp;type=casts&amp;source=3&amp;start=5778912&amp;end=5788912">Vashnik the Malignant 6:02</a> </p></li></ol>
+
+<h2 id="s-rotation">Rotation</h2>
+<h3 id="s-synth-se-de-la-soir-e">Synthèse de la soirée</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">DPS</th><th class="num">vs équivalent</th><th class="num">vs top 3</th><th class="num">Multicible</th><th class="num">Cooldowns manqués</th><th class="num">vs potentiel simc</th></tr></thead>
+<tbody>
+<tr><td>Nymrissa Wavecaller</td><td class="num">164 k</td><td class="num">—</td><td class="num">—</td><td class="num">30 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Nek&#x27;zali the Soulcoiler</td><td class="num">169 k</td><td class="num">—</td><td class="num">—</td><td class="num">19 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>The Coiled Altar</td><td class="num">186 k</td><td class="num">—</td><td class="num">—</td><td class="num">0 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Ula&#x27;tek</td><td class="num">145 k</td><td class="num">—</td><td class="num">—</td><td class="num">7 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Entombed Sentinels</td><td class="num">150 k</td><td class="num">—</td><td class="num">—</td><td class="num">29 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Vashnik the Malignant</td><td class="num">178 k</td><td class="num">—</td><td class="num">—</td><td class="num">20 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>The Lost Explorers</td><td class="num">121 k</td><td class="num">—</td><td class="num">—</td><td class="num">95 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Sszorak</td><td class="num">170 k</td><td class="num">—</td><td class="num">—</td><td class="num">0 %</td><td class="num">0</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+
+<p class="note">Potentiel simc : ton équipement simulé avec une rotation parfaite, à la durée du kill, chaque phase au nombre d'ennemis qu'elle a en moyenne (1, 2, ou 3 et plus). Un vrai combat (déplacements, phases, cibles qui changent) reste en dessous : l'écart sert surtout à comparer les boss entre eux et d'une soirée à l'autre.</p>
+<h3 id="s-d-tail-de-chaque-boss">Détail de chaque boss</h3>
+<details class="boss" id="boss-nymrissa-wavecaller"><summary><strong>Nymrissa Wavecaller</strong> · 164 k · — face à l'équivalent · 30 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=2" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/pMy87dgnCtHvBNaj/fight/2" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/pMy87dgnCtHvBNaj/2/T%C3%BBpepatest/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Tûpepatest</b> (toi) <span class="det">· 164 k</span><div class="det"><b>rang ≈ 3 577</b> / 17 034 · centile 79 (68 à ton ilvl)</div></div><div class="ecart"><div class="dps">164 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">17</td><td>non</td><td>—</td><td>Power Infusion 5 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="74.1" height="18"><title>Monocible : 0:00 → 0:29 (1,0 ennemis)</title></rect><rect class="multi" x="274.1" y="4" width="35.8" height="18"><title>Multicible : 0:29 → 0:43 (5,3 ennemis)</title></rect><rect class="mono" x="309.8" y="4" width="76.6" height="18"><title>Monocible : 0:43 → 1:13 (1,1 ennemis)</title></rect><rect class="multi" x="386.5" y="4" width="53.6" height="18"><title>Multicible : 1:13 → 1:34 (6,9 ennemis)</title></rect><rect class="mono" x="440.1" y="4" width="117.5" height="18"><title>Monocible : 1:34 → 2:20 (1,0 ennemis)</title></rect><rect class="multi" x="557.6" y="4" width="48.5" height="18"><title>Multicible : 2:20 → 2:39 (5,2 ennemis)</title></rect><rect class="mono" x="606.1" y="4" width="66.4" height="18"><title>Monocible : 2:39 → 3:05 (1,0 ennemis)</title></rect><rect class="multi" x="672.5" y="4" width="56.2" height="18"><title>Multicible : 3:05 → 3:27 (6,3 ennemis)</title></rect><rect class="mono" x="728.7" y="4" width="107.3" height="18"><title>Monocible : 3:27 → 4:09 (1,1 ennemis)</title></rect><rect class="multi" x="836.0" y="4" width="28.1" height="18"><title>Multicible : 4:09 → 4:20 (4,5 ennemis)</title></rect><rect class="mono" x="864.1" y="4" width="79.9" height="18"><title>Monocible : 4:20 → 4:51 (1,1 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Invoke Xuen, the White Tiger</td><td class="num">0 / 3</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Invoke Xuen, the White Tiger</td><td class="num">0 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(204 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="[Item Effect] Instantanée 1.5 min de recharge Approximativement 18 activations par minute Vous croquez le cœur et vous laissez envahir par une faim vorace, qui vous octroie un bonus de 151 à la Force ou l’Agilité pendant 20 s. Tant que la faim persiste, vous avez une chance très élevée de dévorer un morceau de votre cible à chaque attaque, ce qui lui inflige 3535 points de dégâts physiques et augmente votre Force ou Agilité de 17 points supplémentaires."><i class="ic ic-inv_121_trinket_raid_ulatek_heart"></i>Voracious Heart of Ula&#x27;tek <span class="fr">(Cœur avide d’Ula’tek)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(87 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-nek-zali-the-soulcoiler"><summary><strong>Nek&#x27;zali the Soulcoiler</strong> · 169 k · — face à l'équivalent · 19 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=5" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/pMy87dgnCtHvBNaj/fight/5" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/pMy87dgnCtHvBNaj/5/T%C3%BBpepatest/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Tûpepatest</b> (toi) <span class="det">· 169 k</span><div class="det"><b>rang ≈ 446</b> / 22 302 · centile 98 (86 à ton ilvl)</div></div><div class="ecart"><div class="dps">169 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">17</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="211.0" height="18"><title>Monocible : 0:00 → 0:57 (1,0 ennemis)</title></rect><rect class="multi" x="411.0" y="4" width="59.2" height="18"><title>Multicible : 0:57 → 1:13 (4,6 ennemis)</title></rect><rect class="mono" x="470.2" y="4" width="155.5" height="18"><title>Monocible : 1:13 → 1:55 (1,0 ennemis)</title></rect><rect class="multi" x="625.7" y="4" width="29.6" height="18"><title>Multicible : 1:55 → 2:03 (3,0 ennemis)</title></rect><rect class="mono" x="655.4" y="4" width="199.9" height="18"><title>Monocible : 2:03 → 2:57 (1,2 ennemis)</title></rect><rect class="multi" x="855.3" y="4" width="51.8" height="18"><title>Multicible : 2:57 → 3:11 (4,4 ennemis)</title></rect><rect class="mono" x="907.1" y="4" width="36.9" height="18"><title>Monocible : 3:11 → 3:20 (1,5 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Invoke Xuen, the White Tiger</td><td class="num">0 / 2</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Invoke Xuen, the White Tiger</td><td class="num">0 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(163 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Requiert Moine Niveau 1 requis Déchaîne un puissant piétinement qui inflige ([700% of Attack Power]) points de dégâts de nature aux adversaires proches. Dégâts réduits au-delà de 5 cibles. Génère 2 points de chi."><i class="ic ic-inv_ability_monk_jadefirestomp"></i>Zenith Stomp <span class="fr">(Piétinement culminant)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Requiert Moine Maître brasseur, Marche-vent Les Astres vénérables vous renforcent, ce qui inflige [([165% of Attack Power]) * 5] points de dégâts de nature aux adversaires et rend [([1100% of Spell Power]) * 5] points de vie à un maximum de 5 personnages alliés blessés à moins de 15 m en 4 s, réduits au-delà de 5 cibles. Vous pouvez vous déplacer pendant la canalisation, mais l’incantation d’un sort de soins ou de dégâts annule l’effet. Tisse-brume Les Astres vénérables vous renforcent, ce qui rend [([1100% of Spell Power]) * 5] points de vie à un maximum de 5 personnages alliés blessés et inflige [([165% of Attack Power]) * 5] points de dégâts de nature aux adversaires à moins de 20 m en 4 s, réduits au-delà de 5 cibles. Vous pouvez vous déplacer pendant la canalisation, mais l’incantation d’un sort de soins ou de dégâts annule l’effet."><i class="ic ic-inv_ability_conduitofthecelestialsmonk_celestialconduit"></i>Celestial Conduit <span class="fr">(Canalisation astrale)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(38 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-the-coiled-altar"><summary><strong>The Coiled Altar</strong> · 186 k · — face à l'équivalent · 0 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=12" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/pMy87dgnCtHvBNaj/fight/12" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/pMy87dgnCtHvBNaj/12/T%C3%BBpepatest/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Tûpepatest</b> (toi) <span class="det">· 186 k</span><div class="det"><b>rang ≈ 1 029</b> / 17 151 · centile 94 (71 à ton ilvl)</div></div><div class="ecart"><div class="dps">186 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">17</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="744.0" height="18"><title>Monocible : 0:00 → 4:10 (1,4 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Invoke Xuen, the White Tiger</td><td class="num">0 / 2</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Invoke Xuen, the White Tiger</td><td class="num">0 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(250 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Requiert Moine Niveau 29 requis Absorbe les dégâts subis pendant 10 s, jusqu’à 50% de votre maximum de points de vie, et redirige 70% de ce montant vers la cible ennemie sous forme de dégâts de Nature en 6 s."><i class="ic ic-ability_monk_touchofkarma"></i>Touch of Karma <span class="fr">(Toucher du karma)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Requiert Moine Niveau 1 requis Déchaîne un puissant piétinement qui inflige ([700% of Attack Power]) points de dégâts de nature aux adversaires proches. Dégâts réduits au-delà de 5 cibles. Génère 2 points de chi."><i class="ic ic-inv_ability_monk_jadefirestomp"></i>Zenith Stomp <span class="fr">(Piétinement culminant)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Requiert Moine Maître brasseur, Marche-vent Les Astres vénérables vous renforcent, ce qui inflige [([165% of Attack Power]) * 5] points de dégâts de nature aux adversaires et rend [([1100% of Spell Power]) * 5] points de vie à un maximum de 5 personnages alliés blessés à moins de 15 m en 4 s, réduits au-delà de 5 cibles. Vous pouvez vous déplacer pendant la canalisation, mais l’incantation d’un sort de soins ou de dégâts annule l’effet. Tisse-brume Les Astres vénérables vous renforcent, ce qui rend [([1100% of Spell Power]) * 5] points de vie à un maximum de 5 personnages alliés blessés et inflige [([165% of Attack Power]) * 5] points de dégâts de nature aux adversaires à moins de 20 m en 4 s, réduits au-delà de 5 cibles. Vous pouvez vous déplacer pendant la canalisation, mais l’incantation d’un sort de soins ou de dégâts annule l’effet."><i class="ic ic-inv_ability_conduitofthecelestialsmonk_celestialconduit"></i>Celestial Conduit <span class="fr">(Canalisation astrale)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-ula-tek"><summary><strong>Ula&#x27;tek</strong> · 145 k · — face à l'équivalent · 7 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=15" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/pMy87dgnCtHvBNaj/fight/15" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/pMy87dgnCtHvBNaj/15/T%C3%BBpepatest/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Tûpepatest</b> (toi) <span class="det">· 145 k</span><div class="det"><b>rang ≈ 3 957</b> / 16 490 · centile 76 (58 à ton ilvl)</div></div><div class="ecart"><div class="dps">145 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">17</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="352.0" height="18"><title>Monocible : 0:00 → 2:55 (1,8 ennemis)</title></rect><rect class="multi" x="552.0" y="4" width="50.3" height="18"><title>Multicible : 2:55 → 3:20 (5,8 ennemis)</title></rect><rect class="mono" x="602.3" y="4" width="341.7" height="18"><title>Monocible : 3:20 → 6:09 (0,9 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Invoke Xuen, the White Tiger</td><td class="num">2 / 3</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(345 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(25 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Requiert Moine Invoque une effigie de Xuen, le Tigre blanc. Dure 20 s . Il attaque votre cible principale et frappe avec Éclair du Tigre 3 ennemis à moins de 10 mètres toutes les 1 s, ce qui leur inflige ([25.7% of Attack Power]) points de dégâts de Nature. [ Éclair du Tigre renforcé : Toutes les 4 s, Xuen frappe vos ennemis avec Éclair du Tigre renforcé, ce qui leur fait subir 4% des dégâts que vous leur avez infligés au cours des 4 dernières secondes ]"><i class="ic ic-ability_monk_summontigerstatue"></i>Invoke Xuen, the White Tiger <span class="fr">(Invocation de Xuen, le Tigre blanc)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-entombed-sentinels"><summary><strong>Entombed Sentinels</strong> · 150 k · — face à l'équivalent · 29 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=24" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/pMy87dgnCtHvBNaj/fight/24" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/pMy87dgnCtHvBNaj/24/T%C3%BBpepatest/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Tûpepatest</b> (toi) <span class="det">· 150 k</span><div class="det"><b>rang ≈ 6 524</b> / 23 301 · centile 72 (69 à ton ilvl)</div></div><div class="ecart"><div class="dps">150 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">17</td><td>non</td><td>—</td><td>Power Infusion 4 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="32.1" height="18"><title>Monocible : 0:00 → 0:17 (2,0 ennemis)</title></rect><rect class="multi" x="232.1" y="4" width="20.7" height="18"><title>Multicible : 0:17 → 0:28 (3,0 ennemis)</title></rect><rect class="mono" x="252.8" y="4" width="90.5" height="18"><title>Monocible : 0:28 → 1:16 (2,0 ennemis)</title></rect><rect class="multi" x="343.3" y="4" width="43.4" height="18"><title>Multicible : 1:16 → 1:39 (3,0 ennemis)</title></rect><rect class="mono" x="386.7" y="4" width="56.6" height="18"><title>Monocible : 1:39 → 2:09 (2,0 ennemis)</title></rect><rect class="multi" x="443.3" y="4" width="24.5" height="18"><title>Multicible : 2:09 → 2:22 (3,0 ennemis)</title></rect><rect class="mono" x="467.8" y="4" width="69.8" height="18"><title>Monocible : 2:22 → 2:59 (2,0 ennemis)</title></rect><rect class="multi" x="537.6" y="4" width="35.8" height="18"><title>Multicible : 2:59 → 3:18 (3,0 ennemis)</title></rect><rect class="mono" x="573.4" y="4" width="66.0" height="18"><title>Monocible : 3:18 → 3:53 (2,0 ennemis)</title></rect><rect class="multi" x="639.4" y="4" width="41.5" height="18"><title>Multicible : 3:53 → 4:15 (3,0 ennemis)</title></rect><rect class="mono" x="680.9" y="4" width="52.8" height="18"><title>Monocible : 4:15 → 4:43 (2,0 ennemis)</title></rect><rect class="multi" x="733.7" y="4" width="47.1" height="18"><title>Multicible : 4:43 → 5:08 (3,0 ennemis)</title></rect><rect class="mono" x="780.9" y="4" width="163.1" height="18"><title>Monocible : 5:08 → 6:34 (1,6 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Invoke Xuen, the White Tiger</td><td class="num">0 / 5</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Invoke Xuen, the White Tiger</td><td class="num">0 / 2</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(281 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(113 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Requiert Moine Niveau 1 requis Déchaîne un puissant piétinement qui inflige ([700% of Attack Power]) points de dégâts de nature aux adversaires proches. Dégâts réduits au-delà de 5 cibles. Génère 2 points de chi."><i class="ic ic-inv_ability_monk_jadefirestomp"></i>Zenith Stomp <span class="fr">(Piétinement culminant)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Requiert Moine Invoque une effigie de Xuen, le Tigre blanc. Dure 20 s . Il attaque votre cible principale et frappe avec Éclair du Tigre 3 ennemis à moins de 10 mètres toutes les 1 s, ce qui leur inflige ([25.7% of Attack Power]) points de dégâts de Nature. [ Éclair du Tigre renforcé : Toutes les 4 s, Xuen frappe vos ennemis avec Éclair du Tigre renforcé, ce qui leur fait subir 4% des dégâts que vous leur avez infligés au cours des 4 dernières secondes ]"><i class="ic ic-ability_monk_summontigerstatue"></i>Invoke Xuen, the White Tiger <span class="fr">(Invocation de Xuen, le Tigre blanc)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-vashnik-the-malignant"><summary><strong>Vashnik the Malignant</strong> · 178 k · — face à l'équivalent · 20 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=34" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/pMy87dgnCtHvBNaj/fight/34" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/pMy87dgnCtHvBNaj/34/T%C3%BBpepatest/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Tûpepatest</b> (toi) <span class="det">· 178 k</span><div class="det"><b>rang ≈ 10 599</b> / 22 553 · centile 53 (41 à ton ilvl)</div></div><div class="ecart"><div class="dps">178 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">17</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="54.3" height="18"><title>Monocible : 0:00 → 0:27 (1,0 ennemis)</title></rect><rect class="multi" x="254.3" y="4" width="30.1" height="18"><title>Multicible : 0:27 → 0:42 (4,3 ennemis)</title></rect><rect class="mono" x="284.4" y="4" width="138.7" height="18"><title>Monocible : 0:42 → 1:51 (1,0 ennemis)</title></rect><rect class="multi" x="423.1" y="4" width="28.1" height="18"><title>Multicible : 1:51 → 2:05 (3,9 ennemis)</title></rect><rect class="mono" x="451.2" y="4" width="140.7" height="18"><title>Monocible : 2:05 → 3:15 (1,1 ennemis)</title></rect><rect class="multi" x="591.9" y="4" width="40.2" height="18"><title>Multicible : 3:15 → 3:35 (4,0 ennemis)</title></rect><rect class="mono" x="632.1" y="4" width="126.6" height="18"><title>Monocible : 3:35 → 4:38 (1,0 ennemis)</title></rect><rect class="multi" x="758.7" y="4" width="52.3" height="18"><title>Multicible : 4:38 → 5:04 (4,4 ennemis)</title></rect><rect class="mono" x="811.0" y="4" width="133.0" height="18"><title>Monocible : 5:04 → 6:10 (1,1 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Invoke Xuen, the White Tiger</td><td class="num">1 / 3</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Invoke Xuen, the White Tiger</td><td class="num">1 / 2</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(295 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(75 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><i class="ic ic-ability_monk_summontigerstatue"></i>Courage of the White Tiger <span class="fr">(Courage du Tigre blanc)</span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="[Item Effect] Instantanée 1.5 min de recharge Approximativement 18 activations par minute Vous croquez le cœur et vous laissez envahir par une faim vorace, qui vous octroie un bonus de 151 à la Force ou l’Agilité pendant 20 s. Tant que la faim persiste, vous avez une chance très élevée de dévorer un morceau de votre cible à chaque attaque, ce qui lui inflige 3535 points de dégâts physiques et augmente votre Force ou Agilité de 17 points supplémentaires."><i class="ic ic-inv_121_trinket_raid_ulatek_heart"></i>Voracious Heart of Ula&#x27;tek <span class="fr">(Cœur avide d’Ula’tek)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée Requiert Moine Niveau 1 requis Marche-vent ( Moine / Moniale Marche - vent ) Frappe avec la paume de votre main, ce qui inflige ([90% of Attack Power]) points de dégâts physiques. Génère 2 points de chi. Maître brasseur, Tisse-brume Frappe avec la paume de votre main, ce qui inflige ([90% of Attack Power]) points de dégâts physiques. [ Maître brasseur : Réduit le temps de recharge restant de vos breuvages de 1 s / Marche-vent : Génère 0 points de chi. ]"><i class="ic ic-ability_monk_tigerpalm"></i>Tiger Palm <span class="fr">(Paume du tigre)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-the-lost-explorers"><summary><strong>The Lost Explorers</strong> · 121 k · — face à l'équivalent · 95 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=38" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/pMy87dgnCtHvBNaj/fight/38" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/pMy87dgnCtHvBNaj/38/T%C3%BBpepatest/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Tûpepatest</b> (toi) <span class="det">· 121 k</span><div class="det"><b>rang ≈ 16 572</b> / 23 018 · centile 28 (14 à ton ilvl)</div></div><div class="ecart"><div class="dps">121 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">17</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="multi" x="200.0" y="4" width="622.0" height="18"><title>Multicible : 0:00 → 5:34 (3,0 ennemis)</title></rect><rect class="mono" x="822.0" y="4" width="35.4" height="18"><title>Monocible : 5:34 → 5:53 (2,0 ennemis)</title></rect><rect class="multi" x="857.3" y="4" width="86.7" height="18"><title>Multicible : 5:53 → 6:39 (2,9 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Invoke Xuen, the White Tiger</td><td class="num">0 / 3</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Invoke Xuen, the White Tiger</td><td class="num">0 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(19 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(381 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-sszorak"><summary><strong>Sszorak</strong> · 170 k · — face à l'équivalent · 0 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/pMy87dgnCtHvBNaj?fight=50" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/pMy87dgnCtHvBNaj/fight/50" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/pMy87dgnCtHvBNaj/50/T%C3%BBpepatest/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Tûpepatest</b> (toi) <span class="det">· 170 k</span><div class="det"><b>rang ≈ 3 992</b> / 16 635 · centile 76 (77 à ton ilvl)</div></div><div class="ecart"><div class="dps">170 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">17</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="744.0" height="18"><title>Monocible : 0:00 → 5:44 (1,0 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Zenith</td><td class="num">0 / 3</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Zenith</td><td class="num">0 / 2</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(345 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Requiert Moine Niveau 1 requis Déchaîne un puissant piétinement qui inflige ([700% of Attack Power]) points de dégâts de nature aux adversaires proches. Dégâts réduits au-delà de 5 cibles. Génère 2 points de chi."><i class="ic ic-inv_ability_monk_jadefirestomp"></i>Zenith Stomp <span class="fr">(Piétinement culminant)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Requiert Moine Niveau 50 requis Vous assénez un puissant coup tournoyant ascendant qui inflige [3 * ([313.95% of Attack Power])] points de dégâts aux adversaires proches et ([450% of Attack Power]) supplémentaires à la première cible atteinte. Dégâts réduits au-delà de 5 cibles. Uniquement utilisable lorsque Poings de fureur et Coup de pied du soleil levant sont tous deux en cours de recharge. (3sec de recharge)"><i class="ic ic-ability_monk_hurricanestrike"></i>Whirling Dragon Punch <span class="fr">(Coup de poing du dragon tourbillonnant)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Requiert Moine Niveau 29 requis Absorbe les dégâts subis pendant 10 s, jusqu’à 50% de votre maximum de points de vie, et redirige 70% de ce montant vers la cible ennemie sous forme de dégâts de Nature en 6 s."><i class="ic ic-ability_monk_touchofkarma"></i>Touch of Karma <span class="fr">(Toucher du karma)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Marche-vent Vous tournoyez dans les airs en assénant des coups de pied qui infligent [4 * ([10% of Attack Power]) * [(Puissance d&#x27;attaque * 0.98)][((Puissance d&#x27;attaque + [Offhand Attack Power]) * 2 / 3)] -- 2H, DW / Puissance d&#x27;attaque] points de dégâts physiques en 1.5 s aux adversaires à moins de 8 mètres. Les dégâts sont réduits au-delà de 5 cibles. Maître brasseur, Tisse-brume Vous tournoyez dans les airs en assénant des coups de pied qui infligent [4 * ([10% of Attack Power])] points de dégâts physiques en 1.5 s aux adversaires à moins de 8 mètres. Les dégâts sont réduits au-delà de 5 cibles."><i class="ic ic-ability_monk_cranekick_new"></i>Spinning Crane Kick <span class="fr">(Coup tournoyant de la grue)</span></span></td><td class="num">8 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+
+<h2 id="s-build-et-stats">Build et stats</h2>
+<p class="note">Pas de simulation (mode rapide ou export de l'addon absent).</p>
+
+<h2 id="s-quipement">Équipement</h2>
+<p class="note">Pas d'analyse d'équipement (mode rapide ou export absent).</p>
+
+<h2 id="s-progression">Progression</h2>
+<h3 id="s-centiles-par-boss">Centiles par boss</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">06/09</th><th class="num">17/09</th><th class="num">23/09</th></tr></thead>
+<tbody>
+<tr><td>The Lost Explorers</td><td class="num">—</td><td class="num">59 <span class="muted">· 63</span></td><td class="num">28 <span class="muted">· 14</span></td></tr>
+<tr><td>Sszorak</td><td class="num">—</td><td class="num">44 <span class="muted">· 42</span></td><td class="num">76 <span class="muted">· 77</span></td></tr>
+<tr><td>Nymrissa Wavecaller</td><td class="num">—</td><td class="num">—</td><td class="num">79 <span class="muted">· 68</span></td></tr>
+<tr><td>Nek&#x27;zali the Soulcoiler</td><td class="num">—</td><td class="num">—</td><td class="num">98 <span class="muted">· 86</span></td></tr>
+<tr><td>The Coiled Altar</td><td class="num">—</td><td class="num">—</td><td class="num">94 <span class="muted">· 71</span></td></tr>
+<tr><td>Ula&#x27;tek</td><td class="num">—</td><td class="num">—</td><td class="num">76 <span class="muted">· 58</span></td></tr>
+<tr><td>Entombed Sentinels</td><td class="num">—</td><td class="num">—</td><td class="num">72 <span class="muted">· 69</span></td></tr>
+<tr><td>Vashnik the Malignant</td><td class="num">—</td><td class="num">—</td><td class="num">53 <span class="muted">· 41</span></td></tr>
+<tr><td><strong>Écart au potentiel simc</strong></td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Centile global · centile à ton ilvl. Écart au potentiel : ton DPS rapporté à ce que ton équipement ferait avec une rotation parfaite (simulation).</p>
+<h3 id="s-conseils-du-17-09">Conseils du 17/09</h3>
+<p>Aucun conseil chiffré à au moins 0,5 % la fois précédente.</p>
+
+<details class="methode"><summary><h2 id="s-m-thode" style="display:inline">Méthode</h2> <span class="muted">(cliquer pour déplier)</span></summary><div class="cartes"><div class="carte"><div class="lib"><strong>Combats analysés</strong></div><p>Pour chaque boss, ton meilleur kill de la soirée (centile le plus haut).</p></div><div class="carte"><div class="lib"><strong>Top 3</strong></div><p>Les trois premiers de ta spé au classement héroïque du boss, logs postérieurs au 23/09 à 06 h (maintenance du mercredi, ou dernier correctif de tes sorts intégré à simc).</p></div><div class="carte"><div class="lib"><strong>Joueur équivalent</strong></div><p>Même tranche d&#x27;ilvl, raid de taille (±5) et de durée (±25 %) proches, sans Évocateur Augmentation, 10 à 45 % de DPS en plus ; parmi les plus proches de +25 %, le plus proche en talents et bijoux. Critères élargis (tranches voisines, ±8 joueurs, ±35 %) si personne après le correctif.</p></div><div class="carte"><div class="lib"><strong>Phases</strong></div><p>Multicible quand 3 ennemis ou plus sont attaqués par le raid (seuil de la rotation simc).</p></div><div class="carte"><div class="lib"><strong>Règles de rotation</strong></div><p>Conditions de la rotation simc vérifiées lancer par lancer ; retenues seulement si tu fais nettement moins bien que les références.</p></div><div class="carte"><div class="lib"><strong>Gains</strong></div><p>Estimés à partir des écarts mesurés, puis validés en simulation pour les plus gros (fautes imitées dans simc à ton rythme et à celui des références ; gain = écart des deux).</p></div><div class="carte"><div class="lib"><strong>Limites</strong></div><p>Une référence joue un autre combat que le tien (raid, durée, adds) : un écart est une piste, pas une preuve. Avec moins de 0,5 % d&#x27;écart, une simulation n&#x27;est pas significative.</p></div></div></details>
+<div id="infobulle"></div>
+<script>
+(() => {
+  const bulle = document.getElementById("infobulle");
+  const montrer = (ev, texte) => {
+    bulle.textContent = texte; bulle.style.display = "block";
+    const x = Math.min(ev.clientX + 14, window.innerWidth - bulle.offsetWidth - 8);
+    bulle.style.left = x + "px"; bulle.style.top = (ev.clientY + 14) + "px";
+  };
+  const cacher = () => { bulle.style.display = "none"; };
+  document.querySelectorAll("[data-tip]").forEach(el => {
+    el.addEventListener("pointermove", ev => montrer(ev, el.dataset.tip));
+    el.addEventListener("pointerleave", cacher);
+  });
+  document.querySelectorAll("svg[data-courbes]").forEach(svg => {
+    const d = JSON.parse(svg.dataset.courbes), zone = svg.querySelector(".zone"), ligne = svg.querySelector(".reticule");
+    zone.addEventListener("pointermove", ev => {
+      const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY;
+      const q = p.matrixTransform(svg.getScreenCTM().inverse());
+      const i = Math.max(0, Math.min(d.t.length - 1, Math.round((q.x - d.x0) / d.dx)));
+      ligne.setAttribute("x1", d.x0 + i * d.dx); ligne.setAttribute("x2", d.x0 + i * d.dx); ligne.style.display = "";
+      montrer(ev, d.t[i] + "\n" + d.series.map(s => (s.v[i] == null ? "—" : s.v[i]) + " lancers/min  " + s.nom).join("\n"));
+    });
+    zone.addEventListener("pointerleave", () => { ligne.style.display = "none"; cacher(); });
+  });
+})();
+</script>
+<script>
+function ouvrirAncre() {
+  const d = location.hash && document.getElementById(location.hash.slice(1));
+  if (d && d.tagName === "DETAILS") { d.open = true; d.scrollIntoView(); }
+}
+addEventListener("hashchange", ouvrirAncre); addEventListener("DOMContentLoaded", ouvrirAncre);
+</script>
+
+</main>
+</div>
+<script>
+(function () {
+  var nav = document.querySelector('.sommaire'); if (!nav) return;
+  var det = nav.querySelector('details'), petit = window.matchMedia('(max-width: 1100px)');
+  if (petit.matches) det.open = false;
+  var liens = {}; nav.querySelectorAll('a').forEach(function (a) { liens[a.getAttribute('href').slice(1)] = a; });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A' && petit.matches) det.open = false; });
+  var titres = Array.prototype.filter.call(document.querySelectorAll('main h2[id], main h3[id]'),
+                                           function (h) { return liens[h.id]; });
+  function actif() {
+    var courant = titres[0];
+    titres.forEach(function (h) { if (h.getBoundingClientRect().top < 120) courant = h; });
+    Object.keys(liens).forEach(function (k) { liens[k].classList.toggle('actif', courant && k === courant.id); });
+  }
+  window.addEventListener('scroll', actif, {passive: true}); actif();
+})();
+</script>
+</body>
+</html>
