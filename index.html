@@ -143,6 +143,7 @@ details:not([open])>summary::after{transform:rotate(-90deg)}
 details>summary:hover::after{color:var(--accent)}
 td.n a.lien{text-decoration:underline dotted;text-underline-offset:3px}
 .badge-pu{margin-left:2px;font-size:.78rem;font-weight:600;color:var(--serie2);cursor:help}
+.badge-allie{color:var(--accent)}  /* joueur d'une guilde alliée (26/10) */
 a.wf{font-weight:700}a.wf.good{color:var(--good)}a.wf.warn{color:var(--warn)}a.wf.bad{color:var(--bad)}a.wf:hover{text-decoration:underline}
 th[data-aide]{cursor:help;text-decoration:underline dotted;text-underline-offset:3px}
 #bulle{position:fixed;z-index:20;max-width:280px;background:var(--fg);color:var(--bg);font-size:12px;line-height:1.4;padding:7px 10px;border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.25);pointer-events:none;display:none}
@@ -280,6 +281,7 @@ table.soirees{width:100%;border-collapse:collapse;margin-top:12px;font-size:.93r
 /* PU (26/10) : marque, et la case « Afficher les PU » qui les cache (body.sans-pu) */
 .pu{display:inline-block;margin-left:6px;padding:0 5px;border-radius:4px;font-size:.68rem;font-weight:700;line-height:1.5;
  color:var(--mut);border:1px solid var(--border);vertical-align:middle}
+.pu.allie{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
 .n-guilde{display:none}
 body.sans-pu .est-pu{display:none}body.sans-pu .n-tous{display:none}body.sans-pu .n-guilde{display:inline}
 .bascule-pu{display:inline-flex;align-items:center;gap:6px;margin-left:12px;font-size:.88rem;color:var(--mut);cursor:pointer}
@@ -321,6 +323,8 @@ setTheme(th.value);th.onchange=()=>setTheme(th.value);
 const CLASSES=JSON.parse(document.getElementById('ga-classes').textContent);
 // PU : joueur hors de la guilde du rapport (soirees.json depuis le 26/10) ; la case « Afficher les PU » les cache
 const MARQUE_PU='<span class="pu" title="Pas membre de la guilde">PU</span>';
+// allié : joueur d'une guilde alliée (config/guildes_alliees.yaml), jamais caché avec les PU
+const marque=j=>j.pu?MARQUE_PU:j.allie?`<span class="pu allie" title="Guilde alliée : ${esc(j.allie)}">allié</span>`:'';
 const ROLES=[['tank','Tanks'],['soigneur','Soigneurs'],['DPS','DPS']];
 const JOURS=['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'];
 const MOIS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
@@ -340,7 +344,7 @@ function ligne(s,raid){
   const nPU=s.joueurs.filter(j=>j.pu).length;
   const joueurs=s.joueurs.length?`<span class="survol" tabindex="0">${nPU?`<span class="n-tous">${s.joueurs.length}</span><span class="n-guilde">${s.joueurs.length-nPU}</span>`:s.joueurs.length}<span class="mobile"> joueurs</span><span class="bulle" role="tooltip">`
     +groupes.map(([l,js])=>`<span class="b-role"><span class="s-lib">${l}</span>${js.map(j=>{const c=CLASSES[j.classe]||[];
-      return `<a class="b-nom${j.pu?' est-pu':''}" href="${esc(s.date)}/${encodeURI(j.page)}" style="--classe:${c[0]||'var(--mut)'}"><span class="pastille"></span>${esc(j.nom)}${j.pu?MARQUE_PU:''}<span class="b-spe">${esc(j.spec_fr||'')}</span></a>`}).join('')}</span>`).join('')
+      return `<a class="b-nom${j.pu?' est-pu':''}" href="${esc(s.date)}/${encodeURI(j.page)}" style="--classe:${c[0]||'var(--mut)'}"><span class="pastille"></span>${esc(j.nom)}${marque(j)}<span class="b-spe">${esc(j.spec_fr||'')}</span></a>`}).join('')}</span>`).join('')
     +'</span></span>':'—';
   return `<tr class="soiree" data-noms="${esc(s.joueurs.map(j=>(j.personnage||j.nom).toLowerCase()).join(' '))}">`
     +`<td class="c-date">${lien?`<a class="date" href="${lien}">${esc(jour(s.date))}</a>`:esc(jour(s.date))}</td>`
@@ -387,7 +391,7 @@ function tableJoueurs(liste){
     +ls.map(({nom,n,der,j,ks,role})=>{const c=CLASSES[j.classe]||[];const spe=k=>k.split('|')[1];
       const t=[spe(ks[0]),c[1]].filter(Boolean).join(' ');
       const aussi=ks.slice(1).map(k=>(k.split('|')[0]!==role?`${ROLE_FR[k.split('|')[0]]||''} `:'')+spe(k)).filter(x=>x.trim());
-      return `<tr class="soiree${j.pu?' est-pu':''}" data-noms="${esc(nom.toLowerCase())}"><td><span class="pastille" style="--classe:${c[0]||'var(--mut)'}"></span><b>${esc(nom)}</b>${j.pu?MARQUE_PU:''}</td>`
+      return `<tr class="soiree${j.pu?' est-pu':''}" data-noms="${esc(nom.toLowerCase())}"><td><span class="pastille" style="--classe:${c[0]||'var(--mut)'}"></span><b>${esc(nom)}</b>${marque(j)}</td>`
       +`<td class="diff">${esc(ROLE_FR[role]||'')}${t?` · ${esc(t)}`:''}${aussi.length?`<span class="b-spe"> (aussi ${esc(aussi.join(', '))})</span>`:''}</td><td class="num">${n} / ${liste.length}</td>`
       +`<td><a class="date" href="${esc(der.date)}/${encodeURI(j.page)}">${esc(jour(der.date))} →</a></td></tr>`}).join('')+'</tbody></table>';
 }
