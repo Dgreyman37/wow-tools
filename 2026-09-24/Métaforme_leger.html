@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ga-genere" content="2026-10-26T12:10">
+<meta name="ga-version" content="58ba446">
+<title>Mon DPS Métaforme</title>
+<style>
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .badge { font-size: .74rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px;
+           padding: 2px 10px; background: var(--surface); }
+  .badge-verif.ok { color: var(--good); border-color: var(--good); }
+  .badge-verif.alerte { color: var(--warn); border-color: var(--warn); }
+  .badge-verif.non { font-style: italic; }
+  :root { --bg: #f7f6f3; --surface: #ffffff; --text: #1f2328; --muted: #5f6670; --border: #e1e0dc;
+          --accent: #b8860b; --good: #1f7a4d; --bad: #b23b2e; --warn: #9a6400; --row: #faf9f7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #16171a; --surface: #1f2125; --text: #e6e6e3; --muted: #9ba1a8; --border: #33363c;
+            --accent: #e3b341; --good: #5cc48f; --bad: #ef7a6c; --warn: #e0b04f; --row: #23252a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  h2 { font-size: 1.35rem; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.08rem; margin: 26px 0 8px; }
+  a { color: var(--accent); }
+  .meta { color: var(--muted); margin: 0 0 20px; font-size: .95rem; }
+  .lead { background: var(--surface); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 6px; }
+  .lead ul { margin: 6px 0 0; padding-left: 20px; }
+  .note { color: var(--muted); font-size: .92rem; }
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+  th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; vertical-align: top; }
+  td.wrap { white-space: normal; min-width: 240px; }
+  th { background: var(--row); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--good); font-weight: 600; } .mid { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; } .muted { color: var(--muted); }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 8px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  td details { background: none; border: 0; padding: 0; margin: 4px 0 0; }
+  td summary { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  td details p { margin: 4px 0; max-width: 46em; }
+  .faire { display: block; margin-top: 2px; }
+</style>
+<style>
+  .avec-nav { display: grid; grid-template-columns: 230px minmax(0, 1040px); gap: 28px; justify-content: center;
+              padding: 0 16px; }
+  .avec-nav main { max-width: none; margin: 0; padding: 32px 0 64px; }
+  .sommaire { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 32px 0 24px;
+              font-size: .9rem; }
+  .sommaire summary { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+                      font-size: .75rem; margin-bottom: 8px; cursor: pointer; list-style: none; }
+  .sommaire summary::-webkit-details-marker { display: none; }
+  .sommaire ul { list-style: none; margin: 0; padding: 0; }
+  .sommaire li { margin: 0; }
+  .sommaire a { display: block; padding: 4px 10px; border-left: 3px solid var(--border); color: var(--text);
+                text-decoration: none; line-height: 1.35; }
+  .sommaire li ul a { padding-left: 22px; color: var(--muted); font-size: .85rem; }
+  .sommaire a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .sommaire a.actif { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  /* sections bien séparées : un bandeau par grande partie */
+  .avec-nav main > h2, .avec-nav main section > h2 {
+    margin: 64px 0 18px; padding: 12px 16px; font-size: 1.45rem; background: var(--surface);
+    border: 1px solid var(--border); border-left: 6px solid var(--accent); border-radius: 10px; }
+  .avec-nav main > h2:first-of-type { margin-top: 36px; }
+  .avec-nav h2, .avec-nav h3 { scroll-margin-top: 16px; }
+  .avec-nav main > h3 { padding-bottom: 4px; border-bottom: 1px dashed var(--border); }
+  @media (max-width: 1100px) {
+    .avec-nav { display: block; padding: 0; }
+    .avec-nav main { padding: 16px 16px 64px; }
+    .sommaire { position: sticky; top: 0; z-index: 5; max-height: 70vh; padding: 8px 16px; background: var(--bg);
+                border-bottom: 1px solid var(--border); }
+    .sommaire summary { margin: 0; padding: 6px 0; }
+    .sommaire summary::after { content: " ▾"; }
+  }
+</style>
+<style>.ic{display:inline-block;width:1.2em;height:1.2em;border-radius:3px;background-size:cover;vertical-align:-.25em;margin-right:.3em;flex:none}.ic-spec{border-radius:50%}.ic-ability_druid_berserk,.io-ability_druid_berserk,.fi-ability_druid_berserk{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAYEBwgFA//EADAQAAEDAwMCBQMCBwAAAAAAAAECAwQABREGEiEHMRMUIkFRMlJxFYEIFiMzYWKR/8QAGAEAAwEBAAAAAAAAAAAAAAAAAgMEBQH/xAAlEQABAwMDBAMBAAAAAAAAAAABAAIDBBExIfDxBUFx4RITkbH/2gAMAwEAAhEDEQA/AOV/CV0jhvux9Zaja8zPcXvioe5DRJ/uHPdXvz2/NU51x11I1n1YuV78NsxIb3lIDagFoSw0ogZB4VuO5Rz93xWw9AuOWmzR4sUJR4aEjAA9sZxVAdbui7Vi05aL5a32fLsSxAua/CIUtb7y1Jfz7gBQRg9sD5rGpqoSuLn5P8W5VUhjaAzAz5SXY9Y6y0kJLVmv022N3NCXAWmEobPGAPDUDsIGBuQewrq6dt2s9XWp7UOodU3V21wpaYzy/wBQKlR1rHpVsKvpOfqFJk21SJUR5VsYuaVxUKJQMrQUp3E5+zjA/Y/NStK37wrLKRMiQ7jb/St5h7clbZ5w4kpwQPn4JzjvQP8Ak5pLD6T4XQ2AeNR+HjYTxZeq9ks8EWPWFlulzudsUqIJsSUlIkNJPoUrfyVYOM/AFFVhqNhF4u7txaaSgPAE/wBTGcDGfzgDn370U8MgIu4apZFa02Zjt4Ww4F8gW67sRZkhqO8uOZCEuK27kBQSSPwSP+0odT+o8fUzH8p2VyOLJbpzci73R9vxG3XG15QyygYK8qHfIBxxxk1VnU3VUq5r0reIs1uDETbR5KXt3b3SNsht5WOFpUMBPbaR80r2O5zVmLHmtqVEaGwLZIAPfCs9iQDgZ9hjis76JIWEg68qxlRHLKBILt43futI9JtZaTR+ox5dm8lC2LcfefUgg57lfGB7/NY/u0qNGussWtZVD8w6hokY8RkqO3I/GKY9YapXLirs1tJaiFQMtaCQH1gYwP8AUY7f5NJrjSnVpHaqOl0hgaXPOe29hR9RnjlntTtsBvldGNPkxWgzuaIH055wPiiowioI5UU/Aoq8liINkt7Tv0OecvF8Tom5HzVjuiiHoyySEL4w639ix9w/fI4pt030osM7UF9tq7pemmITTi2w0+2CSFEDd6OeKKK5M4tdos+MAsBKpVv0bkg52rUkE/ANSWgAgq9yO9FFHJlOowLrzK1E96KKKGycXFf/2Q==)}.ic-ability_druid_ferociousbite,.io-ability_druid_ferociousbite,.fi-ability_druid_ferociousbite{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAYHBQQD/8QAKxAAAQMEAQMEAgEFAAAAAAAAAQIDBAUGESEAEhMxByJBURQjYRUkMnGB/8QAFwEAAwEAAAAAAAAAAAAAAAAAAwQGBf/EACURAAICAgIBAwUBAAAAAAAAAAECAAMEEQUhEjFRYSIykaHR8P/aAAwDAQACEQMRAD8AXaLUbZYbfkuwZclxoFTjwYW6E42olXgY+TzwtCsw7y9TItForD0xx6I4uIttruNx39BLzqc/4IGVb+cc9rbrtAlFSa5AlTIIBT+RcE9TETBOCERm9rP8bzj442x0Q6U4iv8Apb6erp1wxiVsRyR++EpKu4ZDeR2kqx7EklR8ga4CmlFQbEps7lL3vcKxA/Uw/Umh0q2ILNsB6oyEtuqcX0Ycn1h7O/A/WyFHa1ec+0HGeTmmR7luGrS4lKagOS2sLdYQFLYhoGggFOSpf358HO+V+i1ui3DZEO/LgqUKHSHqgIVwUynRO0IxWFJQXVAl5aB7c5ODnIGscRPVS7X7RuWJS7OfRDq1AmOsKnRUgt1GG4hDjPcxpRAICvs7GMnhHFZHpEBkZfkAjHfxE1NZuClvyIE9RiSWHSlxtsKSM4G/O9Y3w5RapConqK3Cu1aIsGVMjAS44f6eh5KlJXjfjIyP4I4cUNSbm0nKWBQGPf8AviKVyUir0OhpvBqkPvsh1DTs+YoOPN5xgIScpbOxvZHGJFyt2S3A9R/Sm6jUpEkBmv0yqnrdQpR9hcb0SnPt60nzg5wcc5LU9Q0wrVm2ZdtMk1SiSkFv8uLhbzXwFKQfOPOR9eOTGEYTchxCe3KZbWpLLqm8FSQdHex8a4wzME3qZtdKXZBRzrua6IiZEmoSXGTAMx9a1MRnT2+2V9Yb35SlQ1nehweilPbjw2S4886lttAO1rUQlIyfskDndR4tTq70eBSKZJkSZfdTFSEYD3bSVL7ZOlEY2BvlMYsax7VlNybjrs6t1VpxqXBh05xIWptwJDTvQSApxp1DnUjqwRjWuIV0X3OGY9e0p8rleN4/HNeOvlYRrf8AZDpDJakOsyWHY8hpam3mljCkLBwUkHwQeHKhfN7RbjqzNRuykWl/WfxkNyliC+pS1An3L6HAAo52N40M8OOnFPvJ0coSNsncWEx0R56ltFSSFZG/G+bdy0+HOpC33WEJdaQFpWgYOfG/vhw4DGZivZlPn4tIckIPWbdsVmo0/wBPLYpNPkrhg1t59Epn2vtK6ST0L+M+DrY5lV6QulKTSKalERqSv+5ebTh54lSiSpfk7JP/AHhw43SSF6mHZTX5faPWcQolNaJT+Mlwk5Kl7JP++HDhxNnbZ7lTXiUeA+gfif/Z)}.ic-ability_druid_rake,.io-ability_druid_rake,.fi-ability_druid_rake{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAYHCAIDBAX/xAAwEAABAwMDAgUDAgcAAAAAAAABAgMEAAURBhIhMUEHEyJhgQgyURRCJENicZGhsf/EABcBAAMBAAAAAAAAAAAAAAAAAAQFBgL/xAAsEQABAgMDDAMBAAAAAAAAAAABAAIDBBEhIjEFEhRBUVJhcYGRsdETocGy/9oADAMBAAIRAxEAPwColxQssMyXFlTrhV5hJySc5z8g5rO0Ml4LaJG1Y3AZ7g8/6NdS0CTp4qDR86O4ELP9P7T/ANHwK6tERHZ0t2IzHddfDZdZ2IJ9Q4IOB3Bxz3xQ7n3HcE4hy40mHscB+gj67qy30maFZm7rxJYacKFARkhCVOZ5yoE/YB+e5PFP3jl4nXCyR3dN6falWuYght556MnzVg/jrjPUK6/2rj0lqK8+F2hrPaJUaNElSmvOjwmVZc259SnlHvnrzhPq+ETxJsuq5EZd/uVuNu/XSCtwLYU1gE+nbnsrPH545OabSMC60uwKAyhELo7hssUXyMreUsOSEqUcrw5tyrvwBiitWM9UnjtjOKKa5oQKVdLR1zpyYgG5ufHUEDH8wDkf5FWy+k/T6dC6PuMvV0ldobuL6Www4hDglJWpCG8YCjypzaEjryexxXPwQvLOnrg7c3YTMtcaM8phLqMhK1IKAeemCQT7bh3psm6inzYMXdeZO23xZIDaFKCf1TKFISQBggqC1KHsqpKXp81HGzD165qzmZR0eQBYLwGcO94dDQjgTTBSTqq12XQvj41MuRiXKFHYRKgreWXsjdtw7z+wbgE8AqCVYr0fEfx1tmrNHOR5FvSxGktsuIa2hbjQWlDiFqUrAJBC07U4J/I61AWsdXxp94VdWoyI2/LRCVjlrJICk44IzjjrgUt64uTkaXGjEtJLUJuOEITgBDeUIVnuVD1fPtTQOhy7gCc6mFPCSzDXTjBHNjsHV18eusbeafbHNt06GqTHnSY6VuKJbKUEg+5PU9OaKh6PfZsZBbjyFtoJKiEgdTRWxlR+6htDg7y9rS0l2FLc8ohSW1KTtWMhSSdpSfYjNNzv8MjVsNHKYjC1NLP35+zk9/SrHwKKKQxsT08qryc92itt3v5d6CiiY84pSgVdTisblNkT5SpMlYU4QE8DAAAwAPgUUUc0BSUZ7iSK6/0rfa4LUqOpxxSwQrHpI/A9veiiitIaq//Z)}.ic-artifactability_feraldruid_ashamanesbite,.io-artifactability_feraldruid_ashamanesbite,.fi-artifactability_feraldruid_ashamanesbite{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwEBAQEAAAAAAAAAAAAAAAQFBgMCCP/EACsQAAEDBAEDBAEEAwAAAAAAAAECAwQABRESIQYxQRMiUWEUMoGRoSNCcf/EABoBAAICAwAAAAAAAAAAAAAAAAIEAQMABQb/xAArEQACAQMCAwcFAQAAAAAAAAABAhEAAyExQQQSURMUIjJhobEjQoKRwdH/2gAMAwEAAhEDEQA/APkyJ75YcWdklw7bnv8A9+6srEqU8qB/iaYW2XXFLTlWAQMD45AFc+h7Sm63lLLj7TUcALdccJ0SByScck/Q5PatRdemX+n44uc+e3IjzkJ/FlM5Vvt7gkN/qBGpBBHfzSFwEkkaj5rr+BuJaREcwHJnMeEAzJ6HT96b5ae4IzzMaK2jl7X0mz+oAcZP0aUeQtYTsnTbOBtnzySfJqy8y45foLLcVyMFtuBkLb1WvOVEkf6DJI+RS85p55re3obeZYRlbxTqgE8gJ84GDz570IlYEU1cC3g7q0iYAA1gDQYMAEyYAAE1FVOnx33m4MiQ20HDw0tSRn9qKbje+M0pL/pZTyFDufJ++aKt7WMRWp7iLnj5jnP2753PrWzsdtRaOjIsppxlc+4OKynPLKU4wVj4OTgfRPxTMtUmBaYyzPlGQxlLC9tVJUeOPgDJ58VHsVzZnrgRSv2BAffTt20wkJ/rb+KodV3eG5fQmLHbLjjw/HjIVslpCjwFZ7nH8nn6oQWDT026nPsKbexauWgqwS0eI6IoiABuzEn1J5ojLCjfJzF2mWzqO4JmIkot2shLSkocdf01K9iDqk4ySQTnOAazl9TbX3o8thh5m3yIa3m4oWFeiE+wBahjbkHGfgVU63MKChDL05BVrh51olRdJAVokHAwnOpPYkE88VjZ9/U7b2rfHY9OO0nVO6gpWMk9wB5JP70Yll0yfaleW1w98Et9NZKg5LbTGgDHOdo82tJvoLzm5OB2AHYDwBRSSnFqOSaKLs3pduMskyVNOdKyXY055xogER3D2+Bkf2K7dPPPSOo4bjzq1LW9kqJ5zzRRWXRhz6fw1PBMW7qh059PyQfFeeqpD0i9yC8sq0VonPgDxUwdqKKtXyCkeKYtfcnqfk/4KKKKKmqK/9k=)}.ic-inv12_apextalent_druid_unseenpredator,.io-inv12_apextalent_druid_unseenpredator,.fi-inv12_apextalent_druid_unseenpredator{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAUEBgIHCAP/xAAuEAACAgEDBAAEBQUBAAAAAAABAgMEEQAFIQYSMUETIlFxBxQjMmEIFSRCUpH/xAAYAQEBAQEBAAAAAAAAAAAAAAAFAwQGAv/EAC4RAAECAwUGBQUAAAAAAAAAAAECEQADIQQSMUFRBWFxgaGxExQiMsFCgpHR8P/aAAwDAQACEQMRAD8A5t2GrLLHN8VmknjnlgkJ5LdwDAk/yQdROkdpex1arzmSKtTRtwkK5V2ij+bCfySAAfXn1q70KLVusb+3ys5lsRLK3dx+sp7cj75Bz99YdPUKUXXVuJprFK0dodaUrxtKJHIy4RcjLGIsAoz82ePGh1Wn0rIzD9q9THfWzZSZcqUVfSu6fyfi72zhXjeE3B+sYYBFJHfz8VYP8dJzlliz4zgNx596VmQ2unLKr2iNL4kjgMmWrq37jz5BJAH258ay3B91uwf2/Zqe7S1nnftjCP2rJ2/MMeA/aBnHOBzxqTJV/LbOm0pco/n1DWrsQbuc9oyIgQO0FRyRnk5HrXsAADX4ETQSuYsD2sa5EnQlnNHppg4EQK165UjMda7YroTkrHKygn64GjSKzYJnY849aNWCFQYq1IBZukb23+nDcl6W6qQolfckO3XnXPbHKxCMx+mH+G/2fOkn4obCluhQ3y4k0BpO8V2sCVIm7sMv0T9QHJ/5ZMZyNJuh+utqrdD7t0n1JXmn2y1E09a1CxM1ayiH4QVc9vLcMT649DXQ217RtHV2xw2dxNWWl1LR/Jbi0U4dKu7QqqFg68H4qhPfLIg96BmibYlJURRJI4j9sSOQ1hxe1JdpBlqDhVa64g41wD6tvaOYL3Vu739ln2x7MQ20t3WJDEvd3eFw/wC9mA4HJOODxrz6OptVhXqWauqVI2eDb4ZOTYkK4dj9UUNyfGSFHvE7fOjdy23qV9t6oko1KW3yPLaSvMglKDwoTOe5gAq8cDk+9Qd53CXeLMgjaCjRqxBHMfMVOAH5Y09sxJPHlmJJ/hdJQoXZLMakj+xPQbzBiL/jCdNqU4DMnF82SMd5cmgitbrJG1+Uwrlc/wCo40a926jtVWMOzytSqKflTCszH2zEjlj/AOeh40a3BCgGAgWbNsy1lSllzokNydQPQcIVpM9O7IsRBUOVwwyCM+9bn/BXdJJZoOmZa1aSlPfWzCXUs1ScwSr8WIE9ocdqkFlbBAI0aNRtwF0xTZZKkEHJouX9UwtHY9i3FtyttJaWvUnQsvbKDEWaRjjuZyQCSSftrRP4gQptdmPY6mVqpClhiTl5ZGTJZj7x4AGABn6nRo1k2b7E/d3jTOJ8nNOlwcjecc2D8IQ7ZQhtV2kkZwQ5HykfQaNGjTMc5H//2Q==)}.ic-inv_11_0_raid_gruesomesyringe_blue,.io-inv_11_0_raid_gruesomesyringe_blue,.fi-inv_11_0_raid_gruesomesyringe_blue{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAYDBQcECP/EACoQAAICAQQBAgYCAwAAAAAAAAECAwQRAAUGIRIiMQcTFEFRYSMyQoGx/8QAFwEBAQEBAAAAAAAAAAAAAAAABAMFAv/EACsRAAEDAwEHAgcAAAAAAAAAAAEAAgMEESExBRJBYXGhsROBMkJRkcHR4f/aAAwDAQACEQMRAD8Azqtt9XjnFKVwUV3Hl28wSXoms+DQbdSUdzOGBBdu8Z/6cagl4TPynkG5XY7dDZqcEaGzdto0VdrAiVpVQKPfPk2AOh7D7a4Nx5MbqV5YTLHaWlBTJ68YxH49qQc/2QMD9jp43vm1zc6VDj9yOLcIYLTbrPFJ4hbNjqOrHJ9igfzkYD3GlQU9TA2SokO9yB5mwH0xYcs31SXRxTBscXLuFkfNuG3eP2IJZG+rq2IxJWupBJHHMDnIAcAgjB6P2wR0dKtud4vSiD9nGvQ1OTjvLtnscb5bYl2zdrE4s1+QsSwknClVW0gyPl4YqrLjwGAOtZvyn4fcl4+liTctmZ4IJPlyWKzLPH/XyD5TOEI7DEAdH8avS1HrsuRYjUZx9wD2U9pbMmoJdx4wcg6g+/ZJFeS2kQMFiaFW9RVJWUZ/1o0TTMr4Qeke2D1o0lZ112fX/SgM3Y/Gr3b94gkjlks1VsiZFVgZChIXOASPbonsY7wdJ1yRDJ4MR/XPeoLFqQVwkRK46Peu2yuYCBx10PkKkUr4nXYbLV6N+S2kdXb7BsQj0rWmdYrUWfurHCy+/wCm/Wm+38Q5K+57HxDid5qVWNIRassSJr84A8wxPYX/AB8egTnOQABiHF7ViFEmaT1xuGjJ7wQcjV5YkrbhLJO9YR3y4lr2klIdJs5GSesZx17fv8UYyBzS4AB/vkWvg2weFjjRaZrnVLBFIdDgcOvI8Es8mksw7/eieoa0i2JA8AUD5TeZymB0Me3WjTT8Tp4t85BX3xYErWr9GCW9F7+NgL4SfjBJXOP3o0TfvkHCzqiF0Mro3NyP5+0iW/5I5C3vGxCkarVkcsAWOjRo1QSHNsumAWVtHPJGVRTgHTPxsCxdqxyjyV5kVh+QTo0adHlw6j8KMXxt6jyFLuTtPaZpj5sB45I0aNGjjCntKV5rJbn5j5X/2Q==)}.ic-inv_collections_armor_flowerbracelet_b_01,.io-inv_collections_armor_flowerbracelet_b_01,.fi-inv_collections_armor_flowerbracelet_b_01{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAcDBQYECP/EAC4QAAIBAwMDAwEIAwAAAAAAAAEDAgQFEQASIQYxQRNRYSIHFBYjMkKBkSRScf/EABgBAAMBAQAAAAAAAAAAAAAAAAQFBgMH/8QAKREAAQMDAgUDBQAAAAAAAAAAAQADEQIEIRITBTFBYXEiMlGBobHR8P/aAAwDAQACEQMRAD8AUlZbXtW58VtaFHLpCJlsBOMyPjn31m65HBHOnj08impbfVh0o/mulGXOQfGD/Hj51m7Z0wu7dYuhWUK0pAk1dPIbIzju2ggD9vnVNcNgEU/KO2qsQOaUVZBldSyS2cSylVlOQBugO8fk45HvgjVbUhn4WXSSRMl9eZIkQRnEADg9jyQP416N6v6Zt1zt8FOp907bTzFJJMBH6McwP+w9ueMnHtrH9RrnbKKjtNntiDTzkxaWlQaE74gMlHP6pnsPn/mlz9maAaicdOsnwhq7fQDVUYAPnOUlL1ckQqVLsS6y2oWhcHQFTKXqOEcTZ3wMnwNGpeqrbS2y9vo3KehsD9SAOVe0STyZbcE/JOjS41dvsspnK9dWyrg581PuOwGXAMcxH9DVjd7ayFRCuoZeomSzFhjAZBJHn++NT9EXJVDBxhQJdGZlGbJKyTLHbd4133h4t1OUVEkozH1Pu0Dk/V2JPjvnTniF7cUXO223iRBkZHXHMR+pKs+E2tvs6yMnr+Vk4XNtHKofTNb/AIipOYARiQjyQPHjWLu4j1ill/si5UTqd5nXKjAgemcbCPAIlnJGOMEjPOmNaadFCZVTaVVRFgKgqX6YiQwSR3Oc6xfVHUAsthebfbKWDGmSKiamYTFYyDKMIjBPyfHjjRl+8zQ1pcMVRg9x/c1I3jjLQr1DST7T45JO/aF0/f6zqqprLha7lXvdGEi6n27SBERAyAcnEeT50asLr1z06KvauobtEQPyt8oj4znRqV3XTklJhdXke2U9aatei0RioxjEx9TGM/UY99ct3UyuVJ9RV1Je2MN7RPEzjHn57HRo10WppvcNWkTCtG3Kh6ZxCjlcWUrbnGKEzFFTlyRISxuBwMgEZAHjSZ6iuFUoywzO8fXn92fcdtGjUlxfLlP1UrxD1O0z3S0Xb0Pa8kzgItMQIkYA4Pt86NGjShEjkv/Z)}.ic-inv_misc_herb_16,.io-inv_misc_herb_16,.fi-inv_misc_herb_16{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAYDBQcECP/EAC4QAAIBAgUDAwMDBQAAAAAAAAECAwQRAAUSITEGE0EUUWEiMnEHFRYzQlKhsf/EABgBAQEBAQEAAAAAAAAAAAAAAAUGBAID/8QAKxEAAQMDAgQEBwAAAAAAAAAAAQIDEQAEMRIhBWGBwRMyQaEUUYKR0eHx/9oADAMBAAIRAxEAPwDx8FkeZmkZmctdixuST5JxZegnlDvFG8kcSgyuB9KX4ueBfx74ly7L5np2qTDKYVbS0gQ6Qx3sTa1/jGtda9Ny11Dk1P07RCKhEKSLRpIBu6KRJvbWdmDMSWvfgEDBlzeIaUNRiaorXh5LRUcUi9NdB5rnsEcyQimo2l7fq5I2Pcc7aEA3dvgceThnzboLpDIqPVm+Y5hJUICXAYIi+Bcqp8+Bc+Njh56VqYui6alyyai/da2nDvmBWoMa0ynURTJJ/aA7XkbbV9l7A3RP1k6kos+bXRVFPGC8RalSRW0aUK2XSNOkEk2HF+MDC5uLp8JQshHL+HtVU3YWVraKedaCjpkScnYDaeuJMZpVm/jNPKy5bnHUlHTsdQSMKwJ4v9y+w5F9uTgxQZkj0gpu6P60AmWxv9JJtf52wYdS0qNln7/qpVxxkKMoSOh/NP3VKVMj5bl2WLKmXpSJTQ06ElHkBOtyBsXdrMSd9x4AxoFPVyZRT0qB71cFOiJa10Krp17jxY2+bHxhOp60UkMVRErIEXw9jKx4APj8+2GGeKnNP6urzGCSplHcbQ3ANttI8cDe3GJu+C341DHvRllxppaQw75R5iMk59cEHYnkYpW6+jzSv9JleXUs0lHIDUSaF+lpbkXduAFX/I2FyfJwo9e5ZR9OtR5fDUrWVhi7tVUIWEauSR2kUgXC23c/cSbWA31CnrOw7NHIBE0bIS1tOk2Jvfxtz+MY/wBbmdxls9S+t5aQuWBuGJkfcHyOdx84T4StRAbIgD3NIvaFWfjBepXaY3549I+VU1TXSz9oSuWEUYjTxZRwP94McWDDwSBQpfcUZJrUaueQxUq7ALCpAA8nn/gxxZ9NI+VUZLEdxpNYGwaxFr/jBgxgcQmUmKP4EkfFD6j13qjz+lFJDEI5pmV11FWba9vbFLWVc9RS0sMrXSnQpH7hSSbYMGNjYGkVtbcWtqVHI71NldBDVU7SSM4IfT9JHsPj5wYMGPWuK//Z)}.ic-spec-DruidFeral,.io-spec-DruidFeral,.fi-spec-DruidFeral{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACQAJAMBIgACEQEDEQH/xAAZAAEBAAMBAAAAAAAAAAAAAAAHBQIEBgP/2gAIAQEAAAAADlQ6PMXqcQ61RhqRzRVM0/c4sw2equk/n//EABgBAAMBAQAAAAAAAAAAAAAAAAMFBgEE/9oACAECEAAAAKdEGkFzjxT/AP/EABgBAAMBAQAAAAAAAAAAAAAAAAMFBgQH/9oACAEDEAAAAOfWh4M7PeF//8QALBAAAgIBBAEBBQkAAAAAAAAAAQIDBAUABhESIUEQEzFSgRUWI1FhcXKSwf/aAAgBAQABPwDa+3MxmrJaFQF7dnmcc6n+5mHiCXEE88fgyLGUHI1n97WLUbVqPSGD8o1450x5PJPJOgzD4E62/kpqONqTPGHls2kgqwjwqepcj1I1uOnk9w3bszsIMdV5BY+ACv8Ap1PGPedYo2489f100bK3Uggg6r4TIWIxIkBKk629LBYxVKzypnpOzxp8xmAVf6nUt5twZbMYUOqdDD16+oRvxCNUdv42vUvvOna3JVmliT5EQ9Q2sBRNnKIDXeY9x1TgjsTrM7p+ybppVPdIkSKCF+Hf11t3JGsarFiEisr3/i2rCVdurayydWmvT9opPVYm86kM8mcpZhfFGPGP788eD6GP6k6ub5qUxImMx0MDkEd18kfU6sWprEzyyMezHWO8yTofg0Dc/Qc6s3LFnasAlfsI2YJrB5G5LtTIwPKTGAnjTklm/c+z/8QAKBEAAQIEAwgDAAAAAAAAAAAAAwECAAQREgUTchAhMTM0U2KRcYGC/9oACAECAQE/ABCSXBQaXv8AL3EyYxn1IvD19Rkl7boEbOGx6OoiUu+KQVobkcRbGjcv63QuKMqtEiU5L9JIxDp5PTs//8QAKBEAAQQBAgQGAwAAAAAAAAAAAQIDBBEABRITFCFRBhAjMUJxcrHC/9oACAEDAQE/AJr0idqW2Q7wYqLpSF0SQarucgxIsRkIZRV9Vdz94ZUcGi+i/wAhmowuXlu/J1d8qK9lbgrIEnUFpfQ02p5byE7lb6DR6gpONeF4QbRxAlS6G49zmoAceIaFh9H6OaMAJeqUAPX/AJ8v/9k=)}.ic-spell_nature_starfall,.io-spell_nature_starfall,.fi-spell_nature_starfall{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAgEFAQAAAAAAAAAAAAAAAAgEAQMFBgcJ/8QAMBAAAQMDAwIEBAYDAAAAAAAAAQIDBAAFEQYSITFRBxNBYQhCUoEiIzIzcbGhwdH/xAAZAQACAwEAAAAAAAAAAAAAAAACBAADBQH/xAAmEQACAQMCBQUBAAAAAAAAAAABAgADESEEEjFBUWGhBRNSgcGx/9oADAMBAAIRAxEAPwBVWrai82xUm3oxMjpAeZHzj6h7/wB1gthSvY4kpwcE45FTbS7cYEhM+HvQUHlaBxjsf+UxejfCyD4pabg6ns0dq3z1rw9GShSUPBLiUObCs4WvH4sZCQVde20umpahA7nYw49D3H7DNmGOMXqyWabPneTGbKjnAWMgfzV/bDuspcN9xqNOLhS1KJ2tO+gC/pPZQ+/enVieCsfTenbpdlQlMxmoUiU5G2qDiXAlSUjjOVY5yk8e4NKJrnRc62TFLhW94Q0MturWscp3pByr0HXH94JxQPp0FIGkd2Tf88c4w9FfZUobnnNRuNvl2+UqLLZU06nqD6juO496KyLGprpHYbjLW28llOxBdSFFKfQZ7Cik9un+RH1FcSNbJcpmQl2E64wsfubDxjPXHSnb+CW4PSGp2+AG2kI/NmeWhkOrKjknCRu4CR3zzSPQ3XIEwOlKkuNnoR/g+1dF0jr2fbnGbrLcfdtEB1CmLel8obLw5SjA9MjduOTgY5pvT1qa6d6NQ5PDtDRNzZa09P0LC0pUg7knoRSUfHBpa82G7HUlskPORJSt8rbghsHgZB6AnjA4PrXW9BeOEVzR9nuN2ukdJksPKCHGyXHVJJO1ShhKClONxPB9Oa0X4yfEPR+oPCpqEha1Xh2SDES0Ry1tBK1ZGQghQx0OfvVWnp1aLOORFiR4/klbfRwDa8StxxDiys5QT1CRx9qKj0UgWPWVzot1iQrtZbFc34TDMl9PkvKZBSHNpKAojP6sJGSOpya1e/w2rdc240crLShkhRz8xH+qKK2vU0UICBmd6yl7us2TCtcRx0eVDaKGQABgFaj9+TWKfkPv5Lrq1k88miisdna9rwqmWzLFFFFVwJ//2Q==)}</style>
+</head>
+<body>
+<div class="avec-nav">
+<nav class="sommaire"><details open><summary>Sur cette page</summary><ul><li><a href="#s-boss-par-boss">Boss par boss</a></li><li><a href="#s-corriger-en-priorit">À corriger en priorité</a></li><li><a href="#s-rotation">Rotation</a><ul><li class="sous"><a href="#s-synth-se-de-la-soir-e">Synthèse de la soirée</a></li><li class="sous"><a href="#s-d-tail-de-chaque-boss">Détail de chaque boss</a></li></ul></li><li><a href="#s-build-et-stats">Build et stats</a></li><li><a href="#s-quipement">Équipement</a></li><li><a href="#s-progression">Progression</a><ul><li class="sous"><a href="#s-centiles-par-boss">Centiles par boss</a></li><li class="sous"><a href="#s-conseils-du-23-09">Conseils du 23/09</a></li></ul></li><li><a href="#s-m-thode">Méthode</a></li></ul></details></nav>
+<main>
+<p class="badges"><span class="badge">Généré le 26/10/2026 à 12:10</span><span class="badge" title="Commit du code guild_analyser qui a produit cette page">Version 58ba446</span><span class="badge badge-verif non" title="Pas encore relue par le vérificateur (intégrité des données, anomalies)">Non vérifié</span></p>
+<style>
+  main { max-width: 1100px; }
+  .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 16px 0; }
+  .carte { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .carte .val { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .carte .lib { color: var(--muted); font-size: .85rem; }
+  .prio { list-style: none; padding: 0; margin: 0; counter-reset: p; }
+  .prio > li { counter-increment: p; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+               padding: 14px 16px 12px 56px; margin: 12px 0; position: relative; }
+  .prio > li::before { content: counter(p); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px;
+                       border-radius: 50%; background: var(--accent); color: var(--surface); font-weight: 700;
+                       display: flex; align-items: center; justify-content: center; }
+  .prio h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .gain { float: right; margin-left: 10px; background: var(--row); border: 1px solid var(--border); border-radius: 999px;
+          padding: 2px 10px; font-size: .85rem; font-weight: 600; white-space: nowrap; }
+  .gain.nc { color: var(--muted); font-weight: 400; }
+  .gain.grave { color: var(--bad); border-color: var(--bad); }
+  .gain.ok { border-color: var(--good); }
+  .prio p { margin: 6px 0; }
+  .etiq { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; margin-right: 6px; }
+  pre.macro { background: var(--row); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin: 6px 0;
+              font-size: .88rem; white-space: pre-wrap; }
+  code { background: var(--row); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: .86em;
+         word-break: break-word; }
+  .moments a { margin-right: 4px; white-space: nowrap; display: inline-block; }
+  .boss-chip { display: inline-block; font-size: .8rem; color: var(--muted); border: 1px solid var(--border);
+               border-radius: 999px; padding: 0 8px; margin: 2px 4px 2px 0; }
+  .sort { border-bottom: 1px dotted var(--muted); cursor: help; }
+  .fr { color: var(--muted); }
+  .bandeau { background: color-mix(in srgb, var(--warn) 14%, var(--surface)); border: 1px solid var(--warn);
+             border-radius: 8px; padding: 8px 12px; margin: 8px 0; font-size: .92rem; }
+  .pc { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .gris { --pc: #7d838b; } .vert { --pc: #1b9a1b; } .bleu { --pc: #0070dd; } .violet { --pc: #a335ee; }
+  .orange { --pc: #e07800; } .rose { --pc: #d6559b; } .dore { --pc: #b8942a; }
+  .pc, .pc-t { color: var(--pc, var(--muted)); }
+  .verdict { font-weight: 700; }
+  table.boss-soiree td a, .liens a { white-space: nowrap; }
+  .e-pos { color: var(--good); font-weight: 600; } .e-mid { color: var(--warn); font-weight: 600; }
+  .e-neg { color: var(--bad); font-weight: 600; }
+  .methode .carte p { margin: 4px 0 0; font-size: .92rem; }
+  .methode summary { cursor: pointer; }
+  p.mode { margin: 4px 0 10px; }
+  .refs { display: grid; gap: 10px; margin: 12px 0 16px; }
+  .ref { display: grid; grid-template-columns: minmax(0, 1fr) 11rem; gap: 4px 16px; align-items: center;
+         background: var(--surface); border: 1px solid var(--border); border-left: 6px solid var(--muted);
+         border-radius: 10px; padding: 10px 14px; }
+  .ref.e-bad { border-left-color: var(--bad); } .ref.e-warn { border-left-color: var(--warn); }
+  .ref.e-good { border-left-color: var(--good); } .ref.moi { border-left-color: var(--accent); }
+  .ref .qui { font-size: 1.05rem; } .ref .qui b { font-size: 1.15rem; }
+  .ref .det { color: var(--muted); font-size: .85rem; } .ref .det b { color: var(--text); font-size: inherit; }
+  .ref .ecart { grid-row: span 2; text-align: right; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .ref .ecart .dps { font-size: 1.9rem; font-weight: 800; }
+  .ref .ecart .pc { font-size: 1.05rem; font-weight: 700; }
+  .ref .ecart .lib { color: var(--muted); font-size: .8rem; }
+  .ref.e-bad .ecart .dps, .ref.e-bad .ecart .pc { color: var(--bad); }
+  .ref.e-warn .ecart .dps, .ref.e-warn .ecart .pc { color: var(--warn); }
+  .ref.e-good .ecart .dps, .ref.e-good .ecart .pc { color: var(--good); }
+  .ref .barre { grid-column: 1; position: relative; height: 12px; background: var(--row); border-radius: 0 4px 4px 0; }
+  .ref .barre span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--muted); }
+  .ref.e-bad .barre span { background: var(--bad); } .ref.e-warn .barre span { background: var(--warn); }
+  .ref.e-good .barre span { background: var(--good); } .ref.moi .barre span { background: var(--accent); }
+  .ref .barre i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--text); }
+  .duo { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); column-gap: 0; row-gap: 4px;
+         margin: 8px 0; }
+  .duo-tete { font-weight: 700; padding: 4px 10px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .duo-tete.dm { text-align: right; border-bottom: 3px solid var(--accent); }
+  .duo-tete.dr { border-bottom: 3px solid var(--muted); }
+  .duo-minute { grid-column: 1 / -1; text-align: center; font-weight: 700; color: var(--muted); font-size: .85rem;
+                margin-top: 10px; border-top: 1px solid var(--border); padding-top: 4px; }
+  .duo-phase { grid-column: 1 / -1; text-align: center; font-style: italic; color: var(--muted); font-size: .88rem;
+               background: var(--row); border-radius: 6px; padding: 2px 8px; }
+  .duo-axe { background: linear-gradient(var(--border), var(--border)) center / 2px 100% no-repeat; }
+  .duo-c { padding: 3px 10px; border-radius: 6px; font-size: .92rem; }
+  .duo-c.cd:not(.vide) { background: color-mix(in srgb, var(--c) 12%, var(--surface)); }
+  .duo-c.dm { text-align: right; } .duo-c.dm.cd:not(.vide) { border-right: 4px solid var(--c); }
+  .duo-c.dr.cd:not(.vide) { border-left: 4px solid var(--c); }
+  .duo-c .t { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .85rem; }
+  .duo-c .absent { color: var(--muted); font-style: italic; font-size: .85rem; }
+  .duo-c .pourquoi { display: block; font-size: .85rem; color: var(--warn); }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases .mono { fill: var(--row); stroke: var(--border); } .phases .multi { fill: #eb6834; opacity: .55; }
+  .phases text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  section.boss > summary { font-size: 1.1rem; padding: 4px 0; }
+  section.boss { margin: 10px 0; }
+  details.boss { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px;
+                 margin: 10px 0; }
+  details.boss > summary { font-size: 1.08rem; }
+  .muted { color: var(--muted); }
+  @media (max-width: 600px) { .prio > li { padding-left: 16px; } .prio > li::before { position: static; margin-bottom: 6px; } }
+</style>
+<style>
+  .viz { --s1: #2a78d6; --s2: #eb6834; margin: 10px 0 4px; }
+  @media (prefers-color-scheme: dark) { .viz { --s1: #3987e5; --s2: #d95926; } }
+  .viz svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .viz text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  .viz text.lib { fill: var(--text); }
+  .viz .grille { stroke: var(--border); stroke-width: 1; }
+  .viz .s1 { fill: var(--s1); } .viz .s2 { fill: var(--s2); }
+  .viz .l1 { stroke: var(--s1); } .viz .l2 { stroke: var(--s2); }
+  .viz circle { stroke: var(--surface); stroke-width: 2; }
+  .viz [data-tip]:hover { opacity: .75; }
+  .viz .legende { display: flex; gap: 16px; flex-wrap: wrap; font-size: .88rem; color: var(--muted); margin: 0 0 4px; }
+  .viz .legende i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+  .viz .legende i.trou { border-radius: 2px; opacity: .45; }
+  #infobulle { position: fixed; pointer-events: none; display: none; z-index: 10; background: var(--surface);
+               color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px;
+               font-size: .85rem; box-shadow: 0 2px 8px rgba(0,0,0,.15); white-space: pre; }
+</style>
+<style>
+  .cause { display: flex; height: 10px; border-radius: 3px; overflow: hidden; background: var(--row); margin: 4px 0 2px; max-width: 420px; }
+  .cause span { display: block; height: 100%; }
+  .c-freq { background: #2a78d6; } .c-crit { background: #eb6834; } .c-coup { background: #9a6fd0; } .c-abs { background: #888; }
+  .pastille { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin: 0 4px 0 10px; }
+  .sorts-pourquoi { list-style: none; padding: 0; }
+  .sorts-pourquoi li { border-bottom: 1px solid var(--border); padding: 8px 0; }
+  .sorts-pourquoi .faits { color: var(--muted); font-size: .92rem; }
+  .centile { font-weight: 600; }
+  .c-legendaire { color: #e08a00; } .c-epique { color: #a335ee; } .c-rare { color: #0070dd; }
+  .c-peu { color: #1eaa1e; } .c-commun { color: var(--muted); }
+  .mecanisme { margin: 6px 0 0; padding: 6px 10px; border-left: 3px solid #eb6834; background: var(--row); font-size: .92rem; }
+  section.boss { border-top: 2px solid var(--border); margin-top: 28px; }
+</style>
+<h1>Mon DPS — Métaforme</h1>
+<p class="meta"><i class="ic ic-spec ic-spec-DruidFeral" title="Feral Druid"></i>Druide Farouche · ilvl 320 · raid du 24/09/2026 · 1 boss tué · <a href="https://www.warcraftlogs.com/reports/bvBYwXApHKVaFntx">rapport Warcraft Logs</a> · <a href="https://murlok.io/druid/feral/m+" title="Talents, statistiques et équipement des meilleurs joueurs de ta spé en Mythique+ (Murlok)">builds du top M+ (Murlok) ↗</a></p>
+<p class="mode"><span class="etiq">Niveau d'analyse</span><strong>léger</strong> : rotation lue dans le log seulement : ni top mondial, ni joueur équivalent, ni simulation (fiche des PU).</p>
+<p class="note"><strong>Moyennes sur 1 boss</strong></p>
+<div class="cartes">
+<div class="carte"><div class="val">144 k</div><div class="lib">DPS moyen (pas de top 3 trouvé)</div></div>
+<div class="carte"><div class="val"><span class="pc vert" title="centile 34 : moyen">34</span></div><div class="lib"><span class="verdict pc-t vert">moyen</span> · centile moyen (tous ilvl) : tu fais mieux que 34 % des joueurs</div></div>
+<div class="carte"><div class="val"><span class="pc vert" title="centile 25 : moyen">25</span></div><div class="lib"><span class="verdict pc-t vert">moyen</span> · centile moyen à ton ilvl : tu fais mieux que 25 % des joueurs</div></div>
+<div class="carte"><div class="val">≈ 2,4 %</div><div class="lib">à gagner par le jeu (estimé)</div></div>
+<div class="carte"><div class="val muted">—</div><div class="lib">écart à ton potentiel simc (sans simulation)</div></div>
+</div>
+<div class="bandeau"><strong>Spé vérifiée en partie</strong> — 8/10 (Métaforme) : à lire avec prudence. Point ouvert : gain d&#x27;uptime de Rip probablement estimé haut.</div>
+
+<h2 id="s-boss-par-boss">Boss par boss</h2>
+<div class="table-wrap">
+<table class="boss-soiree">
+<thead><tr><th>Boss</th><th class="num">Centile</th><th class="num">À ton ilvl</th><th class="num">DPS</th><th class="num">Durée</th><th class="num">Rang</th><th class="num">vs top 3</th><th class="num">vs potentiel simc</th><th class="num">Wipes</th><th>Combat</th></tr></thead>
+<tbody>
+<tr><td><a href="#boss-the-twin-fangs">The Twin Fangs</a></td><td class="num"><span class="pc vert" title="centile 34 : moyen">34</span></td><td class="num"><span class="pc vert" title="centile 25 : moyen">25</span></td><td class="num">144 k</td><td class="num">8:19</td><td class="num">≈ 4 305 / 6 524</td><td class="num">—</td><td class="num">—</td><td class="num">10</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/bvBYwXApHKVaFntx?fight=12" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/bvBYwXApHKVaFntx/fight/12" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/bvBYwXApHKVaFntx/12/M%C3%A9taforme/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Centiles aux couleurs de Warcraft Logs : gris sous 25, vert 25 à 49, bleu 50 à 74, violet 75 à 94, orange 95 à 98, rose 99, doré 100. Écarts : en vert au-dessus de la référence, en orange jusqu'à 15 % en dessous, en rouge au-delà ; face au top 3, un écart de 30 à 40 % reste courant. Pas d'écart à l'équivalent ici : il est choisi pour faire environ 25 % de plus que toi, son écart vaut donc toujours environ −20 % (il sert à comparer la rotation, dans le détail de chaque boss). Le nom du boss mène à son détail ; « Logs », « Wipefest » et « Analyzer » ouvrent le combat sur warcraftlogs.com, ses mécaniques sur wipefest.gg et ton analyse sur wowanalyzer.com.</p>
+<div class="bandeau"><strong>Correctifs récents de tes sorts</strong> (données de simc) : <i class="ic ic-inv_collections_armor_flowerbracelet_b_01"></i>Bursting Growth <span class="fr">(Croissance effrénée)</span> AP Coefficient (0.864 -&gt; 1), PvP Coefficient (1 -&gt; 0.87) le 22/09 ; Patient Custodian Base Value (8 -&gt; 10), PvP Coefficient (1 -&gt; 0.8) le 22/09. Références prises après le 23/09 à 06 h.</div>
+<h2 id="s-corriger-en-priorit">À corriger en priorité</h2>
+<ol class="prio"><li><span class="gain">+3 k · +2,4 % estimé</span><h3>Temps globaux dépensés en sorts utilitaires</h3><span class="boss-chip">The Twin Fangs</span><p><span class="etiq">Cause</span>Stampeding Roar (Ruée rugissante) : 6 lancers, contre 0 chez les références (ramenés à ta durée de combat) ; Tiger Dash (Célérité du tigre) : 6 lancers, contre 0 chez les références (ramenés à ta durée de combat). Soit environ 12 temps globaux de recharge sans dégâts.</p><p><span class="etiq">Conseil</span>Ne les lancer que quand la mécanique l&#x27;exige : chaque temps global pris à la rotation est perdu pour les dégâts. À vérifier aux moments indiqués : certains peuvent être une consigne du raid ou imposés par le boss.</p><p class="note"><span class="etiq">Preuve</span>Lancers du log ; sorts de classe sans aucun dégât, qui prennent un temps global (données de simc), hors interruptions, cooldowns, bijoux et potion. Gain estimé : un temps global (1 s) au DPS moyen par lancer en trop.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/bvBYwXApHKVaFntx?fight=12&amp;type=casts&amp;source=27&amp;start=7064495&amp;end=7074495">The Twin Fangs 0:47 Stampeding Roar (Ruée rugissante)</a> <a href="https://www.warcraftlogs.com/reports/bvBYwXApHKVaFntx?fight=12&amp;type=casts&amp;source=27&amp;start=7124495&amp;end=7134495">The Twin Fangs 1:47 Stampeding Roar (Ruée rugissante)</a> <a href="https://www.warcraftlogs.com/reports/bvBYwXApHKVaFntx?fight=12&amp;type=casts&amp;source=27&amp;start=7136935&amp;end=7146935">The Twin Fangs 2:00 Tiger Dash (Célérité du tigre)</a> <a href="https://www.warcraftlogs.com/reports/bvBYwXApHKVaFntx?fight=12&amp;type=casts&amp;source=27&amp;start=7178795&amp;end=7188795">The Twin Fangs 2:42 Tiger Dash (Célérité du tigre)</a> <a href="https://www.warcraftlogs.com/reports/bvBYwXApHKVaFntx?fight=12&amp;type=casts&amp;source=27&amp;start=7197285&amp;end=7207285">The Twin Fangs 3:00 Stampeding Roar (Ruée rugissante)</a> <a href="https://www.warcraftlogs.com/reports/bvBYwXApHKVaFntx?fight=12&amp;type=casts&amp;source=27&amp;start=7236955&amp;end=7246955">The Twin Fangs 3:40 Tiger Dash (Célérité du tigre)</a> </p></li><li><span class="gain nc">gain non chiffré</span><h3><i class="ic ic-ability_druid_berserk"></i>Bijou hors de Berserk</h3><span class="boss-chip">The Twin Fangs</span><p><span class="etiq">Cause</span>4 sur 4 hors de Berserk.</p><p><span class="etiq">Conseil</span>Activer le bijou au début de Berserk : leurs bonus se multiplient.</p><pre class="macro">#showtooltip
+/use 13
+/use 14
+/cast Berserk</pre><p><span class="etiq">Affichage</span>Macro qui colle les bijoux au gros cooldown (les bijoux sans effet à activer sont ignorés).</p><p class="note"><span class="etiq">Preuve</span>Règle vérifiée lancer par lancer sur le log : 4 fautes sur 4 occasions.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/bvBYwXApHKVaFntx?fight=12&amp;type=casts&amp;source=27&amp;start=7118665&amp;end=7128665">The Twin Fangs 1:42</a> <a href="https://www.warcraftlogs.com/reports/bvBYwXApHKVaFntx?fight=12&amp;type=casts&amp;source=27&amp;start=7212185&amp;end=7222185">The Twin Fangs 3:15</a> <a href="https://www.warcraftlogs.com/reports/bvBYwXApHKVaFntx?fight=12&amp;type=casts&amp;source=27&amp;start=7306505&amp;end=7316505">The Twin Fangs 4:49</a> <a href="https://www.warcraftlogs.com/reports/bvBYwXApHKVaFntx?fight=12&amp;type=casts&amp;source=27&amp;start=7413725&amp;end=7423725">The Twin Fangs 6:37</a> </p></li><li><span class="gain nc">gain non chiffré</span><h3><i class="ic ic-ability_druid_berserk"></i>Potion hors de Berserk</h3><span class="boss-chip">The Twin Fangs</span><p><span class="etiq">Cause</span>1 sur 1 hors de Berserk.</p><p><span class="etiq">Conseil</span>Boire la potion au début de Berserk.</p><p class="note"><span class="etiq">Preuve</span>Règle vérifiée lancer par lancer sur le log : 1 faute sur 1 occasion.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/bvBYwXApHKVaFntx?fight=12&amp;type=casts&amp;source=27&amp;start=7361125&amp;end=7371125">The Twin Fangs 5:44</a> </p></li></ol>
+
+<h2 id="s-rotation">Rotation</h2>
+<h3 id="s-synth-se-de-la-soir-e">Synthèse de la soirée</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">DPS</th><th class="num">vs équivalent</th><th class="num">vs top 3</th><th class="num">Multicible</th><th class="num">Cooldowns manqués</th><th class="num">vs potentiel simc</th></tr></thead>
+<tbody>
+<tr><td>The Twin Fangs</td><td class="num">144 k</td><td class="num">—</td><td class="num">—</td><td class="num">13 %</td><td class="num">0</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+
+<p class="note">Potentiel simc : ton équipement simulé avec une rotation parfaite, à la durée du kill, chaque phase au nombre d'ennemis qu'elle a en moyenne (1, 2, ou 3 et plus). Un vrai combat (déplacements, phases, cibles qui changent) reste en dessous : l'écart sert surtout à comparer les boss entre eux et d'une soirée à l'autre.</p>
+<h3 id="s-d-tail-de-chaque-boss">Détail de chaque boss</h3>
+<details class="boss" id="boss-the-twin-fangs"><summary><strong>The Twin Fangs</strong> · 144 k · — face à l'équivalent · 13 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/bvBYwXApHKVaFntx?fight=12" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/bvBYwXApHKVaFntx/fight/12" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/bvBYwXApHKVaFntx/12/M%C3%A9taforme/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Métaforme</b> (toi) <span class="det">· 144 k</span><div class="det"><b>rang ≈ 4 305</b> / 6 524 · centile 34 (25 à ton ilvl)</div></div><div class="ecart"><div class="dps">144 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">14</td><td>non</td><td>—</td><td>Power Infusion 3 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="56.6" height="18"><title>Monocible : 0:00 → 0:38 (2,0 ennemis)</title></rect><rect class="multi" x="256.6" y="4" width="13.4" height="18"><title>Multicible : 0:38 → 0:47 (3,9 ennemis)</title></rect><rect class="mono" x="270.0" y="4" width="89.4" height="18"><title>Monocible : 0:47 → 1:47 (2,0 ennemis)</title></rect><rect class="multi" x="359.4" y="4" width="17.9" height="18"><title>Multicible : 1:47 → 1:59 (3,8 ennemis)</title></rect><rect class="mono" x="377.3" y="4" width="132.6" height="18"><title>Monocible : 1:59 → 3:28 (2,0 ennemis)</title></rect><rect class="multi" x="510.0" y="4" width="16.4" height="18"><title>Multicible : 3:28 → 3:39 (3,7 ennemis)</title></rect><rect class="mono" x="526.3" y="4" width="83.4" height="18"><title>Monocible : 3:39 → 4:35 (2,0 ennemis)</title></rect><rect class="multi" x="609.8" y="4" width="16.4" height="18"><title>Multicible : 4:35 → 4:46 (4,1 ennemis)</title></rect><rect class="mono" x="626.2" y="4" width="134.1" height="18"><title>Monocible : 4:46 → 6:16 (2,0 ennemis)</title></rect><rect class="multi" x="760.3" y="4" width="16.4" height="18"><title>Multicible : 6:16 → 6:27 (3,9 ennemis)</title></rect><rect class="mono" x="776.7" y="4" width="86.4" height="18"><title>Monocible : 6:27 → 7:25 (2,0 ennemis)</title></rect><rect class="multi" x="863.1" y="4" width="17.9" height="18"><title>Multicible : 7:25 → 7:37 (4,2 ennemis)</title></rect><rect class="mono" x="881.0" y="4" width="63.0" height="18"><title>Monocible : 7:37 → 8:19 (1,7 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Berserk</td><td class="num">4 / 4</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Berserk</td><td class="num">1 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(433 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Vos attaques ont une chance élevée de faire naître en vous une rancune sanguinaire. Au bout de 15 fois, la rancune explose et asperge votre cible et l’ensemble des adversaires à proximité d’une bile cramoisie, qui inflige ( 25761 * 1 ) points de dégâts d’ombre répartis entre les adversaires. Dégâts augmentés de 30 % par personnage adverse supplémentaire, jusqu’à un maximum de 150 %. Si une seule cible adverse a été touchée, la bile concentrée inflige ( 25761 * 25 / 100 * 1 ) points de dégâts d’ombre supplémentaires en 3 s."><i class="ic ic-inv_11_0_raid_gruesomesyringe_blue"></i>Crimson Bile <span class="fr">(Bile cramoisie)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée Requiert Druide Niveau 2 requis Un rayon de lumière lunaire brûle l’adversaire, ce qui lui inflige ([21.2% of Spell Power]) points de dégâts des arcanes, puis ([165.6% of Spell Power]) supplémentaires en 18 s [ Clair de lune scintillant : et réduit les dégâts que vous infligent les adversaires de 1 % / .] [ Puissance astrale : Génère 0 points de puissance astrale. ] Gardien Hits a second target within 15 yds of the first."><i class="ic ic-spell_nature_starfall"></i>Moonfire <span class="fr">(Éclat lunaire)</span></span></td><td class="num">7 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 45 s de recharge Requiert Druide Niveau 50 requis Requiert Forme de félin Une frénésie furieuse vous envahit et vous griffez votre cible à 5 reprises pour lui infliger [([16.3% of Attack Power]) * 5] points de dégâts physiques, puis [5 * ([32.67% of Attack Power]) * 6 / 2] points de dégâts de saignement supplémentaires en 6 s. Confère 5 points de combo."><i class="ic ic-ability_druid_rake"></i>Feral Frenzy <span class="fr">(Frénésie farouche)</span></span></td><td class="num">9 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Les dégâts de Déchirure et Griffure ont une chance de provoquer Lianes sanguinaires sur la cible, infligeant ([97.5% of Attack Power]) points de dégâts de saignement pendant 6 s. Plusieurs instances de cet effet peuvent se chevaucher."><i class="ic ic-inv_misc_herb_16"></i>Bloodseeker Vines <span class="fr">(Lianes sanguinaires)</span></span></td><td class="num">9 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(66 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée Requiert Druide Niveau 45 requis Requiert Forme de félin Un coup de grâce qui inflige des dégâts instantanés et applique Déchirure aux ennemis à moins de 10 mètres. La durée dépend du nombre de points de combo. 1 point : [([15.5% of Attack Power]) * 2] et Déchirure pendant ( 2 * 2) s 2 points : [([15.5% of Attack Power]) * 3] et Déchirure pendant ( 2 * 3) s 3 points : [([15.5% of Attack Power]) * 4] et Déchirure pendant ( 2 * 4) s 4 points : [([15.5% of Attack Power]) * 5] et Déchirure pendant ( 2 * 5) s 5 points : [([15.5% of Attack Power]) * 6] et Déchirure pendant ( 2 * 6) s"><i class="ic ic-artifactability_feraldruid_ashamanesbite"></i>Primal Wrath <span class="fr">(Colère primitive)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><i class="ic ic-inv12_apextalent_druid_unseenpredator"></i>Unseen Predator</td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée Requiert Druide Niveau 7 requis Requiert Forme de félin Un coup de grâce qui inflige des dégâts physiques en fonction du nombre de points de combo et consomme jusqu’à 25 points d’énergie supplémentaires pour augmenter vos dégâts de 100% au maximum. 1 point : [([145.2% of Attack Power]) / 5] points de dégâts 2 points : [([145.2% of Attack Power]) * 2 / 5] points de dégâts 3 points : [([145.2% of Attack Power]) * 3 / 5] points de dégâts 4 points : [([145.2% of Attack Power]) * 4 / 5] points de dégâts 5 points : [([145.2% of Attack Power]) * 5 / 5] points de dégâts"><i class="ic ic-ability_druid_ferociousbite"></i>Ferocious Bite <span class="fr">(Morsure féroce)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+
+<h2 id="s-build-et-stats">Build et stats</h2>
+<p class="note">Pas de simulation (mode rapide ou export de l'addon absent).</p>
+
+<h2 id="s-quipement">Équipement</h2>
+<p class="note">Pas d'analyse d'équipement (mode rapide ou export absent).</p>
+
+<h2 id="s-progression">Progression</h2>
+<h3 id="s-centiles-par-boss">Centiles par boss</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">13/09</th><th class="num">16/09</th><th class="num">17/09</th><th class="num">23/09</th><th class="num">24/09</th></tr></thead>
+<tbody>
+<tr><td>Nymrissa Wavecaller</td><td class="num">—</td><td class="num">44 <span class="muted">· 30</span></td><td class="num">—</td><td class="num">66 <span class="muted">· 54</span></td><td class="num">—</td></tr>
+<tr><td>Nek&#x27;zali the Soulcoiler</td><td class="num">—</td><td class="num">74 <span class="muted">· 34</span></td><td class="num">—</td><td class="num">91 <span class="muted">· 69</span></td><td class="num">—</td></tr>
+<tr><td>The Coiled Altar</td><td class="num">—</td><td class="num">76 <span class="muted">· 46</span></td><td class="num">—</td><td class="num">83 <span class="muted">· 58</span></td><td class="num">—</td></tr>
+<tr><td>Ula&#x27;tek</td><td class="num">—</td><td class="num">32 <span class="muted">· 12</span></td><td class="num">—</td><td class="num">52 <span class="muted">· 32</span></td><td class="num">—</td></tr>
+<tr><td>Entombed Sentinels</td><td class="num">—</td><td class="num">40 <span class="muted">· 42</span></td><td class="num">—</td><td class="num">42 <span class="muted">· 36</span></td><td class="num">—</td></tr>
+<tr><td>Vashnik the Malignant</td><td class="num">—</td><td class="num">24 <span class="muted">· 23</span></td><td class="num">—</td><td class="num">39 <span class="muted">· 33</span></td><td class="num">—</td></tr>
+<tr><td>The Lost Explorers</td><td class="num">—</td><td class="num">—</td><td class="num">47 <span class="muted">· 43</span></td><td class="num">21 <span class="muted">· 15</span></td><td class="num">—</td></tr>
+<tr><td>Sszorak</td><td class="num">—</td><td class="num">—</td><td class="num">47 <span class="muted">· 45</span></td><td class="num">49 <span class="muted">· 49</span></td><td class="num">—</td></tr>
+<tr><td>The Twin Fangs</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">34 <span class="muted">· 25</span></td></tr>
+<tr><td><strong>Écart au potentiel simc</strong></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Centile global · centile à ton ilvl. Écart au potentiel : ton DPS rapporté à ce que ton équipement ferait avec une rotation parfaite (simulation).</p>
+<h3 id="s-conseils-du-23-09">Conseils du 23/09</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Conseil</th><th class="num">Gain alors</th><th class="num">Gain aujourd&#x27;hui</th><th>Statut</th></tr></thead>
+<tbody>
+<tr><td class="wrap">Temps globaux dépensés en sorts utilitaires</td><td class="num">1,6 %</td><td class="num">2,4 %</td><td class="muted">pas comparable</td></tr>
+
+</tbody>
+</table>
+</div>
+
+<p>0 corrigé, 0 en progrès, 0 toujours là, 1 pas comparable (boss non affrontés ce soir).</p>
+
+<details class="methode"><summary><h2 id="s-m-thode" style="display:inline">Méthode</h2> <span class="muted">(cliquer pour déplier)</span></summary><div class="cartes"><div class="carte"><div class="lib"><strong>Combats analysés</strong></div><p>Pour chaque boss, ton meilleur kill de la soirée (centile le plus haut).</p></div><div class="carte"><div class="lib"><strong>Top 3</strong></div><p>Les trois premiers de ta spé au classement héroïque du boss, logs postérieurs au 23/09 à 06 h (maintenance du mercredi, ou dernier correctif de tes sorts intégré à simc).</p></div><div class="carte"><div class="lib"><strong>Joueur équivalent</strong></div><p>Même tranche d&#x27;ilvl, raid de taille (±5) et de durée (±25 %) proches, sans Évocateur Augmentation, 10 à 45 % de DPS en plus ; parmi les plus proches de +25 %, le plus proche en talents et bijoux. Critères élargis (tranches voisines, ±8 joueurs, ±35 %) si personne après le correctif.</p></div><div class="carte"><div class="lib"><strong>Phases</strong></div><p>Multicible quand 3 ennemis ou plus sont attaqués par le raid (seuil de la rotation simc).</p></div><div class="carte"><div class="lib"><strong>Règles de rotation</strong></div><p>Conditions de la rotation simc vérifiées lancer par lancer ; retenues seulement si tu fais nettement moins bien que les références.</p></div><div class="carte"><div class="lib"><strong>Gains</strong></div><p>Estimés à partir des écarts mesurés, puis validés en simulation pour les plus gros (fautes imitées dans simc à ton rythme et à celui des références ; gain = écart des deux).</p></div><div class="carte"><div class="lib"><strong>Limites</strong></div><p>Une référence joue un autre combat que le tien (raid, durée, adds) : un écart est une piste, pas une preuve. Avec moins de 0,5 % d&#x27;écart, une simulation n&#x27;est pas significative.</p></div></div></details>
+<div id="infobulle"></div>
+<script>
+(() => {
+  const bulle = document.getElementById("infobulle");
+  const montrer = (ev, texte) => {
+    bulle.textContent = texte; bulle.style.display = "block";
+    const x = Math.min(ev.clientX + 14, window.innerWidth - bulle.offsetWidth - 8);
+    bulle.style.left = x + "px"; bulle.style.top = (ev.clientY + 14) + "px";
+  };
+  const cacher = () => { bulle.style.display = "none"; };
+  document.querySelectorAll("[data-tip]").forEach(el => {
+    el.addEventListener("pointermove", ev => montrer(ev, el.dataset.tip));
+    el.addEventListener("pointerleave", cacher);
+  });
+  document.querySelectorAll("svg[data-courbes]").forEach(svg => {
+    const d = JSON.parse(svg.dataset.courbes), zone = svg.querySelector(".zone"), ligne = svg.querySelector(".reticule");
+    zone.addEventListener("pointermove", ev => {
+      const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY;
+      const q = p.matrixTransform(svg.getScreenCTM().inverse());
+      const i = Math.max(0, Math.min(d.t.length - 1, Math.round((q.x - d.x0) / d.dx)));
+      ligne.setAttribute("x1", d.x0 + i * d.dx); ligne.setAttribute("x2", d.x0 + i * d.dx); ligne.style.display = "";
+      montrer(ev, d.t[i] + "\n" + d.series.map(s => (s.v[i] == null ? "—" : s.v[i]) + " lancers/min  " + s.nom).join("\n"));
+    });
+    zone.addEventListener("pointerleave", () => { ligne.style.display = "none"; cacher(); });
+  });
+})();
+</script>
+<script>
+function ouvrirAncre() {
+  const d = location.hash && document.getElementById(location.hash.slice(1));
+  if (d && d.tagName === "DETAILS") { d.open = true; d.scrollIntoView(); }
+}
+addEventListener("hashchange", ouvrirAncre); addEventListener("DOMContentLoaded", ouvrirAncre);
+</script>
+
+</main>
+</div>
+<script>
+(function () {
+  var nav = document.querySelector('.sommaire'); if (!nav) return;
+  var det = nav.querySelector('details'), petit = window.matchMedia('(max-width: 1100px)');
+  if (petit.matches) det.open = false;
+  var liens = {}; nav.querySelectorAll('a').forEach(function (a) { liens[a.getAttribute('href').slice(1)] = a; });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A' && petit.matches) det.open = false; });
+  var titres = Array.prototype.filter.call(document.querySelectorAll('main h2[id], main h3[id]'),
+                                           function (h) { return liens[h.id]; });
+  function actif() {
+    var courant = titres[0];
+    titres.forEach(function (h) { if (h.getBoundingClientRect().top < 120) courant = h; });
+    Object.keys(liens).forEach(function (k) { liens[k].classList.toggle('actif', courant && k === courant.id); });
+  }
+  window.addEventListener('scroll', actif, {passive: true}); actif();
+})();
+</script>
+</body>
+</html>
