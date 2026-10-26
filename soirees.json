@@ -27,6 +27,22 @@
    "tues": 1,
    "affrontes": 2,
    "essais": 18,
+   "boss": [
+    {
+     "nom": "The Coiled Altar",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 13,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Ula'tek",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 5,
+     "meilleur_pv": 69.15
+    }
+   ],
    "joueurs": [
     {
      "nom": "Louac",
@@ -34,6 +50,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -42,6 +59,7 @@
      "role": "tank",
      "classe": "DemonHunter",
      "spec_fr": "Vengeance",
+     "pu": true,
      "page": "Neczuniunia_soiree.html"
     },
     {
@@ -50,6 +68,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -58,6 +77,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -66,6 +86,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Nyktalgiaa_soiree.html"
     },
     {
@@ -74,6 +95,7 @@
      "role": "DPS",
      "classe": "Warrior",
      "spec_fr": "Armes",
+     "pu": true,
      "page": "Alats_soiree.html"
     },
     {
@@ -82,6 +104,7 @@
      "role": "DPS",
      "classe": "Paladin",
      "spec_fr": "Vindicte",
+     "pu": true,
      "page": "Bhørn_soiree.html"
     },
     {
@@ -90,6 +113,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -98,6 +122,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Gonzoshen_soiree.html"
     },
     {
@@ -106,6 +131,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Kaelhdyr_soiree.html"
     },
     {
@@ -114,6 +140,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -122,6 +149,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -130,6 +158,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     },
     {
@@ -138,6 +167,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": true,
      "page": "Махатекдк_soiree.html"
     }
    ]
@@ -151,6 +181,57 @@
    "tues": 7,
    "affrontes": 7,
    "essais": 18,
+   "boss": [
+    {
+     "nom": "Nymrissa Wavecaller",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Nek'zali the Soulcoiler",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Entombed Sentinels",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vashnik the Malignant",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Lost Explorers",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Sszorak",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 5,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Twin Fangs",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 8,
+     "meilleur_pv": null
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -158,6 +239,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -166,6 +248,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -174,6 +257,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -182,6 +266,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Nyktalgiaa_soiree.html"
     },
     {
@@ -190,6 +275,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -198,6 +284,7 @@
      "role": "DPS",
      "classe": "Shaman",
      "spec_fr": "Élémentaire",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -206,6 +293,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Kaelhdyr_soiree.html"
     },
     {
@@ -214,6 +302,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Lodan_soiree.html"
     },
     {
@@ -222,6 +311,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -230,6 +320,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -238,6 +329,7 @@
      "role": "DPS",
      "classe": "Priest",
      "spec_fr": "Ombre",
+     "pu": false,
      "page": "Natryum_soiree.html"
     },
     {
@@ -246,6 +338,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     }
    ]
@@ -259,6 +352,22 @@
    "tues": 0,
    "affrontes": 2,
    "essais": 10,
+   "boss": [
+    {
+     "nom": "The Twin Fangs",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 8,
+     "meilleur_pv": 1.1
+    },
+    {
+     "nom": "Kith'ix",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 2,
+     "meilleur_pv": 90.16
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -266,6 +375,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -274,6 +384,7 @@
      "role": "tank",
      "classe": "DeathKnight",
      "spec_fr": "Sang",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     },
     {
@@ -282,6 +393,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -290,6 +402,7 @@
      "role": "soigneur",
      "classe": "Paladin",
      "spec_fr": "Sacré",
+     "pu": true,
      "page": "Møises_soiree.html"
     },
     {
@@ -298,6 +411,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Nyktalgiaa_soiree.html"
     },
     {
@@ -306,6 +420,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Précision",
+     "pu": true,
      "page": "Bowtoyersk_soiree.html"
     },
     {
@@ -314,6 +429,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -322,6 +438,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Gonzoshen_soiree.html"
     },
     {
@@ -330,6 +447,7 @@
      "role": "DPS",
      "classe": "Priest",
      "spec_fr": "Ombre",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -338,6 +456,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Givre",
+     "pu": true,
      "page": "Jäggerbømb_soiree.html"
     },
     {
@@ -346,6 +465,7 @@
      "role": "DPS",
      "classe": "Warrior",
      "spec_fr": "Armes",
+     "pu": true,
      "page": "Mazzìnga_soiree.html"
     },
     {
@@ -354,6 +474,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -362,6 +483,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -370,6 +492,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Météion_soiree.html"
     }
    ]
@@ -383,6 +506,22 @@
    "tues": 1,
    "affrontes": 2,
    "essais": 18,
+   "boss": [
+    {
+     "nom": "The Twin Fangs",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 4,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Coiled Altar",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 14,
+     "meilleur_pv": 7.35
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -390,6 +529,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -398,6 +538,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -406,6 +547,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -414,6 +556,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -422,6 +565,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Nyktalgiaa_soiree.html"
     },
     {
@@ -430,6 +574,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -438,6 +583,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Kaelhdyr_soiree.html"
     },
     {
@@ -446,6 +592,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Lodan_soiree.html"
     },
     {
@@ -454,6 +601,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -462,6 +610,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -470,6 +619,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Météion_soiree.html"
     },
     {
@@ -478,6 +628,7 @@
      "role": "DPS",
      "classe": "Priest",
      "spec_fr": "Ombre",
+     "pu": false,
      "page": "Natryum_soiree.html"
     },
     {
@@ -486,6 +637,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     },
     {
@@ -494,6 +646,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
+     "pu": false,
      "page": "Ærzä_soiree.html"
     }
    ]
@@ -507,6 +660,57 @@
    "tues": 6,
    "affrontes": 7,
    "essais": 17,
+   "boss": [
+    {
+     "nom": "Nymrissa Wavecaller",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Nek'zali the Soulcoiler",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Entombed Sentinels",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vashnik the Malignant",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Lost Explorers",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Sszorak",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 5,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Twin Fangs",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 5,
+     "meilleur_pv": 10.96
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -514,6 +718,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -522,6 +727,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -530,6 +736,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -538,6 +745,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -546,6 +754,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Nyktalgiaa_soiree.html"
     },
     {
@@ -554,6 +763,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -562,6 +772,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -570,6 +781,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -578,6 +790,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Météion_soiree.html"
     },
     {
@@ -586,6 +799,7 @@
      "role": "DPS",
      "classe": "Priest",
      "spec_fr": "Ombre",
+     "pu": false,
      "page": "Natryum_soiree.html"
     },
     {
@@ -594,6 +808,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     },
     {
@@ -602,6 +817,7 @@
      "role": "DPS",
      "classe": "Shaman",
      "spec_fr": "Élémentaire",
+     "pu": false,
      "page": "Sinistra_soiree.html"
     },
     {
@@ -610,6 +826,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
+     "pu": false,
      "page": "Ærzä_soiree.html"
     }
    ]
@@ -623,6 +840,50 @@
    "tues": 6,
    "affrontes": 6,
    "essais": 15,
+   "boss": [
+    {
+     "nom": "Nymrissa Wavecaller",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Nek'zali the Soulcoiler",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Entombed Sentinels",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 3,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vashnik the Malignant",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Lost Explorers",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 6,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Sszorak",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 3,
+     "meilleur_pv": null
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -630,6 +891,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -638,6 +900,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -646,6 +909,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -654,6 +918,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -662,6 +927,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Nyktalgiaa_soiree.html"
     },
     {
@@ -670,6 +936,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
+     "pu": true,
      "page": "Bastoul_soiree.html"
     },
     {
@@ -678,6 +945,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -686,6 +954,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Kaelhdyr_soiree.html"
     },
     {
@@ -694,6 +963,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Lodan_soiree.html"
     },
     {
@@ -702,6 +972,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -710,6 +981,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -718,6 +990,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Météion_soiree.html"
     },
     {
@@ -726,6 +999,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     },
     {
@@ -734,6 +1008,7 @@
      "role": "DPS",
      "classe": "Shaman",
      "spec_fr": "Élémentaire",
+     "pu": false,
      "page": "Sinistra_soiree.html"
     },
     {
@@ -742,6 +1017,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
+     "pu": false,
      "page": "Ærzä_soiree.html"
     }
    ]
@@ -755,6 +1031,22 @@
    "tues": 1,
    "affrontes": 2,
    "essais": 15,
+   "boss": [
+    {
+     "nom": "The Twin Fangs",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 11,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Coiled Altar",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 4,
+     "meilleur_pv": 64.79
+    }
+   ],
    "joueurs": [
     {
      "nom": "Louac",
@@ -762,6 +1054,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -770,6 +1063,7 @@
      "role": "tank",
      "classe": "DeathKnight",
      "spec_fr": "Sang",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     },
     {
@@ -778,6 +1072,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -786,6 +1081,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -794,6 +1090,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Nyktalgiaa_soiree.html"
     },
     {
@@ -802,6 +1099,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -810,6 +1108,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Gonzoshen_soiree.html"
     },
     {
@@ -818,6 +1117,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Kaelhdyr_soiree.html"
     },
     {
@@ -826,6 +1126,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -834,6 +1135,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -842,6 +1144,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Météion_soiree.html"
     },
     {
@@ -850,6 +1153,7 @@
      "role": "DPS",
      "classe": "Priest",
      "spec_fr": "Ombre",
+     "pu": false,
      "page": "Natryum_soiree.html"
     },
     {
@@ -858,6 +1162,7 @@
      "role": "DPS",
      "classe": "Shaman",
      "spec_fr": "Élémentaire",
+     "pu": false,
      "page": "Sinistra_soiree.html"
     },
     {
@@ -866,6 +1171,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
+     "pu": false,
      "page": "Ærzä_soiree.html"
     }
    ]
@@ -879,6 +1185,64 @@
    "tues": 8,
    "affrontes": 8,
    "essais": 17,
+   "boss": [
+    {
+     "nom": "Nymrissa Wavecaller",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Nek'zali the Soulcoiler",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Entombed Sentinels",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vashnik the Malignant",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Lost Explorers",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Sszorak",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 7,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Coiled Altar",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Ula'tek",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -886,6 +1250,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -894,6 +1259,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -902,6 +1268,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -910,6 +1277,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -918,6 +1286,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Discipline",
+     "pu": false,
      "page": "Natryum-Discipline_soiree.html"
     },
     {
@@ -926,6 +1295,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Nyktalgiaa_soiree.html"
     },
     {
@@ -934,6 +1304,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -942,6 +1313,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Gonzoshen_soiree.html"
     },
     {
@@ -950,6 +1322,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Leberlynoix_soiree.html"
     },
     {
@@ -958,6 +1331,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Lodan_soiree.html"
     },
     {
@@ -966,6 +1340,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -974,6 +1349,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -982,6 +1358,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Météion_soiree.html"
     },
     {
@@ -990,6 +1367,7 @@
      "role": "DPS",
      "classe": "Priest",
      "spec_fr": "Ombre",
+     "pu": false,
      "page": "Natryum-Ombre_soiree.html"
     },
     {
@@ -998,6 +1376,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     },
     {
@@ -1006,6 +1385,7 @@
      "role": "DPS",
      "classe": "Shaman",
      "spec_fr": "Élémentaire",
+     "pu": false,
      "page": "Sinistra_soiree.html"
     },
     {
@@ -1014,6 +1394,7 @@
      "role": "DPS",
      "classe": "Monk",
      "spec_fr": "Marche-vent",
+     "pu": true,
      "page": "Tûpepatest_soiree.html"
     },
     {
@@ -1022,6 +1403,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
+     "pu": false,
      "page": "Ærzä_soiree.html"
     }
    ]
@@ -1035,6 +1417,22 @@
    "tues": 1,
    "affrontes": 2,
    "essais": 16,
+   "boss": [
+    {
+     "nom": "Nymrissa Wavecaller",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Twin Fangs",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 15,
+     "meilleur_pv": 11.99
+    }
+   ],
    "joueurs": [
     {
      "nom": "Dïnnen",
@@ -1042,6 +1440,7 @@
      "role": "tank",
      "classe": "Warrior",
      "spec_fr": "Protection",
+     "pu": true,
      "page": "Dïnnen_soiree.html"
     },
     {
@@ -1050,6 +1449,7 @@
      "role": "tank",
      "classe": "DeathKnight",
      "spec_fr": "Sang",
+     "pu": true,
      "page": "Thanlosk_soiree.html"
     },
     {
@@ -1058,6 +1458,7 @@
      "role": "soigneur",
      "classe": "Druid",
      "spec_fr": "Restauration",
+     "pu": true,
      "page": "Darkspammer_soiree.html"
     },
     {
@@ -1066,6 +1467,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Gonzochimy_soiree.html"
     },
     {
@@ -1074,6 +1476,7 @@
      "role": "soigneur",
      "classe": "Monk",
      "spec_fr": "Tisse-brume",
+     "pu": true,
      "page": "Mönche_soiree.html"
     },
     {
@@ -1082,6 +1485,7 @@
      "role": "soigneur",
      "classe": "Druid",
      "spec_fr": "Restauration",
+     "pu": true,
      "page": "Orelïnde_soiree.html"
     },
     {
@@ -1090,6 +1494,7 @@
      "role": "DPS",
      "classe": "Shaman",
      "spec_fr": "Élémentaire",
+     "pu": true,
      "page": "Ceek_soiree.html"
     },
     {
@@ -1098,6 +1503,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Augmentation",
+     "pu": true,
      "page": "Falconnard_soiree.html"
     },
     {
@@ -1106,6 +1512,7 @@
      "role": "DPS",
      "classe": "Warrior",
      "spec_fr": "Armes",
+     "pu": true,
      "page": "Kinqsman_soiree.html"
     },
     {
@@ -1114,6 +1521,7 @@
      "role": "DPS",
      "classe": "Rogue",
      "spec_fr": "Assassinat",
+     "pu": true,
      "page": "Latoxikah_soiree.html"
     },
     {
@@ -1122,6 +1530,7 @@
      "role": "DPS",
      "classe": "Warlock",
      "spec_fr": "Destruction",
+     "pu": true,
      "page": "Mannifas_soiree.html"
     },
     {
@@ -1130,6 +1539,7 @@
      "role": "DPS",
      "classe": "Priest",
      "spec_fr": "Ombre",
+     "pu": true,
      "page": "Obscurity_soiree.html"
     },
     {
@@ -1138,6 +1548,7 @@
      "role": "DPS",
      "classe": "Paladin",
      "spec_fr": "Vindicte",
+     "pu": true,
      "page": "Sempere_soiree.html"
     },
     {
@@ -1146,6 +1557,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
+     "pu": true,
      "page": "Syrpha_soiree.html"
     },
     {
@@ -1154,6 +1566,7 @@
      "role": "DPS",
      "classe": "Mage",
      "spec_fr": "Arcanes",
+     "pu": true,
      "page": "Treont_soiree.html"
     },
     {
@@ -1162,6 +1575,7 @@
      "role": "DPS",
      "classe": "Paladin",
      "spec_fr": "Vindicte",
+     "pu": true,
      "page": "Wrecka_soiree.html"
     },
     {
@@ -1170,6 +1584,7 @@
      "role": "DPS",
      "classe": "Warlock",
      "spec_fr": "Démonologie",
+     "pu": true,
      "page": "Xelganas_soiree.html"
     },
     {
@@ -1178,6 +1593,7 @@
      "role": "DPS",
      "classe": "Warrior",
      "spec_fr": "Armes",
+     "pu": true,
      "page": "Zael_soiree.html"
     },
     {
@@ -1186,6 +1602,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévoreur",
+     "pu": true,
      "page": "Денжер_soiree.html"
     },
     {
@@ -1194,6 +1611,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
+     "pu": true,
      "page": "Мафеста_soiree.html"
     }
    ]
@@ -1207,6 +1625,29 @@
    "tues": 2,
    "affrontes": 3,
    "essais": 27,
+   "boss": [
+    {
+     "nom": "The Lost Explorers",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 4,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Sszorak",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 9,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Twin Fangs",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 14,
+     "meilleur_pv": 31.26
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -1214,6 +1655,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -1222,6 +1664,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -1230,6 +1673,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -1238,6 +1682,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -1246,6 +1691,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Discipline",
+     "pu": false,
      "page": "Natryum_soiree.html"
     },
     {
@@ -1254,6 +1700,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -1262,6 +1709,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Gonzoshen_soiree.html"
     },
     {
@@ -1270,6 +1718,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -1278,6 +1727,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -1286,6 +1736,7 @@
      "role": "DPS",
      "classe": "Monk",
      "spec_fr": "Marche-vent",
+     "pu": true,
      "page": "Tûpepatest_soiree.html"
     },
     {
@@ -1294,6 +1745,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
+     "pu": false,
      "page": "Ærzä_soiree.html"
     }
    ]
@@ -1307,6 +1759,50 @@
    "tues": 6,
    "affrontes": 6,
    "essais": 16,
+   "boss": [
+    {
+     "nom": "Nymrissa Wavecaller",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Nek'zali the Soulcoiler",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Entombed Sentinels",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 5,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vashnik the Malignant",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Coiled Altar",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Ula'tek",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 3,
+     "meilleur_pv": null
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -1314,6 +1810,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -1322,6 +1819,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -1330,6 +1828,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -1338,6 +1837,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -1346,6 +1846,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Discipline",
+     "pu": false,
      "page": "Natryum-Discipline_soiree.html"
     },
     {
@@ -1354,6 +1855,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Nyktalgiaa_soiree.html"
     },
     {
@@ -1362,6 +1864,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -1370,6 +1873,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Précision",
+     "pu": false,
      "page": "Gonzoshen_soiree.html"
     },
     {
@@ -1378,6 +1882,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Lodan_soiree.html"
     },
     {
@@ -1386,6 +1891,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -1394,6 +1900,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -1402,6 +1909,7 @@
      "role": "DPS",
      "classe": "Priest",
      "spec_fr": "Ombre",
+     "pu": false,
      "page": "Natryum-Ombre_soiree.html"
     },
     {
@@ -1410,6 +1918,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     },
     {
@@ -1418,6 +1927,7 @@
      "role": "DPS",
      "classe": "Shaman",
      "spec_fr": "Élémentaire",
+     "pu": false,
      "page": "Sinistra_soiree.html"
     },
     {
@@ -1426,6 +1936,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
+     "pu": false,
      "page": "Ærzä_soiree.html"
     }
    ]
@@ -1439,6 +1950,15 @@
    "tues": 0,
    "affrontes": 1,
    "essais": 21,
+   "boss": [
+    {
+     "nom": "Sszorak",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 21,
+     "meilleur_pv": 29.68
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -1446,6 +1966,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -1454,6 +1975,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -1462,6 +1984,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": true,
      "page": "Agorâ_soiree.html"
     },
     {
@@ -1470,6 +1993,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": true,
      "page": "Bigshøtx_soiree.html"
     },
     {
@@ -1478,6 +2002,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -1486,6 +2011,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -1494,6 +2020,7 @@
      "role": "soigneur",
      "classe": "Paladin",
      "spec_fr": "Sacré",
+     "pu": true,
      "page": "Maggmar_soiree.html"
     },
     {
@@ -1502,6 +2029,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": true,
      "page": "Byvako_soiree.html"
     },
     {
@@ -1510,6 +2038,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Précision",
+     "pu": true,
      "page": "Châckí_soiree.html"
     },
     {
@@ -1518,6 +2047,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -1526,6 +2056,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévoreur",
+     "pu": true,
      "page": "Devourmom_soiree.html"
     },
     {
@@ -1534,6 +2065,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Gonzoshen_soiree.html"
     },
     {
@@ -1542,6 +2074,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Kaelhdyr_soiree.html"
     },
     {
@@ -1550,6 +2083,7 @@
      "role": "DPS",
      "classe": "Shaman",
      "spec_fr": "Élémentaire",
+     "pu": true,
      "page": "Krakedoole_soiree.html"
     },
     {
@@ -1558,6 +2092,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -1566,6 +2101,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -1574,6 +2110,7 @@
      "role": "DPS",
      "classe": "Paladin",
      "spec_fr": "Vindicte",
+     "pu": true,
      "page": "Phz_soiree.html"
     },
     {
@@ -1582,6 +2119,7 @@
      "role": "DPS",
      "classe": "Rogue",
      "spec_fr": "Assassinat",
+     "pu": true,
      "page": "Scorpionitor_soiree.html"
     },
     {
@@ -1590,6 +2128,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": true,
      "page": "Ywi_soiree.html"
     }
    ]
@@ -1603,6 +2142,36 @@
    "tues": 3,
    "affrontes": 4,
    "essais": 19,
+   "boss": [
+    {
+     "nom": "Entombed Sentinels",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vashnik the Malignant",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 3,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Lost Explorers",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Sszorak",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 13,
+     "meilleur_pv": 55.77
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -1610,6 +2179,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -1618,6 +2188,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -1626,6 +2197,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -1634,6 +2206,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -1642,6 +2215,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Discipline",
+     "pu": false,
      "page": "Natryum_soiree.html"
     },
     {
@@ -1650,6 +2224,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -1658,6 +2233,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Précision",
+     "pu": false,
      "page": "Gonzoshen_soiree.html"
     },
     {
@@ -1666,6 +2242,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Kaelhdyr_soiree.html"
     },
     {
@@ -1674,6 +2251,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Lodan_soiree.html"
     },
     {
@@ -1682,6 +2260,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -1690,6 +2269,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -1698,6 +2278,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Météion_soiree.html"
     },
     {
@@ -1706,6 +2287,7 @@
      "role": "DPS",
      "classe": "Warlock",
      "spec_fr": "Destruction",
+     "pu": false,
      "page": "Orviden_soiree.html"
     },
     {
@@ -1714,6 +2296,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     },
     {
@@ -1722,6 +2305,7 @@
      "role": "DPS",
      "classe": "Shaman",
      "spec_fr": "Élémentaire",
+     "pu": false,
      "page": "Sinistra_soiree.html"
     },
     {
@@ -1730,6 +2314,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
+     "pu": false,
      "page": "Ærzä_soiree.html"
     }
    ]
@@ -1743,6 +2328,71 @@
    "tues": 9,
    "affrontes": 9,
    "essais": 16,
+   "boss": [
+    {
+     "nom": "Nymrissa Wavecaller",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Nek'zali the Soulcoiler",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Entombed Sentinels",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vashnik the Malignant",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Lost Explorers",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 4,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Sszorak",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Twin Fangs",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Coiled Altar",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 4,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Ula'tek",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -1750,6 +2400,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -1758,6 +2409,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -1766,6 +2418,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -1774,6 +2427,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -1782,6 +2436,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Discipline",
+     "pu": false,
      "page": "Natryum-Discipline_soiree.html"
     },
     {
@@ -1790,6 +2445,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Nyktalgiaa_soiree.html"
     },
     {
@@ -1798,6 +2454,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -1806,6 +2463,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Gonzoshen-Maîtrise_des_bêtes_soiree.html"
     },
     {
@@ -1814,6 +2472,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Précision",
+     "pu": false,
      "page": "Gonzoshen-Précision_soiree.html"
     },
     {
@@ -1822,6 +2481,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Leberlynoix_soiree.html"
     },
     {
@@ -1830,6 +2490,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -1838,6 +2499,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -1846,6 +2508,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Météion_soiree.html"
     },
     {
@@ -1854,6 +2517,7 @@
      "role": "DPS",
      "classe": "Priest",
      "spec_fr": "Ombre",
+     "pu": false,
      "page": "Natryum-Ombre_soiree.html"
     },
     {
@@ -1862,6 +2526,7 @@
      "role": "DPS",
      "classe": "Warlock",
      "spec_fr": "Destruction",
+     "pu": false,
      "page": "Orviden_soiree.html"
     },
     {
@@ -1870,6 +2535,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     },
     {
@@ -1878,6 +2544,7 @@
      "role": "DPS",
      "classe": "Shaman",
      "spec_fr": "Élémentaire",
+     "pu": false,
      "page": "Sinistra_soiree.html"
     }
    ]
@@ -1891,6 +2558,15 @@
    "tues": 0,
    "affrontes": 1,
    "essais": 19,
+   "boss": [
+    {
+     "nom": "The Lost Explorers",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 19,
+     "meilleur_pv": 1.02
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -1898,6 +2574,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -1906,6 +2583,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -1914,6 +2592,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -1922,6 +2601,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -1930,6 +2610,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": true,
      "page": "Naoîmi_soiree.html"
     },
     {
@@ -1938,6 +2619,7 @@
      "role": "soigneur",
      "classe": "Paladin",
      "spec_fr": "Sacré",
+     "pu": true,
      "page": "Pawwni_soiree.html"
     },
     {
@@ -1946,6 +2628,7 @@
      "role": "soigneur",
      "classe": "Paladin",
      "spec_fr": "Sacré",
+     "pu": true,
      "page": "Турбитоник_soiree.html"
     },
     {
@@ -1954,6 +2637,7 @@
      "role": "DPS",
      "classe": "Warrior",
      "spec_fr": "Armes",
+     "pu": true,
      "page": "Acronøs_soiree.html"
     },
     {
@@ -1962,6 +2646,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": true,
      "page": "Beæsti_soiree.html"
     },
     {
@@ -1970,6 +2655,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -1978,6 +2664,7 @@
      "role": "DPS",
      "classe": "Mage",
      "spec_fr": "Arcanes",
+     "pu": false,
      "page": "Deaddrath_soiree.html"
     },
     {
@@ -1986,6 +2673,7 @@
      "role": "DPS",
      "classe": "Shaman",
      "spec_fr": "Élémentaire",
+     "pu": true,
      "page": "Fairycham_soiree.html"
     },
     {
@@ -1994,6 +2682,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": true,
      "page": "Fondorlatos_soiree.html"
     },
     {
@@ -2002,6 +2691,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Gonzoshen-Maîtrise_des_bêtes_soiree.html"
     },
     {
@@ -2010,6 +2700,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Précision",
+     "pu": false,
      "page": "Gonzoshen-Précision_soiree.html"
     },
     {
@@ -2018,6 +2709,7 @@
      "role": "DPS",
      "classe": "Warrior",
      "spec_fr": "Fureur",
+     "pu": true,
      "page": "Infernos_soiree.html"
     },
     {
@@ -2026,6 +2718,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Kaelhdyr_soiree.html"
     },
     {
@@ -2034,6 +2727,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -2042,6 +2736,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -2050,6 +2745,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     },
     {
@@ -2058,6 +2754,7 @@
      "role": "DPS",
      "classe": "Monk",
      "spec_fr": "Marche-vent",
+     "pu": true,
      "page": "Ryozumk_soiree.html"
     },
     {
@@ -2066,6 +2763,7 @@
      "role": "DPS",
      "classe": "Mage",
      "spec_fr": "Arcanes",
+     "pu": true,
      "page": "Sanni_soiree.html"
     },
     {
@@ -2074,6 +2772,7 @@
      "role": "DPS",
      "classe": "Warrior",
      "spec_fr": "Armes",
+     "pu": true,
      "page": "Sima_soiree.html"
     },
     {
@@ -2082,6 +2781,7 @@
      "role": "DPS",
      "classe": "Monk",
      "spec_fr": "Marche-vent",
+     "pu": true,
      "page": "Tûpepatest_soiree.html"
     },
     {
@@ -2090,6 +2790,7 @@
      "role": "DPS",
      "classe": "Mage",
      "spec_fr": "Arcanes",
+     "pu": true,
      "page": "Чсвова_soiree.html"
     }
    ]
@@ -2103,6 +2804,22 @@
    "tues": 1,
    "affrontes": 2,
    "essais": 14,
+   "boss": [
+    {
+     "nom": "Entombed Sentinels",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 8,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vashnik the Malignant",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 6,
+     "meilleur_pv": 39.37
+    }
+   ],
    "joueurs": [
     {
      "nom": "Gonzodokas",
@@ -2110,6 +2827,7 @@
      "role": "tank",
      "classe": "DeathKnight",
      "spec_fr": "Sang",
+     "pu": false,
      "page": "Gonzodokas_soiree.html"
     },
     {
@@ -2118,6 +2836,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -2126,6 +2845,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -2134,6 +2854,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -2142,6 +2863,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -2150,6 +2872,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Kaelhdyr_soiree.html"
     },
     {
@@ -2158,6 +2881,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -2166,6 +2890,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -2174,6 +2899,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Météion_soiree.html"
     },
     {
@@ -2182,6 +2908,7 @@
      "role": "DPS",
      "classe": "Warlock",
      "spec_fr": "Destruction",
+     "pu": false,
      "page": "Orviden_soiree.html"
     },
     {
@@ -2190,6 +2917,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     },
     {
@@ -2198,6 +2926,7 @@
      "role": "DPS",
      "classe": "Shaman",
      "spec_fr": "Élémentaire",
+     "pu": false,
      "page": "Sinistra_soiree.html"
     },
     {
@@ -2206,6 +2935,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
+     "pu": false,
      "page": "Ærzä_soiree.html"
     }
    ]
@@ -2219,6 +2949,71 @@
    "tues": 9,
    "affrontes": 9,
    "essais": 16,
+   "boss": [
+    {
+     "nom": "Nymrissa Wavecaller",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Nek'zali the Soulcoiler",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 5,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Entombed Sentinels",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vashnik the Malignant",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Lost Explorers",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Sszorak",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Twin Fangs",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Coiled Altar",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Ula'tek",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    }
+   ],
    "joueurs": [
     {
      "nom": "Gonzodokas",
@@ -2226,6 +3021,7 @@
      "role": "tank",
      "classe": "DeathKnight",
      "spec_fr": "Sang",
+     "pu": false,
      "page": "Gonzodokas_soiree.html"
     },
     {
@@ -2234,6 +3030,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -2242,6 +3039,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -2250,6 +3048,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -2258,6 +3057,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Nyktalgiaa_soiree.html"
     },
     {
@@ -2266,6 +3066,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -2274,6 +3075,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Kaelhdyr_soiree.html"
     },
     {
@@ -2282,6 +3084,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Leberlynoix_soiree.html"
     },
     {
@@ -2290,6 +3093,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -2298,6 +3102,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -2306,6 +3111,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Météion_soiree.html"
     },
     {
@@ -2314,6 +3120,7 @@
      "role": "DPS",
      "classe": "Priest",
      "spec_fr": "Ombre",
+     "pu": false,
      "page": "Natryum_soiree.html"
     },
     {
@@ -2322,6 +3129,7 @@
      "role": "DPS",
      "classe": "Warlock",
      "spec_fr": "Destruction",
+     "pu": false,
      "page": "Orviden_soiree.html"
     },
     {
@@ -2330,6 +3138,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     },
     {
@@ -2338,6 +3147,7 @@
      "role": "DPS",
      "classe": "Shaman",
      "spec_fr": "Élémentaire",
+     "pu": false,
      "page": "Sinistra_soiree.html"
     },
     {
@@ -2346,6 +3156,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
+     "pu": false,
      "page": "Ærzä_soiree.html"
     }
    ]
@@ -2359,6 +3170,22 @@
    "tues": 1,
    "affrontes": 2,
    "essais": 13,
+   "boss": [
+    {
+     "nom": "Nek'zali the Soulcoiler",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 9,
+     "meilleur_pv": 14.12
+    },
+    {
+     "nom": "Ula'tek",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 4,
+     "meilleur_pv": null
+    }
+   ],
    "joueurs": [
     {
      "nom": "Gonzodokas",
@@ -2366,6 +3193,7 @@
      "role": "tank",
      "classe": "DeathKnight",
      "spec_fr": "Sang",
+     "pu": false,
      "page": "Gonzodokas_soiree.html"
     },
     {
@@ -2374,6 +3202,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -2382,6 +3211,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -2390,6 +3220,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -2398,6 +3229,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Nyktalgiaa_soiree.html"
     },
     {
@@ -2406,6 +3238,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -2414,6 +3247,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Kaelhdyr_soiree.html"
     },
     {
@@ -2422,6 +3256,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Leberlynoix_soiree.html"
     },
     {
@@ -2430,6 +3265,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -2438,6 +3274,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -2446,6 +3283,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Météion_soiree.html"
     },
     {
@@ -2454,6 +3292,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     }
    ]
@@ -2467,6 +3306,29 @@
    "tues": 2,
    "affrontes": 3,
    "essais": 22,
+   "boss": [
+    {
+     "nom": "Nymrissa Wavecaller",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Coiled Altar",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 4,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Ula'tek",
+     "difficulte": "Normal",
+     "tue": false,
+     "essais": 17,
+     "meilleur_pv": 15.34
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -2474,6 +3336,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -2482,6 +3345,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -2490,6 +3354,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -2498,6 +3363,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -2506,6 +3372,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Nyktalgiaa_soiree.html"
     },
     {
@@ -2514,6 +3381,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -2522,6 +3390,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Précision",
+     "pu": false,
      "page": "Gonzoshen_soiree.html"
     },
     {
@@ -2530,6 +3399,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Leberlynoix_soiree.html"
     },
     {
@@ -2538,6 +3408,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Lodan_soiree.html"
     },
     {
@@ -2546,6 +3417,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -2554,6 +3426,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -2562,6 +3435,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Météion_soiree.html"
     },
     {
@@ -2570,6 +3444,7 @@
      "role": "DPS",
      "classe": "Priest",
      "spec_fr": "Ombre",
+     "pu": false,
      "page": "Natryum_soiree.html"
     },
     {
@@ -2578,6 +3453,7 @@
      "role": "DPS",
      "classe": "Warlock",
      "spec_fr": "Destruction",
+     "pu": false,
      "page": "Orviden_soiree.html"
     },
     {
@@ -2586,6 +3462,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     },
     {
@@ -2594,6 +3471,7 @@
      "role": "DPS",
      "classe": "Shaman",
      "spec_fr": "Élémentaire",
+     "pu": false,
      "page": "Sinistra_soiree.html"
     }
    ]
@@ -2607,6 +3485,57 @@
    "tues": 6,
    "affrontes": 7,
    "essais": 18,
+   "boss": [
+    {
+     "nom": "Nek'zali the Soulcoiler",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Entombed Sentinels",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vashnik the Malignant",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Lost Explorers",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 3,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Sszorak",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 4,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Twin Fangs",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 3,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Coiled Altar",
+     "difficulte": "Normal",
+     "tue": false,
+     "essais": 5,
+     "meilleur_pv": 59.57
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -2614,6 +3543,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -2622,6 +3552,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -2630,6 +3561,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -2638,6 +3570,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -2646,6 +3579,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Discipline",
+     "pu": false,
      "page": "Natryum-Discipline_soiree.html"
     },
     {
@@ -2654,6 +3588,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -2662,6 +3597,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Précision",
+     "pu": false,
      "page": "Gonzoshen_soiree.html"
     },
     {
@@ -2670,6 +3606,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Leberlynoix_soiree.html"
     },
     {
@@ -2678,6 +3615,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Lodan_soiree.html"
     },
     {
@@ -2686,6 +3624,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -2694,6 +3633,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -2702,6 +3642,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Météion_soiree.html"
     },
     {
@@ -2710,6 +3651,7 @@
      "role": "DPS",
      "classe": "Priest",
      "spec_fr": "Ombre",
+     "pu": false,
      "page": "Natryum-Ombre_soiree.html"
     },
     {
@@ -2718,6 +3660,7 @@
      "role": "DPS",
      "classe": "Mage",
      "spec_fr": "Arcanes",
+     "pu": false,
      "page": "Orvidette_soiree.html"
     },
     {
@@ -2726,6 +3669,7 @@
      "role": "DPS",
      "classe": "Shaman",
      "spec_fr": "Élémentaire",
+     "pu": false,
      "page": "Sinistra_soiree.html"
     },
     {
@@ -2734,6 +3678,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
+     "pu": false,
      "page": "Ærzä_soiree.html"
     }
    ]
@@ -2747,6 +3692,22 @@
    "tues": 1,
    "affrontes": 2,
    "essais": 11,
+   "boss": [
+    {
+     "nom": "Nymrissa Wavecaller",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 3,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Coiled Altar",
+     "difficulte": "Normal",
+     "tue": false,
+     "essais": 8,
+     "meilleur_pv": 53.21
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -2754,6 +3715,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -2762,6 +3724,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -2770,6 +3733,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -2778,6 +3742,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -2786,6 +3751,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -2794,6 +3760,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Gonzoshen_soiree.html"
     },
     {
@@ -2802,6 +3769,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Leberlynoix_soiree.html"
     },
     {
@@ -2810,6 +3778,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -2818,6 +3787,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -2826,6 +3796,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Météion_soiree.html"
     }
    ]
@@ -2839,6 +3810,29 @@
    "tues": 2,
    "affrontes": 3,
    "essais": 21,
+   "boss": [
+    {
+     "nom": "Sszorak",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 4,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Twin Fangs",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 4,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Coiled Altar",
+     "difficulte": "Normal",
+     "tue": false,
+     "essais": 13,
+     "meilleur_pv": 24.09
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -2846,6 +3840,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -2854,6 +3849,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -2862,6 +3858,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo-Sacré_soiree.html"
     },
     {
@@ -2870,6 +3867,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -2878,6 +3876,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Discipline",
+     "pu": false,
      "page": "Natryum-Discipline_soiree.html"
     },
     {
@@ -2886,6 +3885,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Nyktalgiaa_soiree.html"
     },
     {
@@ -2894,6 +3894,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -2902,6 +3903,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Gonzoshen-Maîtrise_des_bêtes_soiree.html"
     },
     {
@@ -2910,6 +3912,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Précision",
+     "pu": false,
      "page": "Gonzoshen-Précision_soiree.html"
     },
     {
@@ -2918,6 +3921,7 @@
      "role": "DPS",
      "classe": "Priest",
      "spec_fr": "Ombre",
+     "pu": false,
      "page": "Ingolmo-Ombre_soiree.html"
     },
     {
@@ -2926,6 +3930,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Kaelhdyr_soiree.html"
     },
     {
@@ -2934,6 +3939,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Lodan_soiree.html"
     },
     {
@@ -2942,6 +3948,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -2950,6 +3957,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -2958,6 +3966,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Météion_soiree.html"
     },
     {
@@ -2966,6 +3975,7 @@
      "role": "DPS",
      "classe": "Priest",
      "spec_fr": "Ombre",
+     "pu": false,
      "page": "Natryum-Ombre_soiree.html"
     },
     {
@@ -2974,6 +3984,7 @@
      "role": "DPS",
      "classe": "Warlock",
      "spec_fr": "Affliction",
+     "pu": false,
      "page": "Orviden-Affliction_soiree.html"
     },
     {
@@ -2982,6 +3993,7 @@
      "role": "DPS",
      "classe": "Warlock",
      "spec_fr": "Destruction",
+     "pu": false,
      "page": "Orviden-Destruction_soiree.html"
     },
     {
@@ -2990,6 +4002,7 @@
      "role": "DPS",
      "classe": "DeathKnight",
      "spec_fr": "Impie",
+     "pu": false,
      "page": "Ragnarorc_soiree.html"
     }
    ]
@@ -3003,6 +4016,43 @@
    "tues": 4,
    "affrontes": 5,
    "essais": 17,
+   "boss": [
+    {
+     "nom": "Nek'zali the Soulcoiler",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Entombed Sentinels",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vashnik the Malignant",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 3,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Lost Explorers",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 5,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Sszorak",
+     "difficulte": "Normal",
+     "tue": false,
+     "essais": 6,
+     "meilleur_pv": 31.84
+    }
+   ],
    "joueurs": [
     {
      "nom": "Jairtrude",
@@ -3010,6 +4060,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Jairtrude_soiree.html"
     },
     {
@@ -3018,6 +4069,7 @@
      "role": "tank",
      "classe": "Paladin",
      "spec_fr": "Protection",
+     "pu": false,
      "page": "Louac_soiree.html"
     },
     {
@@ -3026,6 +4078,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Sacré",
+     "pu": false,
      "page": "Ingolmo_soiree.html"
     },
     {
@@ -3034,6 +4087,7 @@
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
+     "pu": false,
      "page": "Jalyne_soiree.html"
     },
     {
@@ -3042,6 +4096,7 @@
      "role": "soigneur",
      "classe": "Priest",
      "spec_fr": "Discipline",
+     "pu": false,
      "page": "Natryum_soiree.html"
     },
     {
@@ -3050,6 +4105,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Côrnus_soiree.html"
     },
     {
@@ -3058,6 +4114,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Précision",
+     "pu": false,
      "page": "Gonzoshen_soiree.html"
     },
     {
@@ -3066,6 +4123,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Kaelhdyr_soiree.html"
     },
     {
@@ -3074,6 +4132,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Leberlynoix_soiree.html"
     },
     {
@@ -3082,6 +4141,7 @@
      "role": "DPS",
      "classe": "DemonHunter",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Lodan_soiree.html"
     },
     {
@@ -3090,6 +4150,7 @@
      "role": "DPS",
      "classe": "Hunter",
      "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
      "page": "Mécafree_soiree.html"
     },
     {
@@ -3098,6 +4159,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Farouche",
+     "pu": false,
      "page": "Métaforme_soiree.html"
     },
     {
@@ -3106,6 +4168,7 @@
      "role": "DPS",
      "classe": "Evoker",
      "spec_fr": "Dévastation",
+     "pu": false,
      "page": "Météion_soiree.html"
     },
     {
@@ -3114,6 +4177,7 @@
      "role": "DPS",
      "classe": "Warlock",
      "spec_fr": "Destruction",
+     "pu": false,
      "page": "Orviden_soiree.html"
     },
     {
@@ -3122,6 +4186,7 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
+     "pu": false,
      "page": "Ærzä_soiree.html"
     }
    ]
@@ -3135,6 +4200,36 @@
    "tues": 3,
    "affrontes": 4,
    "essais": 16,
+   "boss": [
+    {
+     "nom": "Vaelgor & Ezzorak",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Lightblinded Vanguard",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Crown of the Cosmos",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 8,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Chimaerus, the Undreamt God",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 5,
+     "meilleur_pv": 77.55
+    }
+   ],
    "joueurs": []
   }
  ]

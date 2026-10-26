@@ -263,6 +263,9 @@ table.soirees{width:100%;border-collapse:collapse;margin-top:12px;font-size:.93r
 .b-nom{display:flex;align-items:center;gap:0;padding:2px 0;color:var(--fg);text-decoration:none;font-weight:600;font-size:.88rem}
 .b-nom:hover{color:var(--accent)}
 .b-spe{margin-left:auto;padding-left:14px;color:var(--mut);font-weight:400;font-size:.8rem}
+.b-boss{display:flex;align-items:center;padding:2px 0;color:var(--fg);font-weight:600;font-size:.88rem}
+.b-boss .b-spe{white-space:nowrap}
+.b-etat{width:1.2em;color:var(--mut);font-weight:700}.b-boss.tue .b-etat{color:var(--accent)}
 .mobile{display:none}
 @media (max-width:700px){.mobile{display:inline}.soirees tr{position:relative}.survol{position:static}
  .bulle{left:0;right:0;min-width:0}.soirees td.c-joueurs{text-align:left}}
@@ -274,6 +277,12 @@ table.soirees{width:100%;border-collapse:collapse;margin-top:12px;font-size:.93r
  background:linear-gradient(90deg,var(--serie2) calc(var(--p)*100%),var(--border) 0)}
 .tues.complet .jauge{background:var(--good)}.tues.complet b{color:var(--good)}
 .hero-tag.forte{color:var(--serie2);border-color:var(--serie2)}
+/* PU (26/10) : marque, et la case « Afficher les PU » qui les cache (body.sans-pu) */
+.pu{display:inline-block;margin-left:6px;padding:0 5px;border-radius:4px;font-size:.68rem;font-weight:700;line-height:1.5;
+ color:var(--mut);border:1px solid var(--border);vertical-align:middle}
+.n-guilde{display:none}
+body.sans-pu .est-pu{display:none}body.sans-pu .n-tous{display:none}body.sans-pu .n-guilde{display:inline}
+.bascule-pu{display:inline-flex;align-items:center;gap:6px;margin-left:12px;font-size:.88rem;color:var(--mut);cursor:pointer}
 </style>
 </head>
 <body>
@@ -296,6 +305,7 @@ table.soirees{width:100%;border-collapse:collapse;margin-top:12px;font-size:.93r
   <div class="hero-date">Résumé de chaque soirée et pages de chaque joueur, d'après Warcraft Logs, Wipefest et SimulationCraft.</div>
   <div class="hero-pastilles"><span class="hero-tag forte" id="nb">…</span></div>
   <input id="cherche" type="search" placeholder="Chercher un joueur" aria-label="Chercher un joueur">
+  <label class="bascule-pu"><input type="checkbox" id="voir-pu" checked> Afficher les PU</label>
 </section>
 <div id="soirees"><p class="mut">Chargement des soirées…</p></div>
 <p id="rien" class="mut" hidden>Aucune soirée avec ce joueur.</p>
@@ -309,6 +319,8 @@ try{const v=localStorage.getItem('theme');if(v!==null)th.value=v}catch(e){}
 setTheme(th.value);th.onchange=()=>setTheme(th.value);
 
 const CLASSES=JSON.parse(document.getElementById('ga-classes').textContent);
+// PU : joueur hors de la guilde du rapport (soirees.json depuis le 26/10) ; la case « Afficher les PU » les cache
+const MARQUE_PU='<span class="pu" title="Pas membre de la guilde">PU</span>';
 const ROLES=[['tank','Tanks'],['soigneur','Soigneurs'],['DPS','DPS']];
 const JOURS=['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'];
 const MOIS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
@@ -325,16 +337,29 @@ function chip(j,date){
 function ligne(s,raid){
   const lien=s.page?`${esc(s.date)}/${encodeURI(s.page)}`:null;
   const groupes=s.joueurs.some(j=>j.role)?ROLES.map(([r,l])=>[l,s.joueurs.filter(j=>j.role===r)]).filter(g=>g[1].length):[['Joueurs',s.joueurs]];
-  const joueurs=s.joueurs.length?`<span class="survol" tabindex="0">${s.joueurs.length}<span class="mobile"> joueurs</span><span class="bulle" role="tooltip">`
+  const nPU=s.joueurs.filter(j=>j.pu).length;
+  const joueurs=s.joueurs.length?`<span class="survol" tabindex="0">${nPU?`<span class="n-tous">${s.joueurs.length}</span><span class="n-guilde">${s.joueurs.length-nPU}</span>`:s.joueurs.length}<span class="mobile"> joueurs</span><span class="bulle" role="tooltip">`
     +groupes.map(([l,js])=>`<span class="b-role"><span class="s-lib">${l}</span>${js.map(j=>{const c=CLASSES[j.classe]||[];
-      return `<a class="b-nom" href="${esc(s.date)}/${encodeURI(j.page)}" style="--classe:${c[0]||'var(--mut)'}"><span class="pastille"></span>${esc(j.nom)}<span class="b-spe">${esc(j.spec_fr||'')}</span></a>`}).join('')}</span>`).join('')
+      return `<a class="b-nom${j.pu?' est-pu':''}" href="${esc(s.date)}/${encodeURI(j.page)}" style="--classe:${c[0]||'var(--mut)'}"><span class="pastille"></span>${esc(j.nom)}${j.pu?MARQUE_PU:''}<span class="b-spe">${esc(j.spec_fr||'')}</span></a>`}).join('')}</span>`).join('')
     +'</span></span>':'—';
   return `<tr class="soiree" data-noms="${esc(s.joueurs.map(j=>(j.personnage||j.nom).toLowerCase()).join(' '))}">`
     +`<td class="c-date">${lien?`<a class="date" href="${lien}">${esc(jour(s.date))}</a>`:esc(jour(s.date))}</td>`
     +`<td class="c-raid">${difficultes(s.difficulte)}${s.zone&&s.zone!==raid?` <span class="diff">· ${esc(s.zone)}</span>`:''}</td>`
-    +`<td class="c-tues num tues${s.tues?'':' zero'}${s.affrontes&&s.tues===s.affrontes?' complet':''}">${s.affrontes?`<b>${s.tues}</b> / ${s.affrontes}<span class="jauge" style="--p:${s.tues/s.affrontes}"></span>`:'—'}</td>`
+    +`<td class="c-tues num tues${s.tues?'':' zero'}${s.affrontes&&s.tues===s.affrontes?' complet':''}">${s.affrontes?bossTues(s):'—'}</td>`
     +`<td class="c-essais num">${s.essais??'—'}</td>`
     +`<td class="c-joueurs num">${joueurs}</td></tr>`;
+}
+// boss tués / attaqués ; au survol, le détail de chaque boss (soirees.json publié depuis le 26/10 : « boss »)
+const pv=n=>`${String(Math.round(n*10)/10).replace('.',',')} %`;
+function bossTues(s){
+  const compte=`<b>${s.tues}</b> / ${s.affrontes}<span class="jauge" style="--p:${s.tues/s.affrontes}"></span>`;
+  if(!(s.boss||[]).length)return compte;
+  const plusieurs=(s.difficulte||'').includes(', ');
+  const un=b=>`<span class="b-boss${b.tue?' tue':''}"><span class="b-etat">${b.tue?'✓':'✗'}</span>${esc(b.nom)}`
+    +`<span class="b-spe">${plusieurs&&b.difficulte?esc(b.difficulte)+' · ':''}${b.tue?'':(b.meilleur_pv!=null?`au mieux à ${pv(b.meilleur_pv)} de vie · `:'')}${pl(b.essais||0,'essai')}</span></span>`;
+  const groupes=[['Boss tués',s.boss.filter(b=>b.tue)],['Attaqués sans kill',s.boss.filter(b=>!b.tue)]].filter(g=>g[1].length);
+  return `<span class="survol" tabindex="0">${compte}<span class="bulle" role="tooltip">`
+    +groupes.map(([l,bs])=>`<span class="b-role"><span class="s-lib">${l}</span>${bs.map(un).join('')}</span>`).join('')+'</span></span>';
 }
 // difficulté en pastille : la couleur de contraste de la palette (--serie2) pour l'Héroïque, plus forte pour le Mythique
 const DIF={Normal:'n','Héroïque':'h',Mythique:'m'};
@@ -362,7 +387,7 @@ function tableJoueurs(liste){
     +ls.map(({nom,n,der,j,ks,role})=>{const c=CLASSES[j.classe]||[];const spe=k=>k.split('|')[1];
       const t=[spe(ks[0]),c[1]].filter(Boolean).join(' ');
       const aussi=ks.slice(1).map(k=>(k.split('|')[0]!==role?`${ROLE_FR[k.split('|')[0]]||''} `:'')+spe(k)).filter(x=>x.trim());
-      return `<tr class="soiree" data-noms="${esc(nom.toLowerCase())}"><td><span class="pastille" style="--classe:${c[0]||'var(--mut)'}"></span><b>${esc(nom)}</b></td>`
+      return `<tr class="soiree${j.pu?' est-pu':''}" data-noms="${esc(nom.toLowerCase())}"><td><span class="pastille" style="--classe:${c[0]||'var(--mut)'}"></span><b>${esc(nom)}</b>${j.pu?MARQUE_PU:''}</td>`
       +`<td class="diff">${esc(ROLE_FR[role]||'')}${t?` · ${esc(t)}`:''}${aussi.length?`<span class="b-spe"> (aussi ${esc(aussi.join(', '))})</span>`:''}</td><td class="num">${n} / ${liste.length}</td>`
       +`<td><a class="date" href="${esc(der.date)}/${encodeURI(j.page)}">${esc(jour(der.date))} →</a></td></tr>`}).join('')+'</tbody></table>';
 }
@@ -403,6 +428,11 @@ fetch('soirees.json',{cache:'no-store'})
   .then(d=>{afficher(d);document.getElementById('source').textContent='Liste mise à jour à chaque publication.'})
   .catch(()=>depuisGitHub().then(d=>{afficher(d);document.getElementById('source').textContent='Liste lue dans le dépôt GitHub (soirees.json absent).'})
     .catch(()=>{document.getElementById('soirees').innerHTML='<p class="mut">Liste des soirées indisponible pour le moment.</p>'}));
+
+const voirPU=document.getElementById('voir-pu');
+const basculerPU=()=>{document.body.classList.toggle('sans-pu',!voirPU.checked);try{localStorage.setItem('voir-pu',voirPU.checked?'1':'0')}catch(e){}};
+try{if(localStorage.getItem('voir-pu')==='0')voirPU.checked=false}catch(e){}
+basculerPU();voirPU.onchange=basculerPU;
 </script>
 </body>
 </html>
