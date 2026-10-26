@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ga-genere" content="2026-10-26T13:11">
+<meta name="ga-version" content="58ba446">
+<title>Mon DPS Sinistra</title>
+<style>
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .badge { font-size: .74rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px;
+           padding: 2px 10px; background: var(--surface); }
+  .badge-verif.ok { color: var(--good); border-color: var(--good); }
+  .badge-verif.alerte { color: var(--warn); border-color: var(--warn); }
+  .badge-verif.non { font-style: italic; }
+  :root { --bg: #f7f6f3; --surface: #ffffff; --text: #1f2328; --muted: #5f6670; --border: #e1e0dc;
+          --accent: #b8860b; --good: #1f7a4d; --bad: #b23b2e; --warn: #9a6400; --row: #faf9f7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #16171a; --surface: #1f2125; --text: #e6e6e3; --muted: #9ba1a8; --border: #33363c;
+            --accent: #e3b341; --good: #5cc48f; --bad: #ef7a6c; --warn: #e0b04f; --row: #23252a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  h2 { font-size: 1.35rem; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.08rem; margin: 26px 0 8px; }
+  a { color: var(--accent); }
+  .meta { color: var(--muted); margin: 0 0 20px; font-size: .95rem; }
+  .lead { background: var(--surface); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 6px; }
+  .lead ul { margin: 6px 0 0; padding-left: 20px; }
+  .note { color: var(--muted); font-size: .92rem; }
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+  th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; vertical-align: top; }
+  td.wrap { white-space: normal; min-width: 240px; }
+  th { background: var(--row); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--good); font-weight: 600; } .mid { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; } .muted { color: var(--muted); }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 8px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  td details { background: none; border: 0; padding: 0; margin: 4px 0 0; }
+  td summary { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  td details p { margin: 4px 0; max-width: 46em; }
+  .faire { display: block; margin-top: 2px; }
+</style>
+<style>
+  .avec-nav { display: grid; grid-template-columns: 230px minmax(0, 1040px); gap: 28px; justify-content: center;
+              padding: 0 16px; }
+  .avec-nav main { max-width: none; margin: 0; padding: 32px 0 64px; }
+  .sommaire { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 32px 0 24px;
+              font-size: .9rem; }
+  .sommaire summary { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+                      font-size: .75rem; margin-bottom: 8px; cursor: pointer; list-style: none; }
+  .sommaire summary::-webkit-details-marker { display: none; }
+  .sommaire ul { list-style: none; margin: 0; padding: 0; }
+  .sommaire li { margin: 0; }
+  .sommaire a { display: block; padding: 4px 10px; border-left: 3px solid var(--border); color: var(--text);
+                text-decoration: none; line-height: 1.35; }
+  .sommaire li ul a { padding-left: 22px; color: var(--muted); font-size: .85rem; }
+  .sommaire a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .sommaire a.actif { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  /* sections bien séparées : un bandeau par grande partie */
+  .avec-nav main > h2, .avec-nav main section > h2 {
+    margin: 64px 0 18px; padding: 12px 16px; font-size: 1.45rem; background: var(--surface);
+    border: 1px solid var(--border); border-left: 6px solid var(--accent); border-radius: 10px; }
+  .avec-nav main > h2:first-of-type { margin-top: 36px; }
+  .avec-nav h2, .avec-nav h3 { scroll-margin-top: 16px; }
+  .avec-nav main > h3 { padding-bottom: 4px; border-bottom: 1px dashed var(--border); }
+  @media (max-width: 1100px) {
+    .avec-nav { display: block; padding: 0; }
+    .avec-nav main { padding: 16px 16px 64px; }
+    .sommaire { position: sticky; top: 0; z-index: 5; max-height: 70vh; padding: 8px 16px; background: var(--bg);
+                border-bottom: 1px solid var(--border); }
+    .sommaire summary { margin: 0; padding: 6px 0; }
+    .sommaire summary::after { content: " ▾"; }
+  }
+</style>
+<style>.ic{display:inline-block;width:1.2em;height:1.2em;border-radius:3px;background-size:cover;vertical-align:-.25em;margin-right:.3em;flex:none}.ic-spec{border-radius:50%}.ic-8026698,.io-8026698,.fi-8026698{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwEBAQEAAAAAAAAAAAAAAAUHBgQIA//EAC0QAAIBAwMCBQMEAwAAAAAAAAECAwQFEQAGEiExBxMiQWEVUXFSgZGhFBYy/8QAGgEAAwEAAwAAAAAAAAAAAAAAAwQFAQIGB//EACcRAAIBBAAFAwUAAAAAAAAAAAECAAMEESESMUFhsQVx8BMiI4Hx/9oADAMBAAIRAxEAPwBJtjYdTLbob4qf5Dxy8pgWJJB7jVAkqrJtfb1Jd3kqaGpaVlUBg8jN1BcZ9h3J/rOuDam85LRtuOahWNgziOcMueOSvX4yOY/JGpj4o3WPcO4Zl259Qmhp4W8+SYelFU9eI7qv3J7nXodVigK410763mdIWlWvK+KhwoJ/h94x2DuWW33qoW8bmnrqeoiMEsK0ZUCTyYURs59QUR46ey8u5xqvHY9FeZTJTlKmb6arJJFgpMRkA9OmO3XXlG2w1Yrc0ZeaYZbiikk4BJx+wOrd4Q7wes27S2a0NPDcFqvPqJQ58njk4KhT6UxgtnGT2ycaUpVHxino/Pn7jfqdkUIqo3LniZy/7Gu9pu9Rb6Z5EWFuLeWzBS2OpH3/AD8aNbncm46ee8TPUzyNICFLSL6jjpkj2/GjVJaCFQWG4ut/cgDUX7Q27jijStIjghoz1DA9wR7j4OujxjrLXsnaItVst1FT1926T+TEqYiH6sdTk9vbTbw54LKJaiZn8tS7ZPsBnPwNYLxHpbpvWumu7QSrRwuQkxjPAZwEQn26D+dCvASMKOQgbf8ALeD6p+0eeniTrblzqLLf6C6ZZWjlDq36fn++2vQlor6Cqt/OgpKWijkcvLDTxqirIepOABkHuCevX41Jd422l/0fbsQgm+qqZhK6jkCgb0rgdc/Y9sd9OtnVNdb1oZq6kqoKaZBCs0iYSQMMqQex6jQ7NeB8MJQ9SRbhBVGiCR74J7xxfZ4o7i6y0ruwH/QUHI/fRr47grKdbk4fHLAyCO2jVIkZ5xNFPCIs2Pd66lrESCXiskbchjPTgTjW2qq2eDwsaGMgRimVuOO59Hf+dGjQKYBTJ7TL1QKy4HUeZMr07zTWumdm8thggE9jIQdU7eEMT7PkAjWNVihKqgwF4svHH4BI0aNZT2WnO70aQ7mRnddwqTfJ8vnGB10aNGkHY8R3LCKvCNT/2Q==)}.ic-ability_racial_ancestralcall,.io-ability_racial_ancestralcall,.fi-ability_racial_ancestralcall{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAABgAHBQQI/8QALhAAAgEDBAAEBAYDAAAAAAAAAQIDBAURAAYSIQcUMUETIlFxFRYjMkKBYZGh/8QAGAEAAwEBAAAAAAAAAAAAAAAABAUGAgP/xAAxEQABAwIEBAIJBQAAAAAAAAABAgMRACEEEjFBBRMigQZRFBUWIzJhocHRQnGRsfD/2gAMAwEAAhEDEQA/AAG2be14pbld7rSwVVpq+Ub85GBo4ixUvGwHFDyxgAHIHeM5Of7ns1tMk34X5ozCr8tFC5U4TA4jI9W7x7Yx9SdOPDDezxWh7RHTVSTUFPK6mmXLTIMkdscKcddAknHvo9brLu/eNZLf6S21MavOJYZm48CFwBgkjn0ME4Pf3OrLM24EgCSZ7fje1RqEvYHEuqeUEJERKoBF4kHcgXI21uCa6W3bHcpEt+2qKenpqNucl1khLcppF7ZWYD+GVVVzjJzjvOk9BsR7LQz+Wq6gS/DDsVkKvOyk8FyPb5vT3OP78O17rcKuomjrK6ayT0tQsEzvJklsEgKGGMlgwK+pB9TrseIF2ttqp5748dXUV4dKaFTOpcjH8VH7VLDlgZPr3ruOU23pYfSPvSPEOY1zFBoKgK1AE5iTYknUX1kwALC1eWkltcbTPJPRiSVw7MvxZeZ4KORKjAJx6e2rWSC81TIvnLQjyhR3NA2cf76H+Bq0N6yZ/wADT32XeP61diiO1O9r0pp5blX0ETfA+PTvSyY5KyorNIq4/cFBOftrW9sXO7UFprUB25FJDTjy0RldBOpOABlCAoAOOOeyAQNB9z7joaDxBoZp6xKa0m3y+XjaH9EkhouAVQMADl16cm9ydJob1bi9JWPY90rDAqgSpSlkyox2oPM/cr76KaSAClJ0P938v48+1TvGHl4nI680SFAEHf5JkqTfpgxPxHTfh3+ha+Tlb5S09OIweUMMoYO7AMmfocKGPZx8o69NH5bZQm6ub1cai4RwOxpqKWMu0DEdmTGOR6UBiTnI1194Xq13u/7ftdoudLKK7zVPK4fk+JsHmw/iVdVHfZ7GiH5a3I+yF3XZOFbFIGFdChIngaP5WGD+9RjPXYB9NZdeRMZZIOuug8hrr2NMOFgtMp5jnKCrBJtElQsTJSTlI1k/DNOtubwsVFaYqS5H9aIlFAZThAflHqPbVr5yuVfVSVRd+Ckj0ODq0ErxApJyxp8qaueBsC6ouKWoE3sojWtk3fBF5TdEvw1MtG8dTA5AJRiCxHfWMjOPr364wIpvEbelJVvQQX2oWn9lOCR19SM6tWs8WcWypPLMSbxv1GmvAsKzimSH0BYGWMwBj3aTaQd7032hTU0HkN0QwqlyuVNNLO4J4hiCCVGevr9z/WmnhZPNSeH1I8UrZqTNUycjn52dsn/g1atM8M2kOIAGx+oTNSHH+vDLzX94kdhngfsNqyLxS27bfzIlXErwNWwColSPATmXdSQMdZ45x9SdWrVqfxjSOeu29UXCsW/6G31nT8j7V//Z)}.ic-inv_10_dungeonjewelry_primalist_trinket_1ragingelement_fire,.io-inv_10_dungeonjewelry_primalist_trinket_1ragingelement_fire,.fi-inv_10_dungeonjewelry_primalist_trinket_1ragingelement_fire{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAYEBQcDAv/EAC0QAAEDAwMCBQQCAwAAAAAAAAECAwQFESEABhITMQciQVFhFCMycSSBQpHB/8QAGgEAAQUBAAAAAAAAAAAAAAAABgEDBAUHAv/EACsRAAEDAwMDAwMFAAAAAAAAAAECESEAAwQFMVESQWEGIrETcfAzgcHR4f/aAAwDAQACEQMRAD8AwXw3qElcpFDqctDlHnSkLktOxzIPPtzSkEK5ZtcEd/XWnO7LiVyvOvJUxJiUxKQywcJZjhSihspHuOSvW5BznVV4SraYlKVGhuqmpjudFSWr8VEBPIH4BP8AetWm02p0TwwqD8FDb0xyWW+og/m2pPG2e4CiQf3pdX1ZeBZVYhz0hLmfcd24Hd+5DbSxp+lDNykXJAJLxEc+T8Cqzbvh5s6JSkz6pFLin1OLZaUsgANqCACQRYlV1HPYWFr6qq5t+kddUukQ4EtS0qQYjxIbeTb8QLJv65vf50zb3jytweGUaoUgFcxpRVIZaHFXWACZCOPflzTyA9b476y7bS6vTUw1z4ygxKcsyCkgm35JIORbvf11nem5WXkruZK8g9SVFJQTx4cbgbhuQa0a1pmHcxyhKJMjxMfhftSFuGnP0aqOR4k91DTv3enHeWA2TjgoXuFJtYg5wMnGjT1uqiUiuVT651SmHeAQv7KVcyCbKOcG1v8AWjWh2b6lW0laJafx6BbluylZCLgb96uNj03cTSY0imQiptS+mHlAcDbJBv8Aq1/+6ZKnVpdamSKfToKGYE1K1yHl5Tw5khAP+K0rN7YJvfsbaodnV+k1jatILU0x6pSJS1paJsHmlgki9xm4A/u/6417cs8wIan6a2l51IccVGDfmWpI5cwqx7GxORe+Dm9fl4d7V9UCl2QySoHcFgfaXMKcMQRsYM1NwMq1p2CohclmeZZzHZi+7cy9NexJ9aiUqXAfDTyg8C26lQWiQ2SRZRSblSTeyk5tixHaRX2HX3WZMuI51GwpLPN3kEg2vbA74FzpOjJrTMczKMqmTm+BdTSlo/ktt91eUgX4n2USRZVrHEVjxOihZptUpkuGl08HFJShJbwRyCSMkD59MW1zm+gFnM+rYISk7nvxs3HEfFPYPrpKLClLQ6xLD+J+R9jtXncL0FNUcZdgJccZ+2pSXkgEgn59raNc6/tukN12cxNr5TJaeKHOUFWTjIso4IsdGjuxouLbtpR0ksN3M0CXvUSV3FKMOdm/ysapc2VT54+meUm7nE/OdPdSSmVRYtZI6M5BcjFxny80JspPL3I5kfq2jRqNpxcv5qyyNwKp6fuStRZTa485xpaFBSFJNik4Nx7HW4U+nU/e82nM7ghMPvVGjoluSkp4vodIUSUr728vZVxk47WNGii/+mVdwP6of1UdBSUxNRYX0r8GOufBYnyA2EqkPqcDiwkkDkUKSFGwAuRfHfRo0aYc0NKSCT9zzyfNf//Z)}.ic-inv_stormelemental,.io-inv_stormelemental,.fi-inv_stormelemental{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAYEBQcDCP/EAC8QAAIBAwMDAgQFBQAAAAAAAAECAwQFEQASIQYxQRNRBxQiYTJScYGhFSNCgrH/xAAXAQEBAQEAAAAAAAAAAAAAAAAFAwQG/8QALREAAQMDAgIIBwAAAAAAAAAAAQIDEQAhMUFhBAUSExQiUYHB8SMyYpGx0fD/2gAMAwEAAhEDEQA/APMVhtFdW05uVRNNT07yE+s6l3nk7FUXu7c8nsMnJ1b3eVZJobtTx1lJdIHEVxgEZKLtGY5FcHhsDH7frmx6Uaot1ULlUVMEDIOZ52BwPYDtj7Dx40wXqqsUF2jezUctWa1ljFwqSYYH98R4LFc8jhc88nvo1x4uPAdEqO2ANQTj1tYZpNCEtNfN0dZOZ0gZt61S9ET3W717VU9mjuKqwMywosMzBiBuJACN3798ZP61txraiZntdzii/pCOVcU6YEQfAEm5gCxBIwx4xjsDy83WxWl6BJaKvlgamy8kQY+k+SNzhMlUzx279vGu10tvTNFbQhiapZ2aMxb98jhl+rk4JIAOW445JHhhzg2FMJQlMESZ3PhqPudqFRzN4PFRVIMDXA9zpWJ3IXjpq4T2ta+pgCtvHoVDKkgI4cYPkY+/jxo0wPSdBVISS4XS701SECOsFPGynAwDktycY5899Gje1kWUhZOyTFK9jKrhSYP1CocFPO0Y+aXZKoyxkYszH+f+6aLRbrheVSD5sq7x7Yw4ZQwVSdrOfw5APJyCe+onSNXGtjqR1HbKkwvGBRVETFCkhDEDH+SngnGceRzqDQ3mqo6tHpJiksRP1Z44I4Hgnx7fr2LBQWQhSVSDlMe3kaIKk8R1gIgjCpJH94gVqtu+Ht1pUpmqa+lphL9Cf3DJjdksxwABgHaQc9z4GkyprqO2daRy09fDIKeTjfCXjZS3OB+Xg+CD5BHGm+f4nxXOzR0jQimlkyPUmjIlplfILKwwHUngsQSNxwOdZv1YvylRSTVAeBsHKoCFZwedv5ff27e+kONaaDMsZoLla3lPEcWIG35qH1jQdNWzqa4UlfNeXqVqJN6xxRRbPrbAKkcHGDgYAyBgaNKdzNdX1slVO71EjnmQY5xx+2jRAiO8m9dHYYNW3TtVNWVripb1QwkbDE4B2cYHYDU2626CDrd7QjSfLGphQ5b6trtHkZ/2P8aNGtYuxJzP7rIbPEDECrJmkNAKN5WdLZXVFNSs2CyxhwcfflidcfiTUSSU9MfwhVLBVJxnPfGjRqjhPVHyqDY+MKQCxJyScnk86NGjRU0vAr//2Q==)}.ic-shaman_talent_elementalblast,.io-shaman_talent_elementalblast,.fi-shaman_talent_elementalblast{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAcGCAIDBAX/xAAuEAABAwIFAgUDBQEAAAAAAAABAgMEBREABhIhMQcTIkFRYXEUFcEII4GRofD/xAAYAQEAAwEAAAAAAAAAAAAAAAAEBQYHAv/EACkRAAEDAgQEBwEAAAAAAAAAAAECAxEABAUSIWEGEzFxIkFCgaGxwVH/2gAMAwEAAhEDEQA/AFRk2jTai994pMZ1MNwqTqfc1uKUU2XxySbkef5bNLqlVo81UiktCAO0lLjWgFKQALlQOx338Xt545Miu03L3TeHWEwJbSWdZeU27azjiQg21e1thcknytiYV6QxRcjpzZEeEeE+AIMaU2EL1FRJK0E2UbcegtjOTit2xd8626glI32PWa01tLHIDL4mfvb+VtoGbpNWiPHMUxT9NS4iO+jsJSC08lXiCUgeJJSFJPqffHi9bKIuiM0Kot3nU5MBttiWzu26tGrz8jYiwPv6YXVJ6mwZWZJKKxFdfg1BpLMlMZSWVjS4FpUgnUAQQNiCCLgW5xZPKtNo0zpxPi/VPu0eplEeGJTiHUB1dwh1BsClQJAUggEEH5xqrbgxTCwh7QmAQPPfuO0ETtFRddFhfZ2YIB0qqVUzU45NWsyKiSeQ2stpHtZJF/nnBiOZ0hVGmZmmwg68yptwhaEkpAVwoW+b4MVJfDjraigJ6VOjH2zqR9VLcl9WqM9lOPlbNtOTMpzUsSv2iUL1jjcf6PTGnq/1NbzS5AjZfiuQ4VPXqY7yg+68s7lxalXB3CQE24H8YU8eh1apOJVDjGTJUndiKzchKU7q0pHoLk/JOHB0Tp0ql0+qmRleFVUToXYLspor+mub60/8OB6YfbcNNc/OkH8qJbubp+EEe+o66dppUxY0v7onuAlWreycXY6C6pnS+RImnWmjr+uY7h27qWlgEjg2Ok7+acISXkaXJUZkCKspbGpSgm9/fGiLnuv0CkSKIzLmMRngUutIUUpWPyOcXG0tBbtKQTEx8HX4ke9CvrF5pWaJFR7Oz783MkuVJcK3nFlS1K5Kibk/3fBiM1isOvVBx03BVzvgxy7cNlZIoIQqs8j1GdBrMFyLKdaW4dClIVpVpOxFxvYjFvqk8nJPS6FNocaMh+e52HlOthfhAuLDi9/UHBgwC5WpFitSTBqUUtQsFEH1Cl9L6gZspEuEj7mmdFnuhl6LJjNdrSSONCUkHfkHHP8AqOp1Py/nCLJpUGOyoR2ZOhTYWgqtexSq4I24N8GDAOHXXHM+dRPejYC4pbriVGRH4KrtWFqfqspxem6nCbJAAF99h5DfjBgwYcseI12sDMa//9k=)}.ic-spec-ShamanElemental,.io-spec-ShamanElemental,.fi-spec-ShamanElemental{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACQAJAMBIgACEQEDEQH/xAAbAAACAgMBAAAAAAAAAAAAAAAFBwIGAQMECP/aAAgBAQAAAADyv3WtjKysdTbsyFOM4bW6c+EfEFEyHnpx/8QAFgEBAQEAAAAAAAAAAAAAAAAABAUG/9oACAECEAAAAKmrkJPIRNP/AP/EABgBAAMBAQAAAAAAAAAAAAAAAAMEBQEC/9oACAEDEAAAABwqKrTXJ9//xAAqEAACAgIBAwMCBwEAAAAAAAABAgMEAAURBiExElGBBxMQFBUjQmFicf/aAAgBAQABPwDKtKeyeIYnkPsoJOa3ofqO+C0WtmCDy8gMaj5fNfrOnOkNU17Yivd2R5+zCjCRE/s5tt/JeuyT8cc+w4xU9XjzkE1unMGikkikX+Skqw+RnS31Gmra29q9uLFurOvkScSL8tmu1nSHVdfYmtrJ6RhrtxZkn/aUjw0vgDNhRalcmryFOUbjkH1Kw91I7EHNH0jt92hajX9YB7kkIB8tm3+m0sWkp29ragp3A5hbuCsoHdTymazojW6uq+53toNrkcKq129TWHPcKDnU3Wx2EH5DX1loa5T2qx+G/wBP7nI9rZCKvZgBwOcYww9KyVdyauuKQhqqQSH7h4HPDp385b3Fwq0C3Z3g5BCuxPB/5yQCMj29z9NsVHlZoWdX9BPYOPDYx5Oeo5srdieQvLIWY8YxJOEkIB7nD+H/xAAmEQABAwIFAwUAAAAAAAAAAAACAQMRABIEBSEiMhAVMVFTYXGB/9oACAECAQE/AMK2ImJONXhSsqDCmmGsY9wNZ+FVaJx2V40rrLAtzbAlu0mUrG5yZWW8bdoxAh9J613F2sxVb1/Kd89P/8QAIREAAgEDAwUAAAAAAAAAAAAAAQIEAAMSESJBEBMhUWH/2gAIAQMBAT8AcnTRT5qUZNy4qO2KZbseflJFjqoAWlMqSz4tgA21qsRn1Jutkw5rsp6qOBgKHT//2Q==)}.ic-spell_fire_elemental_totem,.io-spell_fire_elemental_totem,.fi-spell_fire_elemental_totem{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAYHAwgF/8QALhAAAQMDBAEDAgUFAAAAAAAAAQIDBAAFEQYHEiExE0FRFCIIMmFxgRWRseHw/8QAGAEAAwEBAAAAAAAAAAAAAAAABAUGAwf/xAAuEQABAwIEBAILAAAAAAAAAAABAgMRAAQhMUFRBRKBwQZxEyIyUmGRsdHh8PH/2gAMAwEAAhEDEQA/AEjYrbt7dBttK20WxFuC1m5oSVqkOHscknGSCezXTuo9mtDX5FrF4hOvv2xICXkuYU4nPLirrsA5x7gHAryfw3206f22gSpznGXNZTyQE8eKEjIBHzgjs99+/mvYumpnYEsSXjmOtzrPQIB7wfkVyvj3HXGnlJYPrCQPhv8AyqRixedVyt6AdTH6OlPVvat0K3tQYkdLMVtPBDafAHxStrLbbSGsGYDNztrXCG8HW8JHeARg/p2alWodc6hs13eZul0XGYcfUYqygn1GyelDiMYAxTxpfU9zkMw3pD4kKCQtx1CCEqbKjxUPkEY7/aptq94hbrQ86Ryq1TI69jtTO48O3Fu2HAsGccJ2nUQexrnbfbQCLfuVcforv/S48jDqI7anQEjtGTx6JPD/ALFFUH8RE27x9fNvWh2SmPLgtPkJUgDkSpJ8pJ8JFFdNsrxxduhQVIjf8UAm1bWkKKTNMugNZu6t1SqzyGI9okRSoOQ1OZJIVleO8kke3sMY6rXcf6XUun33NMXSIh20pWuVFL4y2nsleQf9fzUkvEzSG2zUTUltnOz2VBare5GXzL0kABSVOjkOPWCnOcAYxmoztvuDOsO4ce8S31uxZD/CY0T9q2XDxcBHv9pP8gVKteGzfBy8YlJSAUyMyJ5gQccYiTiCRnjRb1+m0ebKFCRtkM895nzqyWPXU+3RU22Qi13NpCVFpuUhLoaye+GT1n48HzVS20ukuSzJamzIqJc6IZLSXVpALSD0vr8rYwQD4PHHgE1zELVFb3Wd0ome8hgXP6RLgACvT545/GePdYPbovp1tc58iOJ1olepGTBWvgkRSQEtpI7ThKUeOujkHJo57ww3epPocCRzTETOWseeWWJ1B3EeNo9jCFHEwNMZz3+es1Z9Ubjrn3ZYY01b7szGHoNS5jriFupBJCglKgAk8uvfH9qKTm9abVzmxKeubjL7pUp1Fyti3HUKKieIU0eJSAQAevB6FFENWSmkBAYXhhr96Xi8tRkv60kb32OBpm8M2myiRGtzpXIMX11qaS5njyCVE4OOs+alpUfqQfg0UVU8GcW5YtqWZJSKmbrC5IGU96o0m5yXd3Hrr9iJKopfygEAL+j/ADD9c9/vU5kk8x37D/FFFbWQAAj3U961vMup7Vo2MoBooophS+v/2Q==)}.ic-spell_fire_flameshock,.io-spell_fire_flameshock,.fi-spell_fire_flameshock{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAQQDAQAAAAAAAAAAAAAAAAQGBwgBAwUC/8QAKxAAAQMDAwMDBAMBAAAAAAAAAQIDBAUGEQASIQcxQRNRYSIycZEIFEJi/8QAGgEAAgMBAQAAAAAAAAAAAAAABQYCBAcAAf/EACgRAAEDAwIFBQEBAAAAAAAAAAECAxEABCEFMQYiQVFhEhSBobETcf/aAAwDAQACEQMRAD8A8OdLFzdjsKczIYbb3JCCNxIGSAO/v303l9Pp1Tr8aLFjqVMW4W8KTgt7cEk+MAHSvos6ioPyZiqg6wqMtP1eoQEIKgCrg5J7ADHJ1zf5LdWVR6xOs603HIaM+lWpiRtdecxhTKVZ+lA7KxjKsjt3yq3TqLl77RpUkDJIgJHcxvvt1OPNaTf6s3bNwYUTtiIPmpQteHa7dGmph1Fg0uiS0F6q7glqQ8EkuJCjwoJO0ce+BnWmpMQ7ttVytRYzjEZUN1+KDwXcOFDaiP8AoAkaqrSbkafTRqTWg89b1McW+qBHc2eqpXKuT5UQkZ8DtqeOmV4XJf1WmyBBi0y36XBXGjRIjZS36ro2NoBPKiEgn4A8ahqXD79hNx65AMknoMADypRz2SMCg9lrDy3Uycz+nPxTKuGmPUyrPRVKPGFZSpSQcgHRpb1BmsquiQy0QoR0pZKkHIUpI+o/vOjR+1ffUwgnsKZw00vmI3pNWIblqWJEuOnOkyf70V04+1O1S1oB98qQknx21CVdlyJ1TflS3C4+84p11Z/0tR3KP7Ore0202K/0Uft555hqpTmkrhreSBl1tRKBzzg8gH541U2s0iVEqMiJNbXFlsKKHmXUlKkqHBH541a4Zv2ny8lR50qI8lPT4wR/tJfEDZ9wYGIH1v8Adc+DtyvP3EDb+9Wx6BV1ysGVb1sNMwbboVOSFLUgJcnznU4Ly1HlIyFYA9hk+NVRZY2q4IWrjCRzqyvRG3KvQulNYqzzEqC5VH0bXCghSGEDAXg4xkqOD8fOu4wS0uz5jzEgJnuSJMdSADHaSRk1V0ltS30pFYrNo0unTS3W7gp0aW4PULYe3YBJAyfJ40aju5or7ldluEuOlS8la08qOOT3ONGh7VipSAS8dugEU5qeuZOPqntNu6tSIsSoreQl8NNut7AQlokYISM9vg509KBS6Lf1uzqvd1EgVSoUuLlqQ4hSXHMBWA4Ukb8Y86NGhWqtptmytgekpVAIwQJ2kRUrltLlukqE4H7TYNSiUSOhdGtu3oDjJyhxuAkqBx3yrJz8622jdFdqV0ttT6i/IYknY6ytZ2KBOO34PHto0a9/i2q3UtQkwcnJ77kk1f8AbtNo5EgfFM3qVWZdIudyLBS021s3Ebe53KGe/sBo0aNN+nWrKrRoqSCfSKVbm4dS6oBRr//Z)}.ic-spell_nature_chainlightning,.io-spell_nature_chainlightning,.fi-spell_nature_chainlightning{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAUGBwj/xAAwEAABAwMDAwMCBAcAAAAAAAABAgMEAAURBhIhBzFBEyJRFGEIIzJxFiRCYoGhsf/EABkBAAIDAQAAAAAAAAAAAAAAAAQFAAIGA//EACkRAAEDAwIFAwUAAAAAAAAAAAEAAgMEESEFMRJBUWHwIjJxQqGxwdH/2gAMAwEAAhEDEQA/AKfpJDsespIZsdqtFujQGENvvtxUPPOkDlQ3ZAz23HuQcZxTLrTpW7K0quPCiQ7dFbRw4ltJfcA5JUvAPwMDHc1lP4btfWLpxpp+LIU87dbglqZLeXgNNpUPymEDuVY5J4GTgcDNWuputmn9SyZ2n323lTJKQiMuO9sSvAIUB3G8c4KsA9ia0pleZGkN9Itjn+d/AOSSMpIYYnudk5z2/nP9rk/WWnr5GffuEr81kjcXEKCht8Z5IqMIIOOa61vMXTk/TLMMJtxYgselJbUwGJSlKWT6isfqUdw59wx5qOtXQ6HfIMi66duMaaxGaK5TCwtLsdJBwVJ7HscYPOCe1C1VPDUSXjeGm/1HfO4PfobG5VaPU7MtINtrDl58rnqiqW+2QM3JxhO9CWjsCdnKQD2PyfvRQbtNnaSLJo2ricAQU1sDdlcejSZk+Q+1HGVNJaIJX4O7Pfjj4AFaZpCfoG1OR7oykG6pWpSHUseg3H8J3crLp8qyQDyMHNYTHuCm2kNZwASSQPP3+abQZLkqVGjhQw8sICs+3n704pamnewM4c9rg9N0trKOZ5J4zb7W+F0BrpcbXF4l3vSMdhxKypUuK3L3qGcAKQgp9qcgkgDHuIGKT26XfLFp+dE+ojwEKkNuvt5IdeW2Bsb2nwVYVzkkhJyAMVnsF1VqkJnWp+bDkNuhsLB2OKVjPtKf+ftWtSrfNvWlYcq97v4naYVLCn0JEh2GHEpBc8kpUoYJ/pJHgUDqGmMgjMrDYC2Dk9MEoNsjh6TkHslPVXTcydq1Uu0uW11h2Myta2Hke50oBWVf3FWf8YoqUv6v5xCV7gUNhI2qxxk0VVmtytaBwjC6CFhF+IrGh3pna1KaeKEn2nGQeQaKKFo/eD3T6b2lbX08vT1qtUCMzDgPGZPVudkRw441gJHsJ/T3z+4Bpe7qi8M9QlT1yPqHw/8ATLLw3+o2sYWlXyCFf6TjGBRRR+qkkgFBaYxpilJHlipbVF1mG8vJCkpCCUjA74JooorPKMY3hGF//9k=)}.ic-spell_nature_lightning,.io-spell_nature_lightning,.fi-spell_nature_lightning{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAgICAwAAAAAAAAAAAAAAAAUEBgcIAQID/8QAKxAAAQMDAgQGAgMAAAAAAAAAAQIDBAAFEQYhBxITMRQiQVFhgRZxJDKh/8QAGQEAAgMBAAAAAAAAAAAAAAAABAUBAgYD/8QAJxEAAQQBAgYBBQAAAAAAAAAAAQACAxEEEiEFEzFBUYHwYXGRwdH/2gAMAwEAAhEDEQA/ANNEDfemlptE65r6cCI/KWNyllsrI+hvUNpoOgJQPOe2/epcR24WmZ1I70iJIQSnmbWUKT8ZGDTnCibG4OkZqb88Lk8kimndXnTfCHW92YVLTYX4sRG65E0eHbA9TleMj5FZOgRNEcJdH+OmJtuoNXPpUG+isPMxAexO+MgfFIuGvGd+Fo+4aS1fGn361yVJUCiYUPN+YFQC1Z2OO1W+BYuH/EfR2oLvG01+JiJHIZuku5HwrbmdupnAyrt5Qf1W1djGLHMnL0xbU5tG+wsk6uvUALN5nPlkDJTTL3rv+6Ppa8aq1A7er29cHCoFeMbAbfVFL7zb3Lfc34bwShbSyk4VkH5B9Qe4PqKKzT8nIDiAAnscMTWBrRsFcNA8MtQauh+MtTTCI6VFKnpbgYaJGOyl7H6rLWueDcKDoy03XVmobfb71zuRXHGFB9qSlIy2oqR2WBkfOB61Ju8+1weGT9k15OscaY1HQu2RbQSHmyE5CXOXKcE4Hv3J2Fa53K8SMrjRpkoRDylLTrvNgj9bZHvTN2TFitbqqgezQbH3PX8f1K2DJy3Op1CzRHj569rN+neH+k9EaeTrjW8pq+WlT3RgQLc55ZrwHN5lE5CEgbg43IFUDihxPuGrQ1AajtWiyxj/ABbTEPLGa7+bHqo57mqki8zvx2Rb3JK1x1vIdDZVsF4I5se+Ns+1IVHO5oTiHH5H0WnetuwaPoBsD5PUo3GwyCTK7UfKZvXJ95LfXIcKEBKSsAnlycD/AGilfMaKz54g4mz1R/LCaXq4S5TvWfdK1r7k0sJKjk0UVGdK98xDioiaA3YLu4ohsIH9e9eRNFFDTE2rtXFFFFcFZf/Z)}.ic-spell_shaman_earthquake,.io-spell_shaman_earthquake,.fi-spell_shaman_earthquake{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwADAQAAAAAAAAAAAAAAAAUGAgQHA//EADAQAAEDAwMDAgQFBQAAAAAAAAECAwQABREGEiETMVEUQQciYYEVFkJxoSMycoLB/8QAGQEAAwADAAAAAAAAAAAAAAAAAgMFAQQG/8QAKBEAAQMBBgUFAAAAAAAAAAAAAQACEQMEEiExUbEFQXGR8BMUFSQy/9oADAMBAAIRAxEAPwDT0ro63pYSmD02H0N7wrYUdTjkZ/ml3xX0ha77Y40TppiXdpKlB5KtyVAD5Ukjv78nFPXXrbEgMymL7PkvuICkJiJ3pSexJ3JIA796QxNVxr1ePQXa9x9PMRVKUGJUZ5P4g37KLiSnAxxgYz965hvEHulzW5ddufZWTY2jAnNcT0JpO5o1e7FkQJKlRRuXsaLgznjJAIAz5ruWiNDxLawuRLdbak7g4vejPUz48Yq9tMaNItZbsV60r+HpyS1DjOJUlQOSEp34UVDjKu31qemIVscdckejZJIR12Utkgdv1HGaD5t9RxERvsmDhbbsyVN60jWabe1OiOVlLaUKJwOR44NFJbrJhtT3Um5RMZ+UlwDI80U4W16X7JmqrNF3S5IY9NHvlxjFKSlaQhKkkkDGTz2/f71nctRw46V2/Xcu16qgsbigekQqUgkEBsqBAQMkc9+P3pE9pW9T7A0mzarYjJ6RKWEtOJ6gPdJXuO0ZJ7AAZqWtt0tug724dbaFkzJZQFQyp9IaH1CSClRz+rJPPaprLOys4kGToIB74HdblR90CRhry86p3I0jctWTTJ0PYPy5DRnquPSHi2oew3KzlX+Ax9ado+GsdCmzqK/zXnEgF5qOtKGUKOeATlZ8Z4+2azlfHWy3GEERfV2h3ICjJa6ice+Cg44x7ipzU+rnrst42rU7Agyk7VslW0k++Qf+8ij+1+SLo6Se+Ky30IkGfNF4XWw2KPNWxHtTC22/lClkqJ88k5opNOmo6qes+gubRuIJIJop4FSMyhNycgmNi1DcoTDS2HEggHAIOOfvVArUs25Mhi4RYEtpZOUvMbh49zRRS6lNhJJCOiSRBWqNIaauLDjirQxGcI/ujlSMc+M4/iuY69tMawXtcKAp3pKbC/6igSD9Diiij4bVe98OMpNra1rJAU/6h9QyXnD/ALGiiirl0KXeOq//2Q==)}.ic-spell_shaman_lavaburst,.io-spell_shaman_lavaburst,.fi-spell_shaman_lavaburst{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAUHCAYD/8QALxAAAQMDAwIGAQIHAAAAAAAAAQIDBAAFEQYSIQcTFCIxQVFhCBUjMkJxgaHR8P/EABgBAQEAAwAAAAAAAAAAAAAAAAYFAQIH/8QAKhEAAQIFAgUDBQAAAAAAAAAAAQIDAAQRITEFEkFRYXGBMqGxEyIzQtH/2gAMAwEAAhEDEQA/AJVe9Si06oW70+eldhtw+GWpSkLwcAqJOdylZPrXX6V03ZdfqltzXmzeXGdjL7qxsPJKkn7zzn4yKlar7HlT3n7RFRCfkvb2mFHcGxn+HIGMc8D6qjWyBc40ZMmFDS28Wu8jtxtp8Rjz4xnckY4oVOI+kkH0q51v5jtMgpM00oJUFAAXoCE0BI5VJvUHnakLLr0qlaQ1u5GvVsS54lsqYQ0r9spHqpKvb+nrXDxNCi8a6ftzakRGNpcK3DwkfOa0tpOTrTX+lpdov8PfdICe7bLmSAoOFPCVbScj0Gfse9T3qvpxemtI2tUzenUsphcaWhlQO1Z8zauP5ing/JzisS8++l4oUr7jbNfPanvEJ6Xkn29rqQlwVJpgm5xkbq06G3WM7TJE21TpMGJOkNNtuqGGnVJBI4zwfqimV60tMjzi2DhexCnEuHBSopBI/wA0UwbebKQawEekJgOEbCLwt05df0u6MSy2HS2rO0+h+q0z056zXWay0z4aOGGUFDZSwMozxwf+9Kym0pKVBRANP4F/nRXGjFfcZ2H9sNqxtPzj/dTtS01E4OsVtC1duTq3MI3o5dcWJNrRtPTF6sdo6m2W4WzTjzSb814aVLQVqBfURwlAO0cJyQBnBJHpSX8g7jbxr1V3bgLd/QpbUec062QlYKe4hafbBBcSD8pz71Mrb1NXKtSoN8u8xcKVBbjv9goD6VJJPeQcYCsEpwByMVb375atYfjPLaZYvs5u3wXUrn3VCQ4pbW1SVZzlYO4gKAx5SDijTUqUJq5+tu/C3g48xbniqWmUPAVChTO6xNic3FhwxWIrqjQk6+XVdwcS1ad2UttnzJdaClBtxJycpUjZ/cGip9K6o6lZYh28z1uMwY4jMYQjytgkgZIycZIyfbFFUUyOqIG1Ck0GM44e0ao1uWUkFw1Vx7xLB616Dg5+KKKVcYCIxFA6dachXxhlcx6UguSA0e04E4HH0eea7CBNull01qy2RrtOdiJebt3aecyntr3EnAAG7ygA+wJooo3NKK31oVcCnzC7TQAW+o/sSKd5ZSwngZ9BRRRSZv0CCbv5Fdz8mP/Z)}</style>
+</head>
+<body>
+<div class="avec-nav">
+<nav class="sommaire"><details open><summary>Sur cette page</summary><ul><li><a href="#s-boss-par-boss">Boss par boss</a></li><li><a href="#s-corriger-en-priorit">À corriger en priorité</a></li><li><a href="#s-rotation">Rotation</a><ul><li class="sous"><a href="#s-synth-se-de-la-soir-e">Synthèse de la soirée</a></li><li class="sous"><a href="#s-d-tail-de-chaque-boss">Détail de chaque boss</a></li></ul></li><li><a href="#s-build-et-stats">Build et stats</a></li><li><a href="#s-quipement">Équipement</a></li><li><a href="#s-progression">Progression</a><ul><li class="sous"><a href="#s-centiles-par-boss">Centiles par boss</a></li><li class="sous"><a href="#s-conseils-du-24-09">Conseils du 24/09</a></li></ul></li><li><a href="#s-m-thode">Méthode</a></li></ul></details></nav>
+<main>
+<p class="badges"><span class="badge">Généré le 26/10/2026 à 13:11</span><span class="badge" title="Commit du code guild_analyser qui a produit cette page">Version 58ba446</span><span class="badge badge-verif non" title="Pas encore relue par le vérificateur (intégrité des données, anomalies)">Non vérifié</span></p>
+<style>
+  main { max-width: 1100px; }
+  .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 16px 0; }
+  .carte { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .carte .val { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .carte .lib { color: var(--muted); font-size: .85rem; }
+  .prio { list-style: none; padding: 0; margin: 0; counter-reset: p; }
+  .prio > li { counter-increment: p; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+               padding: 14px 16px 12px 56px; margin: 12px 0; position: relative; }
+  .prio > li::before { content: counter(p); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px;
+                       border-radius: 50%; background: var(--accent); color: var(--surface); font-weight: 700;
+                       display: flex; align-items: center; justify-content: center; }
+  .prio h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .gain { float: right; margin-left: 10px; background: var(--row); border: 1px solid var(--border); border-radius: 999px;
+          padding: 2px 10px; font-size: .85rem; font-weight: 600; white-space: nowrap; }
+  .gain.nc { color: var(--muted); font-weight: 400; }
+  .gain.grave { color: var(--bad); border-color: var(--bad); }
+  .gain.ok { border-color: var(--good); }
+  .prio p { margin: 6px 0; }
+  .etiq { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; margin-right: 6px; }
+  pre.macro { background: var(--row); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin: 6px 0;
+              font-size: .88rem; white-space: pre-wrap; }
+  code { background: var(--row); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: .86em;
+         word-break: break-word; }
+  .moments a { margin-right: 4px; white-space: nowrap; display: inline-block; }
+  .boss-chip { display: inline-block; font-size: .8rem; color: var(--muted); border: 1px solid var(--border);
+               border-radius: 999px; padding: 0 8px; margin: 2px 4px 2px 0; }
+  .sort { border-bottom: 1px dotted var(--muted); cursor: help; }
+  .fr { color: var(--muted); }
+  .bandeau { background: color-mix(in srgb, var(--warn) 14%, var(--surface)); border: 1px solid var(--warn);
+             border-radius: 8px; padding: 8px 12px; margin: 8px 0; font-size: .92rem; }
+  .pc { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .gris { --pc: #7d838b; } .vert { --pc: #1b9a1b; } .bleu { --pc: #0070dd; } .violet { --pc: #a335ee; }
+  .orange { --pc: #e07800; } .rose { --pc: #d6559b; } .dore { --pc: #b8942a; }
+  .pc, .pc-t { color: var(--pc, var(--muted)); }
+  .verdict { font-weight: 700; }
+  table.boss-soiree td a, .liens a { white-space: nowrap; }
+  .e-pos { color: var(--good); font-weight: 600; } .e-mid { color: var(--warn); font-weight: 600; }
+  .e-neg { color: var(--bad); font-weight: 600; }
+  .methode .carte p { margin: 4px 0 0; font-size: .92rem; }
+  .methode summary { cursor: pointer; }
+  p.mode { margin: 4px 0 10px; }
+  .refs { display: grid; gap: 10px; margin: 12px 0 16px; }
+  .ref { display: grid; grid-template-columns: minmax(0, 1fr) 11rem; gap: 4px 16px; align-items: center;
+         background: var(--surface); border: 1px solid var(--border); border-left: 6px solid var(--muted);
+         border-radius: 10px; padding: 10px 14px; }
+  .ref.e-bad { border-left-color: var(--bad); } .ref.e-warn { border-left-color: var(--warn); }
+  .ref.e-good { border-left-color: var(--good); } .ref.moi { border-left-color: var(--accent); }
+  .ref .qui { font-size: 1.05rem; } .ref .qui b { font-size: 1.15rem; }
+  .ref .det { color: var(--muted); font-size: .85rem; } .ref .det b { color: var(--text); font-size: inherit; }
+  .ref .ecart { grid-row: span 2; text-align: right; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .ref .ecart .dps { font-size: 1.9rem; font-weight: 800; }
+  .ref .ecart .pc { font-size: 1.05rem; font-weight: 700; }
+  .ref .ecart .lib { color: var(--muted); font-size: .8rem; }
+  .ref.e-bad .ecart .dps, .ref.e-bad .ecart .pc { color: var(--bad); }
+  .ref.e-warn .ecart .dps, .ref.e-warn .ecart .pc { color: var(--warn); }
+  .ref.e-good .ecart .dps, .ref.e-good .ecart .pc { color: var(--good); }
+  .ref .barre { grid-column: 1; position: relative; height: 12px; background: var(--row); border-radius: 0 4px 4px 0; }
+  .ref .barre span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--muted); }
+  .ref.e-bad .barre span { background: var(--bad); } .ref.e-warn .barre span { background: var(--warn); }
+  .ref.e-good .barre span { background: var(--good); } .ref.moi .barre span { background: var(--accent); }
+  .ref .barre i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--text); }
+  .duo { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); column-gap: 0; row-gap: 4px;
+         margin: 8px 0; }
+  .duo-tete { font-weight: 700; padding: 4px 10px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .duo-tete.dm { text-align: right; border-bottom: 3px solid var(--accent); }
+  .duo-tete.dr { border-bottom: 3px solid var(--muted); }
+  .duo-minute { grid-column: 1 / -1; text-align: center; font-weight: 700; color: var(--muted); font-size: .85rem;
+                margin-top: 10px; border-top: 1px solid var(--border); padding-top: 4px; }
+  .duo-phase { grid-column: 1 / -1; text-align: center; font-style: italic; color: var(--muted); font-size: .88rem;
+               background: var(--row); border-radius: 6px; padding: 2px 8px; }
+  .duo-axe { background: linear-gradient(var(--border), var(--border)) center / 2px 100% no-repeat; }
+  .duo-c { padding: 3px 10px; border-radius: 6px; font-size: .92rem; }
+  .duo-c.cd:not(.vide) { background: color-mix(in srgb, var(--c) 12%, var(--surface)); }
+  .duo-c.dm { text-align: right; } .duo-c.dm.cd:not(.vide) { border-right: 4px solid var(--c); }
+  .duo-c.dr.cd:not(.vide) { border-left: 4px solid var(--c); }
+  .duo-c .t { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .85rem; }
+  .duo-c .absent { color: var(--muted); font-style: italic; font-size: .85rem; }
+  .duo-c .pourquoi { display: block; font-size: .85rem; color: var(--warn); }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases .mono { fill: var(--row); stroke: var(--border); } .phases .multi { fill: #eb6834; opacity: .55; }
+  .phases text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  section.boss > summary { font-size: 1.1rem; padding: 4px 0; }
+  section.boss { margin: 10px 0; }
+  details.boss { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px;
+                 margin: 10px 0; }
+  details.boss > summary { font-size: 1.08rem; }
+  .muted { color: var(--muted); }
+  @media (max-width: 600px) { .prio > li { padding-left: 16px; } .prio > li::before { position: static; margin-bottom: 6px; } }
+</style>
+<style>
+  .viz { --s1: #2a78d6; --s2: #eb6834; margin: 10px 0 4px; }
+  @media (prefers-color-scheme: dark) { .viz { --s1: #3987e5; --s2: #d95926; } }
+  .viz svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .viz text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  .viz text.lib { fill: var(--text); }
+  .viz .grille { stroke: var(--border); stroke-width: 1; }
+  .viz .s1 { fill: var(--s1); } .viz .s2 { fill: var(--s2); }
+  .viz .l1 { stroke: var(--s1); } .viz .l2 { stroke: var(--s2); }
+  .viz circle { stroke: var(--surface); stroke-width: 2; }
+  .viz [data-tip]:hover { opacity: .75; }
+  .viz .legende { display: flex; gap: 16px; flex-wrap: wrap; font-size: .88rem; color: var(--muted); margin: 0 0 4px; }
+  .viz .legende i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+  .viz .legende i.trou { border-radius: 2px; opacity: .45; }
+  #infobulle { position: fixed; pointer-events: none; display: none; z-index: 10; background: var(--surface);
+               color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px;
+               font-size: .85rem; box-shadow: 0 2px 8px rgba(0,0,0,.15); white-space: pre; }
+</style>
+<style>
+  .cause { display: flex; height: 10px; border-radius: 3px; overflow: hidden; background: var(--row); margin: 4px 0 2px; max-width: 420px; }
+  .cause span { display: block; height: 100%; }
+  .c-freq { background: #2a78d6; } .c-crit { background: #eb6834; } .c-coup { background: #9a6fd0; } .c-abs { background: #888; }
+  .pastille { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin: 0 4px 0 10px; }
+  .sorts-pourquoi { list-style: none; padding: 0; }
+  .sorts-pourquoi li { border-bottom: 1px solid var(--border); padding: 8px 0; }
+  .sorts-pourquoi .faits { color: var(--muted); font-size: .92rem; }
+  .centile { font-weight: 600; }
+  .c-legendaire { color: #e08a00; } .c-epique { color: #a335ee; } .c-rare { color: #0070dd; }
+  .c-peu { color: #1eaa1e; } .c-commun { color: var(--muted); }
+  .mecanisme { margin: 6px 0 0; padding: 6px 10px; border-left: 3px solid #eb6834; background: var(--row); font-size: .92rem; }
+  section.boss { border-top: 2px solid var(--border); margin-top: 28px; }
+</style>
+<h1>Mon DPS — Sinistra</h1>
+<p class="meta"><i class="ic ic-spec ic-spec-ShamanElemental" title="Elemental Shaman"></i>Chaman Élémentaire · ilvl 318 · raid du 30/09/2026 · 6 boss tués, meilleur kill de chacun · <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA">rapport Warcraft Logs</a> · <a href="https://murlok.io/shaman/elemental/m+" title="Talents, statistiques et équipement des meilleurs joueurs de ta spé en Mythique+ (Murlok)">builds du top M+ (Murlok) ↗</a></p>
+<p class="mode"><span class="etiq">Niveau d'analyse</span><strong>léger</strong> : rotation lue dans le log seulement : ni top mondial, ni joueur équivalent, ni simulation (fiche des PU).</p>
+<p class="note"><strong>Moyennes sur 6 boss</strong> (détail boss par boss juste en dessous)</p>
+<div class="cartes">
+<div class="carte"><div class="val">130 k</div><div class="lib">DPS moyen (pas de top 3 trouvé)</div></div>
+<div class="carte"><div class="val"><span class="pc vert" title="centile 29 : moyen">29</span></div><div class="lib"><span class="verdict pc-t vert">moyen</span> · centile moyen (tous ilvl) : tu fais mieux que 29 % des joueurs</div></div>
+<div class="carte"><div class="val"><span class="pc vert" title="centile 26 : moyen">26</span></div><div class="lib"><span class="verdict pc-t vert">moyen</span> · centile moyen à ton ilvl : tu fais mieux que 26 % des joueurs</div></div>
+<div class="carte"><div class="val">≈ 1,4 %</div><div class="lib">à gagner par le jeu (estimé)</div></div>
+<div class="carte"><div class="val muted">—</div><div class="lib">écart à ton potentiel simc (sans simulation)</div></div>
+</div>
+<div class="bandeau"><strong>Spé pas encore vérifiée</strong> : ce rapport repose sur des règles génériques qui n'ont pas encore été contrôlées sur des logs de cette spé (familiers, incantations, ressource, cooldowns propres à la classe). À lire avec prudence.</div>
+
+<h2 id="s-boss-par-boss">Boss par boss</h2>
+<div class="table-wrap">
+<table class="boss-soiree">
+<thead><tr><th>Boss</th><th class="num">Centile</th><th class="num">À ton ilvl</th><th class="num">DPS</th><th class="num">Durée</th><th class="num">Rang</th><th class="num">vs top 3</th><th class="num">vs potentiel simc</th><th class="num">Wipes</th><th>Combat</th></tr></thead>
+<tbody>
+<tr><td><a href="#boss-nymrissa-wavecaller">Nymrissa Wavecaller</a></td><td class="num"><span class="pc vert" title="centile 41 : moyen">41</span></td><td class="num"><span class="pc vert" title="centile 33 : moyen">33</span></td><td class="num">139 k</td><td class="num">5:30</td><td class="num">≈ 33 618 / 56 981</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=1" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/1" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/1/Sinistra/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-nek-zali-the-soulcoiler">Nek&#x27;zali the Soulcoiler</a></td><td class="num"><span class="pc gris" title="centile 19 : à travailler">19</span></td><td class="num"><span class="pc gris" title="centile 12 : à travailler">12</span></td><td class="num">117 k</td><td class="num">6:14</td><td class="num">≈ 57 670 / 71 198</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=4" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/4" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/4/Sinistra/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-entombed-sentinels">Entombed Sentinels</a></td><td class="num"><span class="pc vert" title="centile 46 : moyen">46</span></td><td class="num"><span class="pc vert" title="centile 49 : moyen">49</span></td><td class="num">130 k</td><td class="num">6:51</td><td class="num">≈ 35 093 / 64 988</td><td class="num">—</td><td class="num">—</td><td class="num">2</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=14" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/14" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/14/Sinistra/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-vashnik-the-malignant">Vashnik the Malignant</a></td><td class="num"><span class="pc vert" title="centile 29 : moyen">29</span></td><td class="num"><span class="pc vert" title="centile 26 : moyen">26</span></td><td class="num">158 k</td><td class="num">5:52</td><td class="num">≈ 45 110 / 63 536</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=17" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/17" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/17/Sinistra/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-the-lost-explorers">The Lost Explorers</a></td><td class="num"><span class="pc gris" title="centile 22 : à travailler">22</span></td><td class="num"><span class="pc gris" title="centile 19 : à travailler">19</span></td><td class="num">129 k</td><td class="num">5:41</td><td class="num">≈ 51 733 / 66 325</td><td class="num">—</td><td class="num">—</td><td class="num">5</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=26" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/26" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/26/Sinistra/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-sszorak">Sszorak</a></td><td class="num"><span class="pc gris" title="centile 17 : à travailler">17</span></td><td class="num"><span class="pc gris" title="centile 14 : à travailler">14</span></td><td class="num">105 k</td><td class="num">6:27</td><td class="num">≈ 34 969 / 42 132</td><td class="num">—</td><td class="num">—</td><td class="num">2</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=31" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/31" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/31/Sinistra/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Centiles aux couleurs de Warcraft Logs : gris sous 25, vert 25 à 49, bleu 50 à 74, violet 75 à 94, orange 95 à 98, rose 99, doré 100. Écarts : en vert au-dessus de la référence, en orange jusqu'à 15 % en dessous, en rouge au-delà ; face au top 3, un écart de 30 à 40 % reste courant. Pas d'écart à l'équivalent ici : il est choisi pour faire environ 25 % de plus que toi, son écart vaut donc toujours environ −20 % (il sert à comparer la rotation, dans le détail de chaque boss). Le nom du boss mène à son détail ; « Logs », « Wipefest » et « Analyzer » ouvrent le combat sur warcraftlogs.com, ses mécaniques sur wipefest.gg et ton analyse sur wowanalyzer.com.</p>
+<div class="bandeau"><strong>Correctifs récents de tes sorts</strong> (données de simc) : <span class="sort" title="Instantanée 10 s de recharge Requiert Chaman Élémentaire Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Amélioration Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Élémentaire Generates 6 Maelstrom."><i class="ic ic-inv_10_dungeonjewelry_primalist_trinket_1ragingelement_fire"></i>Voltaic Blaze <span class="fr">(Brasier voltaïque)</span></span> Attribute (2048 -&gt; 133120) le 24/10. Références prises après le 30/09 à 06 h.</div>
+<h2 id="s-corriger-en-priorit">À corriger en priorité</h2>
+<ol class="prio"><li><span class="gain">+2 k · +1,4 % estimé</span><h3>Temps globaux dépensés en sorts utilitaires</h3><span class="boss-chip">Nymrissa Wavecaller</span><span class="boss-chip">Nek&#x27;zali the Soulcoiler</span><span class="boss-chip">Entombed Sentinels</span><span class="boss-chip">Vashnik the Malignant</span><span class="boss-chip">Sszorak</span><p><span class="etiq">Cause</span>Gust of Wind (Bourrasque) : 6 lancers, contre 0 chez les références (ramenés à ta durée de combat) ; Ghost Wolf (Loup fantôme) : 4 lancers, contre 0 chez les références (ramenés à ta durée de combat). Soit environ 10 temps globaux de recharge sans dégâts.</p><p><span class="etiq">Conseil</span>Ne les lancer que quand la mécanique l&#x27;exige : chaque temps global pris à la rotation est perdu pour les dégâts. À vérifier aux moments indiqués : certains peuvent être une consigne du raid ou imposés par le boss.</p><p class="note"><span class="etiq">Preuve</span>Lancers du log ; sorts de classe sans aucun dégât, qui prennent un temps global (données de simc), hors interruptions, cooldowns, bijoux et potion. Gain estimé : un temps global (1 s) au DPS moyen par lancer en trop.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=1&amp;type=casts&amp;source=11&amp;start=168364&amp;end=178364">Nymrissa Wavecaller 1:51 Gust of Wind (Bourrasque)</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=1&amp;type=casts&amp;source=11&amp;start=210154&amp;end=220154">Nymrissa Wavecaller 2:33 Gust of Wind (Bourrasque)</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=1&amp;type=casts&amp;source=11&amp;start=243124&amp;end=253124">Nymrissa Wavecaller 3:06 Gust of Wind (Bourrasque)</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=1&amp;type=casts&amp;source=11&amp;start=272104&amp;end=282104">Nymrissa Wavecaller 3:34 Gust of Wind (Bourrasque)</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=1&amp;type=casts&amp;source=11&amp;start=277644&amp;end=287644">Nymrissa Wavecaller 3:40 Ghost Wolf (Loup fantôme)</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=1&amp;type=casts&amp;source=11&amp;start=331324&amp;end=341324">Nymrissa Wavecaller 4:34 Gust of Wind (Bourrasque)</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=4&amp;type=casts&amp;source=11&amp;start=952362&amp;end=962362">Nek&#x27;zali the Soulcoiler 1:33 Gust of Wind (Bourrasque)</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=4&amp;type=casts&amp;source=11&amp;start=989432&amp;end=999432">Nek&#x27;zali the Soulcoiler 2:10 Gust of Wind (Bourrasque)</a> </p></li><li><span class="gain nc">gain non chiffré</span><h3><i class="ic ic-8026698"></i>Bijou hors de Ascendance</h3><span class="boss-chip">Nymrissa Wavecaller</span><span class="boss-chip">Nek&#x27;zali the Soulcoiler</span><p><span class="etiq">Cause</span>1 sur 3 hors de Ascendance (Sublimation).</p><p><span class="etiq">Conseil</span>Activer le bijou au début de Ascendance : leurs bonus se multiplient.</p><pre class="macro">#showtooltip
+/use 13
+/use 14
+/cast Sublimation</pre><p><span class="etiq">Affichage</span>Macro qui colle les bijoux au gros cooldown (les bijoux sans effet à activer sont ignorés).</p><p class="note"><span class="etiq">Preuve</span>Règle vérifiée lancer par lancer sur le log : 1 faute sur 3 occasions.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=1&amp;type=casts&amp;source=11&amp;start=339594&amp;end=349594">Nymrissa Wavecaller 4:42</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=4&amp;type=casts&amp;source=11&amp;start=1112032&amp;end=1122032">Nek&#x27;zali the Soulcoiler 4:13</a> </p></li><li><span class="gain nc">gain non chiffré</span><h3><i class="ic ic-8026698"></i>Potion hors de Ascendance</h3><span class="boss-chip">Nek&#x27;zali the Soulcoiler</span><span class="boss-chip">Vashnik the Malignant</span><span class="boss-chip">Sszorak</span><p><span class="etiq">Cause</span>1 sur 1 hors de Ascendance (Sublimation).</p><p><span class="etiq">Conseil</span>Boire la potion au début de Ascendance.</p><p class="note"><span class="etiq">Preuve</span>Règle vérifiée lancer par lancer sur le log : 1 faute sur 1 occasion.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=4&amp;type=casts&amp;source=11&amp;start=1112232&amp;end=1122232">Nek&#x27;zali the Soulcoiler 4:13</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=17&amp;type=casts&amp;source=11&amp;start=3539413&amp;end=3549413">Vashnik the Malignant 5:40</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=31&amp;type=casts&amp;source=11&amp;start=7843306&amp;end=7853306">Sszorak 5:53</a> </p></li></ol>
+
+<h2 id="s-rotation">Rotation</h2>
+<h3 id="s-synth-se-de-la-soir-e">Synthèse de la soirée</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">DPS</th><th class="num">vs équivalent</th><th class="num">vs top 3</th><th class="num">Multicible</th><th class="num">Cooldowns manqués</th><th class="num">vs potentiel simc</th></tr></thead>
+<tbody>
+<tr><td>Nymrissa Wavecaller</td><td class="num">139 k</td><td class="num">—</td><td class="num">—</td><td class="num">36 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Nek&#x27;zali the Soulcoiler</td><td class="num">117 k</td><td class="num">—</td><td class="num">—</td><td class="num">25 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Entombed Sentinels</td><td class="num">130 k</td><td class="num">—</td><td class="num">—</td><td class="num">33 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Vashnik the Malignant</td><td class="num">158 k</td><td class="num">—</td><td class="num">—</td><td class="num">26 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>The Lost Explorers</td><td class="num">129 k</td><td class="num">—</td><td class="num">—</td><td class="num">75 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Sszorak</td><td class="num">105 k</td><td class="num">—</td><td class="num">—</td><td class="num">0 %</td><td class="num">0</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+
+<p class="note">Potentiel simc : ton équipement simulé avec une rotation parfaite, à la durée du kill, chaque phase au nombre d'ennemis qu'elle a en moyenne (1, 2, ou 3 et plus). Un vrai combat (déplacements, phases, cibles qui changent) reste en dessous : l'écart sert surtout à comparer les boss entre eux et d'une soirée à l'autre.</p>
+<h3 id="s-d-tail-de-chaque-boss">Détail de chaque boss</h3>
+<details class="boss" id="boss-nymrissa-wavecaller"><summary><strong>Nymrissa Wavecaller</strong> · 139 k · — face à l'équivalent · 36 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=1" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/1" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/1/Sinistra/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Sinistra</b> (toi) <span class="det">· 139 k</span><div class="det"><b>rang ≈ 33 618</b> / 56 981 · centile 41 (33 à ton ilvl)</div></div><div class="ecart"><div class="dps">139 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="69.7" height="18"><title>Monocible : 0:00 → 0:31 (1,0 ennemis)</title></rect><rect class="multi" x="269.7" y="4" width="45.0" height="18"><title>Multicible : 0:31 → 0:51 (4,4 ennemis)</title></rect><rect class="mono" x="314.7" y="4" width="54.0" height="18"><title>Monocible : 0:51 → 1:15 (1,1 ennemis)</title></rect><rect class="multi" x="368.7" y="4" width="45.0" height="18"><title>Multicible : 1:15 → 1:35 (5,0 ennemis)</title></rect><rect class="mono" x="413.7" y="4" width="105.7" height="18"><title>Monocible : 1:35 → 2:22 (1,1 ennemis)</title></rect><rect class="multi" x="519.5" y="4" width="36.0" height="18"><title>Multicible : 2:22 → 2:38 (4,9 ennemis)</title></rect><rect class="mono" x="555.5" y="4" width="65.2" height="18"><title>Monocible : 2:38 → 3:07 (1,0 ennemis)</title></rect><rect class="multi" x="620.7" y="4" width="49.5" height="18"><title>Multicible : 3:07 → 3:29 (5,0 ennemis)</title></rect><rect class="mono" x="670.2" y="4" width="94.5" height="18"><title>Monocible : 3:29 → 4:11 (1,0 ennemis)</title></rect><rect class="multi" x="764.7" y="4" width="42.7" height="18"><title>Multicible : 4:11 → 4:30 (5,8 ennemis)</title></rect><rect class="mono" x="807.5" y="4" width="63.0" height="18"><title>Monocible : 4:30 → 4:58 (1,1 ennemis)</title></rect><rect class="multi" x="870.5" y="4" width="49.5" height="18"><title>Multicible : 4:58 → 5:20 (3,8 ennemis)</title></rect><rect class="mono" x="920.0" y="4" width="24.0" height="18"><title>Monocible : 5:20 → 5:30 (1,2 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Ascendance</td><td class="num">1 / 3</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Ascendance</td><td class="num">0 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(212 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Appelle un élémentaire de feu supérieur qui fait pleuvoir la mort et la destruction sur vos adversaires pendant 20 s. Tant qu’il est actif, Horion de flammes inflige ses dégâts 33.3333 % plus vite et la durée des Horions de flammes suivants est augmentée de 100 %."><i class="ic ic-spell_fire_elemental_totem"></i>Fire Elemental <span class="fr">(Élémentaire de feu)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 10 s de recharge Requiert Chaman Élémentaire Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Amélioration Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Élémentaire Generates 6 Maelstrom."><i class="ic ic-inv_10_dungeonjewelry_primalist_trinket_1ragingelement_fire"></i>Voltaic Blaze <span class="fr">(Brasier voltaïque)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée Requiert Chaman Niveau 3 requis Enflamme la cible et lui inflige ([22.425% of Spell Power]) points de dégâts volcaniques, puis ([120.06% of Spell Power]) supplémentaires en 18 s. Horion de flamme peut être appliqué à un maximum de 6 cibles. Élémentaire, Amélioration La dissipation de Horion de flamme provoque une éruption volcanique explosive sous le personnage adverse qui le dissipe, ce qui lui inflige ([3175.2% of Spell Power]) points de dégâts volcaniques et le projette dans les airs Élémentaire Generates 3 Maelstrom."><i class="ic ic-spell_fire_flameshock"></i>Flame Shock <span class="fr">(Horion de flammes)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="[ Élémentaire : Gardien des tempêtes invoque un esprit ancestral à vos côtés pendant 8 s / Restauration Le lancement de Déchaînement de la vie invoque un esprit ancestral à vos côtés pendant 12 s ] Il copie tous les sorts de dégâts ou de soins que vous lancez."><i class="ic ic-ability_racial_ancestralcall"></i>Call of the Ancestors <span class="fr">(Appel des ancêtres)</span></span></td><td class="num">8 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(119 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Provoque de violentes secousses sismiques dans un rayon de 8 m à l’emplacement ciblé. Inflige [6 * ([63.25% of Spell Power])] points de dégâts de nature en 6 s et a 5 % de chances de renverser les adversaires. Plusieurs utilisations de Séisme peuvent se superposer. Ce sort est lancé à un emplacement sélectionné."><i class="ic ic-spell_shaman_earthquake"></i>Earthquake <span class="fr">(Séisme)</span></span></td><td class="num">7 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée Requiert Chaman Niveau 3 requis Enflamme la cible et lui inflige ([22.425% of Spell Power]) points de dégâts volcaniques, puis ([120.06% of Spell Power]) supplémentaires en 18 s. Horion de flamme peut être appliqué à un maximum de 6 cibles. Élémentaire, Amélioration La dissipation de Horion de flamme provoque une éruption volcanique explosive sous le personnage adverse qui le dissipe, ce qui lui inflige ([3175.2% of Spell Power]) points de dégâts volcaniques et le projette dans les airs Élémentaire Generates 3 Maelstrom."><i class="ic ic-spell_fire_flameshock"></i>Flame Shock <span class="fr">(Horion de flammes)</span></span></td><td class="num">11 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2 s d&#x27;incantation 12 s de recharge 1 Charge Requiert Chaman Requiert le niveau 15 (Amélioration) Requiert le niveau 25 (Élémentaire) Amélioration Contrôle la puissance brute des éléments, ce qui vous permet d’infliger ([201.25% of Spell Power]) points de dégâts élémentaires et augmente votre score de Coup critique ou votre Hâte de 3 % ou votre Maîtrise de (3 * 1.875 ) % pendant 10 s. Élémentaire Contrôle la puissance brute des éléments, ce qui vous permet d’infliger ([201.25% of Spell Power]) points de dégâts élémentaires et augmente votre score de Coup critique ou votre Hâte de 8 % ou votre Maîtrise de (8 * 1.875 ) % pendant 10 s."><i class="ic ic-shaman_talent_elementalblast"></i>Elemental Blast <span class="fr">(Explosion élémentaire)</span></span></td><td class="num">17 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 10 s de recharge Requiert Chaman Élémentaire Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Amélioration Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Élémentaire Generates 6 Maelstrom."><i class="ic ic-inv_10_dungeonjewelry_primalist_trinket_1ragingelement_fire"></i>Voltaic Blaze <span class="fr">(Brasier voltaïque)</span></span></td><td class="num">25 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-nek-zali-the-soulcoiler"><summary><strong>Nek&#x27;zali the Soulcoiler</strong> · 117 k · — face à l'équivalent · 25 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=4" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/4" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/4/Sinistra/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Sinistra</b> (toi) <span class="det">· 117 k</span><div class="det"><b>rang ≈ 57 670</b> / 71 198 · centile 19 (12 à ton ilvl)</div></div><div class="ecart"><div class="dps">117 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="123.1" height="18"><title>Monocible : 0:00 → 1:02 (1,1 ennemis)</title></rect><rect class="multi" x="323.1" y="4" width="43.7" height="18"><title>Multicible : 1:02 → 1:24 (4,1 ennemis)</title></rect><rect class="mono" x="366.8" y="4" width="89.3" height="18"><title>Monocible : 1:24 → 2:09 (1,0 ennemis)</title></rect><rect class="multi" x="456.1" y="4" width="19.9" height="18"><title>Multicible : 2:09 → 2:19 (4,3 ennemis)</title></rect><rect class="mono" x="476.0" y="4" width="93.3" height="18"><title>Monocible : 2:19 → 3:06 (1,1 ennemis)</title></rect><rect class="multi" x="569.3" y="4" width="35.7" height="18"><title>Multicible : 3:06 → 3:24 (3,7 ennemis)</title></rect><rect class="mono" x="605.0" y="4" width="73.5" height="18"><title>Monocible : 3:24 → 4:01 (1,2 ennemis)</title></rect><rect class="multi" x="678.5" y="4" width="21.8" height="18"><title>Multicible : 4:01 → 4:12 (3,7 ennemis)</title></rect><rect class="mono" x="700.3" y="4" width="85.4" height="18"><title>Monocible : 4:12 → 4:55 (1,1 ennemis)</title></rect><rect class="multi" x="785.7" y="4" width="29.8" height="18"><title>Multicible : 4:55 → 5:10 (3,8 ennemis)</title></rect><rect class="mono" x="815.5" y="4" width="51.6" height="18"><title>Monocible : 5:10 → 5:36 (1,2 ennemis)</title></rect><rect class="multi" x="867.1" y="4" width="33.8" height="18"><title>Multicible : 5:36 → 5:53 (5,0 ennemis)</title></rect><rect class="mono" x="900.9" y="4" width="43.1" height="18"><title>Monocible : 5:53 → 6:14 (1,0 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Ascendance</td><td class="num">1 / 3</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Ascendance</td><td class="num">1 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(282 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Appelle un élémentaire de feu supérieur qui fait pleuvoir la mort et la destruction sur vos adversaires pendant 20 s. Tant qu’il est actif, Horion de flammes inflige ses dégâts 33.3333 % plus vite et la durée des Horions de flammes suivants est augmentée de 100 %."><i class="ic ic-spell_fire_elemental_totem"></i>Fire Elemental <span class="fr">(Élémentaire de feu)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée Requiert Chaman Niveau 3 requis Enflamme la cible et lui inflige ([22.425% of Spell Power]) points de dégâts volcaniques, puis ([120.06% of Spell Power]) supplémentaires en 18 s. Horion de flamme peut être appliqué à un maximum de 6 cibles. Élémentaire, Amélioration La dissipation de Horion de flamme provoque une éruption volcanique explosive sous le personnage adverse qui le dissipe, ce qui lui inflige ([3175.2% of Spell Power]) points de dégâts volcaniques et le projette dans les airs Élémentaire Generates 3 Maelstrom."><i class="ic ic-spell_fire_flameshock"></i>Flame Shock <span class="fr">(Horion de flammes)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 10 s de recharge Requiert Chaman Élémentaire Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Amélioration Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Élémentaire Generates 6 Maelstrom."><i class="ic ic-inv_10_dungeonjewelry_primalist_trinket_1ragingelement_fire"></i>Voltaic Blaze <span class="fr">(Brasier voltaïque)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(93 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Le lancement de Gardien des tempêtes invoque un élémentaire de tempête supérieur qui projette des bourrasques de vent sur vos adversaires pendant 10 s."><i class="ic ic-inv_stormelemental"></i>Storm Elemental <span class="fr">(Élémentaire de tempête)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Provoque de violentes secousses sismiques dans un rayon de 8 m à l’emplacement ciblé. Inflige [6 * ([63.25% of Spell Power])] points de dégâts de nature en 6 s et a 5 % de chances de renverser les adversaires. Plusieurs utilisations de Séisme peuvent se superposer. Ce sort est lancé à un emplacement sélectionné."><i class="ic ic-spell_shaman_earthquake"></i>Earthquake <span class="fr">(Séisme)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2.5 s d&#x27;incantation Requiert Chaman Niveau 1 requis Projette un éclair sur la cible, ce qui lui inflige ([170% of Spell Power]) points de dégâts de nature. Amélioration Consumes Maelstrom Weapon for increased cast speed."><i class="ic ic-spell_nature_lightning"></i>Lightning Bolt <span class="fr">(Éclair)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée Requiert Chaman Niveau 3 requis Enflamme la cible et lui inflige ([22.425% of Spell Power]) points de dégâts volcaniques, puis ([120.06% of Spell Power]) supplémentaires en 18 s. Horion de flamme peut être appliqué à un maximum de 6 cibles. Élémentaire, Amélioration La dissipation de Horion de flamme provoque une éruption volcanique explosive sous le personnage adverse qui le dissipe, ce qui lui inflige ([3175.2% of Spell Power]) points de dégâts volcaniques et le projette dans les airs Élémentaire Generates 3 Maelstrom."><i class="ic ic-spell_fire_flameshock"></i>Flame Shock <span class="fr">(Horion de flammes)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 10 s de recharge Requiert Chaman Élémentaire Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Amélioration Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Élémentaire Generates 6 Maelstrom."><i class="ic ic-inv_10_dungeonjewelry_primalist_trinket_1ragingelement_fire"></i>Voltaic Blaze <span class="fr">(Brasier voltaïque)</span></span></td><td class="num">14 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-entombed-sentinels"><summary><strong>Entombed Sentinels</strong> · 130 k · — face à l'équivalent · 33 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=14" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/14" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/14/Sinistra/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Sinistra</b> (toi) <span class="det">· 130 k</span><div class="det"><b>rang ≈ 35 093</b> / 64 988 · centile 46 (49 à ton ilvl)</div></div><div class="ecart"><div class="dps">130 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="30.8" height="18"><title>Monocible : 0:00 → 0:17 (2,0 ennemis)</title></rect><rect class="multi" x="230.8" y="4" width="27.1" height="18"><title>Multicible : 0:17 → 0:32 (3,0 ennemis)</title></rect><rect class="mono" x="257.9" y="4" width="83.3" height="18"><title>Monocible : 0:32 → 1:18 (2,0 ennemis)</title></rect><rect class="multi" x="341.2" y="4" width="32.6" height="18"><title>Multicible : 1:18 → 1:36 (3,0 ennemis)</title></rect><rect class="mono" x="373.8" y="4" width="61.5" height="18"><title>Monocible : 1:36 → 2:10 (2,0 ennemis)</title></rect><rect class="multi" x="435.3" y="4" width="19.9" height="18"><title>Multicible : 2:10 → 2:21 (3,0 ennemis)</title></rect><rect class="mono" x="455.2" y="4" width="70.6" height="18"><title>Monocible : 2:21 → 3:00 (2,0 ennemis)</title></rect><rect class="multi" x="525.8" y="4" width="34.4" height="18"><title>Multicible : 3:00 → 3:19 (3,0 ennemis)</title></rect><rect class="mono" x="560.2" y="4" width="59.7" height="18"><title>Monocible : 3:19 → 3:52 (2,0 ennemis)</title></rect><rect class="multi" x="619.9" y="4" width="36.2" height="18"><title>Multicible : 3:52 → 4:12 (3,0 ennemis)</title></rect><rect class="mono" x="656.1" y="4" width="50.7" height="18"><title>Monocible : 4:12 → 4:40 (2,0 ennemis)</title></rect><rect class="multi" x="706.8" y="4" width="39.8" height="18"><title>Multicible : 4:40 → 5:02 (3,0 ennemis)</title></rect><rect class="mono" x="746.6" y="4" width="54.3" height="18"><title>Monocible : 5:02 → 5:32 (2,0 ennemis)</title></rect><rect class="multi" x="800.9" y="4" width="32.6" height="18"><title>Multicible : 5:32 → 5:50 (3,0 ennemis)</title></rect><rect class="mono" x="833.5" y="4" width="63.3" height="18"><title>Monocible : 5:50 → 6:25 (2,0 ennemis)</title></rect><rect class="multi" x="896.8" y="4" width="25.3" height="18"><title>Multicible : 6:25 → 6:39 (3,0 ennemis)</title></rect><rect class="mono" x="922.2" y="4" width="21.8" height="18"><title>Monocible : 6:39 → 6:51 (1,3 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Ascendance</td><td class="num">0 / 4</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Ascendance</td><td class="num">0 / 2</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(274 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Appelle un élémentaire de feu supérieur qui fait pleuvoir la mort et la destruction sur vos adversaires pendant 20 s. Tant qu’il est actif, Horion de flammes inflige ses dégâts 33.3333 % plus vite et la durée des Horions de flammes suivants est augmentée de 100 %."><i class="ic ic-spell_fire_elemental_totem"></i>Fire Elemental <span class="fr">(Élémentaire de feu)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée Requiert Chaman Niveau 3 requis Enflamme la cible et lui inflige ([22.425% of Spell Power]) points de dégâts volcaniques, puis ([120.06% of Spell Power]) supplémentaires en 18 s. Horion de flamme peut être appliqué à un maximum de 6 cibles. Élémentaire, Amélioration La dissipation de Horion de flamme provoque une éruption volcanique explosive sous le personnage adverse qui le dissipe, ce qui lui inflige ([3175.2% of Spell Power]) points de dégâts volcaniques et le projette dans les airs Élémentaire Generates 3 Maelstrom."><i class="ic ic-spell_fire_flameshock"></i>Flame Shock <span class="fr">(Horion de flammes)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="[ Élémentaire : Gardien des tempêtes invoque un esprit ancestral à vos côtés pendant 8 s / Restauration Le lancement de Déchaînement de la vie invoque un esprit ancestral à vos côtés pendant 12 s ] Il copie tous les sorts de dégâts ou de soins que vous lancez."><i class="ic ic-ability_racial_ancestralcall"></i>Call of the Ancestors <span class="fr">(Appel des ancêtres)</span></span></td><td class="num">17 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2.5 s d&#x27;incantation Requiert Chaman Niveau 1 requis Projette un éclair sur la cible, ce qui lui inflige ([170% of Spell Power]) points de dégâts de nature. Amélioration Consumes Maelstrom Weapon for increased cast speed."><i class="ic ic-spell_nature_lightning"></i>Lightning Bolt <span class="fr">(Éclair)</span></span></td><td class="num">18 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(137 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Le lancement de Gardien des tempêtes invoque un élémentaire de tempête supérieur qui projette des bourrasques de vent sur vos adversaires pendant 10 s."><i class="ic ic-inv_stormelemental"></i>Storm Elemental <span class="fr">(Élémentaire de tempête)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Appelle un élémentaire de feu supérieur qui fait pleuvoir la mort et la destruction sur vos adversaires pendant 20 s. Tant qu’il est actif, Horion de flammes inflige ses dégâts 33.3333 % plus vite et la durée des Horions de flammes suivants est augmentée de 100 %."><i class="ic ic-spell_fire_elemental_totem"></i>Fire Elemental <span class="fr">(Élémentaire de feu)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 10 s de recharge Requiert Chaman Élémentaire Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Amélioration Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Élémentaire Generates 6 Maelstrom."><i class="ic ic-inv_10_dungeonjewelry_primalist_trinket_1ragingelement_fire"></i>Voltaic Blaze <span class="fr">(Brasier voltaïque)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2 s d&#x27;incantation Requiert Chaman Vous lancez sur l’adversaire un éclair qui inflige ([116.4% of Spell Power]) points de dégâts de nature puis rebondit sur des adversaires proches. Frappe 3 cibles au total. Amélioration Consumes Maelstrom Weapon for increased cast speed. Élémentaire Generates 2 Maelstrom per target hit."><i class="ic ic-spell_nature_chainlightning"></i>Chain Lightning <span class="fr">(Chaîne d’éclairs)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée Requiert Chaman Niveau 3 requis Enflamme la cible et lui inflige ([22.425% of Spell Power]) points de dégâts volcaniques, puis ([120.06% of Spell Power]) supplémentaires en 18 s. Horion de flamme peut être appliqué à un maximum de 6 cibles. Élémentaire, Amélioration La dissipation de Horion de flamme provoque une éruption volcanique explosive sous le personnage adverse qui le dissipe, ce qui lui inflige ([3175.2% of Spell Power]) points de dégâts volcaniques et le projette dans les airs Élémentaire Generates 3 Maelstrom."><i class="ic ic-spell_fire_flameshock"></i>Flame Shock <span class="fr">(Horion de flammes)</span></span></td><td class="num">8 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2.5 s d&#x27;incantation Requiert Chaman Niveau 1 requis Projette un éclair sur la cible, ce qui lui inflige ([170% of Spell Power]) points de dégâts de nature. Amélioration Consumes Maelstrom Weapon for increased cast speed."><i class="ic ic-spell_nature_lightning"></i>Lightning Bolt <span class="fr">(Éclair)</span></span></td><td class="num">24 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="[ Élémentaire : Gardien des tempêtes invoque un esprit ancestral à vos côtés pendant 8 s / Restauration Le lancement de Déchaînement de la vie invoque un esprit ancestral à vos côtés pendant 12 s ] Il copie tous les sorts de dégâts ou de soins que vous lancez."><i class="ic ic-ability_racial_ancestralcall"></i>Call of the Ancestors <span class="fr">(Appel des ancêtres)</span></span></td><td class="num">30 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-vashnik-the-malignant"><summary><strong>Vashnik the Malignant</strong> · 158 k · — face à l'équivalent · 26 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=17" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/17" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/17/Sinistra/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Sinistra</b> (toi) <span class="det">· 158 k</span><div class="det"><b>rang ≈ 45 110</b> / 63 536 · centile 29 (26 à ton ilvl)</div></div><div class="ecart"><div class="dps">158 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="54.9" height="18"><title>Monocible : 0:00 → 0:26 (1,0 ennemis)</title></rect><rect class="multi" x="254.9" y="4" width="35.9" height="18"><title>Multicible : 0:26 → 0:43 (4,0 ennemis)</title></rect><rect class="mono" x="290.8" y="4" width="141.4" height="18"><title>Monocible : 0:43 → 1:50 (1,0 ennemis)</title></rect><rect class="multi" x="432.2" y="4" width="40.1" height="18"><title>Multicible : 1:50 → 2:09 (3,5 ennemis)</title></rect><rect class="mono" x="472.3" y="4" width="137.2" height="18"><title>Monocible : 2:09 → 3:14 (1,0 ennemis)</title></rect><rect class="multi" x="609.4" y="4" width="52.8" height="18"><title>Multicible : 3:14 → 3:39 (4,9 ennemis)</title></rect><rect class="mono" x="662.2" y="4" width="124.5" height="18"><title>Monocible : 3:39 → 4:38 (1,0 ennemis)</title></rect><rect class="multi" x="786.7" y="4" width="61.2" height="18"><title>Multicible : 4:38 → 5:07 (5,4 ennemis)</title></rect><rect class="mono" x="847.9" y="4" width="96.1" height="18"><title>Monocible : 5:07 → 5:52 (1,0 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Ascendance</td><td class="num">0 / 2</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Ascendance</td><td class="num">1 / 2</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(263 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Appelle un élémentaire de feu supérieur qui fait pleuvoir la mort et la destruction sur vos adversaires pendant 20 s. Tant qu’il est actif, Horion de flammes inflige ses dégâts 33.3333 % plus vite et la durée des Horions de flammes suivants est augmentée de 100 %."><i class="ic ic-spell_fire_elemental_totem"></i>Fire Elemental <span class="fr">(Élémentaire de feu)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée Requiert Chaman Niveau 3 requis Enflamme la cible et lui inflige ([22.425% of Spell Power]) points de dégâts volcaniques, puis ([120.06% of Spell Power]) supplémentaires en 18 s. Horion de flamme peut être appliqué à un maximum de 6 cibles. Élémentaire, Amélioration La dissipation de Horion de flamme provoque une éruption volcanique explosive sous le personnage adverse qui le dissipe, ce qui lui inflige ([3175.2% of Spell Power]) points de dégâts volcaniques et le projette dans les airs Élémentaire Generates 3 Maelstrom."><i class="ic ic-spell_fire_flameshock"></i>Flame Shock <span class="fr">(Horion de flammes)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(90 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Appelle un élémentaire de feu supérieur qui fait pleuvoir la mort et la destruction sur vos adversaires pendant 20 s. Tant qu’il est actif, Horion de flammes inflige ses dégâts 33.3333 % plus vite et la durée des Horions de flammes suivants est augmentée de 100 %."><i class="ic ic-spell_fire_elemental_totem"></i>Fire Elemental <span class="fr">(Élémentaire de feu)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 10 s de recharge Requiert Chaman Élémentaire Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Amélioration Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Élémentaire Generates 6 Maelstrom."><i class="ic ic-inv_10_dungeonjewelry_primalist_trinket_1ragingelement_fire"></i>Voltaic Blaze <span class="fr">(Brasier voltaïque)</span></span></td><td class="num">7 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée Requiert Chaman Niveau 3 requis Enflamme la cible et lui inflige ([22.425% of Spell Power]) points de dégâts volcaniques, puis ([120.06% of Spell Power]) supplémentaires en 18 s. Horion de flamme peut être appliqué à un maximum de 6 cibles. Élémentaire, Amélioration La dissipation de Horion de flamme provoque une éruption volcanique explosive sous le personnage adverse qui le dissipe, ce qui lui inflige ([3175.2% of Spell Power]) points de dégâts volcaniques et le projette dans les airs Élémentaire Generates 3 Maelstrom."><i class="ic ic-spell_fire_flameshock"></i>Flame Shock <span class="fr">(Horion de flammes)</span></span></td><td class="num">12 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Provoque de violentes secousses sismiques dans un rayon de 8 m à l’emplacement ciblé. Inflige [6 * ([63.25% of Spell Power])] points de dégâts de nature en 6 s et a 5 % de chances de renverser les adversaires. Plusieurs utilisations de Séisme peuvent se superposer. Ce sort est lancé à un emplacement sélectionné."><i class="ic ic-spell_shaman_earthquake"></i>Earthquake <span class="fr">(Séisme)</span></span></td><td class="num">24 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-the-lost-explorers"><summary><strong>The Lost Explorers</strong> · 129 k · — face à l'équivalent · 75 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=26" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/26" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/26/Sinistra/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Sinistra</b> (toi) <span class="det">· 129 k</span><div class="det"><b>rang ≈ 51 733</b> / 66 325 · centile 22 (19 à ton ilvl)</div></div><div class="ecart"><div class="dps">129 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="multi" x="200.0" y="4" width="21.8" height="18"><title>Multicible : 0:00 → 0:10 (2,8 ennemis)</title></rect><rect class="mono" x="221.8" y="4" width="50.1" height="18"><title>Monocible : 0:10 → 0:33 (2,0 ennemis)</title></rect><rect class="multi" x="271.9" y="4" width="141.5" height="18"><title>Multicible : 0:33 → 1:38 (3,0 ennemis)</title></rect><rect class="mono" x="413.4" y="4" width="71.9" height="18"><title>Monocible : 1:38 → 2:11 (2,0 ennemis)</title></rect><rect class="multi" x="485.3" y="4" width="326.6" height="18"><title>Multicible : 2:11 → 4:41 (3,0 ennemis)</title></rect><rect class="mono" x="811.9" y="4" width="34.8" height="18"><title>Monocible : 4:41 → 4:57 (2,0 ennemis)</title></rect><rect class="multi" x="846.7" y="4" width="30.5" height="18"><title>Multicible : 4:57 → 5:11 (3,0 ennemis)</title></rect><rect class="mono" x="877.2" y="4" width="32.7" height="18"><title>Monocible : 5:11 → 5:26 (2,0 ennemis)</title></rect><rect class="multi" x="909.9" y="4" width="34.1" height="18"><title>Multicible : 5:26 → 5:41 (2,9 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Ascendance</td><td class="num">0 / 3</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Ascendance</td><td class="num">0 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(87 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Appelle un élémentaire de feu supérieur qui fait pleuvoir la mort et la destruction sur vos adversaires pendant 20 s. Tant qu’il est actif, Horion de flammes inflige ses dégâts 33.3333 % plus vite et la durée des Horions de flammes suivants est augmentée de 100 %."><i class="ic ic-spell_fire_elemental_totem"></i>Fire Elemental <span class="fr">(Élémentaire de feu)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 10 s de recharge Requiert Chaman Élémentaire Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Amélioration Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Élémentaire Generates 6 Maelstrom."><i class="ic ic-inv_10_dungeonjewelry_primalist_trinket_1ragingelement_fire"></i>Voltaic Blaze <span class="fr">(Brasier voltaïque)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2.5 s d&#x27;incantation Requiert Chaman Niveau 1 requis Projette un éclair sur la cible, ce qui lui inflige ([170% of Spell Power]) points de dégâts de nature. Amélioration Consumes Maelstrom Weapon for increased cast speed."><i class="ic ic-spell_nature_lightning"></i>Lightning Bolt <span class="fr">(Éclair)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée Requiert Chaman Niveau 3 requis Enflamme la cible et lui inflige ([22.425% of Spell Power]) points de dégâts volcaniques, puis ([120.06% of Spell Power]) supplémentaires en 18 s. Horion de flamme peut être appliqué à un maximum de 6 cibles. Élémentaire, Amélioration La dissipation de Horion de flamme provoque une éruption volcanique explosive sous le personnage adverse qui le dissipe, ce qui lui inflige ([3175.2% of Spell Power]) points de dégâts volcaniques et le projette dans les airs Élémentaire Generates 3 Maelstrom."><i class="ic ic-spell_fire_flameshock"></i>Flame Shock <span class="fr">(Horion de flammes)</span></span></td><td class="num">11 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2 s d&#x27;incantation Requiert Chaman Vous lancez sur l’adversaire un éclair qui inflige ([116.4% of Spell Power]) points de dégâts de nature puis rebondit sur des adversaires proches. Frappe 3 cibles au total. Amélioration Consumes Maelstrom Weapon for increased cast speed. Élémentaire Generates 2 Maelstrom per target hit."><i class="ic ic-spell_nature_chainlightning"></i>Chain Lightning <span class="fr">(Chaîne d’éclairs)</span></span></td><td class="num">17 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="[ Élémentaire : Gardien des tempêtes invoque un esprit ancestral à vos côtés pendant 8 s / Restauration Le lancement de Déchaînement de la vie invoque un esprit ancestral à vos côtés pendant 12 s ] Il copie tous les sorts de dégâts ou de soins que vous lancez."><i class="ic ic-ability_racial_ancestralcall"></i>Call of the Ancestors <span class="fr">(Appel des ancêtres)</span></span></td><td class="num">24 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(255 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Appelle un élémentaire de feu supérieur qui fait pleuvoir la mort et la destruction sur vos adversaires pendant 20 s. Tant qu’il est actif, Horion de flammes inflige ses dégâts 33.3333 % plus vite et la durée des Horions de flammes suivants est augmentée de 100 %."><i class="ic ic-spell_fire_elemental_totem"></i>Fire Elemental <span class="fr">(Élémentaire de feu)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 10 s de recharge Requiert Chaman Élémentaire Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Amélioration Foudroie instantanément la cible et 5 adversaires à moins de 10 m avec un tonnerre incandescent, infligeant ([400% of Spell Power]) points de dégâts de nature et appliquant Horion de flammes. Inflige un coup critique à coup sûr. Génère 1 charge d’Arme du Maelström. Élémentaire Generates 6 Maelstrom."><i class="ic ic-inv_10_dungeonjewelry_primalist_trinket_1ragingelement_fire"></i>Voltaic Blaze <span class="fr">(Brasier voltaïque)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2.5 s d&#x27;incantation Requiert Chaman Niveau 1 requis Projette un éclair sur la cible, ce qui lui inflige ([170% of Spell Power]) points de dégâts de nature. Amélioration Consumes Maelstrom Weapon for increased cast speed."><i class="ic ic-spell_nature_lightning"></i>Lightning Bolt <span class="fr">(Éclair)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2 s d&#x27;incantation Requiert Chaman Vous lancez sur l’adversaire un éclair qui inflige ([116.4% of Spell Power]) points de dégâts de nature puis rebondit sur des adversaires proches. Frappe 3 cibles au total. Amélioration Consumes Maelstrom Weapon for increased cast speed. Élémentaire Generates 2 Maelstrom per target hit."><i class="ic ic-spell_nature_chainlightning"></i>Chain Lightning <span class="fr">(Chaîne d’éclairs)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée Requiert Chaman Niveau 3 requis Enflamme la cible et lui inflige ([22.425% of Spell Power]) points de dégâts volcaniques, puis ([120.06% of Spell Power]) supplémentaires en 18 s. Horion de flamme peut être appliqué à un maximum de 6 cibles. Élémentaire, Amélioration La dissipation de Horion de flamme provoque une éruption volcanique explosive sous le personnage adverse qui le dissipe, ce qui lui inflige ([3175.2% of Spell Power]) points de dégâts volcaniques et le projette dans les airs Élémentaire Generates 3 Maelstrom."><i class="ic ic-spell_fire_flameshock"></i>Flame Shock <span class="fr">(Horion de flammes)</span></span></td><td class="num">9 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="[ Élémentaire : Gardien des tempêtes invoque un esprit ancestral à vos côtés pendant 8 s / Restauration Le lancement de Déchaînement de la vie invoque un esprit ancestral à vos côtés pendant 12 s ] Il copie tous les sorts de dégâts ou de soins que vous lancez."><i class="ic ic-ability_racial_ancestralcall"></i>Call of the Ancestors <span class="fr">(Appel des ancêtres)</span></span></td><td class="num">16 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-sszorak"><summary><strong>Sszorak</strong> · 105 k · — face à l'équivalent · 0 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=31" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/31" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/31/Sinistra/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Sinistra</b> (toi) <span class="det">· 105 k</span><div class="det"><b>rang ≈ 34 969</b> / 42 132 · centile 17 (14 à ton ilvl)</div></div><div class="ecart"><div class="dps">105 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="744.0" height="18"><title>Monocible : 0:00 → 6:27 (1,0 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Ascendance</td><td class="num">0 / 3</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Ascendance</td><td class="num">1 / 2</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(387 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée Requiert Chaman Niveau 3 requis Enflamme la cible et lui inflige ([22.425% of Spell Power]) points de dégâts volcaniques, puis ([120.06% of Spell Power]) supplémentaires en 18 s. Horion de flamme peut être appliqué à un maximum de 6 cibles. Élémentaire, Amélioration La dissipation de Horion de flamme provoque une éruption volcanique explosive sous le personnage adverse qui le dissipe, ce qui lui inflige ([3175.2% of Spell Power]) points de dégâts volcaniques et le projette dans les airs Élémentaire Generates 3 Maelstrom."><i class="ic ic-spell_fire_flameshock"></i>Flame Shock <span class="fr">(Horion de flammes)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2.5 s d&#x27;incantation Requiert Chaman Niveau 1 requis Projette un éclair sur la cible, ce qui lui inflige ([170% of Spell Power]) points de dégâts de nature. Amélioration Consumes Maelstrom Weapon for increased cast speed."><i class="ic ic-spell_nature_lightning"></i>Lightning Bolt <span class="fr">(Éclair)</span></span></td><td class="num">15 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="[ Élémentaire : Gardien des tempêtes invoque un esprit ancestral à vos côtés pendant 8 s / Restauration Le lancement de Déchaînement de la vie invoque un esprit ancestral à vos côtés pendant 12 s ] Il copie tous les sorts de dégâts ou de soins que vous lancez."><i class="ic ic-ability_racial_ancestralcall"></i>Call of the Ancestors <span class="fr">(Appel des ancêtres)</span></span></td><td class="num">16 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2 s d&#x27;incantation 8 s de recharge 1 Charge Requiert Chaman Vous projetez de la lave en fusion sur la cible et lui infligez ([181% of Spell Power]) points de dégâts de feu. Si la cible est affectée par Horion de flammes, Explosion de lave inflige systématiquement un coup critique et ses dégâts sont augmentés d’un montant égal à vos chances de coup critique. Élémentaire Generates 8 Maelstrom."><i class="ic ic-spell_shaman_lavaburst"></i>Lava Burst <span class="fr">(Explosion de lave)</span></span></td><td class="num">30 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+
+<h2 id="s-build-et-stats">Build et stats</h2>
+<p class="note">Pas de simulation (mode rapide ou export de l'addon absent).</p>
+
+<h2 id="s-quipement">Équipement</h2>
+<p class="note">Pas d'analyse d'équipement (mode rapide ou export absent).</p>
+
+<h2 id="s-progression">Progression</h2>
+<h3 id="s-centiles-par-boss">Centiles par boss</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">10/09</th><th class="num">16/09</th><th class="num">23/09</th><th class="num">24/09</th><th class="num">30/09</th></tr></thead>
+<tbody>
+<tr><td>Entombed Sentinels</td><td class="num">17 <span class="muted">· 24</span></td><td class="num">34 <span class="muted">· 43</span></td><td class="num">28 <span class="muted">· 24</span></td><td class="num">—</td><td class="num">46 <span class="muted">· 49</span></td></tr>
+<tr><td>The Lost Explorers</td><td class="num">17 <span class="muted">· 26</span></td><td class="num">—</td><td class="num">27 <span class="muted">· 25</span></td><td class="num">—</td><td class="num">22 <span class="muted">· 19</span></td></tr>
+<tr><td>Vashnik the Malignant</td><td class="num">16 <span class="muted">· 23</span></td><td class="num">27 <span class="muted">· 34</span></td><td class="num">24 <span class="muted">· 21</span></td><td class="num">—</td><td class="num">29 <span class="muted">· 26</span></td></tr>
+<tr><td>Nymrissa Wavecaller</td><td class="num">—</td><td class="num">26 <span class="muted">· 23</span></td><td class="num">41 <span class="muted">· 33</span></td><td class="num">—</td><td class="num">41 <span class="muted">· 33</span></td></tr>
+<tr><td>Nek&#x27;zali the Soulcoiler</td><td class="num">—</td><td class="num">67 <span class="muted">· 35</span></td><td class="num">88 <span class="muted">· 62</span></td><td class="num">—</td><td class="num">19 <span class="muted">· 12</span></td></tr>
+<tr><td>The Coiled Altar</td><td class="num">—</td><td class="num">52 <span class="muted">· 27</span></td><td class="num">63 <span class="muted">· 30</span></td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>Ula&#x27;tek</td><td class="num">—</td><td class="num">36 <span class="muted">· 20</span></td><td class="num">50 <span class="muted">· 33</span></td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>Sszorak</td><td class="num">—</td><td class="num">—</td><td class="num">29 <span class="muted">· 27</span></td><td class="num">—</td><td class="num">17 <span class="muted">· 14</span></td></tr>
+<tr><td>The Twin Fangs</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">18 <span class="muted">· 15</span></td><td class="num">—</td></tr>
+<tr><td><strong>Écart au potentiel simc</strong></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Centile global · centile à ton ilvl. Écart au potentiel : ton DPS rapporté à ce que ton équipement ferait avec une rotation parfaite (simulation).</p>
+<h3 id="s-conseils-du-24-09">Conseils du 24/09</h3>
+<p>Aucun conseil chiffré à au moins 0,5 % la fois précédente.</p>
+
+<details class="methode"><summary><h2 id="s-m-thode" style="display:inline">Méthode</h2> <span class="muted">(cliquer pour déplier)</span></summary><div class="cartes"><div class="carte"><div class="lib"><strong>Combats analysés</strong></div><p>Pour chaque boss, ton meilleur kill de la soirée (centile le plus haut).</p></div><div class="carte"><div class="lib"><strong>Top 3</strong></div><p>Les trois premiers de ta spé au classement héroïque du boss, logs postérieurs au 30/09 à 06 h (maintenance du mercredi, ou dernier correctif de tes sorts intégré à simc).</p></div><div class="carte"><div class="lib"><strong>Joueur équivalent</strong></div><p>Même tranche d&#x27;ilvl, raid de taille (±5) et de durée (±25 %) proches, sans Évocateur Augmentation, 10 à 45 % de DPS en plus ; parmi les plus proches de +25 %, le plus proche en talents et bijoux. Critères élargis (tranches voisines, ±8 joueurs, ±35 %) si personne après le correctif.</p></div><div class="carte"><div class="lib"><strong>Phases</strong></div><p>Multicible quand 3 ennemis ou plus sont attaqués par le raid (seuil de la rotation simc).</p></div><div class="carte"><div class="lib"><strong>Règles de rotation</strong></div><p>Conditions de la rotation simc vérifiées lancer par lancer ; retenues seulement si tu fais nettement moins bien que les références.</p></div><div class="carte"><div class="lib"><strong>Gains</strong></div><p>Estimés à partir des écarts mesurés, puis validés en simulation pour les plus gros (fautes imitées dans simc à ton rythme et à celui des références ; gain = écart des deux).</p></div><div class="carte"><div class="lib"><strong>Limites</strong></div><p>Une référence joue un autre combat que le tien (raid, durée, adds) : un écart est une piste, pas une preuve. Avec moins de 0,5 % d&#x27;écart, une simulation n&#x27;est pas significative.</p></div></div></details>
+<div id="infobulle"></div>
+<script>
+(() => {
+  const bulle = document.getElementById("infobulle");
+  const montrer = (ev, texte) => {
+    bulle.textContent = texte; bulle.style.display = "block";
+    const x = Math.min(ev.clientX + 14, window.innerWidth - bulle.offsetWidth - 8);
+    bulle.style.left = x + "px"; bulle.style.top = (ev.clientY + 14) + "px";
+  };
+  const cacher = () => { bulle.style.display = "none"; };
+  document.querySelectorAll("[data-tip]").forEach(el => {
+    el.addEventListener("pointermove", ev => montrer(ev, el.dataset.tip));
+    el.addEventListener("pointerleave", cacher);
+  });
+  document.querySelectorAll("svg[data-courbes]").forEach(svg => {
+    const d = JSON.parse(svg.dataset.courbes), zone = svg.querySelector(".zone"), ligne = svg.querySelector(".reticule");
+    zone.addEventListener("pointermove", ev => {
+      const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY;
+      const q = p.matrixTransform(svg.getScreenCTM().inverse());
+      const i = Math.max(0, Math.min(d.t.length - 1, Math.round((q.x - d.x0) / d.dx)));
+      ligne.setAttribute("x1", d.x0 + i * d.dx); ligne.setAttribute("x2", d.x0 + i * d.dx); ligne.style.display = "";
+      montrer(ev, d.t[i] + "\n" + d.series.map(s => (s.v[i] == null ? "—" : s.v[i]) + " lancers/min  " + s.nom).join("\n"));
+    });
+    zone.addEventListener("pointerleave", () => { ligne.style.display = "none"; cacher(); });
+  });
+})();
+</script>
+<script>
+function ouvrirAncre() {
+  const d = location.hash && document.getElementById(location.hash.slice(1));
+  if (d && d.tagName === "DETAILS") { d.open = true; d.scrollIntoView(); }
+}
+addEventListener("hashchange", ouvrirAncre); addEventListener("DOMContentLoaded", ouvrirAncre);
+</script>
+
+</main>
+</div>
+<script>
+(function () {
+  var nav = document.querySelector('.sommaire'); if (!nav) return;
+  var det = nav.querySelector('details'), petit = window.matchMedia('(max-width: 1100px)');
+  if (petit.matches) det.open = false;
+  var liens = {}; nav.querySelectorAll('a').forEach(function (a) { liens[a.getAttribute('href').slice(1)] = a; });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A' && petit.matches) det.open = false; });
+  var titres = Array.prototype.filter.call(document.querySelectorAll('main h2[id], main h3[id]'),
+                                           function (h) { return liens[h.id]; });
+  function actif() {
+    var courant = titres[0];
+    titres.forEach(function (h) { if (h.getBoundingClientRect().top < 120) courant = h; });
+    Object.keys(liens).forEach(function (k) { liens[k].classList.toggle('actif', courant && k === courant.id); });
+  }
+  window.addEventListener('scroll', actif, {passive: true}); actif();
+})();
+</script>
+</body>
+</html>

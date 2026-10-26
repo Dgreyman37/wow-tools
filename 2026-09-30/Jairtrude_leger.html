@@ -1,0 +1,960 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ga-genere" content="2026-10-26T13:10">
+<meta name="ga-version" content="58ba446">
+<title>Mon tank Jairtrude</title>
+<style>
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .badge { font-size: .74rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px;
+           padding: 2px 10px; background: var(--surface); }
+  .badge-verif.ok { color: var(--good); border-color: var(--good); }
+  .badge-verif.alerte { color: var(--warn); border-color: var(--warn); }
+  .badge-verif.non { font-style: italic; }
+  :root { --bg: #f7f6f3; --surface: #ffffff; --text: #1f2328; --muted: #5f6670; --border: #e1e0dc;
+          --accent: #b8860b; --good: #1f7a4d; --bad: #b23b2e; --warn: #9a6400; --row: #faf9f7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #16171a; --surface: #1f2125; --text: #e6e6e3; --muted: #9ba1a8; --border: #33363c;
+            --accent: #e3b341; --good: #5cc48f; --bad: #ef7a6c; --warn: #e0b04f; --row: #23252a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  h2 { font-size: 1.35rem; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.08rem; margin: 26px 0 8px; }
+  a { color: var(--accent); }
+  .meta { color: var(--muted); margin: 0 0 20px; font-size: .95rem; }
+  .lead { background: var(--surface); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 6px; }
+  .lead ul { margin: 6px 0 0; padding-left: 20px; }
+  .note { color: var(--muted); font-size: .92rem; }
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+  th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; vertical-align: top; }
+  td.wrap { white-space: normal; min-width: 240px; }
+  th { background: var(--row); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--good); font-weight: 600; } .mid { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; } .muted { color: var(--muted); }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 8px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  td details { background: none; border: 0; padding: 0; margin: 4px 0 0; }
+  td summary { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  td details p { margin: 4px 0; max-width: 46em; }
+  .faire { display: block; margin-top: 2px; }
+</style>
+<style>
+  .avec-nav { display: grid; grid-template-columns: 230px minmax(0, 1040px); gap: 28px; justify-content: center;
+              padding: 0 16px; }
+  .avec-nav main { max-width: none; margin: 0; padding: 32px 0 64px; }
+  .sommaire { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 32px 0 24px;
+              font-size: .9rem; }
+  .sommaire summary { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+                      font-size: .75rem; margin-bottom: 8px; cursor: pointer; list-style: none; }
+  .sommaire summary::-webkit-details-marker { display: none; }
+  .sommaire ul { list-style: none; margin: 0; padding: 0; }
+  .sommaire li { margin: 0; }
+  .sommaire a { display: block; padding: 4px 10px; border-left: 3px solid var(--border); color: var(--text);
+                text-decoration: none; line-height: 1.35; }
+  .sommaire li ul a { padding-left: 22px; color: var(--muted); font-size: .85rem; }
+  .sommaire a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .sommaire a.actif { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  /* sections bien séparées : un bandeau par grande partie */
+  .avec-nav main > h2, .avec-nav main section > h2 {
+    margin: 64px 0 18px; padding: 12px 16px; font-size: 1.45rem; background: var(--surface);
+    border: 1px solid var(--border); border-left: 6px solid var(--accent); border-radius: 10px; }
+  .avec-nav main > h2:first-of-type { margin-top: 36px; }
+  .avec-nav h2, .avec-nav h3 { scroll-margin-top: 16px; }
+  .avec-nav main > h3 { padding-bottom: 4px; border-bottom: 1px dashed var(--border); }
+  @media (max-width: 1100px) {
+    .avec-nav { display: block; padding: 0; }
+    .avec-nav main { padding: 16px 16px 64px; }
+    .sommaire { position: sticky; top: 0; z-index: 5; max-height: 70vh; padding: 8px 16px; background: var(--bg);
+                border-bottom: 1px solid var(--border); }
+    .sommaire summary { margin: 0; padding: 6px 0; }
+    .sommaire summary::after { content: " ▾"; }
+  }
+</style>
+<style>.ic{display:inline-block;width:1.2em;height:1.2em;border-radius:3px;background-size:cover;vertical-align:-.25em;margin-right:.3em;flex:none}.ic-spec{border-radius:50%}.ic-inv_10_blacksmithing_consumable_repairhammer_color1,.io-inv_10_blacksmithing_consumable_repairhammer_color1,.fi-inv_10_blacksmithing_consumable_repairhammer_color1{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAcFBggDBP/EACwQAAIBAwMDAgYCAwAAAAAAAAECAwQFEQAGIRIiMQcTFEFRYXGRFRZygcH/xAAXAQEBAQEAAAAAAAAAAAAAAAAEBgUH/8QAKREAAQMCBQMDBQAAAAAAAAAAAQIDEQAhBAUxUXESQWEisfAGExSRof/aAAwDAQACEQMRAD8Ay1ZRfrfTVO4bbKUkROmSTgyKkhI6wTyOVIyOcn76uvo96Y2bdlsa73e+SYjc9duol6ZguD0u8jjCozAqCobnGenIOoXYryWC9CSvoKme3z0csN3pQMFqUt0uy/PqQ4fB5UoD41dNn3aHYosV9pFkuECdUTyxxkRVFO4YNCSfDFctgjhk+2gpxIS8QRMxfxex41G4M71oP4Na2SlswoAmPNvf3qC9XvTmhtdDbLrtSCseJ+mkraNg0rxzgEq6nyVdQeMdrKfkRqtbY9M92XulNeLeaC3oFZqutzEmD4KgjqbwfA0zN7bxvNFuWanssZoUttW8UssjFpnkWRlXkYCg4XxnyRqMvF5vt4tVJU7kus3xs6GZ0EgQU6nlGIPaAw8A8dIHHI0l95Leh4+fP7WZhGMS6lIIGkk146XaG3bTH8HJf75WTjume3sIoQxA7QDkkgY5P/NGoWv3Xaoqp0inmYdRJaEEqSST5JXP6x40aJLxven/AI6RqsfuuNPPu+2bht18uVqrkqKUjplqKRwtQAMEOSMPle0nyQeSdN7cW1bZHsisuG3njfad1HxVCoPV/H1PJamY+e1iwGfk/wBtVb0uvVrgip6e5R1VXQBWWX2K1o50OfMZEqqvGPkc41oHa992HU7MrbDMtwe11Cnqiqqb3JgxPDM6dueAQSfpqQz/ADJzDPtlhtQggHTpKZ5sUm4toSJgxVXleEcADik9YntcwYB760o71bLdc56O+7gUJT3i5m5TxqelqkQRpGkS/eWeRh+Ax4xpL7iqrvvG7VFXFSinpgzOw6sRqST3EnyfkMeAoA8a2JuGH03e322leorKmntMKNTQQ0yqqOA2SMnOWJ/Y86VO7FsUNDU0ll27Q2KlTPxFwqis9S/1SMjKocnBC5bTcrzRx7FFP2lKVvI6UiZ1naJ4gWoOYZe202pZV0JnQiCdYi8ngA+YpHw7XoEjAqKmV5DySnaP9AjRq6f2LblAq0yWOOo6R3SVFSUdj/iM4H550arfVvUx1J7JNRPo/tu23q5zx16yOschVQCBx+taLoNg7UttFBUx2pJ39wJid2ZSCQPGdGjXL/q3FvozENpWQnYGun5D6MC2pNia6b3mTb1hiprRR0dLFOWEipAoz2E+R+MZ+ms6bwr6ppqSL3SBMucjj2x9EHhR+Bo0ar8kQlOCaIFyL+ea5466t3FPqcJJB73968s9qo4H9tEJGASW5JJ0aNGt6inWv//Z)}.ic-inv_ability_lightsmithpaladin_holybulwark,.io-inv_ability_lightsmithpaladin_holybulwark,.fi-inv_ability_lightsmithpaladin_holybulwark{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAgIDAQEAAAAAAAAAAAAAAAcGCAEDBAIF/8QAMhAAAQMDAwMDAgILAAAAAAAAAQIDBAAFEQYSIQcTQSIxgVFhFLEVIzJCVHFygpGhwf/EABgBAQEBAQEAAAAAAAAAAAAAAAYFAwQC/8QAKBEAAQIFAwQBBQAAAAAAAAAAAQACAwQRIbESUXEFMTORIyQyYXKB/9oADAMBAAIRAxEAPwCqGkJ64Wp4lxWkvKbcU4rckLySk8kKyDyec10QrLczMTFRbJi3ONoTGWSoEcEccgjnP3rp0ZIhWuel2fC/EiXbZDTQyRtcWFISr74PNWv1LcpTc+GxbruqNGMJkIQhwgEdlvbgfPFSZ2cdCdYW55VSWlREYKm9TgKu126davtMCLcZ+mri3FfSVBaWt5RjjC0pyUHzhQHFRtTqIGirlDl2R5D0qUz2ZjjakbdgWVIGQAc5HxViG9T3uPLBgTJMfavYrYo7lEH3UfJNe+urcvU/S7SEOUtyVPlahb9avUrZ2VhfxynP8q45aeLnAPFu9a7VK2jywaNTD+PdlVGPMuERoJYky2EL9YCHFICvGePf2xn7UVvvsebFuC4Erer8IVMtpX+4kLUdoB9hkk/JopA1wcAQVILaGhU3sOnnZtvtMvtkobgtr3YPmVj8s075y3LlpixXBCUoDkRMVzaDgPM4ZVnPn9WhX94PmlfYNaHT/T9q3JaaV+MsyAVKQCobZSj6Sf2T/wApudFJUa8WNm2zkNqalKU6nKdym3M43pGRnI4KfIxjBANFJuLEvrFqkA/0pBAa2g096An0F8u6LEObhmO25IUsKdyNw34HpA+uT/k1jq5qSZYj0/aZKETIslU5WxGCkOFttA+nPbcI+xB81P4/T8WedKul5dQ5Fac7rSQ4D3j7+k+6R9VKAI8JJ5CG60XR2468hdpwdw3AEbRwnZt2JSPCQAAB9BWMuWGJo72PqhXqISW12plKbWVzk3LVVynSFbnXpK1qJHvlROf90Vv6j2z9D67vNrO0mNJU2cKCh7DyKKXwAwwm02GEdik6zXdZ1EpSbXYkBRwIzjfwHlY/Kn90OWoM2QhRB3KOR/UKKKOdZH0zeTkq7IeZ36jAT36kuOHS75KzntZ+d4FVC1cd+vLco/xqTiiionSPuPBwV1zXjHIyFFNWxUz9W3iS+673FS1ZII54B+n3ooop3LD4WcDARiY8ruTkr//Z)}.ic-inv_ability_lightsmithpaladin_sacredweapon,.io-inv_ability_lightsmithpaladin_sacredweapon,.fi-inv_ability_lightsmithpaladin_sacredweapon{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgIDAAAAAAAAAAAAAAAAAAgGBwMEBf/EADAQAAEDAwMCBQEIAwAAAAAAAAECAwQABREGEiEiMQcTQVFhFCMyM1JUcoHBY5Gj/8QAFwEAAwEAAAAAAAAAAAAAAAAABAUGA//EADARAAECBAIFDAMAAAAAAAAAAAEAAgMEEbEhMRIzQWFxBRMiIyRCUVKBocHRorLx/9oADAMBAAIRAxEAPwBTtJ3IwNUQ7i79qpDpUd6QvcogjkKyDyfWs9ktipV4iW/clvz5CGA4pJISVLCN2BycE54rSisFE21Ej8ZSVf8ATH9VYtrdtkmbp5uBAcblwpTi5bm/IWfqAU/t9qBmYwYa7KfJR8tB5xpBNKfNFYOutC6ft2mZltDTMa6WFDsiMUMhTkphC9rheWCOpw9aRzs4A6TVE+Ik+Fc9UzJ1viIix3FjY2kkgAJAzk884prPEWGmS7qy8MgKS9bpbK8jqDn1LbfHxgenvSwXzTUtnR8e9FlYQ5Nca3FBwQEJPft60BIRwX1ecch6/wARE3COhRgwzt9qNR5c+I0EsypUdC+sBDikBXpnjv2xn4orA9JkOoabdcUtLKPLaCudiclWB7DKif5NFPMUq6KmEK3LlXDRbTaNxf2A4B/UEf3Uz0Fpq9SdZOR4FumSMyHkuKbZUQAlzuTjgZA71y9IXmDZL9oSZOipksoYQVIKsDP1Ku/tV0eHNwW/rtqVa1uRYVwmPh6MhZLS0lwjCk/dVj5FTM/MuhijhgQR+RTyWghwLhmKWClmobbJkM6vtbbannHHn346GzkqR5rRVgDvkjOB7Gls1Nfb2dGW/RclEhkJuzhEZ5pSFJO1KQdqgCOcim2v9uMR/VrzDMNLltDZgL8lJUzlpJcLYIIHUfQcEkDHalZvVvuk6/xr9MkTJqoVyY8+Q+4txWVK6AVKJPdPFCycSGIhDsxj7FaRA9zMMsrKpblFMa4SI5BBbcKce1FdDWydurbmP85P++aKroLtOG13iBZIYjQ15A2Erbvy1NwdPKSo5aZWlJ/a8rFMH4CHzJNgWrlSpCif5Vmiipvlkdmad5uU+ktY8bh+oTT+JFgtEPS96u0eEhEyVHWlxzJPGNxwOyckAnHcgZpE9SSXmtWxIzbiksvTWi4gHhW0nFFFZxmNE0QB3TYrGWcTAx830oXqWAzK1PdXHFLBEkjpI/KPj5oooqplR1DOAsEmmNc/ibr/2Q==)}.ic-inv_axe_02,.io-inv_axe_02,.fi-inv_axe_02{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAcFBgIECAn/xAAtEAACAQMEAAUDAwUAAAAAAAABAgMEBREABhIhBxMiMUEUMlEjYYEWJHGRof/EABcBAQEBAQAAAAAAAAAAAAAAAAQFAwH/xAAqEQABAwMCBAUFAAAAAAAAAAABAgMRACFBMVESYXGRBBOhseGBssHR8P/aAAwDAQACEQMRAD8AS1JS2/ZvjBYKWvnj8tqCEVc7qHCyTISZTy6JHMHv8d6a+8bXs+6tZabalDHUM3OSWurVVVrmkCxySyKvpCDAQccerIXpWYZeJ3hRbt9Wiz3qlq4bXco6GKCVpSAKkqgx7kd4IHWegD+wpkdupLZDRWm3GaWCCohgkmmfEshSU8lYDrjknivwPcnOo6knzAgySBfaL3mczpyxVdS0FsLBGto3yCCMRMznnVsTbVj2bb7aK20Ub266R4gqoDkwT8iHiPLJBIwyFieag/gjVf3l/T53FZ6OmFvmko45FmpmjYRzRvg4ZgPT6A3Tdp75IxqcrfEOkg2q+3J7HFep69EpXZi392F5CJkAJMRVjlSgyxBbKjsq7xO29uPa+2ZnulHU0tXWzIJZJXR2kp2TK4ZCV7YENg+6gfGNJUgFoDQm3ffl6zFGZlT0qvF+14/uZvFL++VQt19uFLYbpUm3LUv5DRSsoZc9Ho9nAAz840aguTfj/mjVFBKUhMm1CWoKUVRrXoVYqajfYUVbd5KSS3w08fny1CfpR+hej0csvpGB2x6HvpO3qKhmut3rY6Nls1fVvLAHHHyGZvsbHS+o5X4wcE5HbF2fbbl4reE+3avb1TS0cNLOUnonjIjaYLgTswycgZGMEZOR3reh2dcqXbkFlrVp6aSepFJU1NO4JeNJQ0iR5HrZvSv4Hec4I1JQXVOl1IkXietx1Bk996WtKEJ4Fa/Gv1Eelc6COqF3ut4plNZDQF1YqOvkAMo7wQoB+ABq5blp7Wm0ZILhuCnvNZTeStwiq69lpqJZAH4Qwj0ckIGVXJPyffUHu/fNFtidYpUnkNc08zeQkaMqhnjjGeIGe2JJH8e+oHaVfbLvU0l1glqIYaZ44mzIGntznoShiMOrdDky/HE/vxTrjxUFiEzAO/tkGMWGYBUlkMcC2zKokjbbumJ1sTilvvm3Gg3RWQRUK09Mz86ZUBKtEe0YH5yO9GmFv0NNf2lpaq2tCyenMkYX7mzwViSqk5PHJAJOOsaNMbLgSAQPX9UR5bJcJ4j2Hx7VIeDviVu3am2Tt2yV4pqOatPNgv6mA46DA9e/xp3Dxo3fNuD6WSG0NHTU4nhH0v2SFsch6uuuuvzo0ay8PZxYG9I8WkeU0ckH8Vy345VstbvOVpEjQLyKogIC8nZyBknrLH+NQGxrrVWncFPNSlCJT5EsbjKSxt7qw+R7f60aNbpSCyR19zRSohwEHA+0Vv3FfMulWVYxKJiAqYwPY/P+dGjRrZOlGIvX/9k=)}.ic-inv_mace_1h_artifactnorgannon_d_06,.io-inv_mace_1h_artifactnorgannon_d_06,.fi-inv_mace_1h_artifactnorgannon_d_06{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwEAAwAAAAAAAAAAAAAAAAUGBwECBP/EAC4QAAIBAwMDAgUDBQAAAAAAAAECAwQFEQAGIRITQTFhByJRcYEUFZEjMlKh0f/EABoBAAEFAQAAAAAAAAAAAAAAAAQAAgMFBgf/xAAoEQABAwQABAYDAAAAAAAAAAABAAIRAwQhMRITIpEFMkFRYaFCcfD/2gAMAwEAAhEDEQA/AFNl+H1gqYnmbclTNyTmCiZvvknz+dOrT8O0e64stZJOscjx5qYOwe4uCAPmIOQePOoTcltrZ7okUlzr6dKS3pP2YpGRZOqp6WPBGOGBz/PGldqvq26olt1yq6mRYqlu6XapB6g5UydxG5Pyn5jkce2ufhl49nMFXikTEa7LVFlIGAIW8XHYNcu36jvJSxTqFkqHecBUbGMN/j4wD6k6haX4aU01tjrrhc5aCSWaRBA1NllCHpYnnwfbUjc9yXRYJv3rtMe/+mhEKyxd4oSxZxGwMgAwQDwCSfprz2iou+4jC8W4blRU5qOxG8csyKqqjSSEKzjqPSvqTj30yjQvGs6agEncfQ/vRJwH5jKparZ1DSTNFSbzgiT1KuJIzn7A/bRp5si0Xe77cpKyTNVM0MQllljZmZu0hyT5yCDn30aDf4nc03FhqaxoeieLa3InCU79o6mJaKSlQyO9qV5Ok8lO+ePyBj8fxPX+niqd1XK0ikaLFznQ8mQqHhMkYXjOMtyPQ/7KO73O4XZRLW3KonxGIY2klP8ASUcBR4C+351xa4Z6q117Sykzd0SP3WbqYiFlIPOc+nnwMauLe3qUAGudrHcyoC4PHEFV79o5RaKGVgZAlN3V61JAzJEg+/Ej8enOnKbeq47bZ6ijpGWOqlrZJGVwUWLoVApBAAJCSDpxjGefGkO671bNy3HbtJZqyORIrQjVGe4ojlLqxXnAJ+XGcEfTnSvc1wuD7lljpa6rWnCpH2Ypm6SxGSuAcecke/voalTrCkxnlI4iR+y4D6z2Uj+pxK1yOKstlps8VLUVUMctsppemCZlXJiXPGfXjRqLotyXmC30tJX3Rqx6eIRI0iLlEH9qAgcgZwM6NDNsHx1QTn39z8fKbzVk9unk6QM8HT2nqJWiWByHjx04YZyCfTRo1q7lonSrqLimb22kpZVnjjy8DCGMtzhctz9/lHOukp7cpq1A7rcZ+g59P+6NGq5mdotxwl0tXOXJL6NGjRwaI0hiTK//2Q==)}.ic-inv_sword_2h_lightforged_c_01,.io-inv_sword_2h_lightforged_c_01,.fi-inv_sword_2h_lightforged_c_01{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAYFBwgEAv/EAC4QAAEDAwMDAwIGAwAAAAAAAAECAwQABREGEiETMUEHIlEjMhQVQlJhcVOR4f/EABcBAAMBAAAAAAAAAAAAAAAAAAQFBgL/xAAqEQABAwMDAgQHAAAAAAAAAAABAgMRAAQhEjFRQWETcYGRBRQiUoKxsv/aAAwDAQACEQMRAD8A7tb+lVrXoG3WeE6GJMeQXpMtQ3KeWUHcok98kDv2FZ9b0lPXq1vTcktx5a3Q2pZOUpyM5yO4xWv7xcrdddN2TULK3TaOvtmfTKtjZ8qA+0BaU5PYA1X+v7TYoN7b1Khv8TdXiWUYVhIUE5KyPOAQAfNQVg9cNEtIJVqmJ+7zON5JHQRVC82jwyviq80x6dQrJPRPmTGrg4g/SSlBCEq555704wG27p1pUiQpiyRgBLfAALyvDTQ85/6eKlNKQGDZwq4QVyOs4W221IITg+CeMHuf6qUuVgdNyhtlccwY8dJixkI+m24c7lKHk9vknAzxxTk3QWtVuyc5lZjYbxGBQSWC0BcP54Hc7ev6ryzGvtyZRJiXU2GHt2xoSHlI2N+CcdyeSSeT/WKKU9Teqdgs13dtgYkXFbGEuvNHKSvyAcjtRWEfKFIIYURzBz3rRVdkzqSPxFWu1qvTt00FKYg3CPaX5EZxvo4CdjhHKSn9p5HHg0paDbtt51LITfXkRWozaQGw6F7SRycjsrAA48Cq9vKkWkttMNh+6ukdBnbnpAnhZHz8Dz3pu0NpZLkd6zTLgfzx1ha0NrVkMFR/WoHKlck4H2589qmsWrEavp2HO+TvsJyT74pz4QTNT2v7q0Xo1mszj7ietubQ1lZ5SEAnuQSSo/xS9qDVlp0pEm2efeJcu6JYWnYzH9rbhTwOoT7u45/inSzacvenWG5D1pBjKdDUluHILrmP8pQkDeg9iPuHfHBrlmaes2q5gQ7Y0S20IU31pLAbeR8YScEAZz7vjiiXrg27QRpIQJ1ERqM9yDiMQInmhHGQ4orKpjp0FZBdQd5KkjJ5OaKsy9ekmro1zfbZtTvQ3qLKluoClIyQCQFcdqKdD4tZqAIdT7igyzmm307aBtF11U8pUi6h1CEvO+7YVp5UB+7wPjxUa7OlxLimdHkONyW170uA85HNFFJykKungeSPQJEDyzT07VaNx1ffS7o+WiX0lTitMhKMhKvcBnFWBe5ToZdWdqtiFKAI4Jx5/wBUUUkC1C1UZ5/o0KQBWRNXamvl9v8AJnTrg+FhRbQhpZQhCUnhIAPAoooq6trdoMoASNh0HHlQpJmv/9k=)}.ic-spec-PaladinProtection,.io-spec-PaladinProtection,.fi-spec-PaladinProtection{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACQAJAMBIgACEQEDEQH/xAAZAAEBAQADAAAAAAAAAAAAAAAHBgUCBAj/2gAIAQEAAAAAHma/Iwv1GYqZ8gV4vf8AStxrL39ghOWbjGwP/8QAFgEAAwAAAAAAAAAAAAAAAAAAAgQG/9oACAECEAAAAJETXFOoXpP/xAAXAQEBAQEAAAAAAAAAAAAAAAADAgQF/9oACAEDEAAAAOhQMubPQ//EACgQAAICAgMAAQMEAwEAAAAAAAECAwQFEQAGEhMhMVEHIjJiI0KRgf/aAAgBAQABPwDrnX6ljH2MrkX9uz+K0BbRnlc69E/heYv9Q8FXxuKxYwHueHyH+YqIVf7elUb9c7L3GKnj6Vq5hYJ4v5IHOv8A1Togc7TlutdvydORqEtev8XxTTuVDxyMdIQVJ2BzNYqfFZKeoX9BDtHX7Op+zDmS6piafTKQuxssEEIQzInp4XkIKv8AnQbmEw801iSewysy2ApdR/L9uwQOdggGQ6jTcoFLA+io0NqfPOtYSrHkY0yQLq1sJUpqnozTEA7b+q752npFC1k0LxgmOCOP9q/QBeR5StlcFnscIPnnbHFkgUgs/wDj8aGz9ww5irdWpIa5d9TFTFKBtCyoFYMfupB+/Jp0PU6STevJWZiFBJ0HI+gHOjeJe2U5nhlYwJZdt61XR0VUeT8E6Ohw5yrM8k/w/Ks0jOh/oTpf+gb5+mHYaE+TpTWG8XIgsXr1pX2PP152LDT4jLSbXxYin9Ta34lRz6WUA75blJwFGtXdw87uXcn0BCrbAQf6gnnWaUdLCZm25+ClbjFYOSfc3htvJs/8HMj363UtPBjpXSBCQNHZY7+5PKdqerYWSF/LA8myl7NR9da5OxcrPXeRfozxoQQGPLDSnE2WWaRGpAxwlTo+ST9G/POy9ly9mlSotP5rwwpGkajQAC74ef/EACcRAAIBAgUDBAMAAAAAAAAAAAECAwAEERIhMUEGIjIFEBNCUpHB/9oACAECAQE/AFu47wPcyBiqsTHjsBsCKEsRUuMxkTxb7ajYUnV1vGoSQSZ10aoYlhU2EmhRTl4xGPFLIlugkO+btUc8U3S17Oxl/M5v3Xqar89u2Azd2vPiatEVpYcVB7v57f/EACIRAAEDAwMFAAAAAAAAAAAAAAIAAQMRFCIQEhMhMWFicf/aAAgBAwEBPwAYWxBlb0bPz86K39lEee8VMTkJVXNGoe6md6jp/9k=)}.ic-spell_holy_ardentdefender,.io-spell_holy_ardentdefender,.fi-spell_holy_ardentdefender{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgIDAAAAAAAAAAAAAAAAAAcGCAMFCf/EAC4QAAIBAwQBAwIEBwAAAAAAAAECAwQFEQAGEiExBxNBImEUIzORQlFxgbHB0f/EABgBAQEBAQEAAAAAAAAAAAAAAAUGAgED/8QALBEAAQQABAMGBwAAAAAAAAAAAQACAxEEITGxEoHREyIjQVHxJEJhcZGh4f/aAAwDAQACEQMRAD8Ah3oB6CUe4rMu79/w3GGjllBoaJXEIqUwD7skjZKoc4UdFsE+MHT93hsXZtdakNBbbLS19riZ6CeqjhnanfjgHgow8Yzko+R1kDI1A7v6X7r2buSuu+xKauuNrroxJTVdLcnaVY1RUFNLTyAxzAYJBbGQCOSnGsF1h3hbLGl3utoa0RuTiCWbhM5UHl7adtxwMjOPIHZ1N4jENm7znV6c+fuk4YqGS1Fnvlk2nAzjZ1nt1/UuLi9vGI6pwcKACfpTJ58Rgdr560jfV6nqLrVUlbb6V6mOmgMNRJCC49wuzscAHCgtxBPniT8jU+p7LUb+37t2htzTNb66V2rpo1/TghIMjE/GAAP2GrD7x3ftWyem62/blsipLYp9hFjjHJMqW5MB4yM/Uc5713DSiEtLjnnvXsvWeMG2N0y6rnkvuL0GZfsCdGmFumno7peZawQqhbpiAAW+5++MaNPiUEXSNMJvVdDKOWnvMTK6VivHIHUxVLwEBAMHyBjOfI71Xf1EvEVTvKoghkuLUEvGOI1k7SPyHhwWY9McjrA8dDTa3ZuWC07euc/4gs1XIaWAoeyoH1EY85zgY+2q37guctxr2aTCoh4IgOQo/wC6jIPiHviAHBWZ8763qnOHsfFOt5DdTO0tJtv0vv1qqGlaWsSaKmuAPbQuO42bypXLZU/1+c6Tt0hrYbLa9qWKrEY/NkczzAJGhfn+YfH09fB7YgDOmnY5rvT2dYKql/ExVsgiWlqlHGpjx2WVuiB8Mf31noLRtCZKnhshaauldVnMdXLCCM5QDDEDsZOOsAazFjzAS2YXR1FUfrV/y1t8IdmzzH4SBu8NTDWtBTVlO6RDg0hQj3GHlsfAz8aNSu8LY4r3cFtFGq241LGnEtSXOP4iGJBILciCe8HRqnbMS0EA/rqhHA2U2N2Xauue56uGeXjBTRo0EMYwkZeIEkfOllHK3tBcDJfJb58eNGjQeGAEkgHo3ZyYnPhs5qTWysqZTTzyzPJL7M0fJiSeIUj/AB1rb7jq5rV6VVtxpCFqVoJZldhnDsfbz/ZfGjRoqVo7Vgr5hutgnhP2OxVfrfcpzQwvwhHJc49sfzI/1o0aNWrmiyp9f//Z)}.ic-spell_holy_divineshield,.io-spell_holy_divineshield,.fi-spell_holy_divineshield{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAYFBwIDBAj/xAAxEAACAQMDAgQEBAcAAAAAAAABAgMEBREABiESMQcTIkEUMmGxCEJRkRZSYnGBoaL/xAAYAQEAAwEAAAAAAAAAAAAAAAAEBQYHA//EACsRAAECBAMHBAMAAAAAAAAAAAECAwAEESEFMUESFFFhgZHwE3GhsSIj0f/aAAwDAQACEQMRAD8A2Wyih2bsc18TM00vrllGWY55P1yffWFi2Ped2Vct/ucX8P2CcCWnaulLkIB2jjwGf9cnj66mvEJaOtrqG2qs8bO6CPpHoyzhSXx3AQn/AD9Nb99eIeKH42GmSdxViICRgI0PUelpyThY1GOkfmbpzgd8xwwuyrW9qRtOuE0r5p04V0OlzDylAIbzOZ4cLZfB9o23fwqsdTAUsN2kirXjWVYLnAIBMP50deFDEjhu3YkZ1CWxrnZNwUe2rxY66gnCNHLLOzOlYC3pKnHSQBxkE8++ouzbzrKK50NPI1TWrcGjlJNWs0yysGzUIvBKNj1gYQqMjBHLdvO8i/2emneV4aegrCIjSuxVJDGcFD+Zcp347nnI5c+85iaDLTCLkEpItxzF+eo0PMHZU4w4A4apOp07Ur7EdYrreuzVg3FUGhlrIYpcSEQMyqSffg98Afto1c1AtJWUMEzUtRI3QASqg/caNVoYnPtD0zpbtDN6SLQi79RrPu+nmlmlPQq4McwROoHJBPOftrOkoqPcgrKKkamiuMMZkpusZhqIGyTBJjgrz0hu4K/prnqaGHxDsdBW0SnM5VBGW6zHxy5PAyD99KNkudxtt0NDPMIKqhLGN2IJQAgY47qR3/catmFTDc5LCXcH7G7EZGmv1UcwIjpmXdCaoP5Dz7+DDBs3akcslXUVVNNbKGkQU1S8sSxzMqnijjKgZUE+qQ5JGOTxqYv15oUsMFDCPI84ho4oZ/JYR4KooGORgk4/r10bn3Aaqnp3lqEWEKpaFsHLMDgsAfkH/X9s5Trdb7tuGtS/15bp+JMSsy5CyYLdQUc44PsAMj2HD0lmQTvKshlXMmng79TS6XXjtO24Aede0XDYrPXCzUjpOPXH1HMy5zk8Hnvo1VW8fEe02C7iz+TKXpYljcrMoBbnOAQcaNUky+IPn1UoNFXyGvWG7k4b7Q+P7Cd+Gi815ljoGkBhmQu4I5znB1Ze4LJbaaeOKOnXy5Qz9DAEKQp+X3A0aNNniWsbUEWqL06xOEAyzROZQmvYQv2qGB62YtBGemVcZGeckZ500bxIsGzaq425VWqdB1SMMkjB4/1o0a746tS3mUqNQVgREoAC7R463Bdq57tO7TEszZJI7k6NGjWiMtoDabaRSZ6dmBMuAOHM6x//2Q==)}.ic-spell_holy_heroism,.io-spell_holy_heroism,.fi-spell_holy_heroism{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAwEAAwEAAAAAAAAAAAAAAAYHCAMEBQn/xAA3EAABAgUCAQYNBQEAAAAAAAABAgMABAUGERIhMQcVFlFSkhMUIiMyVFVxgZGT0eEzQUNTYaL/xAAaAQACAgMAAAAAAAAAAAAAAAACBQMGAQQH/8QALBEAAQMBBgQFBQAAAAAAAAAAAQACAxEEBSExQVESFXGhExRSYcEikbHR8P/aAAwDAQACEQMRAD8AzrblHqr1Ib8aaAlXEa2XG1alqSValJ2zhR/3HCHmwqBVK+6kUqSQuZKjpbDZdJxvsDkE7Z4R6vJlbM1b/KJQJlU429Sagh+Vl5vdpGssrSG3En0V6sDB/eKtyKWbc1pz0rUatTFtssPoA0OJK1KOyhjO+xO5hNbbxbHGRUe3eo6imKtNhhY0fVmAc9Tp32U85TJCeYpj1p1p9S56nTbS22D6DWUEr0YGMEKSTjiYnnMA7A+UaWv60J6cuOZq9QfE0Kg4pbTqhp04/iIO6SgbY6hmFzoUnss94faFsV5RRtoCnMdhjtDBJxNxHdQs2+k8UA/CCLp0LR2Ge8PtBEvNo/Ui5THuErVmQbuPlYatpVYdlaLNp5zLbISstvBJCiBwOSNWD1qjTlFtqek6ehpuu+NtbOISJJttCjxTjGcAx897WqsxSKqxPpW6hxHlJWD5Q34/MRo+w+Vq6KviUolJ8O4hJyEOkZxjJwVDH5gb5uuYhnAQWtGtBjv1Vcgc6ZtGGnVX+7KnLtUOTn3GNbb7yNyr9JYzqHvwFJ98LfSWj+q/9j7QiPXfXH7IeRUlsNNz7omJRRcSPOKdOcdnZDpweuFbnWf9pyv10whfdninE5e6cWOwwtYWyHInInL+wVl6S0f1U9/8QRG+dqh7SlfrpggOTN37n9Lb8jZfUfuVn5p4zVjqfKG2lNz2jzSdIWCM7/HfbAjltis1WjvF6l1CYk3VDBWyvSYII6aGhzXB2OfwqlUiRtNh8p2m6tUUWNQmzNuOJmnZlxes50+BVpQlPUPOLJ6yY8LnOc/sHdEEEKgxvE7DU/lNWvdQYrqT9cqEu6lCFtkFOd0DrMEEEZEbdlG6V9c1/9k=)}.ic-spell_holy_holynova,.io-spell_holy_holynova,.fi-spell_holy_holynova{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAcDBQYI/8QAMRAAAQMDAwMDAQYHAAAAAAAAAQIDBAAFERIhMQYHQRMicYEVFhdRYbEjMkJSYoLh/8QAGgEAAgIDAAAAAAAAAAAAAAAAAwYABAEFB//EACoRAAECBgAFAwUBAAAAAAAAAAECEQADBCFBUQUSEzGBYXGhFCKRscHh/9oADAMBAAIRAxEAPwDe9qr1cOoGm5suxQPVcJIXHtYZCjnJOeDueae1occbaSxK9BDmMhttWSB+tIb8Roqm0CzMyrNb3x/Aflalz5yeA4nXlSGzgYUef6QeKvz1jZ+hrX94ep33W0Kc9NLedSi6eck8qHknJHHOQnlvDlfS8SKkgkqO7AeAXP8AfMMVVIM2UCWDdsn92jWdxps6zWe7yJ0NubbX3Gy28t7CY+oJQMge5OleFah4Pg1sY0Zw2NiM7ND7nopSt8AH1TgZV+W/P1rn/vN3Zst97Tz2IrqEPTEsLZbW4UlbZdTkpwffsQTyMHf8qk7Id1S/20h29oNGZaSqMtBA0uNj3IO3B0n6lJppXWUsrqTVuUKDF3s5LjG9nXpAV0s1clCAAFg/DBj8Xax794aU6wuNv6VSZbu2xRDQoD9P+UVVW/uLYp7HrSJAhvg6XGXVjKTgcHPuTvkEc0UizaWjKyUyre/+QdKaoBjHPnQ1jukOXdLrebgtd7jIL12nvueoi2kgaWtXC5ah4zhlP+RACl7g9XTOoktwn1aYUcgNthevJSVBKgojONKuPPJ3NNXux1XaI3S6u2vRjaW240cyJRPuXJcUQVAnlTpBKyTuT8Vz3LWS6SRjem3g9IqZOXUTgxe2wNth8DA9XiVU9YRybjUdKwJHVc6NEuE8s2+zwQguacltnWdLafGpS1nc+Mk5001o0u32+8xH7QvENyIiC4kHdCkbtHI5O2nJyd00lbTPXG6aurDQw45JjuFXnSEuDHxlQP0qbpG/Ps3VLUp9SWHsJUv+w5yFf6qCVfSjV9DMqCpj9qbcu3Dk+738QeinS5aQFC5zpseYbf2jYr2pct3qyzWOQlRbfjT1KBKxytGlJ9isggeDqHAFFKXq61KcvK5DaSpL6Q5htGoJUSQpP0UFD4xRQ5fDKcpB5yPxGF9XmLREXHFOuSFLUp4hThWTklXOc/NUr+6hRRW1p+5irU4iRhaktPoH8qm9x8KGP3qNnZQI2I3BoooiswMdhGkTe50RhpLSkHWjUdQzuCU/skUUUVW6SDiLXUVuP//Z)}.ic-spell_holy_innerfire,.io-spell_holy_innerfire,.fi-spell_holy_innerfire{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAgIDAQEAAAAAAAAAAAAAAAcECAIFBgEJ/8QALRAAAgEDAgQFAwUBAAAAAAAAAQIDBAURAAYHEiExCBMUImEjQVEVJDKBoUT/xAAaAQACAgMAAAAAAAAAAAAAAAACBgEHAAME/8QAJxEAAQMDAwQBBQAAAAAAAAAAAQIDEQAEMUFRsQUSE4EhImFxocH/2gAMAwEAAhEDEQA/AEVww2+m5drLaFmipZKusMLVLjpEpK5Y/AHU62e7dhpt6vm2pSVkd4NFVr+6gi6SpgMTgZ6e7Hf7a2PAqzzXDYZAiP17qUjwM82FUn+tNrbmyquk3dWXlaVvSejdFc9hIwAOPnppEvurm2uHkThRPsQP7Ttb2CHLdlxWqQD+6rU9tgj4iXCkYKojkReQLkAnlz/utrd7dFFxFhpDEipzg4A6HppvtwqFRuWrv0UBHmyI5Jb+RGMgD+te8QeHFfBvG239YuSjq2+xyVIXHYds/OtiertPQUqwiD9jGvuhTZlB7DElc+pJ4qr+441S/wBfGoACTsoA+Do1lu0cu6bqvblrJQR8hiNGnBmfGmdhwKVXVJ8ivyeTVo/CPQrWbQsiyLzI17nyMHsFTVh57ZWCWjtUQXy5/MIBGBkMep0m/AzHTz8ODUxlKiot9yqC8KOCyc6Jylh3AIBwfvg6es+5p4ZBixM7R5wzA5Ge+q86imzbuHRdEpUVqIhKjKT25IEDBjO9MDD7ziG0tAGEjUZ+d6j/AKH6eh9MkKmfmYFy3tGMZwPzqLWWIVlj+tE0xYRyqCThPfggY+BnUg7nq5yI3sKFc+7oTjOuhts8k8cMMlv8lGQKuCcAA9OmP9zrms2um3LpbZUruIMfSqJgxJiNcnJ2obh25twFODXcHg18sd8x+XvW+R86ty3GcEjsfqNo1P4q0tLScTNzU1JWQVlOl1qfKnhk50kUyMQQw6Hv30atJpMISCdBwKWVklRNRdn7s3Js66rddsXqstVZjlMlO+OZfww7MPgg6cW2PFXxbW4RQVlZaLhGx/6KBQeg/KFTo0aIAKEmgBMVhWeLTi4J5FSaxRqHbCrbVwBnt1OuU3tx+4q7yoJaK5bompaJ1KvTW9FpkcHGQxTDEfBONGjUFIGKIEmlazEEjRo0ayor/9k=)}.ic-spell_holy_summonlightwell,.io-spell_holy_summonlightwell,.fi-spell_holy_summonlightwell{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAYHCAUE/8QALhAAAQMDAgQFAwUBAAAAAAAAAQIDBAAFEQYSByExQRNRYXGBFSIyCBQkQpFS/8QAGgEBAAIDAQAAAAAAAAAAAAAABgQFAQIHA//EADARAAECBQEEBwkAAAAAAAAAAAECEQADBCExBRJBUWEGEyIjgZGhFBUWMnGxwdHw/9oADAMBAAIRAxEAPwCHah0tbXdOQLhFuseRLnvFt9CnCFRXCrkFk9j13UvXXTl2g6wcs0iLERJgKTGcMP7m1qT/AG3DO4nrkdaf9VcM7to+PbZMmRGm227Rgs+E5yxjdtyeigMEefbvT3wu0fGuRiypG9Sm0BBdSBuITkIVj4waFTtaTSSOt29tJdrcf0zY5wz93IqJmNkJyx4H+8rxw/1DQb/dbBotL6VOGJY20HnklRJ3Z/xNTTS3Dm4XOQw2+wlhUtlx9hTytiVoQDuUCrlj7SPetkansPj2SC29HDqExgjp05ms38TIsi0TA6uM+9FQAPBSso/jhXNKT1GSe3vVbpGs1CwKU2Vl+L3H3jddDTKHtGQMjxN4kM1uXbJbsaDPlMNbt21p5SAT54B9qK8d9Qv6q8YzgWyTuRsJVtBGdpJAJIzg+oop/LJKA5gxM6vbLJtFU4cXQm3fULtdGZFrZ2JdgvPpBA6kpQfXkkg9a1XwghWKf4lysMWQ3b1JQEB5CkqWcc8g/wC56VmGw6ai3DRzRs5gSXoa0uTHGGwo/kdx2lWEkgI2lWMgEcskVd+CXERlom1T5b7zkUBvctAA7jbkcsjvjpRrpN0fl0syVNmXQWJIsADuYWJGCc/WJNDrczUJS0IUxSSGOTzL3D5G5ot95hpk28x9u0Adu1SLW9j0oCy1qacxEbfXtS6vAISnnhKj0Pt51Qbrr3TqG1tMzkPrCtqw2clB9R7gj4rP3FXUEvVMea3ajLdNueEhUOTbwUtlGCDnG4hXMDYTnPSoFVp1LXalLTTu1trZyBgEW4NuY8RGJVZOo6ZS9oJznD8DuzE74m27Qdu1hKhaftzsqE0EjxFPdVYycY+KKVNc3S6IuzSfp8Bc4MA3Dwo+0JfKlHCgFYCggo3d85zzzRSz4eKOyJ9uai/i1nj0ka9OXKSTIBLZYX9PLk0LkW93eHAbcjXGS2SghSd5KFjyUg/aoeigaa+G93fu0netpqI82U4cilbeef8AzuKB07JAooqxp+2hSVXD4Nxv4wf1HuXXL7JYXFjjk35i2zDHsmnYNyZgxpMtxouOOPhR3kLUoZCSAep7dzXI4vagusHh4qTb5bkJT7scH9uooKQtC1KCVfkASkd6KKu58tEtC1ISAWyAAfMARzXT1rqqmR16ivvT8xJGTuJI9Izm5OkzVqelLLzmSNyyScepPM/NFFFGDcx1hBISGj//2Q==)}</style>
+</head>
+<body>
+<div class="avec-nav">
+<nav class="sommaire"><details open><summary>Sur cette page</summary><ul><li><a href="#s-boss-par-boss">Boss par boss</a></li><li><a href="#s-corriger-en-priorit">À corriger en priorité</a></li><li><a href="#s-survie-boss-par-boss">Survie boss par boss</a></li><li><a href="#s-d-g-ts-second-plan">Dégâts (second plan)</a><ul><li class="sous"><a href="#s-rotation">Rotation</a></li><li class="sous"><a href="#s-build-et-stats">Build et stats</a></li><li class="sous"><a href="#s-quipement">Équipement</a></li></ul></li><li><a href="#s-progression">Progression</a><ul><li class="sous"><a href="#s-centiles-par-boss">Centiles par boss</a></li><li class="sous"><a href="#s-conseils-du-23-09">Conseils du 23/09</a></li></ul></li><li><a href="#s-m-thode">Méthode</a></li></ul></details></nav>
+<main>
+<p class="badges"><span class="badge">Généré le 26/10/2026 à 13:10</span><span class="badge" title="Commit du code guild_analyser qui a produit cette page">Version 58ba446</span><span class="badge badge-verif non" title="Pas encore relue par le vérificateur (intégrité des données, anomalies)">Non vérifié</span></p>
+<style>
+  main { max-width: 1100px; }
+  .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 16px 0; }
+  .carte { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .carte .val { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .carte .lib { color: var(--muted); font-size: .85rem; }
+  .prio { list-style: none; padding: 0; margin: 0; counter-reset: p; }
+  .prio > li { counter-increment: p; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+               padding: 14px 16px 12px 56px; margin: 12px 0; position: relative; }
+  .prio > li::before { content: counter(p); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px;
+                       border-radius: 50%; background: var(--accent); color: var(--surface); font-weight: 700;
+                       display: flex; align-items: center; justify-content: center; }
+  .prio h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .gain { float: right; margin-left: 10px; background: var(--row); border: 1px solid var(--border); border-radius: 999px;
+          padding: 2px 10px; font-size: .85rem; font-weight: 600; white-space: nowrap; }
+  .gain.nc { color: var(--muted); font-weight: 400; }
+  .gain.grave { color: var(--bad); border-color: var(--bad); }
+  .gain.ok { border-color: var(--good); }
+  .prio p { margin: 6px 0; }
+  .etiq { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; margin-right: 6px; }
+  pre.macro { background: var(--row); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin: 6px 0;
+              font-size: .88rem; white-space: pre-wrap; }
+  code { background: var(--row); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: .86em;
+         word-break: break-word; }
+  .moments a { margin-right: 4px; white-space: nowrap; display: inline-block; }
+  .boss-chip { display: inline-block; font-size: .8rem; color: var(--muted); border: 1px solid var(--border);
+               border-radius: 999px; padding: 0 8px; margin: 2px 4px 2px 0; }
+  .sort { border-bottom: 1px dotted var(--muted); cursor: help; }
+  .fr { color: var(--muted); }
+  .bandeau { background: color-mix(in srgb, var(--warn) 14%, var(--surface)); border: 1px solid var(--warn);
+             border-radius: 8px; padding: 8px 12px; margin: 8px 0; font-size: .92rem; }
+  .pc { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .gris { --pc: #7d838b; } .vert { --pc: #1b9a1b; } .bleu { --pc: #0070dd; } .violet { --pc: #a335ee; }
+  .orange { --pc: #e07800; } .rose { --pc: #d6559b; } .dore { --pc: #b8942a; }
+  .pc, .pc-t { color: var(--pc, var(--muted)); }
+  .verdict { font-weight: 700; }
+  table.boss-soiree td a, .liens a { white-space: nowrap; }
+  .e-pos { color: var(--good); font-weight: 600; } .e-mid { color: var(--warn); font-weight: 600; }
+  .e-neg { color: var(--bad); font-weight: 600; }
+  .methode .carte p { margin: 4px 0 0; font-size: .92rem; }
+  .methode summary { cursor: pointer; }
+  p.mode { margin: 4px 0 10px; }
+  .refs { display: grid; gap: 10px; margin: 12px 0 16px; }
+  .ref { display: grid; grid-template-columns: minmax(0, 1fr) 11rem; gap: 4px 16px; align-items: center;
+         background: var(--surface); border: 1px solid var(--border); border-left: 6px solid var(--muted);
+         border-radius: 10px; padding: 10px 14px; }
+  .ref.e-bad { border-left-color: var(--bad); } .ref.e-warn { border-left-color: var(--warn); }
+  .ref.e-good { border-left-color: var(--good); } .ref.moi { border-left-color: var(--accent); }
+  .ref .qui { font-size: 1.05rem; } .ref .qui b { font-size: 1.15rem; }
+  .ref .det { color: var(--muted); font-size: .85rem; } .ref .det b { color: var(--text); font-size: inherit; }
+  .ref .ecart { grid-row: span 2; text-align: right; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .ref .ecart .dps { font-size: 1.9rem; font-weight: 800; }
+  .ref .ecart .pc { font-size: 1.05rem; font-weight: 700; }
+  .ref .ecart .lib { color: var(--muted); font-size: .8rem; }
+  .ref.e-bad .ecart .dps, .ref.e-bad .ecart .pc { color: var(--bad); }
+  .ref.e-warn .ecart .dps, .ref.e-warn .ecart .pc { color: var(--warn); }
+  .ref.e-good .ecart .dps, .ref.e-good .ecart .pc { color: var(--good); }
+  .ref .barre { grid-column: 1; position: relative; height: 12px; background: var(--row); border-radius: 0 4px 4px 0; }
+  .ref .barre span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--muted); }
+  .ref.e-bad .barre span { background: var(--bad); } .ref.e-warn .barre span { background: var(--warn); }
+  .ref.e-good .barre span { background: var(--good); } .ref.moi .barre span { background: var(--accent); }
+  .ref .barre i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--text); }
+  .duo { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); column-gap: 0; row-gap: 4px;
+         margin: 8px 0; }
+  .duo-tete { font-weight: 700; padding: 4px 10px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .duo-tete.dm { text-align: right; border-bottom: 3px solid var(--accent); }
+  .duo-tete.dr { border-bottom: 3px solid var(--muted); }
+  .duo-minute { grid-column: 1 / -1; text-align: center; font-weight: 700; color: var(--muted); font-size: .85rem;
+                margin-top: 10px; border-top: 1px solid var(--border); padding-top: 4px; }
+  .duo-phase { grid-column: 1 / -1; text-align: center; font-style: italic; color: var(--muted); font-size: .88rem;
+               background: var(--row); border-radius: 6px; padding: 2px 8px; }
+  .duo-axe { background: linear-gradient(var(--border), var(--border)) center / 2px 100% no-repeat; }
+  .duo-c { padding: 3px 10px; border-radius: 6px; font-size: .92rem; }
+  .duo-c.cd:not(.vide) { background: color-mix(in srgb, var(--c) 12%, var(--surface)); }
+  .duo-c.dm { text-align: right; } .duo-c.dm.cd:not(.vide) { border-right: 4px solid var(--c); }
+  .duo-c.dr.cd:not(.vide) { border-left: 4px solid var(--c); }
+  .duo-c .t { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .85rem; }
+  .duo-c .absent { color: var(--muted); font-style: italic; font-size: .85rem; }
+  .duo-c .pourquoi { display: block; font-size: .85rem; color: var(--warn); }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases .mono { fill: var(--row); stroke: var(--border); } .phases .multi { fill: #eb6834; opacity: .55; }
+  .phases text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  section.boss > summary { font-size: 1.1rem; padding: 4px 0; }
+  section.boss { margin: 10px 0; }
+  details.boss { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px;
+                 margin: 10px 0; }
+  details.boss > summary { font-size: 1.08rem; }
+  .muted { color: var(--muted); }
+  @media (max-width: 600px) { .prio > li { padding-left: 16px; } .prio > li::before { position: static; margin-bottom: 6px; } }
+</style>
+<style>
+  .viz { --s1: #2a78d6; --s2: #eb6834; margin: 10px 0 4px; }
+  @media (prefers-color-scheme: dark) { .viz { --s1: #3987e5; --s2: #d95926; } }
+  .viz svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .viz text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  .viz text.lib { fill: var(--text); }
+  .viz .grille { stroke: var(--border); stroke-width: 1; }
+  .viz .s1 { fill: var(--s1); } .viz .s2 { fill: var(--s2); }
+  .viz .l1 { stroke: var(--s1); } .viz .l2 { stroke: var(--s2); }
+  .viz circle { stroke: var(--surface); stroke-width: 2; }
+  .viz [data-tip]:hover { opacity: .75; }
+  .viz .legende { display: flex; gap: 16px; flex-wrap: wrap; font-size: .88rem; color: var(--muted); margin: 0 0 4px; }
+  .viz .legende i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+  .viz .legende i.trou { border-radius: 2px; opacity: .45; }
+  #infobulle { position: fixed; pointer-events: none; display: none; z-index: 10; background: var(--surface);
+               color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px;
+               font-size: .85rem; box-shadow: 0 2px 8px rgba(0,0,0,.15); white-space: pre; }
+</style>
+<style>
+  .cause { display: flex; height: 10px; border-radius: 3px; overflow: hidden; background: var(--row); margin: 4px 0 2px; max-width: 420px; }
+  .cause span { display: block; height: 100%; }
+  .c-freq { background: #2a78d6; } .c-crit { background: #eb6834; } .c-coup { background: #9a6fd0; } .c-abs { background: #888; }
+  .pastille { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin: 0 4px 0 10px; }
+  .sorts-pourquoi { list-style: none; padding: 0; }
+  .sorts-pourquoi li { border-bottom: 1px solid var(--border); padding: 8px 0; }
+  .sorts-pourquoi .faits { color: var(--muted); font-size: .92rem; }
+  .centile { font-weight: 600; }
+  .c-legendaire { color: #e08a00; } .c-epique { color: #a335ee; } .c-rare { color: #0070dd; }
+  .c-peu { color: #1eaa1e; } .c-commun { color: var(--muted); }
+  .mecanisme { margin: 6px 0 0; padding: 6px 10px; border-left: 3px solid #eb6834; background: var(--row); font-size: .92rem; }
+  section.boss { border-top: 2px solid var(--border); margin-top: 28px; }
+</style>
+<style>
+  td.nu { color: var(--bad); font-weight: 600; }
+  .duo-c.coup { font-size: .88rem; }
+  .duo-c.coup.nu { color: var(--bad); font-weight: 600; }
+</style>
+<h1>Mon tank — Jairtrude</h1>
+<p class="meta"><i class="ic ic-spec ic-spec-PaladinProtection" title="Protection Paladin"></i>Paladin Protection · ilvl 324 · raid du 30/09/2026 · 6 boss tués, meilleur kill de chacun · <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA">rapport Warcraft Logs</a> · <a href="https://murlok.io/paladin/protection/m+" title="Talents, statistiques et équipement des meilleurs joueurs de ta spé en Mythique+ (Murlok)">builds du top M+ (Murlok) ↗</a></p>
+<p class="mode"><span class="etiq">Niveau d'analyse</span><strong>léger</strong> : rotation lue dans le log seulement : ni top mondial, ni joueur équivalent, ni simulation (fiche des PU).</p>
+<p class="note"><strong>Moyennes sur 6 boss</strong> (détail boss par boss juste en dessous)</p>
+<div class="cartes">
+<div class="carte"><div class="val bad">1</div><div class="lib">morts (kills, et wipes où tu tombes parmi les 3 premiers)</div></div>
+<div class="carte"><div class="val">48 %</div><div class="lib">de tes plus gros coups encaissés sous un défensif majeur</div></div>
+<div class="carte"><div class="val">89 %</div><div class="lib">du combat sous Shield of the Righteous</div></div>
+<div class="carte"><div class="val bad">4</div><div class="lib">relais tardifs (3 s de plus que le rythme normal des relais du boss)</div></div>
+<div class="carte"><div class="val"><span class="pc vert" title="centile 37 : moyen">37</span></div><div class="lib"><span class="verdict pc-t vert">moyen</span> · centile moyen au DPS : tu fais mieux que 37 % des joueurs</div></div>
+<div class="carte"><div class="val">64 k</div><div class="lib">DPS moyen (pas de top 3 trouvé)</div></div>
+</div>
+<div class="bandeau"><strong>Survie d'abord</strong> : les constats de survie (morts, défensifs, relais, mitigation) passent toujours devant ceux de dégâts. simc ne simule pas la survie : elle est comparée aux références et à l'autre tank, sans gain chiffré. Les mécaniques de raid punitives se jugent mal dans un log seul : le croisement avec Wipefest viendra plus tard.</div>
+<div class="bandeau"><strong>Spé vérifiée en partie</strong> — 9/10, Jairtrude et Louac : à lire avec prudence. Point ouvert : réductions des défensifs approximatives (verdict des morts) ; relais vérifié sur un seul boss à deux boss (The Twin Fangs) ; Wipefest pas encore croisé.</div>
+
+<h2 id="s-boss-par-boss">Boss par boss</h2>
+<div class="table-wrap">
+<table class="boss-soiree">
+<thead><tr><th>Boss</th><th class="num">Morts</th><th class="num">Gros coups sous défensif</th><th class="num">Mitigation active</th><th class="num">Relais tardifs / relais</th><th class="num">Centile DPS</th><th class="num">DPS</th><th class="num">Durée</th><th>Combat</th></tr></thead>
+<tbody>
+<tr><td><a href="#survie-nymrissa-wavecaller">Nymrissa Wavecaller</a></td><td class="num">—</td><td class="num">67 %</td><td class="num">93 %</td><td class="num">0 / 6</td><td class="num"><span class="pc bleu" title="centile 70 : bon">70</span></td><td class="num">70 k</td><td class="num">5:30</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=1" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/1" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/1/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#survie-nek-zali-the-soulcoiler">Nek&#x27;zali the Soulcoiler</a></td><td class="num">—</td><td class="num">0 %</td><td class="num">85 %</td><td class="num"><span class="bad">1</span> / 6</td><td class="num"><span class="pc vert" title="centile 35 : moyen">35</span></td><td class="num">56 k</td><td class="num">6:14</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=4" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/4" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/4/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#survie-entombed-sentinels">Entombed Sentinels</a></td><td class="num">—</td><td class="num">0 %</td><td class="num">86 %</td><td class="num"><span class="bad">1</span> / 1</td><td class="num"><span class="pc vert" title="centile 40 : moyen">40</span></td><td class="num">63 k</td><td class="num">6:51</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=14" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/14" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/14/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#survie-vashnik-the-malignant">Vashnik the Malignant</a></td><td class="num">—</td><td class="num">80 %</td><td class="num">97 %</td><td class="num">—</td><td class="num"><span class="pc vert" title="centile 35 : moyen">35</span></td><td class="num">82 k</td><td class="num">5:52</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=17" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/17" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/17/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#survie-the-lost-explorers">The Lost Explorers</a></td><td class="num">—</td><td class="num">67 %</td><td class="num">81 %</td><td class="num">0 / 4</td><td class="num"><span class="pc gris" title="centile 21 : à travailler">21</span></td><td class="num">57 k</td><td class="num">5:41</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=26" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/26" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/26/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#survie-sszorak">Sszorak</a></td><td class="num">—</td><td class="num">75 %</td><td class="num">91 %</td><td class="num"><span class="bad">2</span> / 8</td><td class="num"><span class="pc gris" title="centile 22 : à travailler">22</span></td><td class="num">54 k</td><td class="num">6:27</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=31" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/31" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/31/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Gros coups : tes coups encaissés d'au moins 75 % du plus gros (les tank busters). Relais : provocations où tu reprends le boss après le debuff de relais de l'autre tank. Centile au DPS (le classement Warcraft Logs des tanks), aux couleurs du site. Le nom du boss mène au détail de sa survie ; « Logs », « Wipefest » et « Analyzer » ouvrent le combat sur warcraftlogs.com, ses mécaniques sur wipefest.gg et ton analyse sur wowanalyzer.com.</p>
+<h2 id="s-corriger-en-priorit">À corriger en priorité</h2>
+<ol class="prio"><li><span class="gain grave">critique</span><span class="gain nc">gain non chiffré</span><h3>Parmi les 3 premiers morts sur 1 des 9 wipes</h3><span class="boss-chip">Sszorak</span><p><span class="etiq">Cause</span>Sszorak (essai 1) à 2:07 (3e mort sur 15). Coups fatals : coup non identifié.<br><strong>Sszorak (essai 1) à 2:07</strong> : 6 coups en 10 s (0.5 M), les plus gros : Viscous Cyst 277 k à 2:05 (sous Holy Bulwark), Ula&#x27;tek&#x27;s Presence 50 k à 2:04 (sous Holy Bulwark), Ula&#x27;tek&#x27;s Presence 49 k à 1:58 (sous Shield of the Righteous), Ula&#x27;tek&#x27;s Presence 49 k à 2:06 (sous Holy Bulwark). Défensifs prêts et pas lancés : Ardent Defender, Guardian of Ancient Kings, Holy Bulwark. <strong>Un défensif aurait probablement suffi</strong> : mort par accumulation : 0.5 M encaissés en 10 s, dont un 277 k ; le dernier coup (49 k, sous tes 707 k habituels) n&#x27;a fait qu&#x27;achever. Guardian of Ancient Kings pendant ces secondes aurait réduit le total. Seul recours : Ardent Defender, prêt, empêche un coup mortel une fois ; il t&#x27;aurait gardé en vie ici, mais c&#x27;est un filet de sécurité, pas la solution d&#x27;une mécanique ratée.</p><p><span class="etiq">Conseil</span>Un tank mort fait tomber le raid. Pour chaque mort, le verdict dit si un défensif prêt aurait suffi, ou si c&#x27;est une mécanique à revoir (coup à éviter, relais) : dans ce cas, le défensif n&#x27;y aurait rien changé.</p><p class="note"><span class="etiq">Preuve</span>Morts des wipes (Warcraft Logs), sur tous les boss de la soirée.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=29&amp;type=deaths">Sszorak 2:07</a> </p></li><li><span class="gain grave">grave</span><span class="gain nc">gain non chiffré</span><h3>3 de tes 3 plus gros coups encaissés sans défensif majeur (et 1 autre boss)</h3><span class="boss-chip">Nek&#x27;zali the Soulcoiler</span><span class="boss-chip">Entombed Sentinels</span><p><span class="etiq">Cause</span><strong>Nek&#x27;zali the Soulcoiler</strong> : Défensif majeur actif sur 0 % de tes plus gros coups, 100 % chez Louac. Sans défensif : Hungering Pyre 348 k à 2:41, Melee 213 k à 1:21, Melee 205 k à 5:40.<br><strong>Entombed Sentinels</strong> : Défensif majeur actif sur 0 % de tes plus gros coups, 67 % chez Louac. Sans défensif : Bloodvenom Injection 707 k à 6:08, Bloodvenom Injection 619 k à 2:51, Empowering Slam 523 k à 5:12.</p><p><span class="etiq">Conseil</span>Repérer ces coups (souvent les mêmes à chaque fois : le tank buster du boss) et y placer un défensif majeur (Ardent Defender, Guardian of Ancient Kings, Divine Shield, Sentinel…) ; une aide d&#x27;affichage (WeakAura du boss) prévient quelques secondes avant.</p><p class="note"><span class="etiq">Preuve</span>Plus gros coups encaissés et buffs actifs à ce moment-là (Warcraft Logs).</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=4&amp;view=events&amp;start=156000">Nek&#x27;zali the Soulcoiler 2:41</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=4&amp;view=events&amp;start=76000">Nek&#x27;zali the Soulcoiler 1:21</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=4&amp;view=events&amp;start=335000">Nek&#x27;zali the Soulcoiler 5:40</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=14&amp;view=events&amp;start=363000">Entombed Sentinels 6:08</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=14&amp;view=events&amp;start=166000">Entombed Sentinels 2:51</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=14&amp;view=events&amp;start=307000">Entombed Sentinels 5:12</a> </p></li><li><span class="gain grave">grave</span><span class="gain nc">gain non chiffré</span><h3>1 relais tardif sur Hollowing Strikes (et 2 autres boss)</h3><span class="boss-chip">Nek&#x27;zali the Soulcoiler</span><span class="boss-chip">Entombed Sentinels</span><span class="boss-chip">Sszorak</span><p><span class="etiq">Cause</span><strong>Nek&#x27;zali the Soulcoiler</strong> : Tu reprends le boss 5.8 s après le dernier Hollowing Strikes sur Louac (5:29, 5 stacks). L&#x27;autre tank reprend en 2.0 s en médiane. Seuil sur ce boss : 5.0 s (délai médian des relais + 3 s).<br><strong>Entombed Sentinels</strong> : Tu reprends le boss 13.8 s après le dernier Mark of Blood sur Louac (2:39, 1 stacks). L&#x27;autre tank reprend en 2.5 s en médiane. Seuil sur ce boss : 5.7 s (délai médian des relais + 3 s).<br><strong>Sszorak</strong> : Tu reprends le boss 13.3 s après le dernier Corroding Venom sur Louac (0:18, 1 stacks), 11.4 s après le dernier Corroding Venom sur Louac (3:24, 1 stacks). L&#x27;autre tank reprend en 8.4 s en médiane. Seuil sur ce boss : 6.6 s (délai médian des relais + 3 s).</p><p><span class="etiq">Conseil</span>Provoquer dès que l&#x27;autre tank prend son dernier Hollowing Strikes : chaque seconde de retard, il encaisse les coups du boss avec le debuff au maximum.</p><p class="note"><span class="etiq">Preuve</span>Provocations et stacks du debuff de relais (Warcraft Logs).</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=4&amp;view=events&amp;start=324000">Nek&#x27;zali the Soulcoiler 5:29</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=14&amp;view=events&amp;start=154000">Entombed Sentinels 2:39</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=31&amp;view=events&amp;start=13000">Sszorak 0:18</a> <a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=31&amp;view=events&amp;start=199000">Sszorak 3:24</a> </p></li><li><span class="gain nc">gain non chiffré</span><h3><i class="ic ic-spell_holy_holynova"></i>Bijou hors de Sentinel</h3><span class="boss-chip">Sszorak</span><p><span class="etiq">Cause</span>1 sur 4 hors de Sentinel (Sentinelle).</p><p><span class="etiq">Conseil</span>Activer le bijou au début de Sentinel : leurs bonus se multiplient.</p><pre class="macro">#showtooltip
+/use 13
+/use 14
+/cast Sentinelle</pre><p><span class="etiq">Affichage</span>Macro qui colle les bijoux au gros cooldown (les bijoux sans effet à activer sont ignorés).</p><p class="note"><span class="etiq">Preuve</span>Règle vérifiée lancer par lancer sur le log : 1 faute sur 4 occasions.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=31&amp;type=casts&amp;source=4&amp;start=7875236&amp;end=7885236">Sszorak 6:25</a> </p></li></ol>
+
+<h2 id="s-survie-boss-par-boss">Survie boss par boss</h2>
+<details class="boss" id="survie-nymrissa-wavecaller"><summary><strong>Nymrissa Wavecaller</strong> · survie</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=1" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/1" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/1/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Jairtrude</b> (toi) <span class="det">· 70 k</span><div class="det"><b>rang ≈ 5 329</b> / 17 766 · centile 70 (48 à ton ilvl)</div></div><div class="ecart"><div class="dps">70 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<h4>Tes plus gros coups encaissés</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th class="num">Moment</th><th>Coup</th><th class="num">Dégâts</th><th>Actif à ce moment</th></tr></thead>
+<tbody>
+<tr><td class="num">1:37</td><td>Iceblade Flurry</td><td class="num">567 k</td><td>Holy Bulwark, Shield of the Righteous</td></tr>
+<tr><td class="num">1:35</td><td>Iceblade Flurry</td><td class="num">506 k</td><td>Holy Bulwark, Shield of the Righteous</td></tr>
+<tr><td class="num">4:35</td><td>Iceblade Flurry</td><td class="num">487 k</td><td class="nu">seulement Shield of the Righteous</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Sous un défensif majeur : toi 67 %, Louac 25 %. En rouge : coup encaissé sans défensif majeur (la mitigation active seule ne suffit pas sur un tank buster).</p>
+<h4>Déroulé : tes défensifs et tes gros coups face à l'autre tank</h4><p class="note">À gauche toi, à droite Louac (l'autre tank, même combat). Défensifs face à face quand vous les lancez à moins de 10 s d'écart ; vos plus gros coups encaissés (en rouge sans défensif majeur) ; sur toute la largeur, les relais.</p><div class="duo"><div class="duo-tete dm">Toi</div><div class="duo-tete t"></div><div class="duo-tete dr">Louac</div><div class="duo-minute">0:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">0:02</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">0:28</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-phase">0:31 : Jairtrude reprend le boss à Louac (3 Iceblade Flurry, 0,9 s après le dernier)</div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">0:51</span> Iceblade Flurry 532 k sans défensif</div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">0:52</span> Iceblade Flurry 563 k sans défensif</div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">0:53</span> Iceblade Flurry 591 k sans défensif</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">0:53</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">0:54</span> Iceblade Flurry 656 k sous Holy Bulwark</div><div class="duo-phase">0:54 : Jairtrude reprend le boss à Louac (10 Iceblade Flurry, 0,2 s après le dernier)</div><div class="duo-c dm cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="t">0:54</span> <i class="ic ic-spell_holy_heroism"></i>Guardian of Ancient Kings</div><div class="duo-minute">1:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">1:03</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">1:00</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm coup"><span class="t">1:35</span> Iceblade Flurry 506 k sous Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-phase">1:36 : Louac reprend le boss à Jairtrude (8 Iceblade Flurry, 0,3 s après le dernier)</div><div class="duo-c dm coup"><span class="t">1:37</span> Iceblade Flurry 567 k sous Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-minute">2:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">2:05</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">2:02</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="t">2:06</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">2:18</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-phase">2:24 : Jairtrude reprend le boss à Louac (6 Iceblade Flurry, 0,1 s après le dernier)</div><div class="duo-phase">2:46 : Louac reprend le boss à Jairtrude (6 Iceblade Flurry, 0,5 s après le dernier)</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">2:56</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-minute">3:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">3:09</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">3:05</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-phase">3:07 : Jairtrude reprend le boss à Louac (5 Iceblade Flurry, 0,4 s après le dernier)</div><div class="duo-phase">3:30 : Louac reprend le boss à Jairtrude (6 Iceblade Flurry, 0,7 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">3:36</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-minute">4:00</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="t">4:04</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">4:05</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="t">4:08</span> <i class="ic ic-spell_holy_heroism"></i>Guardian of Ancient Kings</div><div class="duo-phase">4:12 : Jairtrude reprend le boss à Louac (3 Iceblade Flurry, 1,0 s après le dernier)</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">4:16</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu"><span class="t">4:35</span> Iceblade Flurry 487 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-phase">4:35 : Louac reprend le boss à Jairtrude (5 Iceblade Flurry, 0,0 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">4:52</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">4:53</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-phase">4:55 : Jairtrude reprend le boss à Louac (3 Iceblade Flurry, 0,6 s après le dernier)</div><div class="duo-minute">5:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">5:16</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">5:09</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-phase">5:19 : Louac reprend le boss à Jairtrude (5 Iceblade Flurry, 0,6 s après le dernier)</div></div>
+<h4>Dégâts subis par capacité</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Capacité</th><th class="num">Encaissé / s</th><th class="num">Absorbé</th><th class="num">Atténué</th></tr></thead>
+<tbody>
+<tr><td>Abyssal Rain</td><td class="num">22 k</td><td class="num">40 %</td><td class="num">22 %</td></tr>
+<tr><td>Iceblade Flurry</td><td class="num">31 k</td><td class="num">6 %</td><td class="num">15 %</td></tr>
+<tr><td>Frost Orb</td><td class="num">9 k</td><td class="num">28 %</td><td class="num">6 %</td></tr>
+<tr><td>Melee</td><td class="num">8 k</td><td class="num">30 %</td><td class="num">72 %</td></tr>
+<tr><td>Lingering Frost</td><td class="num">1 k</td><td class="num">35 %</td><td class="num">19 %</td></tr>
+<tr><td>Pop!</td><td class="num">1 k</td><td class="num">9 %</td><td class="num">49 %</td></tr>
+<tr><td>Omnium Folio</td><td class="num">0 k</td><td class="num">38 %</td><td class="num">13 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Ton auto-soin et tes boucliers : 25 k/s, soit 34 % de tous les soins que tu reçois (73 k/s).</p>
+</details>
+<details class="boss" id="survie-nek-zali-the-soulcoiler"><summary><strong>Nek&#x27;zali the Soulcoiler</strong> · survie</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=4" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/4" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/4/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Jairtrude</b> (toi) <span class="det">· 56 k</span><div class="det"><b>rang ≈ 16 249</b> / 24 999 · centile 35 (16 à ton ilvl)</div></div><div class="ecart"><div class="dps">56 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<h4>Tes plus gros coups encaissés</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th class="num">Moment</th><th>Coup</th><th class="num">Dégâts</th><th>Actif à ce moment</th></tr></thead>
+<tbody>
+<tr><td class="num">2:41</td><td>Hungering Pyre</td><td class="num">348 k</td><td class="nu">seulement Shield of the Righteous</td></tr>
+<tr><td class="num">1:21</td><td>Melee</td><td class="num">213 k</td><td class="nu">seulement Shield of the Righteous</td></tr>
+<tr><td class="num">5:40</td><td>Melee</td><td class="num">205 k</td><td class="nu">seulement Shield of the Righteous</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Sous un défensif majeur : toi 0 %, Louac 100 %. En rouge : coup encaissé sans défensif majeur (la mitigation active seule ne suffit pas sur un tank buster).</p>
+<h4>Déroulé : tes défensifs et tes gros coups face à l'autre tank</h4><p class="note">À gauche toi, à droite Louac (l'autre tank, même combat). Défensifs face à face quand vous les lancez à moins de 10 s d'écart ; vos plus gros coups encaissés (en rouge sans défensif majeur) ; sur toute la largeur, les relais.</p><div class="duo"><div class="duo-tete dm">Toi</div><div class="duo-tete t"></div><div class="duo-tete dr">Louac</div><div class="duo-minute">0:00</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="t">0:00</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">0:10</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">0:01</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-phase">0:25 : Jairtrude reprend le boss à Louac (7 Hollowing Strikes, 1,4 s après le dernier)</div><div class="duo-phase">0:32 : Louac reprend le boss à Jairtrude (2 Hollowing Strikes, 5,0 s après le dernier)</div><div class="duo-phase">0:49 : Jairtrude reprend le boss à Louac (14 Hollowing Strikes, 0,1 s après le dernier)</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">1:02</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">0:59</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-minute">1:00</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">1:09</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-c dm coup nu"><span class="t">1:21</span> Melee 213 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-phase">1:40 : Louac reprend le boss à Jairtrude (9 Hollowing Strikes, 2,1 s après le dernier)</div><div class="duo-c dm cd" style="--c:#d0632b"><span class="t">1:43</span> <i class="ic ic-spell_holy_heroism"></i>Guardian of Ancient Kings</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="t">1:59</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">1:56</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-minute">2:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">2:19</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">2:30</span> Soul Transfer 631 k sous Sentinel</div><div class="duo-c dm coup nu"><span class="t">2:41</span> Hungering Pyre 348 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">2:48</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-minute">3:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">3:19</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">3:30</span> Hungering Pyre 397 k sous Sentinel</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">3:49</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="t">3:51</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">3:53</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-minute">4:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">4:20</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-phase">4:28 : Jairtrude reprend le boss à Louac (7 Hollowing Strikes, 2,1 s après le dernier)</div><div class="duo-phase">4:43 : Louac reprend le boss à Jairtrude (8 Hollowing Strikes, 2,8 s après le dernier)</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">4:50</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">4:54</span> Melee 231 k sous Holy Bulwark</div><div class="duo-phase">4:57 : Jairtrude reprend le boss à Louac (8 Hollowing Strikes, 2,0 s après le dernier)</div><div class="duo-minute">5:00</div><div class="duo-c dm cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="t">5:00</span> <i class="ic ic-spell_holy_heroism"></i>Guardian of Ancient Kings</div><div class="duo-phase">5:15 : Louac reprend le boss à Jairtrude (4 Hollowing Strikes, 1,6 s après le dernier)</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">5:22</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-phase">5:29 : Jairtrude reprend le boss à Louac (5 Hollowing Strikes, 5,8 s après le dernier) — tardif</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="t">5:29</span> <i class="ic ic-spell_holy_divineshield"></i>Divine Shield</div><div class="duo-c dm coup nu"><span class="t">5:40</span> Melee 205 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-phase">5:42 : Louac reprend le boss à Jairtrude (5 Hollowing Strikes, 1,5 s après le dernier)</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">5:52</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-phase">5:53 : Jairtrude reprend le boss à Louac (6 Hollowing Strikes, 2,1 s après le dernier)</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">5:54</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-minute">6:00</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="t">6:07</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-phase">6:07 : Louac reprend le boss à Jairtrude (13 Hollowing Strikes, 1,8 s après le dernier)</div></div>
+<h4>Dégâts subis par capacité</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Capacité</th><th class="num">Encaissé / s</th><th class="num">Absorbé</th><th class="num">Atténué</th></tr></thead>
+<tbody>
+<tr><td>Hollowing Strikes</td><td class="num">18 k</td><td class="num">26 %</td><td class="num">18 %</td></tr>
+<tr><td>Soulcoil Rite</td><td class="num">13 k</td><td class="num">36 %</td><td class="num">18 %</td></tr>
+<tr><td>Corpse Blight</td><td class="num">10 k</td><td class="num">35 %</td><td class="num">10 %</td></tr>
+<tr><td>Melee</td><td class="num">12 k</td><td class="num">11 %</td><td class="num">76 %</td></tr>
+<tr><td>Vessel of Awakening</td><td class="num">3 k</td><td class="num">48 %</td><td class="num">19 %</td></tr>
+<tr><td>Possession Barrage</td><td class="num">5 k</td><td class="num">5 %</td><td class="num">45 %</td></tr>
+<tr><td>Uncoiling</td><td class="num">2 k</td><td class="num">32 %</td><td class="num">13 %</td></tr>
+<tr><td>Latent Cultist</td><td class="num">2 k</td><td class="num">17 %</td><td class="num">8 %</td></tr>
+<tr><td>Cremation</td><td class="num">1 k</td><td class="num">34 %</td><td class="num">21 %</td></tr>
+<tr><td>Slithering Flame</td><td class="num">1 k</td><td class="num">10 %</td><td class="num">15 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Ton auto-soin et tes boucliers : 27 k/s, soit 39 % de tous les soins que tu reçois (69 k/s).</p>
+</details>
+<details class="boss" id="survie-entombed-sentinels"><summary><strong>Entombed Sentinels</strong> · survie</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=14" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/14" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/14/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Jairtrude</b> (toi) <span class="det">· 63 k</span><div class="det"><b>rang ≈ 13 584</b> / 22 640 · centile 40 (18 à ton ilvl)</div></div><div class="ecart"><div class="dps">63 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<h4>Tes plus gros coups encaissés</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th class="num">Moment</th><th>Coup</th><th class="num">Dégâts</th><th>Actif à ce moment</th></tr></thead>
+<tbody>
+<tr><td class="num">6:08</td><td>Bloodvenom Injection</td><td class="num">707 k</td><td class="nu">rien</td></tr>
+<tr><td class="num">2:51</td><td>Bloodvenom Injection</td><td class="num">619 k</td><td class="nu">rien</td></tr>
+<tr><td class="num">5:12</td><td>Empowering Slam</td><td class="num">523 k</td><td class="nu">seulement Shield of the Righteous</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Sous un défensif majeur : toi 0 %, Louac 67 %. En rouge : coup encaissé sans défensif majeur (la mitigation active seule ne suffit pas sur un tank buster).</p>
+<h4>Déroulé : tes défensifs et tes gros coups face à l'autre tank</h4><p class="note">À gauche toi, à droite Louac (l'autre tank, même combat). Défensifs face à face quand vous les lancez à moins de 10 s d'écart ; vos plus gros coups encaissés (en rouge sans défensif majeur) ; sur toute la largeur, les relais.</p><div class="duo"><div class="duo-tete dm">Toi</div><div class="duo-tete t"></div><div class="duo-tete dr">Louac</div><div class="duo-minute">0:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">0:02</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">0:16</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">0:27</span> Empowering Slam 465 k sous Holy Bulwark</div><div class="duo-phase">0:47 : Louac reprend le boss à Jairtrude (9 Mark of Blood, 2,7 s après le dernier)</div><div class="duo-minute">1:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">1:02</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">1:02</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="t">1:40</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">1:58</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-minute">2:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">2:10</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">2:04</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">2:14</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-phase">2:39 : Jairtrude reprend le boss à Louac (1 Mark of Blood, 13,8 s après le dernier) — tardif</div><div class="duo-c dm coup nu"><span class="t">2:51</span> Bloodvenom Injection 619 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="t">2:55</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-minute">3:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">3:04</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="t">3:14</span> <i class="ic ic-spell_holy_heroism"></i>Guardian of Ancient Kings</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">3:19</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">3:32</span> Empowering Slam 543 k sans défensif</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">3:36</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">3:46</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-phase">3:54 : Louac reprend le boss à Jairtrude (14 Mark of Blood, 1,5 s après le dernier)</div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">3:54</span> Empowering Slam 590 k sous Holy Bulwark</div><div class="duo-c dm cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="t">3:58</span> <i class="ic ic-spell_holy_heroism"></i>Guardian of Ancient Kings</div><div class="duo-minute">4:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">4:06</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-phase">4:15 : Louac reprend le boss à Jairtrude (17 Mark of Blood, 7,2 s après le dernier) — tardif</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">4:26</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">4:31</span> Bloodvenom Injection 446 k sous Holy Bulwark</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">4:44</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">4:48</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">4:47</span> Unstable Miasma 503 k sans défensif</div><div class="duo-minute">5:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">5:11</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm coup nu"><span class="t">5:12</span> Empowering Slam 523 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">5:27</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="t">5:28</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">5:39</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-minute">6:00</div><div class="duo-c dm coup nu"><span class="t">6:08</span> Bloodvenom Injection 707 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-phase">6:11 : Louac reprend le boss à Jairtrude (2 Mark of Blood, 2,2 s après le dernier)</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">6:12</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm cd" style="--c:#d0632b"><span class="t">6:21</span> <i class="ic ic-spell_holy_heroism"></i>Guardian of Ancient Kings</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">6:27</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">6:28</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">6:28</span> Empowering Slam 533 k sous Holy Bulwark</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">6:29</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-c dm cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="t">6:49</span> <i class="ic ic-spell_holy_heroism"></i>Guardian of Ancient Kings</div></div>
+<h4>Dégâts subis par capacité</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Capacité</th><th class="num">Encaissé / s</th><th class="num">Absorbé</th><th class="num">Atténué</th></tr></thead>
+<tbody>
+<tr><td>Melee</td><td class="num">44 k</td><td class="num">12 %</td><td class="num">77 %</td></tr>
+<tr><td>Mark of Acid</td><td class="num">18 k</td><td class="num">33 %</td><td class="num">20 %</td></tr>
+<tr><td>Bloodvenom Injection</td><td class="num">22 k</td><td class="num">13 %</td><td class="num">26 %</td></tr>
+<tr><td>Mark of Blood</td><td class="num">13 k</td><td class="num">29 %</td><td class="num">19 %</td></tr>
+<tr><td>Empowering Slam</td><td class="num">7 k</td><td class="num">5 %</td><td class="num">80 %</td></tr>
+<tr><td>Bloodvenom Injection</td><td class="num">7 k</td><td class="num">8 %</td><td class="num">77 %</td></tr>
+<tr><td>Contaminate</td><td class="num">6 k</td><td class="num">17 %</td><td class="num">35 %</td></tr>
+<tr><td>Toxic Droplets</td><td class="num">5 k</td><td class="num">2 %</td><td class="num">33 %</td></tr>
+<tr><td>Blood Venom</td><td class="num">4 k</td><td class="num">23 %</td><td class="num">28 %</td></tr>
+<tr><td>Noxious Blast</td><td class="num">2 k</td><td class="num">16 %</td><td class="num">31 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Ton auto-soin et tes boucliers : 38 k/s, soit 29 % de tous les soins que tu reçois (132 k/s).</p>
+</details>
+<details class="boss" id="survie-vashnik-the-malignant"><summary><strong>Vashnik the Malignant</strong> · survie</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=17" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/17" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/17/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Jairtrude</b> (toi) <span class="det">· 82 k</span><div class="det"><b>rang ≈ 14 257</b> / 21 935 · centile 35 (17 à ton ilvl)</div></div><div class="ecart"><div class="dps">82 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<h4>Tes plus gros coups encaissés</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th class="num">Moment</th><th>Coup</th><th class="num">Dégâts</th><th>Actif à ce moment</th></tr></thead>
+<tbody>
+<tr><td class="num">1:41</td><td>Melee</td><td class="num">492 k</td><td>Holy Bulwark, Shield of the Righteous</td></tr>
+<tr><td class="num">3:00</td><td>Melee</td><td class="num">489 k</td><td class="nu">seulement Shield of the Righteous</td></tr>
+<tr><td class="num">3:28</td><td>Melee</td><td class="num">481 k</td><td>Holy Bulwark, Shield of the Righteous</td></tr>
+<tr><td class="num">3:34</td><td>Melee</td><td class="num">448 k</td><td>Holy Bulwark, Shield of the Righteous</td></tr>
+<tr><td class="num">5:19</td><td>Melee</td><td class="num">423 k</td><td>Holy Bulwark, Shield of the Righteous</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Sous un défensif majeur : toi 80 %, Louac 0 %. En rouge : coup encaissé sans défensif majeur (la mitigation active seule ne suffit pas sur un tank buster).</p>
+<h4>Déroulé : tes défensifs et tes gros coups face à l'autre tank</h4><p class="note">À gauche toi, à droite Louac (l'autre tank, même combat). Défensifs face à face quand vous les lancez à moins de 10 s d'écart ; vos plus gros coups encaissés (en rouge sans défensif majeur) ; sur toute la largeur, les relais.</p><div class="duo"><div class="duo-tete dm">Toi</div><div class="duo-tete t"></div><div class="duo-tete dr">Louac</div><div class="duo-minute">0:00</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="t">0:02</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">0:04</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">0:17</span> Melee 475 k sans défensif</div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">0:41</span> Melee 546 k sans défensif</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">0:44</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-minute">1:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">1:05</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">1:02</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="t">1:12</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-c dm coup"><span class="t">1:41</span> Melee 492 k sous Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-minute">2:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">2:03</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">2:15</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">2:31</span> Melee 509 k sans défensif</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">2:37</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-minute">3:00</div><div class="duo-c dm coup nu"><span class="t">3:00</span> Melee 489 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="t">3:06</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">3:13</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm coup"><span class="t">3:28</span> Melee 481 k sous Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm coup"><span class="t">3:34</span> Melee 448 k sous Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">3:35</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">3:53</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-minute">4:00</div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">4:24</span> Melee 524 k sans défensif</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">4:38</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">4:33</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">4:34</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-minute">5:00</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="t">5:17</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-c dm coup"><span class="t">5:19</span> Melee 423 k sous Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">5:39</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">5:48</span> Melee 481 k sans défensif</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">5:50</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div></div>
+<h4>Dégâts subis par capacité</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Capacité</th><th class="num">Encaissé / s</th><th class="num">Absorbé</th><th class="num">Atténué</th></tr></thead>
+<tbody>
+<tr><td>Dripping Fangs</td><td class="num">24 k</td><td class="num">32 %</td><td class="num">17 %</td></tr>
+<tr><td>Melee</td><td class="num">26 k</td><td class="num">20 %</td><td class="num">68 %</td></tr>
+<tr><td>Toxic Vapor</td><td class="num">9 k</td><td class="num">37 %</td><td class="num">26 %</td></tr>
+<tr><td>Caustic Surge</td><td class="num">5 k</td><td class="num">24 %</td><td class="num">24 %</td></tr>
+<tr><td>Caustic Explosion</td><td class="num">6 k</td><td class="num">15 %</td><td class="num">27 %</td></tr>
+<tr><td>Burning Presence</td><td class="num">5 k</td><td class="num">21 %</td><td class="num">25 %</td></tr>
+<tr><td>Dripping Fangs</td><td class="num">3 k</td><td class="num">19 %</td><td class="num">75 %</td></tr>
+<tr><td>Malignant Catalyst</td><td class="num">3 k</td><td class="num">29 %</td><td class="num">35 %</td></tr>
+<tr><td>Gloom Expulsion</td><td class="num">2 k</td><td class="num">37 %</td><td class="num">24 %</td></tr>
+<tr><td>Congealing Bolt</td><td class="num">2 k</td><td class="num">32 %</td><td class="num">14 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Ton auto-soin et tes boucliers : 35 k/s, soit 38 % de tous les soins que tu reçois (90 k/s).</p>
+</details>
+<details class="boss" id="survie-the-lost-explorers"><summary><strong>The Lost Explorers</strong> · survie</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=26" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/26" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/26/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Jairtrude</b> (toi) <span class="det">· 57 k</span><div class="det"><b>rang ≈ 17 904</b> / 22 664 · centile 21 (9 à ton ilvl)</div></div><div class="ecart"><div class="dps">57 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<h4>Tes plus gros coups encaissés</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th class="num">Moment</th><th>Coup</th><th class="num">Dégâts</th><th>Actif à ce moment</th></tr></thead>
+<tbody>
+<tr><td class="num">2:05</td><td>Blast Wave</td><td class="num">520 k</td><td>Guardian of Ancient Kings, Shield of the Righteous</td></tr>
+<tr><td class="num">1:33</td><td>Blast Wave</td><td class="num">509 k</td><td>Guardian of Ancient Kings, Shield of the Righteous</td></tr>
+<tr><td class="num">4:14</td><td>Melee</td><td class="num">496 k</td><td class="nu">rien</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Sous un défensif majeur : toi 67 %, Louac 80 %. En rouge : coup encaissé sans défensif majeur (la mitigation active seule ne suffit pas sur un tank buster).</p>
+<h4>Déroulé : tes défensifs et tes gros coups face à l'autre tank</h4><p class="note">À gauche toi, à droite Louac (l'autre tank, même combat). Défensifs face à face quand vous les lancez à moins de 10 s d'écart ; vos plus gros coups encaissés (en rouge sans défensif majeur) ; sur toute la largeur, les relais.</p><div class="duo"><div class="duo-tete dm">Toi</div><div class="duo-tete t"></div><div class="duo-tete dr">Louac</div><div class="duo-minute">0:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">0:02</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">0:31</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-phase">0:31 : Louac reprend le boss à Jairtrude (22 Steady Strikes, 1,6 s après le dernier)</div><div class="duo-phase">0:34 : Jairtrude reprend le boss à Louac (2 Steady Strikes, 1,4 s après le dernier)</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">0:55</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-minute">1:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">1:07</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">1:00</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-phase">1:31 : Jairtrude reprend le boss à Louac (35 Steady Strikes, 0,1 s après le dernier)</div><div class="duo-c dm cd" style="--c:#d0632b"><span class="t">1:31</span> <i class="ic ic-spell_holy_heroism"></i>Guardian of Ancient Kings</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="t">1:31</span> <i class="ic ic-spell_holy_heroism"></i>Guardian of Ancient Kings</div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">1:32</span> Blast Wave 489 k sous Guardian of Ancient Kings</div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">1:32</span> Blast Wave 489 k sous Guardian of Ancient Kings</div><div class="duo-c dm coup"><span class="t">1:33</span> Blast Wave 509 k sous Guardian of Ancient Kings</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-minute">2:00</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">2:00</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">2:09</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">2:02</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm cd" style="--c:#d0632b"><span class="t">2:03</span> <i class="ic ic-spell_holy_heroism"></i>Guardian of Ancient Kings</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-c dm coup"><span class="t">2:05</span> Blast Wave 520 k sous Guardian of Ancient Kings</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="t">2:29</span> <i class="ic ic-spell_holy_heroism"></i>Guardian of Ancient Kings</div><div class="duo-phase">2:31 : Louac reprend le boss à Jairtrude (40 Steady Strikes, 2,3 s après le dernier)</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">2:43</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-minute">3:00</div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">3:03</span> Mighty Thud 437 k sous Holy Bulwark</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">3:11</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">3:03</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-phase">3:26 : Jairtrude reprend le boss à Louac (33 Steady Strikes, 0,3 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">3:33</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">3:35</span> Mighty Thud 450 k sous Ardent Defender</div><div class="duo-minute">4:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">4:03</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm coup nu"><span class="t">4:14</span> Melee 496 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">4:23</span> Shredding Shards 373 k sans défensif</div><div class="duo-phase">4:25 : Louac reprend le boss à Jairtrude (39 Steady Strikes, 2,8 s après le dernier)</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">4:42</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-c dm cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="t">4:58</span> <i class="ic ic-spell_holy_heroism"></i>Guardian of Ancient Kings</div><div class="duo-minute">5:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">5:04</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-phase">5:20 : Jairtrude reprend le boss à Louac (30 Steady Strikes, 1,3 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">5:33</span> <i class="ic ic-spell_holy_divineshield"></i>Divine Shield</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">5:41</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div></div>
+<h4>Dégâts subis par capacité</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Capacité</th><th class="num">Encaissé / s</th><th class="num">Absorbé</th><th class="num">Atténué</th></tr></thead>
+<tbody>
+<tr><td>Melee</td><td class="num">37 k</td><td class="num">13 %</td><td class="num">67 %</td></tr>
+<tr><td>Malevolent Presence</td><td class="num">22 k</td><td class="num">21 %</td><td class="num">24 %</td></tr>
+<tr><td>Shredding Shards</td><td class="num">11 k</td><td class="num">1 %</td><td class="num">4 %</td></tr>
+<tr><td>Splinters</td><td class="num">9 k</td><td class="num">20 %</td><td class="num">12 %</td></tr>
+<tr><td>Blast Wave</td><td class="num">9 k</td><td class="num">17 %</td><td class="num">47 %</td></tr>
+<tr><td>Blink Nova</td><td class="num">4 k</td><td class="num">6 %</td><td class="num">31 %</td></tr>
+<tr><td>Omnium Folio</td><td class="num">0 k</td><td class="num">29 %</td><td class="num">13 %</td></tr>
+<tr><td>Frostfire Volley</td><td class="num">0 k</td><td class="num">38 %</td><td class="num">21 %</td></tr>
+<tr><td>Piercing Frost</td><td class="num">0 k</td><td class="num">0 %</td><td class="num">13 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Ton auto-soin et tes boucliers : 26 k/s, soit 28 % de tous les soins que tu reçois (92 k/s).</p>
+</details>
+<details class="boss" id="survie-sszorak"><summary><strong>Sszorak</strong> · survie</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=31" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/31" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/31/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Jairtrude</b> (toi) <span class="det">· 54 k</span><div class="det"><b>rang ≈ 12 128</b> / 15 549 · centile 22 (11 à ton ilvl)</div></div><div class="ecart"><div class="dps">54 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<h4>Tes plus gros coups encaissés</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th class="num">Moment</th><th>Coup</th><th class="num">Dégâts</th><th>Actif à ce moment</th></tr></thead>
+<tbody>
+<tr><td class="num">4:44</td><td>Ravage</td><td class="num">600 k</td><td>Holy Bulwark</td></tr>
+<tr><td class="num">1:09</td><td>Ravage</td><td class="num">536 k</td><td>Holy Bulwark, Shield of the Righteous</td></tr>
+<tr><td class="num">2:30</td><td>Ravage</td><td class="num">502 k</td><td>Sentinel, Shield of the Righteous</td></tr>
+<tr><td class="num">0:25</td><td>Mutilate</td><td class="num">454 k</td><td class="nu">seulement Shield of the Righteous</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Sous un défensif majeur : toi 75 %, Louac 100 %. En rouge : coup encaissé sans défensif majeur (la mitigation active seule ne suffit pas sur un tank buster).</p>
+<h4>Déroulé : tes défensifs et tes gros coups face à l'autre tank</h4><p class="note">À gauche toi, à droite Louac (l'autre tank, même combat). Défensifs face à face quand vous les lancez à moins de 10 s d'écart ; vos plus gros coups encaissés (en rouge sans défensif majeur) ; sur toute la largeur, les relais.</p><div class="duo"><div class="duo-tete dm">Toi</div><div class="duo-tete t"></div><div class="duo-tete dr">Louac</div><div class="duo-minute">0:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">0:00</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">0:08</span> Ravage 420 k sous Holy Bulwark, Sentinel</div><div class="duo-phase">0:18 : Jairtrude reprend le boss à Louac (1 Corroding Venom, 13,3 s après le dernier) — tardif</div><div class="duo-c dm coup nu"><span class="t">0:25</span> Mutilate 454 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">0:52</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-phase">0:52 : Jairtrude reprend le boss à Louac (14 Corroding Venom, 0,1 s après le dernier)</div><div class="duo-minute">1:00</div><div class="duo-c dm coup"><span class="t">1:09</span> Ravage 536 k sous Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-phase">1:10 : Louac reprend le boss à Jairtrude (2 Corroding Venom, 13,9 s après le dernier) — tardif</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">1:12</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">1:11</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">1:17</span> Ravage 558 k sous Sentinel</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="t">1:28</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-phase">1:36 : Jairtrude reprend le boss à Louac (7 Corroding Venom, 0,2 s après le dernier)</div><div class="duo-minute">2:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">2:20</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">2:14</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm coup"><span class="t">2:30</span> Ravage 502 k sous Sentinel</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-phase">2:31 : Louac reprend le boss à Jairtrude (1 Corroding Venom, 8,4 s après le dernier) — tardif</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">2:41</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="t">2:55</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">2:51</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-minute">3:00</div><div class="duo-phase">3:00 : Louac reprend le boss à Jairtrude (4 Corroding Venom, 0,8 s après le dernier)</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">3:23</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">3:15</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="t">3:21</span> <i class="ic ic-spell_holy_heroism"></i>Guardian of Ancient Kings</div><div class="duo-phase">3:24 : Jairtrude reprend le boss à Louac (1 Corroding Venom, 11,4 s après le dernier) — tardif</div><div class="duo-phase">3:38 : Louac reprend le boss à Jairtrude (1 Corroding Venom, 1,2 s après le dernier)</div><div class="duo-minute">4:00</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">4:01</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-phase">4:04 : Jairtrude reprend le boss à Louac (10 Corroding Venom, 1,1 s après le dernier)</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">4:25</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">4:42</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="t">4:44</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-c dm coup"><span class="t">4:44</span> Ravage 600 k sous Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-phase">4:49 : Louac reprend le boss à Jairtrude (1 Corroding Venom, 9,2 s après le dernier) — tardif</div><div class="duo-minute">5:00</div><div class="duo-c dm cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="t">5:00</span> <i class="ic ic-spell_holy_heroism"></i>Guardian of Ancient Kings</div><div class="duo-c dm cd" style="--c:#6b7a1f"><span class="t">5:00</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#6b7a1f"><span class="absent">pas lancé</span></div><div class="duo-phase">5:03 : Jairtrude reprend le boss à Louac (1 Corroding Venom, 0,1 s après le dernier)</div><div class="duo-phase">5:12 : Louac reprend le boss à Jairtrude (5 Corroding Venom, 7,1 s après le dernier) — tardif</div><div class="duo-phase">5:31 : Jairtrude reprend le boss à Louac (9 Corroding Venom, 0,2 s après le dernier)</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">5:34</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-phase">5:47 : Louac reprend le boss à Jairtrude (1 Corroding Venom, 14,6 s après le dernier) — tardif</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="t">5:48</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">5:49</span> Ravage 425 k sous Ardent Defender</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="t">5:51</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-phase">5:59 : Jairtrude reprend le boss à Louac (1 Corroding Venom, 3,6 s après le dernier)</div><div class="duo-minute">6:00</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="t">6:22</span> <i class="ic ic-spell_holy_divineshield"></i>Divine Shield</div></div>
+<h4>Dégâts subis par capacité</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Capacité</th><th class="num">Encaissé / s</th><th class="num">Absorbé</th><th class="num">Atténué</th></tr></thead>
+<tbody>
+<tr><td>Melee</td><td class="num">23 k</td><td class="num">14 %</td><td class="num">73 %</td></tr>
+<tr><td>Ula&#x27;tek&#x27;s Presence</td><td class="num">19 k</td><td class="num">26 %</td><td class="num">28 %</td></tr>
+<tr><td>Mutilated Gash</td><td class="num">19 k</td><td class="num">15 %</td><td class="num">30 %</td></tr>
+<tr><td>Viscous Cyst</td><td class="num">7 k</td><td class="num">23 %</td><td class="num">27 %</td></tr>
+<tr><td>Ravage</td><td class="num">7 k</td><td class="num">18 %</td><td class="num">74 %</td></tr>
+<tr><td>Tempest</td><td class="num">6 k</td><td class="num">16 %</td><td class="num">19 %</td></tr>
+<tr><td>Mutilate</td><td class="num">4 k</td><td class="num">5 %</td><td class="num">34 %</td></tr>
+<tr><td>Venomous Surge</td><td class="num">2 k</td><td class="num">27 %</td><td class="num">32 %</td></tr>
+<tr><td>Omnium Folio</td><td class="num">0 k</td><td class="num">34 %</td><td class="num">13 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Ton auto-soin et tes boucliers : 30 k/s, soit 35 % de tous les soins que tu reçois (87 k/s).</p>
+</details>
+<h2 id="s-d-g-ts-second-plan">Dégâts (second plan)</h2><p class="note">La même analyse que le rapport DPS : rotation, cooldowns offensifs, simulations selon le niveau d'analyse.</p>
+<h3 id="s-rotation">Rotation</h3>
+<h4>Synthèse de la soirée</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">DPS</th><th class="num">vs équivalent</th><th class="num">vs top 3</th><th class="num">Multicible</th><th class="num">Cooldowns manqués</th><th class="num">vs potentiel simc</th></tr></thead>
+<tbody>
+<tr><td>Nymrissa Wavecaller</td><td class="num">70 k</td><td class="num">—</td><td class="num">—</td><td class="num">36 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Nek&#x27;zali the Soulcoiler</td><td class="num">56 k</td><td class="num">—</td><td class="num">—</td><td class="num">25 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Entombed Sentinels</td><td class="num">63 k</td><td class="num">—</td><td class="num">—</td><td class="num">33 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Vashnik the Malignant</td><td class="num">82 k</td><td class="num">—</td><td class="num">—</td><td class="num">26 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>The Lost Explorers</td><td class="num">57 k</td><td class="num">—</td><td class="num">—</td><td class="num">75 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Sszorak</td><td class="num">54 k</td><td class="num">—</td><td class="num">—</td><td class="num">0 %</td><td class="num">0</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+
+<p class="note">Potentiel simc : ton équipement simulé avec une rotation parfaite, à la durée du kill, chaque phase au nombre d'ennemis qu'elle a en moyenne (1, 2, ou 3 et plus). Un vrai combat (déplacements, phases, cibles qui changent) reste en dessous : l'écart sert surtout à comparer les boss entre eux et d'une soirée à l'autre.</p>
+<details class="boss" id="boss-nymrissa-wavecaller"><summary><strong>Nymrissa Wavecaller</strong> · 70 k · — face à l'équivalent · 36 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=1" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/1" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/1/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Jairtrude</b> (toi) <span class="det">· 70 k</span><div class="det"><b>rang ≈ 5 329</b> / 17 766 · centile 70 (48 à ton ilvl)</div></div><div class="ecart"><div class="dps">70 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="69.7" height="18"><title>Monocible : 0:00 → 0:31 (1,0 ennemis)</title></rect><rect class="multi" x="269.7" y="4" width="45.0" height="18"><title>Multicible : 0:31 → 0:51 (4,4 ennemis)</title></rect><rect class="mono" x="314.7" y="4" width="54.0" height="18"><title>Monocible : 0:51 → 1:15 (1,1 ennemis)</title></rect><rect class="multi" x="368.7" y="4" width="45.0" height="18"><title>Multicible : 1:15 → 1:35 (5,0 ennemis)</title></rect><rect class="mono" x="413.7" y="4" width="105.7" height="18"><title>Monocible : 1:35 → 2:22 (1,1 ennemis)</title></rect><rect class="multi" x="519.5" y="4" width="36.0" height="18"><title>Multicible : 2:22 → 2:38 (4,9 ennemis)</title></rect><rect class="mono" x="555.5" y="4" width="65.2" height="18"><title>Monocible : 2:38 → 3:07 (1,0 ennemis)</title></rect><rect class="multi" x="620.7" y="4" width="49.5" height="18"><title>Multicible : 3:07 → 3:29 (5,0 ennemis)</title></rect><rect class="mono" x="670.2" y="4" width="94.5" height="18"><title>Monocible : 3:29 → 4:11 (1,0 ennemis)</title></rect><rect class="multi" x="764.7" y="4" width="42.7" height="18"><title>Multicible : 4:11 → 4:30 (5,8 ennemis)</title></rect><rect class="mono" x="807.5" y="4" width="63.0" height="18"><title>Monocible : 4:30 → 4:58 (1,1 ennemis)</title></rect><rect class="multi" x="870.5" y="4" width="49.5" height="18"><title>Multicible : 4:58 → 5:20 (3,8 ennemis)</title></rect><rect class="mono" x="920.0" y="4" width="24.0" height="18"><title>Monocible : 5:20 → 5:30 (1,2 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Sentinel</td><td class="num">0 / 3</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(212 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Courroux vengeur invoque une arme sacrée supplémentaire. Pendant la durée de Courroux vengeur, celle-ci lance des sorts sur votre cible et fait écho aux effets des techniques de puissance sacrée."><i class="ic ic-inv_mace_1h_artifactnorgannon_d_06"></i>Blessing of the Forge <span class="fr">(Bénédiction de la forge)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Les coups critiques de Jugement créent une onde de choc autour de la cible, [ Sacré : rendant à un maximum de 5 personnages alliés blessés ([113.4% of Spell Power]) points de vie / Protection infligeant ([184% of Attack Power]) points de dégâts aux personnages adverses à moins de 5 m. Les dégâts sont réduits au-delà de 5 cibles ]"><i class="ic ic-inv_10_blacksmithing_consumable_repairhammer_color1"></i>Hammer and Anvil <span class="fr">(Marteau et enclume)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Requiert Paladin Niveau 6 requis Consacre le sol sous vos pieds, ce qui inflige [ Croisade écarlate : [(([5% of Attack Power]) * ceil12) * 1.05] points de dégâts de rayonnement / [(([5% of Attack Power]) * ceil12) * 1.05] points de dégâts du sacré] en 12 s aux adversaires qui entrent dans la zone [ Terre consacrée : et réduit leur vitesse de déplacement de 50% / .] 1 instance maximum."><i class="ic ic-spell_holy_innerfire"></i>Consecration <span class="fr">(Consécration)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2 Charges Requiert Paladin Commande à la Lumière de s’incarner sous la forme d’un armement sacré que brandira votre cible. Arme sacrée : Lorsque vous utilisez Arme sacrée, vos sorts et vos techniques ont une chance de générer ([104% of Attack Power]) points supplémentaires de dégâts du sacré ou de soins sur les cibles proches. L’effet est augmenté lorsque l’Arme sacrée frappe une seule cible, et réduit au-delà de 5. Dure 20 s. Devient Rempart sacré après utilisation. [ Sacré : Génère 3 charges de puissance sacrée. ]"><i class="ic ic-inv_ability_lightsmithpaladin_sacredweapon"></i>Sacred Weapon <span class="fr">(Arme sacrée)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(119 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Les coups critiques de Jugement créent une onde de choc autour de la cible, [ Sacré : rendant à un maximum de 5 personnages alliés blessés ([113.4% of Spell Power]) points de vie / Protection infligeant ([184% of Attack Power]) points de dégâts aux personnages adverses à moins de 5 m. Les dégâts sont réduits au-delà de 5 cibles ]"><i class="ic ic-inv_10_blacksmithing_consumable_repairhammer_color1"></i>Hammer and Anvil <span class="fr">(Marteau et enclume)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2 Charges Requiert Paladin Commande à la Lumière de s’incarner sous la forme d’un armement sacré que brandira votre cible. Arme sacrée : Lorsque vous utilisez Arme sacrée, vos sorts et vos techniques ont une chance de générer ([104% of Attack Power]) points supplémentaires de dégâts du sacré ou de soins sur les cibles proches. L’effet est augmenté lorsque l’Arme sacrée frappe une seule cible, et réduit au-delà de 5. Dure 20 s. Devient Rempart sacré après utilisation. [ Sacré : Génère 3 charges de puissance sacrée. ]"><i class="ic ic-inv_ability_lightsmithpaladin_sacredweapon"></i>Sacred Weapon <span class="fr">(Arme sacrée)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Courroux vengeur invoque une arme sacrée supplémentaire. Pendant la durée de Courroux vengeur, celle-ci lance des sorts sur votre cible et fait écho aux effets des techniques de puissance sacrée."><i class="ic ic-inv_mace_1h_artifactnorgannon_d_06"></i>Blessing of the Forge <span class="fr">(Bénédiction de la forge)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Requiert Paladin Niveau 6 requis Consacre le sol sous vos pieds, ce qui inflige [ Croisade écarlate : [(([5% of Attack Power]) * ceil12) * 1.05] points de dégâts de rayonnement / [(([5% of Attack Power]) * ceil12) * 1.05] points de dégâts du sacré] en 12 s aux adversaires qui entrent dans la zone [ Terre consacrée : et réduit leur vitesse de déplacement de 50% / .] 1 instance maximum."><i class="ic ic-spell_holy_innerfire"></i>Consecration <span class="fr">(Consécration)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-nek-zali-the-soulcoiler"><summary><strong>Nek&#x27;zali the Soulcoiler</strong> · 56 k · — face à l'équivalent · 25 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=4" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/4" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/4/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Jairtrude</b> (toi) <span class="det">· 56 k</span><div class="det"><b>rang ≈ 16 249</b> / 24 999 · centile 35 (16 à ton ilvl)</div></div><div class="ecart"><div class="dps">56 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="123.1" height="18"><title>Monocible : 0:00 → 1:02 (1,1 ennemis)</title></rect><rect class="multi" x="323.1" y="4" width="43.7" height="18"><title>Multicible : 1:02 → 1:24 (4,1 ennemis)</title></rect><rect class="mono" x="366.8" y="4" width="89.3" height="18"><title>Monocible : 1:24 → 2:09 (1,0 ennemis)</title></rect><rect class="multi" x="456.1" y="4" width="19.9" height="18"><title>Multicible : 2:09 → 2:19 (4,3 ennemis)</title></rect><rect class="mono" x="476.0" y="4" width="93.3" height="18"><title>Monocible : 2:19 → 3:06 (1,1 ennemis)</title></rect><rect class="multi" x="569.3" y="4" width="35.7" height="18"><title>Multicible : 3:06 → 3:24 (3,7 ennemis)</title></rect><rect class="mono" x="605.0" y="4" width="73.5" height="18"><title>Monocible : 3:24 → 4:01 (1,2 ennemis)</title></rect><rect class="multi" x="678.5" y="4" width="21.8" height="18"><title>Multicible : 4:01 → 4:12 (3,7 ennemis)</title></rect><rect class="mono" x="700.3" y="4" width="85.4" height="18"><title>Monocible : 4:12 → 4:55 (1,1 ennemis)</title></rect><rect class="multi" x="785.7" y="4" width="29.8" height="18"><title>Multicible : 4:55 → 5:10 (3,8 ennemis)</title></rect><rect class="mono" x="815.5" y="4" width="51.6" height="18"><title>Monocible : 5:10 → 5:36 (1,2 ennemis)</title></rect><rect class="multi" x="867.1" y="4" width="33.8" height="18"><title>Multicible : 5:36 → 5:53 (5,0 ennemis)</title></rect><rect class="mono" x="900.9" y="4" width="43.1" height="18"><title>Monocible : 5:53 → 6:14 (1,0 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Sentinel</td><td class="num">0 / 3</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(282 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Requiert Paladin Niveau 6 requis Consacre le sol sous vos pieds, ce qui inflige [ Croisade écarlate : [(([5% of Attack Power]) * ceil12) * 1.05] points de dégâts de rayonnement / [(([5% of Attack Power]) * ceil12) * 1.05] points de dégâts du sacré] en 12 s aux adversaires qui entrent dans la zone [ Terre consacrée : et réduit leur vitesse de déplacement de 50% / .] 1 instance maximum."><i class="ic ic-spell_holy_innerfire"></i>Consecration <span class="fr">(Consécration)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2 Charges Requiert Paladin Commande à la Lumière de s’incarner sous la forme d’un armement sacré que brandira votre cible. Arme sacrée : Lorsque vous utilisez Arme sacrée, vos sorts et vos techniques ont une chance de générer ([104% of Attack Power]) points supplémentaires de dégâts du sacré ou de soins sur les cibles proches. L’effet est augmenté lorsque l’Arme sacrée frappe une seule cible, et réduit au-delà de 5. Dure 20 s. Devient Rempart sacré après utilisation. [ Sacré : Génère 3 charges de puissance sacrée. ]"><i class="ic ic-inv_ability_lightsmithpaladin_sacredweapon"></i>Sacred Weapon <span class="fr">(Arme sacrée)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(93 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Courroux vengeur invoque une arme sacrée supplémentaire. Pendant la durée de Courroux vengeur, celle-ci lance des sorts sur votre cible et fait écho aux effets des techniques de puissance sacrée."><i class="ic ic-inv_mace_1h_artifactnorgannon_d_06"></i>Blessing of the Forge <span class="fr">(Bénédiction de la forge)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Les coups critiques de Jugement créent une onde de choc autour de la cible, [ Sacré : rendant à un maximum de 5 personnages alliés blessés ([113.4% of Spell Power]) points de vie / Protection infligeant ([184% of Attack Power]) points de dégâts aux personnages adverses à moins de 5 m. Les dégâts sont réduits au-delà de 5 cibles ]"><i class="ic ic-inv_10_blacksmithing_consumable_repairhammer_color1"></i>Hammer and Anvil <span class="fr">(Marteau et enclume)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Mot de rappel (OLD) Mana : 10 10 s d&#x27;incantation"><i class="ic ic-inv_axe_02"></i>Melee <span class="fr">(Mêlée)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-entombed-sentinels"><summary><strong>Entombed Sentinels</strong> · 63 k · — face à l'équivalent · 33 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=14" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/14" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/14/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Jairtrude</b> (toi) <span class="det">· 63 k</span><div class="det"><b>rang ≈ 13 584</b> / 22 640 · centile 40 (18 à ton ilvl)</div></div><div class="ecart"><div class="dps">63 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="30.8" height="18"><title>Monocible : 0:00 → 0:17 (2,0 ennemis)</title></rect><rect class="multi" x="230.8" y="4" width="27.1" height="18"><title>Multicible : 0:17 → 0:32 (3,0 ennemis)</title></rect><rect class="mono" x="257.9" y="4" width="83.3" height="18"><title>Monocible : 0:32 → 1:18 (2,0 ennemis)</title></rect><rect class="multi" x="341.2" y="4" width="32.6" height="18"><title>Multicible : 1:18 → 1:36 (3,0 ennemis)</title></rect><rect class="mono" x="373.8" y="4" width="61.5" height="18"><title>Monocible : 1:36 → 2:10 (2,0 ennemis)</title></rect><rect class="multi" x="435.3" y="4" width="19.9" height="18"><title>Multicible : 2:10 → 2:21 (3,0 ennemis)</title></rect><rect class="mono" x="455.2" y="4" width="70.6" height="18"><title>Monocible : 2:21 → 3:00 (2,0 ennemis)</title></rect><rect class="multi" x="525.8" y="4" width="34.4" height="18"><title>Multicible : 3:00 → 3:19 (3,0 ennemis)</title></rect><rect class="mono" x="560.2" y="4" width="59.7" height="18"><title>Monocible : 3:19 → 3:52 (2,0 ennemis)</title></rect><rect class="multi" x="619.9" y="4" width="36.2" height="18"><title>Multicible : 3:52 → 4:12 (3,0 ennemis)</title></rect><rect class="mono" x="656.1" y="4" width="50.7" height="18"><title>Monocible : 4:12 → 4:40 (2,0 ennemis)</title></rect><rect class="multi" x="706.8" y="4" width="39.8" height="18"><title>Multicible : 4:40 → 5:02 (3,0 ennemis)</title></rect><rect class="mono" x="746.6" y="4" width="54.3" height="18"><title>Monocible : 5:02 → 5:32 (2,0 ennemis)</title></rect><rect class="multi" x="800.9" y="4" width="32.6" height="18"><title>Multicible : 5:32 → 5:50 (3,0 ennemis)</title></rect><rect class="mono" x="833.5" y="4" width="63.3" height="18"><title>Monocible : 5:50 → 6:25 (2,0 ennemis)</title></rect><rect class="multi" x="896.8" y="4" width="25.3" height="18"><title>Multicible : 6:25 → 6:39 (3,0 ennemis)</title></rect><rect class="mono" x="922.2" y="4" width="21.8" height="18"><title>Monocible : 6:39 → 6:51 (1,3 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Sentinel</td><td class="num">0 / 4</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(274 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Courroux vengeur invoque une arme sacrée supplémentaire. Pendant la durée de Courroux vengeur, celle-ci lance des sorts sur votre cible et fait écho aux effets des techniques de puissance sacrée."><i class="ic ic-inv_mace_1h_artifactnorgannon_d_06"></i>Blessing of the Forge <span class="fr">(Bénédiction de la forge)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Marteau et enclume octroie également une charge de Chef-d’œuvre, ce qui permet à votre prochain Armement sacré de lancer une version plus faible sur un personnage allié proche par charge accumulée. (750ms de recharge)"><i class="ic ic-inv_sword_2h_lightforged_c_01"></i>Lesser Weapon <span class="fr">(Arme mineure)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Les personnages adverses touchés par Jugement ou [ Marteau béni ] [ Marteau du vertueux / Frappe du croisé ] subissent 20 % de dégâts du sacré supplémentaires. En cas de coup critique, les dégâts supplémentaires sont augmentés de 100 %."><i class="ic ic-spell_holy_summonlightwell"></i>Unrelenting Edict <span class="fr">(Édit implacable)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(137 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="2 Charges Requiert Paladin Commande à la Lumière de s’incarner sous la forme d’un armement sacré que brandira votre cible. Arme sacrée : Lorsque vous utilisez Arme sacrée, vos sorts et vos techniques ont une chance de générer ([104% of Attack Power]) points supplémentaires de dégâts du sacré ou de soins sur les cibles proches. L’effet est augmenté lorsque l’Arme sacrée frappe une seule cible, et réduit au-delà de 5. Dure 20 s. Devient Rempart sacré après utilisation. [ Sacré : Génère 3 charges de puissance sacrée. ]"><i class="ic ic-inv_ability_lightsmithpaladin_sacredweapon"></i>Sacred Weapon <span class="fr">(Arme sacrée)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Les coups critiques de Jugement créent une onde de choc autour de la cible, [ Sacré : rendant à un maximum de 5 personnages alliés blessés ([113.4% of Spell Power]) points de vie / Protection infligeant ([184% of Attack Power]) points de dégâts aux personnages adverses à moins de 5 m. Les dégâts sont réduits au-delà de 5 cibles ]"><i class="ic ic-inv_10_blacksmithing_consumable_repairhammer_color1"></i>Hammer and Anvil <span class="fr">(Marteau et enclume)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Requiert Paladin Niveau 6 requis Consacre le sol sous vos pieds, ce qui inflige [ Croisade écarlate : [(([5% of Attack Power]) * ceil12) * 1.05] points de dégâts de rayonnement / [(([5% of Attack Power]) * ceil12) * 1.05] points de dégâts du sacré] en 12 s aux adversaires qui entrent dans la zone [ Terre consacrée : et réduit leur vitesse de déplacement de 50% / .] 1 instance maximum."><i class="ic ic-spell_holy_innerfire"></i>Consecration <span class="fr">(Consécration)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Courroux vengeur invoque une arme sacrée supplémentaire. Pendant la durée de Courroux vengeur, celle-ci lance des sorts sur votre cible et fait écho aux effets des techniques de puissance sacrée."><i class="ic ic-inv_mace_1h_artifactnorgannon_d_06"></i>Blessing of the Forge <span class="fr">(Bénédiction de la forge)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-vashnik-the-malignant"><summary><strong>Vashnik the Malignant</strong> · 82 k · — face à l'équivalent · 26 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=17" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/17" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/17/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Jairtrude</b> (toi) <span class="det">· 82 k</span><div class="det"><b>rang ≈ 14 257</b> / 21 935 · centile 35 (17 à ton ilvl)</div></div><div class="ecart"><div class="dps">82 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="54.9" height="18"><title>Monocible : 0:00 → 0:26 (1,0 ennemis)</title></rect><rect class="multi" x="254.9" y="4" width="35.9" height="18"><title>Multicible : 0:26 → 0:43 (4,0 ennemis)</title></rect><rect class="mono" x="290.8" y="4" width="141.4" height="18"><title>Monocible : 0:43 → 1:50 (1,0 ennemis)</title></rect><rect class="multi" x="432.2" y="4" width="40.1" height="18"><title>Multicible : 1:50 → 2:09 (3,5 ennemis)</title></rect><rect class="mono" x="472.3" y="4" width="137.2" height="18"><title>Monocible : 2:09 → 3:14 (1,0 ennemis)</title></rect><rect class="multi" x="609.4" y="4" width="52.8" height="18"><title>Multicible : 3:14 → 3:39 (4,9 ennemis)</title></rect><rect class="mono" x="662.2" y="4" width="124.5" height="18"><title>Monocible : 3:39 → 4:38 (1,0 ennemis)</title></rect><rect class="multi" x="786.7" y="4" width="61.2" height="18"><title>Multicible : 4:38 → 5:07 (5,4 ennemis)</title></rect><rect class="mono" x="847.9" y="4" width="96.1" height="18"><title>Monocible : 5:07 → 5:52 (1,0 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Sentinel</td><td class="num">0 / 3</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(263 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Les coups critiques de Jugement créent une onde de choc autour de la cible, [ Sacré : rendant à un maximum de 5 personnages alliés blessés ([113.4% of Spell Power]) points de vie / Protection infligeant ([184% of Attack Power]) points de dégâts aux personnages adverses à moins de 5 m. Les dégâts sont réduits au-delà de 5 cibles ]"><i class="ic ic-inv_10_blacksmithing_consumable_repairhammer_color1"></i>Hammer and Anvil <span class="fr">(Marteau et enclume)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Courroux vengeur invoque une arme sacrée supplémentaire. Pendant la durée de Courroux vengeur, celle-ci lance des sorts sur votre cible et fait écho aux effets des techniques de puissance sacrée."><i class="ic ic-inv_mace_1h_artifactnorgannon_d_06"></i>Blessing of the Forge <span class="fr">(Bénédiction de la forge)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2 Charges Requiert Paladin Commande à la Lumière de s’incarner sous la forme d’un armement sacré que brandira votre cible. Arme sacrée : Lorsque vous utilisez Arme sacrée, vos sorts et vos techniques ont une chance de générer ([104% of Attack Power]) points supplémentaires de dégâts du sacré ou de soins sur les cibles proches. L’effet est augmenté lorsque l’Arme sacrée frappe une seule cible, et réduit au-delà de 5. Dure 20 s. Devient Rempart sacré après utilisation. [ Sacré : Génère 3 charges de puissance sacrée. ]"><i class="ic ic-inv_ability_lightsmithpaladin_sacredweapon"></i>Sacred Weapon <span class="fr">(Arme sacrée)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(90 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Mot de rappel (OLD) Mana : 10 10 s d&#x27;incantation"><i class="ic ic-inv_axe_02"></i>Melee <span class="fr">(Mêlée)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-the-lost-explorers"><summary><strong>The Lost Explorers</strong> · 57 k · — face à l'équivalent · 75 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=26" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/26" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/26/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Jairtrude</b> (toi) <span class="det">· 57 k</span><div class="det"><b>rang ≈ 17 904</b> / 22 664 · centile 21 (9 à ton ilvl)</div></div><div class="ecart"><div class="dps">57 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="multi" x="200.0" y="4" width="21.8" height="18"><title>Multicible : 0:00 → 0:10 (2,8 ennemis)</title></rect><rect class="mono" x="221.8" y="4" width="50.1" height="18"><title>Monocible : 0:10 → 0:33 (2,0 ennemis)</title></rect><rect class="multi" x="271.9" y="4" width="141.5" height="18"><title>Multicible : 0:33 → 1:38 (3,0 ennemis)</title></rect><rect class="mono" x="413.4" y="4" width="71.9" height="18"><title>Monocible : 1:38 → 2:11 (2,0 ennemis)</title></rect><rect class="multi" x="485.3" y="4" width="326.6" height="18"><title>Multicible : 2:11 → 4:41 (3,0 ennemis)</title></rect><rect class="mono" x="811.9" y="4" width="34.8" height="18"><title>Monocible : 4:41 → 4:57 (2,0 ennemis)</title></rect><rect class="multi" x="846.7" y="4" width="30.5" height="18"><title>Multicible : 4:57 → 5:11 (3,0 ennemis)</title></rect><rect class="mono" x="877.2" y="4" width="32.7" height="18"><title>Monocible : 5:11 → 5:26 (2,0 ennemis)</title></rect><rect class="multi" x="909.9" y="4" width="34.1" height="18"><title>Multicible : 5:26 → 5:41 (2,9 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Sentinel</td><td class="num">0 / 3</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(87 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="2 Charges Requiert Paladin Commande à la Lumière de s’incarner sous la forme d’un armement sacré que brandira votre cible. Arme sacrée : Lorsque vous utilisez Arme sacrée, vos sorts et vos techniques ont une chance de générer ([104% of Attack Power]) points supplémentaires de dégâts du sacré ou de soins sur les cibles proches. L’effet est augmenté lorsque l’Arme sacrée frappe une seule cible, et réduit au-delà de 5. Dure 20 s. Devient Rempart sacré après utilisation. [ Sacré : Génère 3 charges de puissance sacrée. ]"><i class="ic ic-inv_ability_lightsmithpaladin_sacredweapon"></i>Sacred Weapon <span class="fr">(Arme sacrée)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Marteau et enclume octroie également une charge de Chef-d’œuvre, ce qui permet à votre prochain Armement sacré de lancer une version plus faible sur un personnage allié proche par charge accumulée. (750ms de recharge)"><i class="ic ic-inv_sword_2h_lightforged_c_01"></i>Lesser Weapon <span class="fr">(Arme mineure)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(255 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Marteau et enclume octroie également une charge de Chef-d’œuvre, ce qui permet à votre prochain Armement sacré de lancer une version plus faible sur un personnage allié proche par charge accumulée. (750ms de recharge)"><i class="ic ic-inv_sword_2h_lightforged_c_01"></i>Lesser Weapon <span class="fr">(Arme mineure)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2 Charges Requiert Paladin Commande à la Lumière de s’incarner sous la forme d’un armement sacré que brandira votre cible. Arme sacrée : Lorsque vous utilisez Arme sacrée, vos sorts et vos techniques ont une chance de générer ([104% of Attack Power]) points supplémentaires de dégâts du sacré ou de soins sur les cibles proches. L’effet est augmenté lorsque l’Arme sacrée frappe une seule cible, et réduit au-delà de 5. Dure 20 s. Devient Rempart sacré après utilisation. [ Sacré : Génère 3 charges de puissance sacrée. ]"><i class="ic ic-inv_ability_lightsmithpaladin_sacredweapon"></i>Sacred Weapon <span class="fr">(Arme sacrée)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-sszorak"><summary><strong>Sszorak</strong> · 54 k · — face à l'équivalent · 0 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/GmT67t2f3YHPhpFA?fight=31" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/GmT67t2f3YHPhpFA/fight/31" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/GmT67t2f3YHPhpFA/31/Jairtrude/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Jairtrude</b> (toi) <span class="det">· 54 k</span><div class="det"><b>rang ≈ 12 128</b> / 15 549 · centile 22 (11 à ton ilvl)</div></div><div class="ecart"><div class="dps">54 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">15</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="744.0" height="18"><title>Monocible : 0:00 → 6:27 (1,0 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Sentinel</td><td class="num">1 / 4</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(387 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="2 Charges Requiert Paladin Commande à la Lumière de s’incarner sous la forme d’un armement sacré que brandira votre cible. Arme sacrée : Lorsque vous utilisez Arme sacrée, vos sorts et vos techniques ont une chance de générer ([104% of Attack Power]) points supplémentaires de dégâts du sacré ou de soins sur les cibles proches. L’effet est augmenté lorsque l’Arme sacrée frappe une seule cible, et réduit au-delà de 5. Dure 20 s. Devient Rempart sacré après utilisation. [ Sacré : Génère 3 charges de puissance sacrée. ]"><i class="ic ic-inv_ability_lightsmithpaladin_sacredweapon"></i>Sacred Weapon <span class="fr">(Arme sacrée)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<h3 id="s-build-et-stats">Build et stats</h3>
+<p class="note">Pas de simulation (mode rapide ou export de l'addon absent).</p>
+
+<h3 id="s-quipement">Équipement</h3>
+<p class="note">Pas d'analyse d'équipement (mode rapide ou export absent).</p>
+
+<h2 id="s-progression">Progression</h2>
+<h3 id="s-centiles-par-boss">Centiles par boss</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">13/09</th><th class="num">16/09</th><th class="num">17/09</th><th class="num">23/09</th><th class="num">30/09</th></tr></thead>
+<tbody>
+<tr><td>Nymrissa Wavecaller</td><td class="num">—</td><td class="num">37 <span class="muted">· 25</span></td><td class="num">—</td><td class="num">53 <span class="muted">· 36</span></td><td class="num">70 <span class="muted">· 48</span></td></tr>
+<tr><td>Nek&#x27;zali the Soulcoiler</td><td class="num">—</td><td class="num">87 <span class="muted">· 71</span></td><td class="num">—</td><td class="num">89 <span class="muted">· 63</span></td><td class="num">35 <span class="muted">· 16</span></td></tr>
+<tr><td>The Coiled Altar</td><td class="num">—</td><td class="num">49 <span class="muted">· 25</span></td><td class="num">—</td><td class="num">69 <span class="muted">· 39</span></td><td class="num">—</td></tr>
+<tr><td>Ula&#x27;tek</td><td class="num">—</td><td class="num">24 <span class="muted">· 9</span></td><td class="num">—</td><td class="num">37 <span class="muted">· 16</span></td><td class="num">—</td></tr>
+<tr><td>Entombed Sentinels</td><td class="num">—</td><td class="num">26 <span class="muted">· 24</span></td><td class="num">—</td><td class="num">33 <span class="muted">· 24</span></td><td class="num">40 <span class="muted">· 18</span></td></tr>
+<tr><td>Vashnik the Malignant</td><td class="num">—</td><td class="num">23 <span class="muted">· 21</span></td><td class="num">—</td><td class="num">26 <span class="muted">· 16</span></td><td class="num">35 <span class="muted">· 17</span></td></tr>
+<tr><td>The Lost Explorers</td><td class="num">—</td><td class="num">—</td><td class="num">24 <span class="muted">· 25</span></td><td class="num">33 <span class="muted">· 27</span></td><td class="num">21 <span class="muted">· 9</span></td></tr>
+<tr><td>Sszorak</td><td class="num">—</td><td class="num">—</td><td class="num">23 <span class="muted">· 22</span></td><td class="num">16 <span class="muted">· 10</span></td><td class="num">22 <span class="muted">· 11</span></td></tr>
+<tr><td><strong>Écart au potentiel simc</strong></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Centile global · centile à ton ilvl. Écart au potentiel : ton DPS rapporté à ce que ton équipement ferait avec une rotation parfaite (simulation).</p>
+<h3 id="s-conseils-du-23-09">Conseils du 23/09</h3>
+<p>Aucun conseil chiffré à au moins 0,5 % la fois précédente.</p>
+
+<details class="methode"><summary><h2 id="s-m-thode" style="display:inline">Méthode</h2> <span class="muted">(cliquer pour déplier)</span></summary><div class="cartes"><div class="carte"><div class="lib"><strong>Combats analysés</strong></div><p>Ton meilleur kill de chaque boss ; pour les morts, tous les wipes de la soirée (comptées si tu es parmi les 3 premiers à tomber).</p></div><div class="carte"><div class="lib"><strong>Références</strong></div><p>Le top 3 mondial de ta spé et un tank équivalent, trouvés au classement Warcraft Logs des tanks (au DPS) ; et l&#x27;autre tank de la soirée sur le même combat, la comparaison la plus juste pour les relais.</p></div><div class="carte"><div class="lib"><strong>Gros coups</strong></div><p>Les coups encaissés d&#x27;au moins 75 % du plus gros du combat (avant absorption) : les tank busters, avec les buffs actifs à ce moment-là (défensif majeur, mitigation active, ou rien).</p></div><div class="carte"><div class="lib"><strong>Relais</strong></div><p>Le debuff de relais est reconnu sans liste écrite à la main : celui dont les stacks viennent de monter sur un tank (au moins 2 stacks) juste avant que l&#x27;autre provoque. Relais tardif : 3 s de plus que le délai médian des relais du combat, et au moins 4 s.</p></div><div class="carte"><div class="lib"><strong>Classement des constats</strong></div><p>Critique : ta mort. Grave : gros coups sans défensif, relais tardif, boss qui frappe un autre joueur. Puis mitigation et défensifs sous-utilisés ; les constats de dégâts viennent après.</p></div><div class="carte"><div class="lib"><strong>Limites</strong></div><p>simc ne simule pas la survie. Les mécaniques punitives (coups qui tuent d&#x27;un coup) et le bon moment d&#x27;un relais dépendent du boss : le log ne dit pas tout, Wipefest viendra en complément.</p></div></div></details>
+<div id="infobulle"></div>
+<script>
+(() => {
+  const bulle = document.getElementById("infobulle");
+  const montrer = (ev, texte) => {
+    bulle.textContent = texte; bulle.style.display = "block";
+    const x = Math.min(ev.clientX + 14, window.innerWidth - bulle.offsetWidth - 8);
+    bulle.style.left = x + "px"; bulle.style.top = (ev.clientY + 14) + "px";
+  };
+  const cacher = () => { bulle.style.display = "none"; };
+  document.querySelectorAll("[data-tip]").forEach(el => {
+    el.addEventListener("pointermove", ev => montrer(ev, el.dataset.tip));
+    el.addEventListener("pointerleave", cacher);
+  });
+  document.querySelectorAll("svg[data-courbes]").forEach(svg => {
+    const d = JSON.parse(svg.dataset.courbes), zone = svg.querySelector(".zone"), ligne = svg.querySelector(".reticule");
+    zone.addEventListener("pointermove", ev => {
+      const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY;
+      const q = p.matrixTransform(svg.getScreenCTM().inverse());
+      const i = Math.max(0, Math.min(d.t.length - 1, Math.round((q.x - d.x0) / d.dx)));
+      ligne.setAttribute("x1", d.x0 + i * d.dx); ligne.setAttribute("x2", d.x0 + i * d.dx); ligne.style.display = "";
+      montrer(ev, d.t[i] + "\n" + d.series.map(s => (s.v[i] == null ? "—" : s.v[i]) + " lancers/min  " + s.nom).join("\n"));
+    });
+    zone.addEventListener("pointerleave", () => { ligne.style.display = "none"; cacher(); });
+  });
+})();
+</script>
+<script>
+function ouvrirAncre() {
+  const d = location.hash && document.getElementById(location.hash.slice(1));
+  if (d && d.tagName === "DETAILS") { d.open = true; d.scrollIntoView(); }
+}
+addEventListener("hashchange", ouvrirAncre); addEventListener("DOMContentLoaded", ouvrirAncre);
+</script>
+
+</main>
+</div>
+<script>
+(function () {
+  var nav = document.querySelector('.sommaire'); if (!nav) return;
+  var det = nav.querySelector('details'), petit = window.matchMedia('(max-width: 1100px)');
+  if (petit.matches) det.open = false;
+  var liens = {}; nav.querySelectorAll('a').forEach(function (a) { liens[a.getAttribute('href').slice(1)] = a; });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A' && petit.matches) det.open = false; });
+  var titres = Array.prototype.filter.call(document.querySelectorAll('main h2[id], main h3[id]'),
+                                           function (h) { return liens[h.id]; });
+  function actif() {
+    var courant = titres[0];
+    titres.forEach(function (h) { if (h.getBoundingClientRect().top < 120) courant = h; });
+    Object.keys(liens).forEach(function (k) { liens[k].classList.toggle('actif', courant && k === courant.id); });
+  }
+  window.addEventListener('scroll', actif, {passive: true}); actif();
+})();
+</script>
+</body>
+</html>
