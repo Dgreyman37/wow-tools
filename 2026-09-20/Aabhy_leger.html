@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ga-genere" content="2026-10-26T14:18">
+<meta name="ga-version" content="e41ff5e">
+<title>Mon DPS Aabhy</title>
+<style>
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .badge { font-size: .74rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px;
+           padding: 2px 10px; background: var(--surface); }
+  .badge-verif.ok { color: var(--good); border-color: var(--good); }
+  .badge-verif.alerte { color: var(--warn); border-color: var(--warn); }
+  .badge-verif.non { font-style: italic; }
+  :root { --bg: #f7f6f3; --surface: #ffffff; --text: #1f2328; --muted: #5f6670; --border: #e1e0dc;
+          --accent: #b8860b; --good: #1f7a4d; --bad: #b23b2e; --warn: #9a6400; --row: #faf9f7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #16171a; --surface: #1f2125; --text: #e6e6e3; --muted: #9ba1a8; --border: #33363c;
+            --accent: #e3b341; --good: #5cc48f; --bad: #ef7a6c; --warn: #e0b04f; --row: #23252a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  h2 { font-size: 1.35rem; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.08rem; margin: 26px 0 8px; }
+  a { color: var(--accent); }
+  .meta { color: var(--muted); margin: 0 0 20px; font-size: .95rem; }
+  .lead { background: var(--surface); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 6px; }
+  .lead ul { margin: 6px 0 0; padding-left: 20px; }
+  .note { color: var(--muted); font-size: .92rem; }
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+  th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; vertical-align: top; }
+  td.wrap { white-space: normal; min-width: 240px; }
+  th { background: var(--row); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--good); font-weight: 600; } .mid { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; } .muted { color: var(--muted); }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 8px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  td details { background: none; border: 0; padding: 0; margin: 4px 0 0; }
+  td summary { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  td details p { margin: 4px 0; max-width: 46em; }
+  .faire { display: block; margin-top: 2px; }
+</style>
+<style>
+  .avec-nav { display: grid; grid-template-columns: 230px minmax(0, 1040px); gap: 28px; justify-content: center;
+              padding: 0 16px; }
+  .avec-nav main { max-width: none; margin: 0; padding: 32px 0 64px; }
+  .sommaire { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 32px 0 24px;
+              font-size: .9rem; }
+  .sommaire summary { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+                      font-size: .75rem; margin-bottom: 8px; cursor: pointer; list-style: none; }
+  .sommaire summary::-webkit-details-marker { display: none; }
+  .sommaire ul { list-style: none; margin: 0; padding: 0; }
+  .sommaire li { margin: 0; }
+  .sommaire a { display: block; padding: 4px 10px; border-left: 3px solid var(--border); color: var(--text);
+                text-decoration: none; line-height: 1.35; }
+  .sommaire li ul a { padding-left: 22px; color: var(--muted); font-size: .85rem; }
+  .sommaire a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .sommaire a.actif { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  /* sections bien séparées : un bandeau par grande partie */
+  .avec-nav main > h2, .avec-nav main section > h2 {
+    margin: 64px 0 18px; padding: 12px 16px; font-size: 1.45rem; background: var(--surface);
+    border: 1px solid var(--border); border-left: 6px solid var(--accent); border-radius: 10px; }
+  .avec-nav main > h2:first-of-type { margin-top: 36px; }
+  .avec-nav h2, .avec-nav h3 { scroll-margin-top: 16px; }
+  .avec-nav main > h3 { padding-bottom: 4px; border-bottom: 1px dashed var(--border); }
+  @media (max-width: 1100px) {
+    .avec-nav { display: block; padding: 0; }
+    .avec-nav main { padding: 16px 16px 64px; }
+    .sommaire { position: sticky; top: 0; z-index: 5; max-height: 70vh; padding: 8px 16px; background: var(--bg);
+                border-bottom: 1px solid var(--border); }
+    .sommaire summary { margin: 0; padding: 6px 0; }
+    .sommaire summary::after { content: " ▾"; }
+  }
+</style>
+<style>.ic{display:inline-block;width:1.2em;height:1.2em;border-radius:3px;background-size:cover;vertical-align:-.25em;margin-right:.3em;flex:none}.ic-spec{border-radius:50%}.ic-ability_priest_psychiclink,.io-ability_priest_psychiclink,.fi-ability_priest_psychiclink{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwEBAQEAAAAAAAAAAAAAAAUGBwQCA//EADMQAAIBAwMCAwYDCQAAAAAAAAECAwQFEQAGIRIxB0FRExQiMmFxcpHRI0JDgaGjsbLB/8QAGgEAAgIDAAAAAAAAAAAAAAAABAUCAwABB//EADARAAEBBQUGBAcAAAAAAAAAAAECAAMEESESMUGB0QUTFVFhoQYUIvAyNEJxkbHB/9oADAMBAAIRAxEAPwCCqPD/AGTfpkpLVdqmhuEzHoe4g+zmP4hkgk+vc+fOpOr8N7ZT1c9NV7y2vTzQD9oks84YHIGMex5PPbT3au1N4V8V7lus9uigtpPtneVVIfthcfNjPVkZ+Q576rN50lrrpaC8S2jbE3v9FBK0tdeJqd3kCBZPhVwOGUj89dagjCPV1TMVvCSQRLnSoa0OYaKFuHTd1P6n/Wy5tg2JeF3ttZ/os1Rn+sOn1i8LLS1ta81+5rQbZE4QmmaR5JWOfhQMi5PH8vPGm4obG84IsGwlyw4j3HUAD+4capr3tqpub2jblkW00tVRWxqlqda0tEZZGZ8LI55JVYxkn+IPpoiNdQTpAISE9ZJuyxwzbfk0IBU+RQdValkUO3/DylDRw11+pkznAYqH4+bAcd/+aNSlm274m18M8lEbe8aTtGxdo1wwxkAd8aNKw9hCJ2FtDiGyRSyO+rQNDc7qLlRyrLI8iEDpbkODwRj0IJz9NbVszxBqbXbKiyAvLG0sc1LmUo0CvzIRjnDYBAPGWJwfOH90WKJ2ioIIOpSGPwYP04UEj6ZGfPjjS+1QNSXCqqpZWLOUZ5WOOpur19cc/bRDjZr2FNl76goic8JAsZCAQqglNZ9Kd23pN7UluoEultuN7uES1TJVwVtYcxjnAUp5A8g9jjGOdYX4h7jut4ie4zVRlqLhMZ6qcc9eTlQCOy5AA/Ao+muzaVfM1fU2mpYqz0s3VG2OWVC6kY78gY++l9konp4vZJ0PGQcRv2BOM4yCMHAyCD2B4IzrFQe9BduPqFTiK3e5GTXv3yHztKQJAzGYPehy+zSU1zu5KhKmdQFA7nRq6aggU4FopR+NUJ/10aHPh6KNd6e+rLOHO+Y/B0b4WmoluNf7tM3RGq5+DufzzpNfquY+wgUhI16JAF9SWz/gffzzxo0aabRWpSEzN7En5YKxJ0Z1BEIq+OqjYrIkVVEOBjpCOcEY58x9jr3C7VFHPWMxWZYo5cj94sOc5z+vqTo0anOy/p7uYhIFspwkTnzbgS7VTorER5I9D+ujRo1YYl9P4iygrVO9v//Z)}.ic-ability_warlock_voidzone,.io-ability_warlock_voidzone,.fi-ability_warlock_voidzone{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAgICAwAAAAAAAAAAAAAAAAYEBwMFAQII/8QAKBAAAQMDAwQDAAMBAAAAAAAAAQIDBAAFERIhMQYTQVEHImEyYoHR/8QAGAEAAwEBAAAAAAAAAAAAAAAABAUGAwH/xAAuEQACAQIEBQIEBwAAAAAAAAABAhEDBAAFIUESMVFhcRQiBiOBoRNCUoKx4fH/2gAMAwEAAhEDEQA/APPvTKwwxPW0p5FyXpUiQ2jW4hOTqwT/ABKjj7DJpw6Lsd5udvucW4LfdjyGMNokvDZYOQvKjtili539PTbzkC0pbcnIUQ/McSCB/RKfz3SpdbzLukoPznnZChnT3VatO/AJ8Vc3GY2OWKKNP3usgxIXefPQ/wBaOra4WxCLWYsyggoDCe6QZP5jrHLmBqYxYh+O1vOOCPKgSwk4K2ZiCOM1DR0o9DQ9KekLt8NlH3kEKBcO5wgbE423OBmkFc9wIUlI06hpOPVbPpnqm42hKozcx0wnCO7GV90KH4k7A/owaHt88y9yiPbhepBP+kbnkdsD24ysMJpMP3kidtgYnnBBjScS7zdJdxuTsxkPNtr0hOklJUEpCQpWDuogDJopqtlmgdSxBdYNxYhpcJS5HW+kFtY5G444I/DRW1TKDcOaqsGDayGAmdZjbxtgetlea1qjVF4WBMzI1788V51QiU3fZzElkMuh9ZWjOo5JznPkHOdtt61ieasmDPhdXxHolyjpjywkESWwCrnnjjnY+6xu/HEh4IRZrlbrijTl1Rf7KkqzxpV6/wC0vvsguHX1VqfxKbSQQIPPkR1GDqmWVLj51r71afMzy4ecidhGK8WD4rsw0dYUpP185qwrb8eqDLibrdLbbFjPbK3u5qx7CfBFSD0lZbAwxcrtchcFPKIjxo6CEOnxz9iB54FC0/h6/gO68K8yW0A8zv2xxMkvCOJwFAEkkgQJjUST9tZGOekenpE6yNyWHG2WVqPb1ISCoDYncHzkZzjaistxushLjYeZUyO2A2lWNkb4xjIxyNvVFOmz/KrM+nYOxXQkAgGOg6dMMhd29IcBpsY3mPtGmEVbjkdhlplakJdbK3MHGrc7H824pm6QmSGIc95lwoWhrKceCSKKKLyxil0QpiFMdvlzp9dfOJazZkvFZTBAaO3sOIkuW+qO686suuKPK98Z9eqk3hapvQ9tmPqJdjyVxkkcFB+2/wC5oooCg7VKLcZmaZJnciCD5nGOUMXF0WMyjE+QVIP0OuNiZblotttYipbKXIiXlFxOo6lKVn/KKKKnbqtUp1SiGAI/gdsWQuatJVRGgADp+kdsf//Z)}.ic-inv12_ability_priest_powerwordmadness_eye,.io-inv12_ability_priest_powerwordmadness_eye,.fi-inv12_ability_priest_powerwordmadness_eye{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAcEBQYIAv/EAC4QAAEDAwICCgMAAwAAAAAAAAECAwQABREGIRIxBxMUFSIyQVFhcQgjoSRSgf/EABoBAQACAwEAAAAAAAAAAAAAAAUBBgIDBAf/xAAtEQABAgUCBAQHAQAAAAAAAAABAhEAAwQhMRJBBSJRkRRhcbEGEzJSgaHRwf/aAAwDAQACEQMRAD8ASAfMJJkOyI9qjr8fWOgKkOj3APlH9NeG9YQ3ZAiWqJd7k9yBacKCo1m4MFElx676jcckLSku9nyR9cZHLmMIG5yOVdNfjp0M2S46QXr3Vst5lKkr6qLFX2dthKcc+DxK543Pp/2vT5/G6iXLExtCDi2pRBwWcJS/RiesWCXUTQwTZJPqblhbAJOAz9TCj71v0YNuztJziyclSVOoeVgc9vMNvuol+gWq8203ixhaG2xmVFV5mSDgkZ322yMZGR6GnqzqjSEy9CxvWp+Mxx9UxLcdSrhV5U8QG6QcgA7/ADWC6YNNM6elHUluwpAXwTQM/tayEkqGPMnI574zmpouNpqzp1akjLgOPMN7EbFjtDVXRrlpKZjkM/MA7dQR+x/ohEXGNdrfKU3ClSWWXMOANOFIOds4B57fyimLbGI64LZUhLmMhKj6jJxRXUv4Tp5qisFnv3gEcH18wVmK25WoR9P2+EyC47JLrjhzkrDbWRn7UpSs/XtXQehLpN1D0Ru2ax3VLD7rbbyWsgAqGOJBzyzgg+xxSD70WuXBluhL0WG0xKCceZpaCl3ceg5n2wavbdfbjo+5vu2ZqTKsryy4qO2r90Yq3yn/AGHyOfPnUV1FLqZa5aRy282AFjZz1xjPqnTTEyZhWjAbZ2ZiC3R3fe7xpNK9Fd7RqWS6uHPjmc5mU9LKerYSTxKwQfGcZAxk7j0q4/J6Tae6JTKELcmzB1DKA6rLjuwHhBwSBz2+6XF/6aLoJilQ7rObUEcCXU/qeSnnwrSpJQ5gk4JGfmsJcNWTLtcVSm4826XBY4e0SnONQHslKQAkfAxVYpKSnoFKT80ElxbmN7WADkt+HucMcqzjMqaDLSALEAB25i6juST29om3W6d3vNQI0d+UI7SW1uNHCeIcwPf7oqsGkL/cv8ySsIcc34eE7D22GB9CilplVx1SiZUlQTsGTjbJfvAx8YoukECJmmJT6LXFcC/FHlqiIJ9WlDiKT775x91o7PMchXpdvQlDkUIaUltwFXCFEjhBznAzt6j3xRRSvDFHw0kv9vsr+DsI20i1DQQdx7H+DtFrchG77XAegRJDSR4S63lQz8ioN/U3aljsEdpkcwADgf2iim1FlEjMLVVkKIy8US7tcHSHFSFZI9KKKKLXPmajzGAzOmP9Rj//2Q==)}.ic-spec-PriestShadow,.io-spec-PriestShadow,.fi-spec-PriestShadow{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACQAJAMBIgACEQEDEQH/xAAaAAEBAAIDAAAAAAAAAAAAAAAHBgAEAgUI/9oACAEBAAAAANa6nuqHvSIrNN0kgSfC0GrajNlIV01zIUS//8QAGAEAAwEBAAAAAAAAAAAAAAAABAUGBwP/2gAIAQIQAAAAyg93K9qFePov/8QAGQEAAgMBAAAAAAAAAAAAAAAABAYCAwUH/9oACAEDEAAAAHaOyFU5qxPN/wD/xAArEAACAgEDAwMDBAMAAAAAAAABAgMEBQAGERITIRQiMRVBUQcyM2FScXL/2gAIAQEAAT8A2HC+SqVzYV5fgrz8aze8NpbWY17bmW2vkwQL1uv+/gDVL9XNmZJRHPBbqN+WQOo/sldblwsEVSbK4t0njfyWB6kKt4IOosgqmQNtetMev9wEi8f17TralyGKGaUTK0cUJlYAAEAD7BdS7YzeZqZXN4qsDTE8gMLsTLL/AJPyfnWKwN29cq0MbQHqLHskkdu4IgfkkfYAa2Zg7OAsZvC3J4pbArLLC6uSGjB+6ayWat469YrCd/a2tmW8ZZxsjim0fciMMg/Kt41Z2XkNtYOzMM/Y5nlEPYUFYm7mpadTC57C/R7KRT9TUbU3IYPKAD1nVTbIw24cjn72ZNyWWsYgCvT5OsnfNvIWpfSuOZD4Kc62bumxTrySW6pRWIHleB1nW6IMluWoPp57tUmFWj+O1ICeXGsLsWw81fpkspIJVYSuhK8ykgFlb8BdbwsvVqwQSsrS9s+9fHnXqYiT3ZK4P26pwDxraGTu5S3JTvTNNEiGVA5JIbkDwdY8texuVoyuwiiYyIUPSwaM9Q862mJbmPyM9qzPMUm9iu5KqVkLgga3ZkrPqgjdLB2ER6hzwrfPGpf5X/6Ov//EACIRAAICAgICAgMAAAAAAAAAAAECAwQAEQUSEzEVITNhkv/aAAgBAgEBPwCKpV5LkbL3HaKBGUKu+oJY+t5eocfxTealMwYaZq5bt2TeicW9I6qwqjRAP5GxTbq8pLGzKlaSUdmbTD69DZzkn1PBWgseR5Iykz9R3Kb3iQFVVREdAZzoC3wAAAChH6O8rAfMyjXo/X8jB6Gf/8QAKxEAAQIEBAILAAAAAAAAAAAAAQIEAAMSIQURIjEUURMWIzIzQVNicYHR/9oACAEDAQE/AMSXOJoC9CEgfeUYc4cs5hlLUo1JFXLI/MdVek18ZK1X7gh1KCXQmJ8NWSqid7bQ1bBzPkSl23Uq4J57wHeHJGXGi3sEYf2mDVL1EK3N4a2bPSPS/IUTUb+cf//Z)}.ic-spell_fire_twilightflamebreath,.io-spell_fire_twilightflamebreath,.fi-spell_fire_twilightflamebreath{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAYFBwgDBP/EAC4QAAEDBAECBQMDBQAAAAAAAAECAwQABREhBhIxBxNBUXEUIjJhgZEIFULR8P/EABkBAAMBAQEAAAAAAAAAAAAAAAQFBgIAB//EACYRAAEDAwMDBQEAAAAAAAAAAAECAxEABCEFMUEGElETYYHR8LH/2gAMAwEAAhEDEQA/AMqWdxly7suTwp1tx3D+VEqIUdnPqd5+ati02SM2EyJLSXJrThQ8pG/NbSB0LHyn29hVPwT0PghtCyUlISvtkjGfkd/mr643b7mjjrb0pLgkx3CyFKQkqU2O/UEkjICj67GD3zV90u22u4PeNtjxP7NVOjXDbCypaZjavVa27fJuJt8mY3DtsiSUmQpGEpSAfcZJA7D3NWh/TzYYUzmL86xcYdTbIh8p24XFwGU26Or8U6SARopAyPU0jeF/AF865UICLir+zwkJkPLaSU9C1b8rKv8ALI2f4rSMvlPh54aWd+0sT4sVyM0VGMHQp1R2ckZyVE737026g1EhJs2AVOKAwJgTydjJ4nA8ZoXUbvvUUp3NSnLrfxl66JcmQWFvFoZUlvOdnuR60VQc7ksqNOkS496Zhwbk4qdCal+XIeDLh11KB+05Cvt9NCippHT73aIc/v1S8W64rIdqiuSnShDYcAG94I+P+9f1rSvEb6xG44qBbkN3GSq2h6RMdRhIAbIOUj12AM98bqqfByPbL9JTxqYtiNLef640pej0qHS42MDedK3+ISSNirdk3fjHEWF8NudnUx5ExTMtRk9K94KHMgYDfWSCNkBTahkGjdGctrYdzhkq48ZGfx+aKbISIG5pv8K+VWbh1pbtPH4SLjcJTH1FzmqcUEdWPtQgHuRntofNJnLJttushUi5NOXK8RZBdQ0MRlqQvalHGS4oZwEgjWDvdL1+5O0GXmBaYceOcpR9PsqT6Hrzkn9Qf2pQdv7KW/K+tWlAOfLcUT/Bx/qqr0bS3fU84YUrJJOT87RxA4FMm9N2Wrn3r3TrgwJKko49DaSNBBUVEfJNFKVw5Msv4QgqAGOoqzmisr6ms0qKQo49z90QW7cGO80qRFrbfQttakLQoKSpJwUkHRBHY1P8p5LeeTS2518lmbMZYSx9StIDjiUjCesj8iBrqO8ADOqKK89aAIzShvzUMZ0xDIbTKeCB2T1nA/auC5Dys9Syo+5OTRRQzjqzIJOKwFqmJrmlSiMlRooorhtWZNf/2Q==)}.ic-spell_shadow_siphonmana,.io-spell_shadow_siphonmana,.fi-spell_shadow_siphonmana{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAcBBggEBf/EADEQAAEDAgUCBQIFBQAAAAAAAAECAwQFEQAGEiExBxMUIkFRYTJxCBUXJEJSYnKBof/EABkBAAMBAQEAAAAAAAAAAAAAAAQFBgECA//EAC0RAAEDAgQCCQUAAAAAAAAAAAEAAgQDEQUSIUExURNTYXGBoaLR8AYUFZKx/9oADAMBAAIRAxEAPwDJcWnTZMyOEsPvyJTtm0kHU4on39bk++NNdB8oPwadMMqM1JqGpKUU1b92wsK/ksj4+n4HrhdUvLtPo+dsvpiV+JVaJIJfiT4QLCXFi6FBTS/M242o735SUn12bWbenGZaDT6rKkLiVinvRS3FnR3w02ynkhbZ3Sb3+Sd7+mPbDZLWSDmsNCbnb54IXFIrqsYNbc3IuBvqujrez1rgZeeqBdgvUlltwKj0lQKI2nnuJNiR9r7jCj6f0ykVnLZzbnSrLXFZlALjss6i2n3CB5dSv61bAfOGNS25VRyEtH5hXF1JmXHZqoE/aaxIBDGtKzayXgEq4JCgTccK7qLVK9lGvVnIkakxGJrSVQnxEIcYKHEgnSABdRBA819O9gDwZhk7pWGpIfca2aL8edu/vQGKQshFKM3KQRd2g03Fzrw7P6rp+s/Ryk/sKb0xRJjtbB516y1/JsMGEfD6dZ5mx0yYmVKw+yv6VtxVEH/dsGN6et1fkfdZ9vC3resL2GKjFmylTWZbinJaA+lC3ioxnEakhCipO50jY3A02vci2L3CzpMh0Sow/E3iTo6Ur76yoNhKbmyBuo77cbcnY4TGW3WkywXy+Up4QhQAXc2CSTuBe3Fz7b74vGXXH6lV26bS4rD8juL7LKLWSmwKikE2K7gEaueByMT9SOxzhmNhzVC6S+nTJaLnkrLlCTmWv5mYaqOjsOusPGc7H0uMNJ8xUje2rYKG5PlAFsMuY5IoURVZy6ih5Tp0wkivVRvxNSmuHlQGlRSfWyAAN7qJxLkKssUNUek9G67DlvJHiZi0SlqeGoBWpPbNkq3XpvwLf2mpdT6Vn2DktVbzL4unMPuNRjHmp0rKSCCrSbHtJIbSAoBVyojYWw9ZXw6JTDmODncNvnzgpB9HE50ghzcrd7nTt3OvgB5qJ9frEqQXT1ldfPGtxDjd/skcDBjPqqvUFKKjKUSo3ODBf5Wn1fqK4P09W60fq32XVSYjbq5SCtxPYUAhSVWO6tJ/5hg5GjMw6wmNHT20re0FQ2VZKNQ3+59fYYMGJaUTlIVtGAzBPjLpqy4RdbzNXo/aSSlLM0pHB+MUH8RNLLWR0THKnVJTkhpD7gkylOArunff/I4MGFscAVmpjIaBTNgs9U6C1JZUtalghZT5SPYfGDBgxQJGv//Z)}</style>
+</head>
+<body>
+<div class="avec-nav">
+<nav class="sommaire"><details open><summary>Sur cette page</summary><ul><li><a href="#s-boss-par-boss">Boss par boss</a></li><li><a href="#s-corriger-en-priorit">À corriger en priorité</a></li><li><a href="#s-rotation">Rotation</a><ul><li class="sous"><a href="#s-synth-se-de-la-soir-e">Synthèse de la soirée</a></li><li class="sous"><a href="#s-d-tail-de-chaque-boss">Détail de chaque boss</a></li></ul></li><li><a href="#s-build-et-stats">Build et stats</a></li><li><a href="#s-quipement">Équipement</a></li><li><a href="#s-progression">Progression</a></li><li><a href="#s-m-thode">Méthode</a></li></ul></details></nav>
+<main>
+<p class="badges"><span class="badge">Généré le 26/10/2026 à 14:18</span><span class="badge" title="Commit du code guild_analyser qui a produit cette page">Version e41ff5e</span><span class="badge badge-verif non" title="Pas encore relue par le vérificateur (intégrité des données, anomalies)">Non vérifié</span></p>
+<style>
+  main { max-width: 1100px; }
+  .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 16px 0; }
+  .carte { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .carte .val { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .carte .lib { color: var(--muted); font-size: .85rem; }
+  .prio { list-style: none; padding: 0; margin: 0; counter-reset: p; }
+  .prio > li { counter-increment: p; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+               padding: 14px 16px 12px 56px; margin: 12px 0; position: relative; }
+  .prio > li::before { content: counter(p); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px;
+                       border-radius: 50%; background: var(--accent); color: var(--surface); font-weight: 700;
+                       display: flex; align-items: center; justify-content: center; }
+  .prio h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .gain { float: right; margin-left: 10px; background: var(--row); border: 1px solid var(--border); border-radius: 999px;
+          padding: 2px 10px; font-size: .85rem; font-weight: 600; white-space: nowrap; }
+  .gain.nc { color: var(--muted); font-weight: 400; }
+  .gain.grave { color: var(--bad); border-color: var(--bad); }
+  .gain.ok { border-color: var(--good); }
+  .prio p { margin: 6px 0; }
+  .etiq { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; margin-right: 6px; }
+  pre.macro { background: var(--row); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin: 6px 0;
+              font-size: .88rem; white-space: pre-wrap; }
+  code { background: var(--row); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: .86em;
+         word-break: break-word; }
+  .moments a { margin-right: 4px; white-space: nowrap; display: inline-block; }
+  .boss-chip { display: inline-block; font-size: .8rem; color: var(--muted); border: 1px solid var(--border);
+               border-radius: 999px; padding: 0 8px; margin: 2px 4px 2px 0; }
+  .sort { border-bottom: 1px dotted var(--muted); cursor: help; }
+  .fr { color: var(--muted); }
+  .bandeau { background: color-mix(in srgb, var(--warn) 14%, var(--surface)); border: 1px solid var(--warn);
+             border-radius: 8px; padding: 8px 12px; margin: 8px 0; font-size: .92rem; }
+  .pc { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .gris { --pc: #7d838b; } .vert { --pc: #1b9a1b; } .bleu { --pc: #0070dd; } .violet { --pc: #a335ee; }
+  .orange { --pc: #e07800; } .rose { --pc: #d6559b; } .dore { --pc: #b8942a; }
+  .pc, .pc-t { color: var(--pc, var(--muted)); }
+  .verdict { font-weight: 700; }
+  table.boss-soiree td a, .liens a { white-space: nowrap; }
+  .e-pos { color: var(--good); font-weight: 600; } .e-mid { color: var(--warn); font-weight: 600; }
+  .e-neg { color: var(--bad); font-weight: 600; }
+  .methode .carte p { margin: 4px 0 0; font-size: .92rem; }
+  .methode summary { cursor: pointer; }
+  p.mode { margin: 4px 0 10px; }
+  .refs { display: grid; gap: 10px; margin: 12px 0 16px; }
+  .ref { display: grid; grid-template-columns: minmax(0, 1fr) 11rem; gap: 4px 16px; align-items: center;
+         background: var(--surface); border: 1px solid var(--border); border-left: 6px solid var(--muted);
+         border-radius: 10px; padding: 10px 14px; }
+  .ref.e-bad { border-left-color: var(--bad); } .ref.e-warn { border-left-color: var(--warn); }
+  .ref.e-good { border-left-color: var(--good); } .ref.moi { border-left-color: var(--accent); }
+  .ref .qui { font-size: 1.05rem; } .ref .qui b { font-size: 1.15rem; }
+  .ref .det { color: var(--muted); font-size: .85rem; } .ref .det b { color: var(--text); font-size: inherit; }
+  .ref .ecart { grid-row: span 2; text-align: right; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .ref .ecart .dps { font-size: 1.9rem; font-weight: 800; }
+  .ref .ecart .pc { font-size: 1.05rem; font-weight: 700; }
+  .ref .ecart .lib { color: var(--muted); font-size: .8rem; }
+  .ref.e-bad .ecart .dps, .ref.e-bad .ecart .pc { color: var(--bad); }
+  .ref.e-warn .ecart .dps, .ref.e-warn .ecart .pc { color: var(--warn); }
+  .ref.e-good .ecart .dps, .ref.e-good .ecart .pc { color: var(--good); }
+  .ref .barre { grid-column: 1; position: relative; height: 12px; background: var(--row); border-radius: 0 4px 4px 0; }
+  .ref .barre span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--muted); }
+  .ref.e-bad .barre span { background: var(--bad); } .ref.e-warn .barre span { background: var(--warn); }
+  .ref.e-good .barre span { background: var(--good); } .ref.moi .barre span { background: var(--accent); }
+  .ref .barre i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--text); }
+  .duo { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); column-gap: 0; row-gap: 4px;
+         margin: 8px 0; }
+  .duo-tete { font-weight: 700; padding: 4px 10px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .duo-tete.dm { text-align: right; border-bottom: 3px solid var(--accent); }
+  .duo-tete.dr { border-bottom: 3px solid var(--muted); }
+  .duo-minute { grid-column: 1 / -1; text-align: center; font-weight: 700; color: var(--muted); font-size: .85rem;
+                margin-top: 10px; border-top: 1px solid var(--border); padding-top: 4px; }
+  .duo-phase { grid-column: 1 / -1; text-align: center; font-style: italic; color: var(--muted); font-size: .88rem;
+               background: var(--row); border-radius: 6px; padding: 2px 8px; }
+  .duo-axe { background: linear-gradient(var(--border), var(--border)) center / 2px 100% no-repeat; }
+  .duo-c { padding: 3px 10px; border-radius: 6px; font-size: .92rem; }
+  .duo-c.cd:not(.vide) { background: color-mix(in srgb, var(--c) 12%, var(--surface)); }
+  .duo-c.dm { text-align: right; } .duo-c.dm.cd:not(.vide) { border-right: 4px solid var(--c); }
+  .duo-c.dr.cd:not(.vide) { border-left: 4px solid var(--c); }
+  .duo-c .t { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .85rem; }
+  .duo-c .absent { color: var(--muted); font-style: italic; font-size: .85rem; }
+  .duo-c .pourquoi { display: block; font-size: .85rem; color: var(--warn); }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases .mono { fill: var(--row); stroke: var(--border); } .phases .multi { fill: #eb6834; opacity: .55; }
+  .phases text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  section.boss > summary { font-size: 1.1rem; padding: 4px 0; }
+  section.boss { margin: 10px 0; }
+  details.boss { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px;
+                 margin: 10px 0; }
+  details.boss > summary { font-size: 1.08rem; }
+  .muted { color: var(--muted); }
+  @media (max-width: 600px) { .prio > li { padding-left: 16px; } .prio > li::before { position: static; margin-bottom: 6px; } }
+</style>
+<style>
+  .viz { --s1: #2a78d6; --s2: #eb6834; margin: 10px 0 4px; }
+  @media (prefers-color-scheme: dark) { .viz { --s1: #3987e5; --s2: #d95926; } }
+  .viz svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .viz text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  .viz text.lib { fill: var(--text); }
+  .viz .grille { stroke: var(--border); stroke-width: 1; }
+  .viz .s1 { fill: var(--s1); } .viz .s2 { fill: var(--s2); }
+  .viz .l1 { stroke: var(--s1); } .viz .l2 { stroke: var(--s2); }
+  .viz circle { stroke: var(--surface); stroke-width: 2; }
+  .viz [data-tip]:hover { opacity: .75; }
+  .viz .legende { display: flex; gap: 16px; flex-wrap: wrap; font-size: .88rem; color: var(--muted); margin: 0 0 4px; }
+  .viz .legende i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+  .viz .legende i.trou { border-radius: 2px; opacity: .45; }
+  #infobulle { position: fixed; pointer-events: none; display: none; z-index: 10; background: var(--surface);
+               color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px;
+               font-size: .85rem; box-shadow: 0 2px 8px rgba(0,0,0,.15); white-space: pre; }
+</style>
+<style>
+  .cause { display: flex; height: 10px; border-radius: 3px; overflow: hidden; background: var(--row); margin: 4px 0 2px; max-width: 420px; }
+  .cause span { display: block; height: 100%; }
+  .c-freq { background: #2a78d6; } .c-crit { background: #eb6834; } .c-coup { background: #9a6fd0; } .c-abs { background: #888; }
+  .pastille { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin: 0 4px 0 10px; }
+  .sorts-pourquoi { list-style: none; padding: 0; }
+  .sorts-pourquoi li { border-bottom: 1px solid var(--border); padding: 8px 0; }
+  .sorts-pourquoi .faits { color: var(--muted); font-size: .92rem; }
+  .centile { font-weight: 600; }
+  .c-legendaire { color: #e08a00; } .c-epique { color: #a335ee; } .c-rare { color: #0070dd; }
+  .c-peu { color: #1eaa1e; } .c-commun { color: var(--muted); }
+  .mecanisme { margin: 6px 0 0; padding: 6px 10px; border-left: 3px solid #eb6834; background: var(--row); font-size: .92rem; }
+  section.boss { border-top: 2px solid var(--border); margin-top: 28px; }
+</style>
+<h1>Mon DPS — Aabhy</h1>
+<p class="meta"><i class="ic ic-spec ic-spec-PriestShadow" title="Shadow Priest"></i>Prêtre Ombre · ilvl 320 · raid du 20/09/2026 · 0 boss tué · <a href="https://www.warcraftlogs.com/reports/rgHGVNFzJY8XL9A7">rapport Warcraft Logs</a> · <a href="https://murlok.io/priest/shadow/m+" title="Talents, statistiques et équipement des meilleurs joueurs de ta spé en Mythique+ (Murlok)">builds du top M+ (Murlok) ↗</a></p>
+<p class="mode"><span class="etiq">Niveau d'analyse</span><strong>léger</strong> : rotation lue dans le log seulement : ni top mondial, ni joueur équivalent, ni simulation (fiche des PU).</p>
+<p class="note"><strong>Moyennes sur 0 boss</strong></p>
+<div class="cartes">
+<div class="carte"><div class="val">171 k</div><div class="lib">DPS moyen (pas de top 3 trouvé)</div></div>
+<div class="carte"><div class="val muted">—</div><div class="lib">centile moyen (tous ilvl)</div></div>
+<div class="carte"><div class="val muted">—</div><div class="lib">centile moyen à ton ilvl</div></div>
+<div class="carte"><div class="val">≈ 0,0 %</div><div class="lib">à gagner par le jeu (estimé)</div></div>
+<div class="carte"><div class="val muted">—</div><div class="lib">écart à ton potentiel simc (sans simulation)</div></div>
+</div>
+
+<h2 id="s-boss-par-boss">Boss par boss</h2>
+<div class="table-wrap">
+<table class="boss-soiree">
+<thead><tr><th>Boss</th><th class="num">Centile</th><th class="num">À ton ilvl</th><th class="num">DPS</th><th class="num">Durée</th><th class="num">Rang</th><th class="num">vs top 3</th><th class="num">vs potentiel simc</th><th class="num">Wipes</th><th>Combat</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+<p class="note">Centiles aux couleurs de Warcraft Logs : gris sous 25, vert 25 à 49, bleu 50 à 74, violet 75 à 94, orange 95 à 98, rose 99, doré 100. Écarts : en vert au-dessus de la référence, en orange jusqu'à 15 % en dessous, en rouge au-delà ; face au top 3, un écart de 30 à 40 % reste courant. Pas d'écart à l'équivalent ici : il est choisi pour faire environ 25 % de plus que toi, son écart vaut donc toujours environ −20 % (il sert à comparer la rotation, dans le détail de chaque boss). Le nom du boss mène à son détail ; « Logs », « Wipefest » et « Analyzer » ouvrent le combat sur warcraftlogs.com, ses mécaniques sur wipefest.gg et ton analyse sur wowanalyzer.com.</p>
+<div class="bandeau"><strong>Correctifs récents de tes sorts</strong> (données de simc) : <span class="sort" title="Attaque l’esprit de la cible avec l’énergie de l’ombre, ce qui lui inflige ([828.828% of Spell Power]) points de dégâts d’ombre en 4.5 s et réduit sa vitesse de déplacement de 50%. Génère 18 points d’insanité sur la durée de l’effet."><i class="ic ic-spell_shadow_siphonmana"></i>Mind Flay <span class="fr">(Fouet mental)</span></span> SP Coefficient (1.2012 -&gt; 1.38138), PvP Coefficient (0.7 -&gt; 0.61) le 22/09 ; <span class="sort" title="Vos sorts de dégâts directs infligent 20% de leurs dégâts aux autres cibles affectées par votre Toucher vampirique à moins de 40 mètres. Ne s’applique pas aux dégâts d’Apparitions ténébreuses, Mot de l’ombre : Douleur et Toucher vampirique."><i class="ic ic-ability_priest_psychiclink"></i>Psychic Link <span class="fr">(Lien psychique)</span></span> Base Value (25 -&gt; 20), PvP Coefficient (1 -&gt; 1.25) le 22/09 ; <span class="sort" title="Instantanée Requiert Prêtre Requiert Forme d&#x27;ombre Un mot de folie hante la cible, ce qui lui inflige ([261.625% of Spell Power]) points de dégâts d’ombre instantanément, ainsi que 9 supplémentaires en 6 s . Vous rend un nombre de points de vie égal à 30 % des dégâts infligés. Lorsque l’effet est réappliqué, tous les dégâts restants sont ajoutés à ce nouvel effet."><i class="ic ic-inv12_ability_priest_powerwordmadness_eye"></i>Shadow Word: Madness <span class="fr">(Mot de l’ombre : Folie)</span></span> SP Coefficient (2.275 -&gt; 2.61625), PvP Coefficient (1 -&gt; 0.87) le 22/09 ; <span class="sort" title="Les dégâts de Fouet mental sont augmentés de 15 % et la génération d’insanité est augmentée de 30 %."><i class="ic ic-spell_fire_twilightflamebreath"></i>Mind Flay: Insanity <span class="fr">(Fouet mental : insanité)</span></span> SP Coefficient (1.3559 -&gt; 1.55929), PvP Coefficient (0.875 -&gt; 0.76) le 22/09 ; <span class="sort" title="Les apparitions ténébreuses qui flottent vers votre cible principale explosent, infligeant ([133% of Spell Power]) points de dégâts d’ombre aux adversaires à moins de 8 m. Dégâts réduits au-delà de 5 cibles."><i class="ic ic-ability_warlock_voidzone"></i>Shadeburst <span class="fr">(Explosombre)</span></span> SP Coefficient (1.4 -&gt; 1.33), PvP Coefficient (1 -&gt; 1.05) le 22/09 ; Focused Outburst PvP Coefficient (1 -&gt; 2.66667) le 22/09. Références prises après le 16/09 à 06 h.</div>
+<h2 id="s-corriger-en-priorit">À corriger en priorité</h2>
+<ol class="prio"></ol>
+
+<h2 id="s-rotation">Rotation</h2>
+<h3 id="s-synth-se-de-la-soir-e">Synthèse de la soirée</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">DPS</th><th class="num">vs équivalent</th><th class="num">vs top 3</th><th class="num">Multicible</th><th class="num">Cooldowns manqués</th><th class="num">vs potentiel simc</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+
+<p class="note">Potentiel simc : ton équipement simulé avec une rotation parfaite, à la durée du kill, chaque phase au nombre d'ennemis qu'elle a en moyenne (1, 2, ou 3 et plus). Un vrai combat (déplacements, phases, cibles qui changent) reste en dessous : l'écart sert surtout à comparer les boss entre eux et d'une soirée à l'autre.</p>
+<h3 id="s-d-tail-de-chaque-boss">Détail de chaque boss</h3>
+
+<h2 id="s-build-et-stats">Build et stats</h2>
+<p class="note">Pas de simulation (mode rapide ou export de l'addon absent).</p>
+
+<h2 id="s-quipement">Équipement</h2>
+<p class="note">Pas d'analyse d'équipement (mode rapide ou export absent).</p>
+
+<h2 id="s-progression">Progression</h2>
+<p>Première soirée analysée : la progression apparaîtra à la prochaine analyse.</p>
+
+<details class="methode"><summary><h2 id="s-m-thode" style="display:inline">Méthode</h2> <span class="muted">(cliquer pour déplier)</span></summary><div class="cartes"><div class="carte"><div class="lib"><strong>Combats analysés</strong></div><p>Pour chaque boss, ton meilleur kill de la soirée (centile le plus haut).</p></div><div class="carte"><div class="lib"><strong>Top 3</strong></div><p>Les trois premiers de ta spé au classement héroïque du boss, logs postérieurs au 16/09 à 06 h (maintenance du mercredi, ou dernier correctif de tes sorts intégré à simc).</p></div><div class="carte"><div class="lib"><strong>Joueur équivalent</strong></div><p>Même tranche d&#x27;ilvl, raid de taille (±5) et de durée (±25 %) proches, sans Évocateur Augmentation, 10 à 45 % de DPS en plus ; parmi les plus proches de +25 %, le plus proche en talents et bijoux. Critères élargis (tranches voisines, ±8 joueurs, ±35 %) si personne après le correctif.</p></div><div class="carte"><div class="lib"><strong>Phases</strong></div><p>Multicible quand 3 ennemis ou plus sont attaqués par le raid (seuil de la rotation simc).</p></div><div class="carte"><div class="lib"><strong>Règles de rotation</strong></div><p>Conditions de la rotation simc vérifiées lancer par lancer ; retenues seulement si tu fais nettement moins bien que les références.</p></div><div class="carte"><div class="lib"><strong>Gains</strong></div><p>Estimés à partir des écarts mesurés, puis validés en simulation pour les plus gros (fautes imitées dans simc à ton rythme et à celui des références ; gain = écart des deux).</p></div><div class="carte"><div class="lib"><strong>Limites</strong></div><p>Une référence joue un autre combat que le tien (raid, durée, adds) : un écart est une piste, pas une preuve. Avec moins de 0,5 % d&#x27;écart, une simulation n&#x27;est pas significative.</p></div></div></details>
+<div id="infobulle"></div>
+<script>
+(() => {
+  const bulle = document.getElementById("infobulle");
+  const montrer = (ev, texte) => {
+    bulle.textContent = texte; bulle.style.display = "block";
+    const x = Math.min(ev.clientX + 14, window.innerWidth - bulle.offsetWidth - 8);
+    bulle.style.left = x + "px"; bulle.style.top = (ev.clientY + 14) + "px";
+  };
+  const cacher = () => { bulle.style.display = "none"; };
+  document.querySelectorAll("[data-tip]").forEach(el => {
+    el.addEventListener("pointermove", ev => montrer(ev, el.dataset.tip));
+    el.addEventListener("pointerleave", cacher);
+  });
+  document.querySelectorAll("svg[data-courbes]").forEach(svg => {
+    const d = JSON.parse(svg.dataset.courbes), zone = svg.querySelector(".zone"), ligne = svg.querySelector(".reticule");
+    zone.addEventListener("pointermove", ev => {
+      const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY;
+      const q = p.matrixTransform(svg.getScreenCTM().inverse());
+      const i = Math.max(0, Math.min(d.t.length - 1, Math.round((q.x - d.x0) / d.dx)));
+      ligne.setAttribute("x1", d.x0 + i * d.dx); ligne.setAttribute("x2", d.x0 + i * d.dx); ligne.style.display = "";
+      montrer(ev, d.t[i] + "\n" + d.series.map(s => (s.v[i] == null ? "—" : s.v[i]) + " lancers/min  " + s.nom).join("\n"));
+    });
+    zone.addEventListener("pointerleave", () => { ligne.style.display = "none"; cacher(); });
+  });
+})();
+</script>
+<script>
+function ouvrirAncre() {
+  const d = location.hash && document.getElementById(location.hash.slice(1));
+  if (d && d.tagName === "DETAILS") { d.open = true; d.scrollIntoView(); }
+}
+addEventListener("hashchange", ouvrirAncre); addEventListener("DOMContentLoaded", ouvrirAncre);
+</script>
+
+</main>
+</div>
+<script>
+(function () {
+  var nav = document.querySelector('.sommaire'); if (!nav) return;
+  var det = nav.querySelector('details'), petit = window.matchMedia('(max-width: 1100px)');
+  if (petit.matches) det.open = false;
+  var liens = {}; nav.querySelectorAll('a').forEach(function (a) { liens[a.getAttribute('href').slice(1)] = a; });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A' && petit.matches) det.open = false; });
+  var titres = Array.prototype.filter.call(document.querySelectorAll('main h2[id], main h3[id]'),
+                                           function (h) { return liens[h.id]; });
+  function actif() {
+    var courant = titres[0];
+    titres.forEach(function (h) { if (h.getBoundingClientRect().top < 120) courant = h; });
+    Object.keys(liens).forEach(function (k) { liens[k].classList.toggle('actif', courant && k === courant.id); });
+  }
+  window.addEventListener('scroll', actif, {passive: true}); actif();
+})();
+</script>
+</body>
+</html>

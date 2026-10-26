@@ -100,7 +100,7 @@
      "role": "DPS",
      "classe": "Warrior",
      "spec_fr": "Armes",
-     "pu": true,
+     "pu": false,
      "allie": null,
      "page": "Alats_soiree.html"
     },
@@ -1176,8 +1176,8 @@
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
-     "pu": true,
-     "allie": null,
+     "pu": false,
+     "allie": "Drunken Donuts",
      "page": "Bastoul_soiree.html"
     },
     {
@@ -1696,17 +1696,10 @@
    "page": "raid_rgHGVNFzJY8XL9A7.html",
    "zone": "The Venomous Abyss",
    "difficulte": "Héroïque",
-   "tues": 1,
-   "affrontes": 2,
-   "essais": 16,
+   "tues": 0,
+   "affrontes": 1,
+   "essais": 15,
    "boss": [
-    {
-     "nom": "Nymrissa Wavecaller",
-     "difficulte": "Héroïque",
-     "tue": true,
-     "essais": 1,
-     "meilleur_pv": null
-    },
     {
      "nom": "The Twin Fangs",
      "difficulte": "Héroïque",
@@ -1717,204 +1710,334 @@
    ],
    "joueurs": [
     {
-     "nom": "Dïnnen",
-     "personnage": "Dïnnen",
+     "nom": "Jairtrude",
+     "personnage": "Jairtrude",
      "role": "tank",
-     "classe": "Warrior",
+     "classe": "Paladin",
      "spec_fr": "Protection",
-     "pu": true,
+     "pu": false,
      "allie": null,
-     "page": "Dïnnen_soiree.html"
+     "page": "Jairtrude_soiree.html"
     },
     {
-     "nom": "Thanlosk",
-     "personnage": "Thanlosk",
+     "nom": "Louac",
+     "personnage": "Louac",
      "role": "tank",
-     "classe": "DeathKnight",
-     "spec_fr": "Sang",
-     "pu": true,
+     "classe": "Paladin",
+     "spec_fr": "Protection",
+     "pu": false,
      "allie": null,
-     "page": "Thanlosk_soiree.html"
+     "page": "Louac_soiree.html"
     },
     {
-     "nom": "Darkspammer",
-     "personnage": "Darkspammer",
+     "nom": "Aethelsgard",
+     "personnage": "Aethelsgard",
      "role": "soigneur",
-     "classe": "Druid",
-     "spec_fr": "Restauration",
+     "classe": "Paladin",
+     "spec_fr": "Sacré",
      "pu": true,
      "allie": null,
-     "page": "Darkspammer_soiree.html"
+     "page": "Aethelsgard_soiree.html"
     },
     {
-     "nom": "Gonzochimy",
-     "personnage": "Gonzochimy",
+     "nom": "Entourage",
+     "personnage": "Entourage",
+     "role": "soigneur",
+     "classe": "Paladin",
+     "spec_fr": "Sacré",
+     "pu": true,
+     "allie": null,
+     "page": "Entourage_soiree.html"
+    },
+    {
+     "nom": "Feelthekappa",
+     "personnage": "Feelthekappa",
+     "role": "soigneur",
+     "classe": "Priest",
+     "spec_fr": "Sacré",
+     "pu": true,
+     "allie": null,
+     "page": "Feelthekappa_soiree.html"
+    },
+    {
+     "nom": "Ingolmo",
+     "personnage": "Ingolmo",
+     "role": "soigneur",
+     "classe": "Priest",
+     "spec_fr": "Sacré",
+     "pu": false,
+     "allie": null,
+     "page": "Ingolmo_soiree.html"
+    },
+    {
+     "nom": "Jalyne",
+     "personnage": "Jalyne",
      "role": "soigneur",
      "classe": "Shaman",
      "spec_fr": "Restauration",
      "pu": false,
      "allie": null,
-     "page": "Gonzochimy_soiree.html"
+     "page": "Jalyne_soiree.html"
     },
     {
-     "nom": "Mönche",
-     "personnage": "Mönche",
-     "role": "soigneur",
-     "classe": "Monk",
-     "spec_fr": "Tisse-brume",
-     "pu": true,
-     "allie": null,
-     "page": "Mönche_soiree.html"
-    },
-    {
-     "nom": "Orelïnde",
-     "personnage": "Orelïnde",
+     "nom": "Papafaulseit",
+     "personnage": "Papafaulseit",
      "role": "soigneur",
      "classe": "Druid",
      "spec_fr": "Restauration",
      "pu": true,
      "allie": null,
-     "page": "Orelïnde_soiree.html"
+     "page": "Papafaulseit_soiree.html"
     },
     {
-     "nom": "Ceek",
-     "personnage": "Ceek",
-     "role": "DPS",
-     "classe": "Shaman",
-     "spec_fr": "Élémentaire",
+     "nom": "Selveka",
+     "personnage": "Selveka",
+     "role": "soigneur",
+     "classe": "Priest",
+     "spec_fr": "Sacré",
      "pu": true,
      "allie": null,
-     "page": "Ceek_soiree.html"
+     "page": "Selveka_soiree.html"
     },
     {
-     "nom": "Falconnard",
-     "personnage": "Falconnard",
-     "role": "DPS",
-     "classe": "Evoker",
-     "spec_fr": "Augmentation",
+     "nom": "Святстраж-Sacré",
+     "personnage": "Святстраж",
+     "role": "soigneur",
+     "classe": "Paladin",
+     "spec_fr": "Sacré",
      "pu": true,
      "allie": null,
-     "page": "Falconnard_soiree.html"
+     "page": "Святстраж-Sacré_soiree.html"
     },
     {
-     "nom": "Kinqsman",
-     "personnage": "Kinqsman",
-     "role": "DPS",
-     "classe": "Warrior",
-     "spec_fr": "Armes",
-     "pu": true,
-     "allie": null,
-     "page": "Kinqsman_soiree.html"
-    },
-    {
-     "nom": "Latoxikah",
-     "personnage": "Latoxikah",
-     "role": "DPS",
-     "classe": "Rogue",
-     "spec_fr": "Assassinat",
-     "pu": true,
-     "allie": null,
-     "page": "Latoxikah_soiree.html"
-    },
-    {
-     "nom": "Mannifas",
-     "personnage": "Mannifas",
-     "role": "DPS",
-     "classe": "Warlock",
-     "spec_fr": "Destruction",
-     "pu": true,
-     "allie": null,
-     "page": "Mannifas_soiree.html"
-    },
-    {
-     "nom": "Obscurity",
-     "personnage": "Obscurity",
+     "nom": "Aabhy",
+     "personnage": "Aabhy",
      "role": "DPS",
      "classe": "Priest",
      "spec_fr": "Ombre",
      "pu": true,
      "allie": null,
-     "page": "Obscurity_soiree.html"
+     "page": "Aabhy_soiree.html"
     },
     {
-     "nom": "Sempere",
-     "personnage": "Sempere",
+     "nom": "Broschette",
+     "personnage": "Broschette",
      "role": "DPS",
-     "classe": "Paladin",
-     "spec_fr": "Vindicte",
+     "classe": "Warlock",
+     "spec_fr": "Affliction",
      "pu": true,
      "allie": null,
-     "page": "Sempere_soiree.html"
+     "page": "Broschette_soiree.html"
     },
     {
-     "nom": "Syrpha",
-     "personnage": "Syrpha",
-     "role": "DPS",
-     "classe": "Druid",
-     "spec_fr": "Équilibre",
-     "pu": true,
-     "allie": null,
-     "page": "Syrpha_soiree.html"
-    },
-    {
-     "nom": "Treont",
-     "personnage": "Treont",
+     "nom": "Ceinh",
+     "personnage": "Ceinh",
      "role": "DPS",
      "classe": "Mage",
      "spec_fr": "Arcanes",
      "pu": true,
      "allie": null,
-     "page": "Treont_soiree.html"
+     "page": "Ceinh_soiree.html"
     },
     {
-     "nom": "Wrecka",
-     "personnage": "Wrecka",
-     "role": "DPS",
-     "classe": "Paladin",
-     "spec_fr": "Vindicte",
-     "pu": true,
-     "allie": null,
-     "page": "Wrecka_soiree.html"
-    },
-    {
-     "nom": "Xelganas",
-     "personnage": "Xelganas",
-     "role": "DPS",
-     "classe": "Warlock",
-     "spec_fr": "Démonologie",
-     "pu": true,
-     "allie": null,
-     "page": "Xelganas_soiree.html"
-    },
-    {
-     "nom": "Zael",
-     "personnage": "Zael",
-     "role": "DPS",
-     "classe": "Warrior",
-     "spec_fr": "Armes",
-     "pu": true,
-     "allie": null,
-     "page": "Zael_soiree.html"
-    },
-    {
-     "nom": "Денжер",
-     "personnage": "Денжер",
+     "nom": "Côrnus",
+     "personnage": "Côrnus",
      "role": "DPS",
      "classe": "DemonHunter",
-     "spec_fr": "Dévoreur",
-     "pu": true,
+     "spec_fr": "Dévastation",
+     "pu": false,
      "allie": null,
-     "page": "Денжер_soiree.html"
+     "page": "Côrnus_soiree.html"
     },
     {
-     "nom": "Мафеста",
-     "personnage": "Мафеста",
+     "nom": "Deyomir",
+     "personnage": "Deyomir",
+     "role": "DPS",
+     "classe": "Mage",
+     "spec_fr": "Arcanes",
+     "pu": true,
+     "allie": null,
+     "page": "Deyomir_soiree.html"
+    },
+    {
+     "nom": "Gonzoshen",
+     "personnage": "Gonzoshen",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
+     "allie": null,
+     "page": "Gonzoshen_soiree.html"
+    },
+    {
+     "nom": "Ilgaroth",
+     "personnage": "Ilgaroth",
+     "role": "DPS",
+     "classe": "Warrior",
+     "spec_fr": "Fureur",
+     "pu": true,
+     "allie": null,
+     "page": "Ilgaroth_soiree.html"
+    },
+    {
+     "nom": "Jënnis",
+     "personnage": "Jënnis",
      "role": "DPS",
      "classe": "Druid",
      "spec_fr": "Équilibre",
      "pu": true,
      "allie": null,
-     "page": "Мафеста_soiree.html"
+     "page": "Jënnis_soiree.html"
+    },
+    {
+     "nom": "Leberlynoix",
+     "personnage": "Leberlynoix",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
+     "allie": null,
+     "page": "Leberlynoix_soiree.html"
+    },
+    {
+     "nom": "Mécafree",
+     "personnage": "Mécafree",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
+     "allie": null,
+     "page": "Mécafree_soiree.html"
+    },
+    {
+     "nom": "Métaforme",
+     "personnage": "Métaforme",
+     "role": "DPS",
+     "classe": "Druid",
+     "spec_fr": "Farouche",
+     "pu": false,
+     "allie": null,
+     "page": "Métaforme_soiree.html"
+    },
+    {
+     "nom": "Nanopixel",
+     "personnage": "Nanopixel",
+     "role": "DPS",
+     "classe": "Shaman",
+     "spec_fr": "Élémentaire",
+     "pu": true,
+     "allie": null,
+     "page": "Nanopixel_soiree.html"
+    },
+    {
+     "nom": "Nevinia",
+     "personnage": "Nevinia",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "pu": true,
+     "allie": null,
+     "page": "Nevinia_soiree.html"
+    },
+    {
+     "nom": "Sagrario",
+     "personnage": "Sagrario",
+     "role": "DPS",
+     "classe": "Paladin",
+     "spec_fr": "Vindicte",
+     "pu": true,
+     "allie": null,
+     "page": "Sagrario_soiree.html"
+    },
+    {
+     "nom": "Sinistra",
+     "personnage": "Sinistra",
+     "role": "DPS",
+     "classe": "Shaman",
+     "spec_fr": "Élémentaire",
+     "pu": false,
+     "allie": null,
+     "page": "Sinistra_soiree.html"
+    },
+    {
+     "nom": "Taturs",
+     "personnage": "Taturs",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "pu": true,
+     "allie": null,
+     "page": "Taturs_soiree.html"
+    },
+    {
+     "nom": "Tirica",
+     "personnage": "Tirica",
+     "role": "DPS",
+     "classe": "Priest",
+     "spec_fr": "Ombre",
+     "pu": true,
+     "allie": null,
+     "page": "Tirica_soiree.html"
+    },
+    {
+     "nom": "Trunkyl",
+     "personnage": "Trunkyl",
+     "role": "DPS",
+     "classe": "Mage",
+     "spec_fr": "Arcanes",
+     "pu": true,
+     "allie": null,
+     "page": "Trunkyl_soiree.html"
+    },
+    {
+     "nom": "Upsî",
+     "personnage": "Upsî",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "pu": true,
+     "allie": null,
+     "page": "Upsî_soiree.html"
+    },
+    {
+     "nom": "Ærzä",
+     "personnage": "Ærzä",
+     "role": "DPS",
+     "classe": "Druid",
+     "spec_fr": "Équilibre",
+     "pu": false,
+     "allie": null,
+     "page": "Ærzä_soiree.html"
+    },
+    {
+     "nom": "Пылесоскирби",
+     "personnage": "Пылесоскирби",
+     "role": "DPS",
+     "classe": "Paladin",
+     "spec_fr": "Vindicte",
+     "pu": true,
+     "allie": null,
+     "page": "Пылесоскирби_soiree.html"
+    },
+    {
+     "nom": "Святстраж-Vindicte",
+     "personnage": "Святстраж",
+     "role": "DPS",
+     "classe": "Paladin",
+     "spec_fr": "Vindicte",
+     "pu": true,
+     "allie": null,
+     "page": "Святстраж-Vindicte_soiree.html"
+    },
+    {
+     "nom": "Сорисо",
+     "personnage": "Сорисо",
+     "role": "DPS",
+     "classe": "Warlock",
+     "spec_fr": "Démonologie",
+     "pu": true,
+     "allie": null,
+     "page": "Сорисо_soiree.html"
     }
    ]
   },
