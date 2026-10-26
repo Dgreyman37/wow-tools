@@ -345,7 +345,7 @@ function bloc(sa,liste,ouvert){
     +`${sa.en_cours?'<span class="sa-encours">en cours</span>':''}<span class="sa-info">${esc(info)}</span></summary>`
     +(liste.length?`<table class="soirees"><thead><tr><th>Soirée</th><th>Difficulté</th><th class="num">Boss tués</th><th class="num">Essais</th><th class="num">Joueurs</th></tr></thead>`
       +`<tbody>${liste.map(s=>ligne(s,sa.raid)).join('')}</tbody></table>`:'<p class="vide">Aucune soirée publiée pour cette saison.</p>')
-    +(liste.length?tableJoueurs(liste):'')+'</details>';
+    +(liste.some(s=>s.joueurs.length)?tableJoueurs(liste):'')+'</details>';  // saison en LA GUILDE seule : pas de joueurs
 }
 const ROLE_FR={tank:'Tank',soigneur:'Soigneur',DPS:'DPS'};
 function tableJoueurs(liste){
