@@ -538,6 +538,162 @@
    ]
   },
   {
+   "date": "2026-10-14",
+   "saison": "midnight-2",
+   "page": "raid_YnNDhymZWRzLPHtq.html",
+   "zone": "The Venomous Abyss",
+   "difficulte": "Héroïque",
+   "tues": 5,
+   "affrontes": 6,
+   "essais": 15,
+   "boss": [
+    {
+     "nom": "Nek'zali the Soulcoiler",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Entombed Sentinels",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vashnik the Malignant",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Lost Explorers",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Sszorak",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 6,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Twin Fangs",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 4,
+     "meilleur_pv": 59.51
+    }
+   ],
+   "joueurs": [
+    {
+     "nom": "Jairtrude",
+     "personnage": "Jairtrude",
+     "role": "tank",
+     "classe": "Paladin",
+     "spec_fr": "Protection",
+     "pu": false,
+     "allie": null,
+     "page": "Jairtrude_soiree.html"
+    },
+    {
+     "nom": "Ragnarorc",
+     "personnage": "Ragnarorc",
+     "role": "tank",
+     "classe": "DeathKnight",
+     "spec_fr": "Sang",
+     "pu": false,
+     "allie": null,
+     "page": "Ragnarorc_soiree.html"
+    },
+    {
+     "nom": "Ingolmo",
+     "personnage": "Ingolmo",
+     "role": "soigneur",
+     "classe": "Priest",
+     "spec_fr": "Sacré",
+     "pu": false,
+     "allie": null,
+     "page": "Ingolmo_soiree.html"
+    },
+    {
+     "nom": "Nyktalgiaa",
+     "personnage": "Nyktalgiaa",
+     "role": "soigneur",
+     "classe": "Shaman",
+     "spec_fr": "Restauration",
+     "pu": false,
+     "allie": null,
+     "page": "Nyktalgiaa_soiree.html"
+    },
+    {
+     "nom": "Côrnus",
+     "personnage": "Côrnus",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévastation",
+     "pu": false,
+     "allie": null,
+     "page": "Côrnus_soiree.html"
+    },
+    {
+     "nom": "Jalyne",
+     "personnage": "Jalyne",
+     "role": "DPS",
+     "classe": "Shaman",
+     "spec_fr": "Élémentaire",
+     "pu": false,
+     "allie": null,
+     "page": "Jalyne_soiree.html"
+    },
+    {
+     "nom": "Mécafree",
+     "personnage": "Mécafree",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
+     "allie": null,
+     "page": "Mécafree_soiree.html"
+    },
+    {
+     "nom": "Métaforme",
+     "personnage": "Métaforme",
+     "role": "DPS",
+     "classe": "Druid",
+     "spec_fr": "Farouche",
+     "pu": false,
+     "allie": null,
+     "page": "Métaforme_soiree.html"
+    },
+    {
+     "nom": "Météion",
+     "personnage": "Météion",
+     "role": "DPS",
+     "classe": "Evoker",
+     "spec_fr": "Dévastation",
+     "pu": false,
+     "allie": null,
+     "page": "Météion_soiree.html"
+    },
+    {
+     "nom": "Natryum",
+     "personnage": "Natryum",
+     "role": "DPS",
+     "classe": "Priest",
+     "spec_fr": "Ombre",
+     "pu": false,
+     "allie": null,
+     "page": "Natryum_soiree.html"
+    }
+   ]
+  },
+  {
    "date": "2026-10-08",
    "saison": "midnight-2",
    "page": "raid_bmAZqJDHQ9jRv3Kf.html",

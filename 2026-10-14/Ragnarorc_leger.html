@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ga-genere" content="2026-10-26T16:10">
+<meta name="ga-version" content="2913cb6">
+<title>Mon tank Ragnarorc</title>
+<style>
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .badge { font-size: .74rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px;
+           padding: 2px 10px; background: var(--surface); }
+  .badge-verif.ok { color: var(--good); border-color: var(--good); }
+  .badge-verif.alerte { color: var(--warn); border-color: var(--warn); }
+  .badge-verif.non { font-style: italic; }
+  :root { --bg: #f7f6f3; --surface: #ffffff; --text: #1f2328; --muted: #5f6670; --border: #e1e0dc;
+          --accent: #b8860b; --good: #1f7a4d; --bad: #b23b2e; --warn: #9a6400; --row: #faf9f7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #16171a; --surface: #1f2125; --text: #e6e6e3; --muted: #9ba1a8; --border: #33363c;
+            --accent: #e3b341; --good: #5cc48f; --bad: #ef7a6c; --warn: #e0b04f; --row: #23252a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  h2 { font-size: 1.35rem; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.08rem; margin: 26px 0 8px; }
+  a { color: var(--accent); }
+  .meta { color: var(--muted); margin: 0 0 20px; font-size: .95rem; }
+  .lead { background: var(--surface); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 6px; }
+  .lead ul { margin: 6px 0 0; padding-left: 20px; }
+  .note { color: var(--muted); font-size: .92rem; }
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+  th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; vertical-align: top; }
+  td.wrap { white-space: normal; min-width: 240px; }
+  th { background: var(--row); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--good); font-weight: 600; } .mid { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; } .muted { color: var(--muted); }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 8px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  td details { background: none; border: 0; padding: 0; margin: 4px 0 0; }
+  td summary { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  td details p { margin: 4px 0; max-width: 46em; }
+  .faire { display: block; margin-top: 2px; }
+</style>
+<style>
+  .avec-nav { display: grid; grid-template-columns: 230px minmax(0, 1040px); gap: 28px; justify-content: center;
+              padding: 0 16px; }
+  .avec-nav main { max-width: none; margin: 0; padding: 32px 0 64px; }
+  .sommaire { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 32px 0 24px;
+              font-size: .9rem; }
+  .sommaire summary { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+                      font-size: .75rem; margin-bottom: 8px; cursor: pointer; list-style: none; }
+  .sommaire summary::-webkit-details-marker { display: none; }
+  .sommaire ul { list-style: none; margin: 0; padding: 0; }
+  .sommaire li { margin: 0; }
+  .sommaire a { display: block; padding: 4px 10px; border-left: 3px solid var(--border); color: var(--text);
+                text-decoration: none; line-height: 1.35; }
+  .sommaire li ul a { padding-left: 22px; color: var(--muted); font-size: .85rem; }
+  .sommaire a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .sommaire a.actif { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  /* sections bien séparées : un bandeau par grande partie */
+  .avec-nav main > h2, .avec-nav main section > h2 {
+    margin: 64px 0 18px; padding: 12px 16px; font-size: 1.45rem; background: var(--surface);
+    border: 1px solid var(--border); border-left: 6px solid var(--accent); border-radius: 10px; }
+  .avec-nav main > h2:first-of-type { margin-top: 36px; }
+  .avec-nav h2, .avec-nav h3 { scroll-margin-top: 16px; }
+  .avec-nav main > h3 { padding-bottom: 4px; border-bottom: 1px dashed var(--border); }
+  @media (max-width: 1100px) {
+    .avec-nav { display: block; padding: 0; }
+    .avec-nav main { padding: 16px 16px 64px; }
+    .sommaire { position: sticky; top: 0; z-index: 5; max-height: 70vh; padding: 8px 16px; background: var(--bg);
+                border-bottom: 1px solid var(--border); }
+    .sommaire summary { margin: 0; padding: 6px 0; }
+    .sommaire summary::after { content: " ▾"; }
+  }
+</style>
+<style>.ic{display:inline-block;width:1.2em;height:1.2em;border-radius:3px;background-size:cover;vertical-align:-.25em;margin-right:.3em;flex:none}.ic-spec{border-radius:50%}.ic-ability_gouge,.io-ability_gouge,.fi-ability_gouge{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAcEBggFA//EADMQAAIBAwMBBQYEBwAAAAAAAAECAwQFEQAGIRIHEyIxQQgUMlFhcRUWJDMjYoGRobHR/8QAGQEAAgMBAAAAAAAAAAAAAAAAAwUEBgcA/8QAKxEAAQMDAwEGBwAAAAAAAAAAAQIDEQAEIQUSMUFhcYGRseETIjJCUcHw/9oADAMBAAIRAxEAPwDMm6dqVlLtu07pgZ6ihuCdM8jHJhqOpgQx+TdJIJ+TD01C26/4XeAk8UXedJRJGbKAkcHjg/T007exGtttdsis29d6MXClE8kFZSeTS08qhj0E/DIrL1o3oyj5nS733su79n+8KKjKm62mqcyWmuiiUrWwv4SgByA/JVkPKt9wSFfzJKan2LoZeSs8giPMY9xnsqbSWmVLz7uUUSwRPJH0Mki8oSFJz04zweePvxpd1NuliskdxeYeOqen7kg9S9KKxY/fqH9jq8U1bJDboKqjjSFKKZoWgMXS5Rs5V8DnGCOfLjXFv9oRLL+IrUq9O1aA8aMS4Rl4fH+PPzGNL7Vwtr2q6+9XTX7RF1bh9vlIJMdu2D3DIyBHWq0lbV0LSQUdwnEQc4MMroremccfIeejXlVxwLUuIHLRZ8Jz6f8AdGmoNZ8pMEjHnTO9ni+Uy7/orVcqpaeK6fpGmcZAkP7TH+vhz/MNaJ3zbaRNrVNDcrZNdrTT3D9dQTKY2DBOZ4ZByknTgqw8+khgQTrE1JPLSzpNDI0UiMHSRThlYHIIPoQdbx7Cu0ux9p1ls9HcZY5L67e73SiiyJVZR4KlF9Y2YL1EfAx5GOdCcRORRWyDiM+nJ9KRJ7PK2mnun5IuibmtFRCWmoZ1VLpShjyxib9xlIB6o85HIxnVLoqeragq9uXa3Swd1KjgTwNE2VcZUkgHkdXH11o7td7G2s15SvtNP3cdQHbuoI27oOuCZIyD/CJ4BQ8Ak9JIwApr1bphLJGHrZZAS4EtUz4YPyi5yGOBj786UXCloJ3JzPNaFoCm3whAc3J2kFJB4OCJ4icp6z2GkpuqkSi3LcqVIhEkVVIqICSFXqOACeeBjz0a6m9hBTbjqTNG0ssx71iWKkE+h+oxo01adKkAxVP1C0bt7t1reBCj6mOn4IqsVChZZUHIRiBn76mbfvV1sNclws1wqaCqQYEkEhUkcEqceanAyDwfXRo1IpNW9/ZY3Re+1LY8G6N51nvt1tNwqoYJkjWINHJGMq6qACBxjAB4HnpJe1buq40faGdrUkdPDSS1GZZlDd84JGV6i2FHJ+EA/XRo1FdSCcj+inGnurSRBI+keBUJHjJpGbzpIkuyICxCwqoycnAyB/rRo0a62J+Enuo+tsoTqLwA+4/qv//Z)}.ic-achievement_nazmir_boss_bloodofghuun,.io-achievement_nazmir_boss_bloodofghuun,.fi-achievement_nazmir_boss_bloodofghuun{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwADAQAAAAAAAAAAAAAAAAQGAwUHCP/EAC8QAAIBAwMCAwYHAQAAAAAAAAECAwQFEQASIQYxE0FRFCIyYXGBBxUWIyRDkcH/xAAaAQABBQEAAAAAAAAAAAAAAAAFAgMEBgcA/8QAKxEAAgEDAQUHBQAAAAAAAAAAAQIRAAMEIRIxcaHwBRMiQWGB0QZRkbHC/9oADAMBAAIRAxEAPwDzXc4xS1Kw/uGUQCRnZ+WZiTu9fPHOmKSWRKSqVIHPjR+HFHHHkKePePpkbufXWOC6KrO7UNPL4hJLOCW+5zzqs6XukEEa7sRxj3iixbh9e+dBLrMqQVk1pWIFu5JNt9hTMCN0iOB0J9+E1q7XbbxXW+rMFJJWCmJlem27ZGjPfbxk4OSR6eXGpustkSInMCmQ5EaSbmTIyAR9OfvruR6ntBhhNKn8vICyRMxkDDJBHn2Gcc4xnjUl1GKK80FR1h7JKI6moeknrWICTTbN7AEf2BQTk4DgMByOWLOS5JIWOHXOp2ZgWF2Ld26rDd4t44ROhAGhIA3jdXJlmrKJRHTVtTAre8VjmZRntnAPy0apbr0zUNWs1OkkkRAKMoGMaNEUz7JUHaquZH0lnJdZRZJA8wND67vOp2WQQyEBiHPOttbbxGgBljVh2IJ5B9RpaptzVBIQ5OfhPBB0h4VVTShomcSrkdt2PLXDYurBptzk4dwso0q96Nq4v1LS3O39QxWC40TLNRGammnWWTJBUiMFlGOCQCedZbL+I1faOqpYobTRrbR1JFdfy6Hd7OkqbldUUjIRtx4I4XjGoyxXWvt00jUt0ltsqQsPFBKOwIwUDAZ5Hrj6jTS9SSBrbEghp4qGB6eDaPgLklpScZ3EnJPyA0nuN+k9Hr0oZksL93vGMH8Va0t6ggeppNkd6jpp2iirqVzFHMgwQQrAMMZxyOwGjUxQSVDxMqxtXJG5RJlcqCo7YBwf90aG3MDHZiSOZHKr7hdr9rjHQI5iBGk84p6/U8TXckLt8WNXYL6kZOtG6AU29SVbJOVODo0aXik7A9qf7YtrtO0a+L+fk0k8SyzOJCW5xzpq5UFLFUxRRxBV8CI8eZKgnRo1LLHaAnrSq4lm21liVEyP21VljdaW2RRxwxEEbiWGTnt/zRo0agNbUsSRWn4d50x0VTAAH2+K/9k=)}.ic-inv_sword_07,.io-inv_sword_07,.fi-inv_sword_07{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgIDAAAAAAAAAAAAAAAAAAcDBgQFCP/EACoQAAIBAwMEAgIDAAMAAAAAAAECAwQFEQAGIQcSEzEiQRQyFkJRI2Fx/8QAGgEAAgMBAQAAAAAAAAAAAAAABAUBAgYAA//EACkRAAEDAwIFAwUAAAAAAAAAAAECAxEABCESMRNBUWGRIjLhcYGhsdH/2gAMAwEAAhEDEQA/AEzs7a9Fcmti19XbwlbJF5/LIDKQWBY9xOVz9n/vXVlr2V08paOe+S2+gegoIs1rTwgFnB+Kx/TZwq/eSeM6SLXCmqdhUrWC0WyksdvoojWSJTxlqudiO95pCpfC92CoPHvPrDf6tXJto7j23bq280E9H+JNVQCoQySfkoVUTCIfvmNu1AAe0qcDPIxr7TinS6olYTOBIzMgYPnBxO1a569Zum22GUaDtJMg4yTjsYE7mlRu26UfTCGGluOybHdKq80/nMNRIyR00wOG7AoLkMHC9uRh0OM6VW4obpcN0VFfdLPSR10MYqGoKaLvp6CJcHxOg/XAwXycju5OeBZ7bfbztzqQNw79sdZX1dSVSoW6UTxTpG2cNSlsKjhSCoH16wedR3+q/itZVxbGv8kth3PQiVhLEpq44u9g0EjHnksefbA88jOnFvxGlpbUAVkb50kz6gMmIBwD7o3G1InAlYLokAHx0P3NULd11oYrlELU0kUTU6NJHTlkEchHyVuR3MPRb740ahu1rihFJNURGc1NMsymObCqpJAXGPrt0aOQhhI0yalbjriitSRJ7fNWvZF/Sxw09XRII2XsWoQOXiqA3x7Jox7VxkZ5xjTig6gbd2xf7RsayX+npHaPzX7dVJSpJOwK5Smpe8N41VSF4B7R6GQTpc7C2a56fJf4JYZXlSV4UVu+SP8AHli8rtgfHuRmAB/VRn7GoKvY8NfeK2e5092dZBE1LNbngZcgENHJ5GUjOAQ65Hvg6WSOMohRBz8eMwJ/lGaLdLiQR6QBP15wc/qJ6imzTbkot3Rb72lDf7zubb0e35a6CpvbJLNDVIwClXUAhclSueQV49nSosuzayW4UlsqaZa+7VUqUttpIZS8cky4Z5JD9RxqTkfXJPoZ33SLazU10q6CeprJbBFJD/KJLdMR/wARY+OD4/M/Ihm7cEKGOmpca3p/sq/SUtlQVjXmklpDcI7p52j7UDLT+T+obA9ks3AY+hoZFyLPiFB1FRBgbzG5MiJxPMgVZTLdzcaWRAwBz6DtO8iYycRXO/Vnbc9h3jNa03DZ6qKFAI/xElaGIdzfBe4ZwDn0SOfejWH1VviV+6RUpRyU8bU0fjXyI/xxwcocD/z6xo0yZecW2lSgJNWuLNll1TeomDHT8Vi2XqLuixFRbKuKA1VO1BMwiGWi4yQf6sVUKWGCVAGoptwXGG2VEtO/g7qchVjdwseTj4qWwMfX+aNGilNoJGKTlRk5o6b9Rd0bZq4qu11irIT+LMHUkVEZBYCTBHcVPIb9h/uONbPe3UvdV+gmqbhUwuY3jihjWPCRJGwfCrn+zcsTknAGcDGjRqqrVhTpWUCY3jvXNuLSJB2qjy1U91mkqahxG4bsxEgUf7nGPfJ0aNGvfQlOAKgvOOHUpUk1/9k=)}.ic-spec-DeathKnightBlood,.io-spec-DeathKnightBlood,.fi-spec-DeathKnightBlood{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACQAJAMBIgACEQEDEQH/xAAaAAEAAgMBAAAAAAAAAAAAAAAGAwcEBQgC/9oACAEBAAAAAOfOidrRYCyV0mkrRil289QesBdjh5ECEiZ//8QAGQEAAgMBAAAAAAAAAAAAAAAAAgMAAQUE/9oACAECEAAAAMadiwOk6P8A/8QAGAEAAwEBAAAAAAAAAAAAAAAAAwUGAQT/2gAIAQMQAAAAtBJXOj6GcP8A/8QAKhAAAgIBAwMCBQUAAAAAAAAAAQIDBBEABRIGEyExQRUiMkJhI2JxorH/2gAIAQEAAT8A2+hZvWkRVZ5ZHAHuWLHXTnTW1UoFWThPaAYMysQgJ9gRrcdg6bshEs1u3amE3EKxBYRAZPnIL+ddU9NNtbc4gXgf6JMf77qdHkD6410rIKyT22HzRwlUb8v8o1Nvs20VK9WhaRtzszeWUjhAGIAUlvu1X6lt2HsxbwQybTYd0tygu6sfHEgFeeh1FfsQXa29cbKyTOgUYWSMqOauv7Bq3BDHYdTnwfbWyQCXa1V544Y5bAQyyZ4LxQsc41LD0Rkx3Lkth/QFCAMDUOz0tz2d4q0ParGwAiowPmM5bJPuPU6mTp7YqqmemsoYBUm+vt+4Usut9hq/EpWhcGJgGT+DrbrYFPsSNgGXkD6lSB66kLQ3TIylf1AxGc+M5yDq1vgsU5alZzFGj9yNU8DyCjaTuwbPbSWNmSw8TAOfJMbEggHVt3eRWLDyg1Rdjjz951QlMsnbkRHUE4DDONTSpSryS1q0EcnE/PwBP9s6nvW7WXnmaRjy8t+Bpic6/8QAIhEAAQQBAgcAAAAAAAAAAAAAAgABAyIRECESEzEyQVKC/9oACAECAQE/AD45pCbFRQxFFcU0zYaqjDLyN56rluwXL5QxlhrKTvJDu+/tp//EACMRAAECBQUAAwAAAAAAAAAAAAIBAwAEERIhEyIxQVEFQnH/2gAIAQMBAT8AEQkWAVo8mNxF3nqBmgfTScK+6o/maJSH2HmnnG9RvaSpz5Ey4ggwVtyKKCUJl0UbEar9usew5NgrhranPsfGbpdq7O5eYnURsaAlqW9YheY//9k=)}.ic-spell_deathknight_antimagiczone,.io-spell_deathknight_antimagiczone,.fi-spell_deathknight_antimagiczone{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAcGCAIEBQP/xAAsEAABAwMDAQgDAAMAAAAAAAABAgMEBQYRABIhBxMUIjEyQVFhCHGBFkLB/8QAGAEAAwEBAAAAAAAAAAAAAAAAAwQFAQb/xAAuEQABAwMCAgcJAAAAAAAAAAABAAIRAyExBEESEwUUIlFhcYEjMkJicpGx4vD/2gAMAwEAAhEDEQA/AONWPyIaXPi0fp1QY8RERlEZuZIYCnChIxgeyU+fyTqR9cL+uSi9P6Xb8lvF0V9jvFR7AFBDXIQgc4RkerHGAfnS4/FCw4Vy3wtTLbj9JhK7aRIWkpK0JI2oI9iVe2fIHUk602Pdl13tXb4uJpNJodPe7u2t3gJbQdqENjzcUrJ9I8yf519JjG8AgcQufCTDReZO+MxZLcqmKgAGLpR9K4dpTaw7Wr9rTjMeN4kxGEFb7ygcbEDyA45USMe2rGUK5rFvev051FlPSqfEAYjd9nIRHp8dtO9bnYp9IA5KlZycDOdLX8erHolwXvvrNoy6hCWpKQ20pSAwnOe0dA9vokacNaoogM1SHLqFsW7S5W9hUWlQGnXVsZOG1OHCfs5JP60ZlLl+zee1E5N5tMC8+cWgYWal7G3cY9YVbOrvVZdaveU9SWu50yOBHhMR8NoQyknbwnjJyT/dGmPKoPQ+G8WFQarLUn1Oiekbj78JRgaNCNGv8JgfT+yxuqoAYP2Xom0796fRbnhUtp5i3oEpLbklY7Hvqsp2hAHKhznCeMeZ02KFCF/9NolS6lzZzKmKg6+EtOBpt5OwBKUD/VKRkZ+cnPOtLoc1WLgsepf5nV35VLjCMyht7xDDe5ZQk/PpBPwf1pW9bL/XUZpiR3AxEaTtbYRgJbHPB005hJ5b7OYfeFosLDxO+wGEGtUqF/AwCe9TK9esNPodOFvWUzHp1Pa4CWUhRX9qJ8z8k50gbnvR2S+p2XM3qJJxu8v4NQe5K6+8pTDCilBPiWPM64K0BSCtS8n7OptfpRtGWaceZO/mclMUtK1pk3Pef63opPIudlTpOVH9J0ah5B0alnpfUzlM3V67hnyad0PtmPCX2Dc2mIlyAjje6sEqUf8Amqn3pKfMVbm87irk6NGrdcnqZO5J/JU3RXqVT8xULbUpxR3qJzrF8bXNozjRo1yxPZVPZb1LgMyo6nHFOAhe3wkfA+tGjRoKxf/Z)}.ic-spell_deathknight_bloodboil,.io-spell_deathknight_bloodboil,.fi-spell_deathknight_bloodboil{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAYEBQEDBwj/xAAwEAABAwMDAgQEBgMAAAAAAAABAgMEAAURBiExEkETFCKBBzJRcSMzQlORwaHC0f/EABkBAAIDAQAAAAAAAAAAAAAAAAMFAQQGB//EACYRAAEDAwQCAQUAAAAAAAAAAAEAAgMEESEFEhMxQVGhIkJxsfD/2gAMAwEAAhEDEQA/APKb0Of5bzrrTxbdJIcUD6znc5PO/NSbTIdKfKLaD7SjnoUnPuPoa3N3qS/Z0Wh1KFtpV6FqyVIGSelO+ACTk4GT9acTZI1ksbN1i5ekLbKgVDIQRvx3+/alk020WcMnpbrTNOE7uWB30tA3X+ceVpsMa1s2l+KyLYJvmwHnZrqQptkfpCVbEHOSR6gQPdbloti75MTHcU3C8Rfg856c7c9qYPhpoG+a/vC1NlUSGl1KHpRZU4es5IbbQPnXgZxwBuSBTVqeJonRbnk4+lxc5jY9b11eU4oqB/bQQlP2396E5wjNibkq7TtdVMtHGA1huSTbGR12PwL5XK2pMyOFIiy5TTZVnDTikgn67UU6p1xagN9Eab9o6h/tRROWUfb8oB06Am5lCzovQjS2HrzeH2IcSF8yVryp9YAPQ2nlZ3GcbDIpxu9rbutshsW1IKJTgabbLfSeokAZTvjnt2NTpMi1XCYqQzPuhtbnWllD6UuSGlJwQFLGT0EHOQCeQeM1YaMj2xmfDuseZJlvxpIX4YnAgYJxhJAJPHOO+1J5ZXSO3OPS3FHSNoInNDMEdEZvY9n3fvx6uMqDqLW7Pw/uLenNPLdS3aW/AC0LKCtw/mOHvlR/wAOK4/qO8LvNwdlO5LjiyonGMk/1TjrfSk+VqeVIaW0hl5wqBkOhBSMZ9Wf6zSlJsk2K8UrjKJ4BbIcSr7FOauQ8YO7yk1S2exhaBt9gd/xuqbwCrcCirluDKSClcOQFA7gtn/lFG5iqQ09llf2G6OeHEUIsVIWlJKUt4wTyQc5H81fXxqDbE9bdtjvOBQ9Ty3FEnnPzAd6KKWz4eQPa2FG9zqWFxOS0fpWMuzttRUvMzJrZ6AoJDgKRlAVgAg7ZNKE8uMrH4hc6kdR60JO/8UUVEBu0qJDd+Uu3y9SYsxLbLEQJLYJyyDvvRRRTiNjS0YXPa+snbUyNa8gAnyv/2Q==)}.ic-spell_deathknight_iceboundfortitude,.io-spell_deathknight_iceboundfortitude,.fi-spell_deathknight_iceboundfortitude{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwADAQAAAAAAAAAAAAAAAAYHAgQFA//EADAQAAEDAwMDAwEHBQAAAAAAAAECAwQFBhEAEiEHMUETFFEyCBUWIyRCYSI0kaHR/8QAGQEAAgMBAAAAAAAAAAAAAAAAAwQCBQYB/8QALhEAAQMCAwQJBQAAAAAAAAAAAQACEQMhBDFhEkGB8BQiMlFxkcHR4RVCobHx/9oADAMBAAIRAxEAPwDRo9vWrcUyv2K/QZUeLQ4iXhVt6FblLIUHAByNySVJUVHPIIHGpfdNWh3uHqbQae9sosRfs1PqypxpGMqUO2TnP+tOcSHclSiU69LTqiUVmnRzDlspJ/Xx0LKtu36XMA7VIPgAjtrStu+un1LqLlUfs+RRalJQ565iPl+M2tOS2n01gH0lHGeeO2CNbJ+0x5D+yfyItHd3j4VMyk49enJNrTkd8+Oihkai1SpwplYLSi0262yVAHBWogBI/wCDtqy1Dp/KkVS2bOabMKK0hr3pSdziFOJ3rcV44wP86Z7d6uWjDspn8TRJtz16O409GiLjtsMNuhIJJU3wUIWDtGNxBxjGuTeNw3F1Br1RS1TVWlbqVB2pPoUtx5QCMKbUrI35JVtaSEjgFXbQMPTZSa5rWkzmeM+X7iEas2uXguAa0T7Zb012hJtOZQmU0e15Kocf8hC3Gm3CsjurcFc5zyPByPGjUAvu9I8quBmkRHYtNhMoiRGfVI2No45x3JOVE+SSdGp/UsO3qk5aIXQ3G4B81jY93yKKv3CnHD6DoeYAWRsUPj4ye51Yp1fV1FtBaqU9GTXqfvkzGjEZSZkYoBO5O38zaQoYJzg+TqBUOM4+77RDS1Or4SkDOSewxq10qmPdLemky6A2hVw1oKixluJ/tWBtDigk/vJWkDPbk44Go4SpVdSuJA9if7pwTFVjRVGx2ibfKSqXPmyahFpTb7KhIcb2NrgxvQDilpCVBv6hweFD+rgDGDpg+0Jf1dlXdUIqZJTTIEhUZlkAJC1pSBvUBxkkbuNIkOLVqezEuNhoRmmpAEaQSkKU6ghWEDuSk4PbgY55GnfrdCpleoVu3602mN99Rlvzo7ZI/UoUUObR8bgSB8HUS97qboz3c+CNiabRUYSJGXHkKFOrWtZUskk/OjXq+2VPLLaCEEnaMePGjWYcHSU0CFQaKyEVKnSm1rQ8rA3JOCnnx8afutFUqDNXh2x7pbtMahQSht0BRSpafUUrJ5yVLOfnAz2GjRrY4a1OOcgkKV686H0Xb6nU+EiiXBbDUVpqBbiIrsDYkBYWSltalq/cVBZz/IGMY0tQacxVeh0VcwuLVBrMxtg7vpT6TS8c+MqPH8nRo10gFzdR6FAY49GmfuU7kRI6FJCWwMpyeM6NGjVSWick0CV//9k=)}.ic-spell_holy_righteousnessaura,.io-spell_holy_righteousnessaura,.fi-spell_holy_righteousnessaura{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAUDBgcIBP/EADEQAAEDAwMDAgQEBwAAAAAAAAECAwQFBhEAEiEHEzEiURRBYXEWI0KxFTJSU4GRof/EABkBAAIDAQAAAAAAAAAAAAAAAAQFAAMGAf/EACcRAAIBAgUEAgMBAAAAAAAAAAECAwARBBIhMVEFQWGBE8FxkbGh/9oADAMBAAIRAxEAPwC6X5V2qXd8Sg1GBCnWrU47cuid9Ab+EISEqZQsD0AKGQD6fVg5B1S+pfT2l16pVG8q3Xq07BYZShcWE0Erj7E4/MbJ2t5AOFJGw5425xpjbNwtdYLAl065Es0ioocemW64CkBvtp9TGBzsKdoHHPOMka81Gq9dtOqQaXdSfglqShMeYrC2VtHgtLPhTShlJz/KePGQG0kkuGYBhdOPz3Hre3cbGs+ipi4zlbLJ69j97eDuLWrnWSz0tmoU1ClV6myOdjskpWCflnGNQPLqFMS3GrLialRneGpKTu49wff6HWo9bulM+RXqnNpVNbYhIbVISG0FWG93pXn+nlKc5+/jWWWq3IQJ9oVdpa2JSB2R/bd/QoH5c4/xogIVIsBZtiNjwCASNedKF+RHQnMTl3VtWGtiVNgQR7FeKoUGt06TspMuT8G8kPNll9SUqB+fH2/5o0ys+8v4RRhTpbPdUy4pKSoHhPt/vOjUXCdPkAYy5Se3HirXxfVImKBAwHfnzTmq16fR7TodWoUkN/Cr7TxACiDkEedbvat1U3qZZVQ/ENSi991gOR23QBskk43bh+lXhYxzwfIGsgZolCp8eqUyorWaJPeC2Hmxu7R8g4+n7aX2/ZVy2zc0SbR6g3Igh1KtzZ3IUnzyD+xGjnRzIEZbggA21ym+4v2Nh/tKIZ8MiF1bKykkE3AYEXsbdxc78Cttta6qjY89Fm3VPfZoynAIkl14dpKVJx2XF8jYUnKV+AfPGcJL96UPiqMXZb8aWadGjoU+w7tLyFI4XuSkn2DhxxhQIJGmHUB2k35RmaLLejt3LJKYsfvOJaTLQlvhsZ9AdQs+gcFQJHJyNSdNZdzWDa7dNvV6JQHYtOfjCTJkIVJbUopwkBtRIGwoIK+BhR+mkOIlk6ZKY7Ai+3nkdzWhhgi6tCJrlTa1/BHfeueV20TLlLW04N761px7E50a6IEqy6Q2hipUtVQlOp763mEENkL5Tt8DaU4Ixxzo09j6akiB1BIIvtzr91nZsdio5GRiLg2340+qwPp5VZjsWVBkLEiMXEtqbdGQRnAP0I9xjVerjs2l3GpqHUpyEhwY/OPj20aNASsTg4zfW5/opzEijHSqBoQP5V6tyL+JaFWGavIefEeOqQyvICkOISVJUDj6Y+xOornvWuXPYkVdYWy/KjNBhyVtIdlBCwltTxzha0JykKwDg8k6NGheuIvyRNbW33R/SDlEqjQDb9U8iXVJh2lbKH6dTqgtVLGHJSFlSUpedQlI2rSMAIHkZyTzo0aNUpiJUUKrEAeTXXgidizKCT4r/9k=)}.ic-spell_shadow_deathanddecay,.io-spell_shadow_deathanddecay,.fi-spell_shadow_deathanddecay{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAQUAAwAAAAAAAAAAAAAAAAIEBQYHAQMI/8QAKRAAAgICAQMDBAMBAQAAAAAAAQIDBAURAAYSISIxQQcTFFFhgZFCUv/EABgBAQEBAQEAAAAAAAAAAAAAAAUEBgAD/8QAKBEAAQMCBQMEAwAAAAAAAAAAAQACAxExBBIhQfAiUdEFgbHBE3GR/9oADAMBAAIRAxEAPwDyx07j5MthLleCB2lhUyGRI2YIo9RLaHgeCN86+lunrOTnhtT1bBxSTotqeN0UhSTsKXIHfoHQ/jlgjtUekcLEaKWXyltGJnZh9pkYEDS/obJB99j9bHNK6TwFmL6cdGZejhbebx7QW478dCF0sxTPP3CRWA2HQRpptFT269jySedzGkjfQJPB4Vssga7bU8+Uv6eydNV8zJYk6VxlPEQVXeyWBnYJECN+vY9RYIW92/rfKXn+i8dN0llL1PESVrlELkNQzF91p1LIrqx9P2wNnt86Pn23y4dXY2dYUnt04ukMZMwEKZCyZLVhELMxKKGd2Mj95YgDfb+hxlay1Sv0fksPjA1r82RWt2JEkjlkiOu46cksD4XwQQCTrhDZnxvDmm/PK08mFhliLXtAoD2vtQba0r7rA2XTEfr+OHJDO1I6WVmrJsopHZs+dEbG/wDeHNA11RVYeRpY8tOy0oWZaL4DKVKNXIXfwXhgMy7jSVvSsgBHnsOyB+/4HHnRPWXU3SEMWMpX7MU73y1wlwYmHgoNb2m2JB7dDRB9+Wbp/pcdT1KipYRo6dJLH4zkq1jvZgSjAggqVU6HuDytZTBJSuzxvDKssY7ZYyCVQn9lvJJHn++HZ4JXfhcNaeaJ+OLEQxjENPSD9Cv9ouOoszk89m7GWy87TW5jonz6B/4G/IG9+/z5PFYqk9ohtgRoO9t+nvXfr7SfB0PjfzyLls2qdmumRpixCdEsCVkkjHx3b0d+BsjfnjvB9UZ/J9X16GYlDU8mjp9tIwIY0QFuyNR7KCoB+eRyYWVrSRSgHPddjfVKsIiubnnPhZ3nKstjKTz/AHYZhIxIaOTagewH9a4cnJYa8jd/eYgWYhUXY0WJ4cca12UUQpjzdRN1ovTmQOV+ntOWxUrRzpKwWeANHIF7gOzanwvzofPGdi7NYtGo2gmjI5BJaRt62zEknhw4M00e6ncpiIk5QewTLM2mt9MNbniiaWvKYkPb/wA+R5/zkZRyk1HpbuqwwJYs2JQ1gqTIi+FKoSfQCPfQBPzvhw5W7WIA9/tQz3P68KKt35aYhghig7RED6k2fnhw4c9S4g3XCy//2Q==)}.ic-spell_shadow_lifedrain,.io-spell_shadow_lifedrain,.fi-spell_shadow_lifedrain{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAYCBQMECAH/xAAvEAACAQMCBQEGBwEAAAAAAAABAgMABBEFEgYTITFBByIyQlFhgRZDUnFyc6HB/8QAGgEAAgMBAQAAAAAAAAAAAAAAAgQDBQYAAf/EACoRAAEDAwEFCQEAAAAAAAAAAAEAAhEDBCEFQXGRscESEyIxMlFhofDx/9oADAMBAAIRAxEAPwDk+ytIJNCnvHzzI7tIhg/CVJ/5U9Y01bLidtJDBwsqpuRsgg4zWrbOx0u6j+EyqcY+hp19NOHPxJqdrfNJy4rZXSaSQnuqkqc+enT7UnWqd0HPccfxXlpQFwaVENEmCT8AmfpKWqWUMF7KqbhHtLLWpbwBoJGbO5SB3px4nsY7C1aZ0SW+TJjjI6In6m+vkD71S2OlXD8OHVTLA6yyvHsEmZNyruJK/LHmoqVbtUg6U7qGntp3jmNbiCf25UMiLzXBGcNgZoqcnWaT+VFNyVnKgAecbSrG3hji4YlvVuY+ebooIRneFCj2vljJxXSvo1rXDnC/p1dw6nb2Ml3c2/NLMBvK4HtY+nXH3rl20nSOGQTHMWcmPON58D9vnVyupzak0U7zgXOwRsGIG4AbRjx28UleW7qoycT0Wh0m6p+mMhrR7eRk54Jj16/sr/ihmSKUNPOqgmQMrKxAz2z2NKFxdTaTqF5pqjDRyyQZPjqVNNPDENlot5FxBrl3bMLA8y1sY5Q01xKOqKQPdTOCSfHQd6Qbu4lu9SkuZiDLNKXfHlicn/aO2pNAI2BFq17UluwkngY59FldSZpcdg5FFS/Nl/sNFMSVQPHjO88ytdIldd5JyetTESn2STgUUURcQoWgL3Zy/dJG7oaxGMBtwJyDRRXrTK4kzCi0jhjhu5zRRRRQFGSZX//Z)}.ic-spell_shadow_raisedead,.io-spell_shadow_raisedead,.fi-spell_shadow_raisedead{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwEBAQEAAAAAAAAAAAAAAAYHBQMIBP/EADAQAAEDAwIDBwMEAwAAAAAAAAECAwQFBhEAIQcSExQjMUFRYXEiQoEVMkNSkaLB/8QAFgEBAQEAAAAAAAAAAAAAAAAAAgMB/8QAHBEAAwEAAgMAAAAAAAAAAAAAAAECESExEiIy/9oADAMBAAIRAxEAPwDzjwQ4bVjidejNv0lAQkDqy5S0czUVkHdavc+CR5k/JHsZfBnh1YdutMotuPUJJUGXJcxXUU6pZwObOwxudgNht56k/A3ttIsmNJ4dQqhM6yGpFbYPJ11OgKQlxtQI7nPUBCj3ZQSdlg6oFcvByosSLcN0Qq5d0FrtApUNQdbbKkD+bwecSDkpTsnw8tRumxrgkXGdiFGdbpsSg0WIy4k9J6PHCFFQ8UA+QII9zqC3BT0RXuqwCGl/b/U+nxqw8ZakHq5CpCzzPQ0OPPqz9xITjI29c+/xpPft9mdQZdTqUxcRht4R4SGkBxcl9aebffCW0JwVHxytAA3zqk9axNJyTjRp/pFnWu1SIki6boXSpctCnmo7ccrIaC1ISpXoSUKIHoUnz0a3SeFAsYV297Ai0di32k0uIwISFRGek4pzKu+yndWVLKFE5ylatvp0zux+C1sSIDsty4KpPpkcRaezJaRHbjOElZBDSErdKVLVlTh9twMa+PhLUE0+wqDU7dk01h+Oy4mQxU4rpT2oPZ6rTiFpUVFAIKf2pSFHYnOs/i1+sVJUadJbowajMugvQWHW3JJKsdRQdJXy4zgHABJG531Br2Y1jQkXnPYqt5y57DYbiubNJByeUrO/+dbNqTAqHarcYMrlRHZy0oXggyVOtJQpQ9k8hGfMZ0mzmX2Y/bOi6ElYbDikkIzspAB+Bn431oUqM5DKlqea7TFkOurWyvmBywOXCh44Vjcav45AqOdzRplfr0udBipkxkL6DKiojDaAEo/1AJ9ydGmShTjAt+ntMt4C2lOHG2eZxZyfxjRoBGW0uJ9dj2e0wqm0CQWoSWmnHqcgqQhIICdsA7eoJ0h3BxHuW7Xkszlw4cPqdPskCOGGiMncgbqOw3JOjRrJSdMzeDtOqUtFvUZ1xztBaWhLCX+8Q1kKB5Un6fQ7g4wMYG2s+5XX2Lmq6Ou46UQ2UBTisnBKSfDYfgaNGr38jrozHa5PZajsNlsIbYQlI5c7Yz/3Ro0akA//2Q==)}</style>
+</head>
+<body>
+<div class="avec-nav">
+<nav class="sommaire"><details open><summary>Sur cette page</summary><ul><li><a href="#s-boss-par-boss">Boss par boss</a></li><li><a href="#s-corriger-en-priorit">À corriger en priorité</a></li><li><a href="#s-survie-boss-par-boss">Survie boss par boss</a></li><li><a href="#s-d-g-ts-second-plan">Dégâts (second plan)</a><ul><li class="sous"><a href="#s-rotation">Rotation</a></li><li class="sous"><a href="#s-build-et-stats">Build et stats</a></li><li class="sous"><a href="#s-quipement">Équipement</a></li></ul></li><li><a href="#s-progression">Progression</a><ul><li class="sous"><a href="#s-centiles-par-boss">Centiles par boss</a></li><li class="sous"><a href="#s-conseils-du-24-09">Conseils du 24/09</a></li></ul></li><li><a href="#s-m-thode">Méthode</a></li></ul></details></nav>
+<main>
+<p class="badges"><span class="badge">Généré le 26/10/2026 à 16:10</span><span class="badge" title="Commit du code guild_analyser qui a produit cette page">Version 2913cb6</span><span class="badge badge-verif non" title="Pas encore relue par le vérificateur (intégrité des données, anomalies)">Non vérifié</span></p>
+<style>
+  main { max-width: 1100px; }
+  .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 16px 0; }
+  .carte { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .carte .val { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .carte .lib { color: var(--muted); font-size: .85rem; }
+  .prio { list-style: none; padding: 0; margin: 0; counter-reset: p; }
+  .prio > li { counter-increment: p; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+               padding: 14px 16px 12px 56px; margin: 12px 0; position: relative; }
+  .prio > li::before { content: counter(p); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px;
+                       border-radius: 50%; background: var(--accent); color: var(--surface); font-weight: 700;
+                       display: flex; align-items: center; justify-content: center; }
+  .prio h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .gain { float: right; margin-left: 10px; background: var(--row); border: 1px solid var(--border); border-radius: 999px;
+          padding: 2px 10px; font-size: .85rem; font-weight: 600; white-space: nowrap; }
+  .gain.nc { color: var(--muted); font-weight: 400; }
+  .gain.grave { color: var(--bad); border-color: var(--bad); }
+  .gain.ok { border-color: var(--good); }
+  .prio p { margin: 6px 0; }
+  .etiq { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; margin-right: 6px; }
+  pre.macro { background: var(--row); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin: 6px 0;
+              font-size: .88rem; white-space: pre-wrap; }
+  code { background: var(--row); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: .86em;
+         word-break: break-word; }
+  .moments a { margin-right: 4px; white-space: nowrap; display: inline-block; }
+  .boss-chip { display: inline-block; font-size: .8rem; color: var(--muted); border: 1px solid var(--border);
+               border-radius: 999px; padding: 0 8px; margin: 2px 4px 2px 0; }
+  .sort { border-bottom: 1px dotted var(--muted); cursor: help; }
+  .fr { color: var(--muted); }
+  .bandeau { background: color-mix(in srgb, var(--warn) 14%, var(--surface)); border: 1px solid var(--warn);
+             border-radius: 8px; padding: 8px 12px; margin: 8px 0; font-size: .92rem; }
+  .pc { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .gris { --pc: #7d838b; } .vert { --pc: #1b9a1b; } .bleu { --pc: #0070dd; } .violet { --pc: #a335ee; }
+  .orange { --pc: #e07800; } .rose { --pc: #d6559b; } .dore { --pc: #b8942a; }
+  .pc, .pc-t { color: var(--pc, var(--muted)); }
+  .verdict { font-weight: 700; }
+  table.boss-soiree td a, .liens a { white-space: nowrap; }
+  .e-pos { color: var(--good); font-weight: 600; } .e-mid { color: var(--warn); font-weight: 600; }
+  .e-neg { color: var(--bad); font-weight: 600; }
+  .methode .carte p { margin: 4px 0 0; font-size: .92rem; }
+  .methode summary { cursor: pointer; }
+  p.mode { margin: 4px 0 10px; }
+  .refs { display: grid; gap: 10px; margin: 12px 0 16px; }
+  .ref { display: grid; grid-template-columns: minmax(0, 1fr) 11rem; gap: 4px 16px; align-items: center;
+         background: var(--surface); border: 1px solid var(--border); border-left: 6px solid var(--muted);
+         border-radius: 10px; padding: 10px 14px; }
+  .ref.e-bad { border-left-color: var(--bad); } .ref.e-warn { border-left-color: var(--warn); }
+  .ref.e-good { border-left-color: var(--good); } .ref.moi { border-left-color: var(--accent); }
+  .ref .qui { font-size: 1.05rem; } .ref .qui b { font-size: 1.15rem; }
+  .ref .det { color: var(--muted); font-size: .85rem; } .ref .det b { color: var(--text); font-size: inherit; }
+  .ref .ecart { grid-row: span 2; text-align: right; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .ref .ecart .dps { font-size: 1.9rem; font-weight: 800; }
+  .ref .ecart .pc { font-size: 1.05rem; font-weight: 700; }
+  .ref .ecart .lib { color: var(--muted); font-size: .8rem; }
+  .ref.e-bad .ecart .dps, .ref.e-bad .ecart .pc { color: var(--bad); }
+  .ref.e-warn .ecart .dps, .ref.e-warn .ecart .pc { color: var(--warn); }
+  .ref.e-good .ecart .dps, .ref.e-good .ecart .pc { color: var(--good); }
+  .ref .barre { grid-column: 1; position: relative; height: 12px; background: var(--row); border-radius: 0 4px 4px 0; }
+  .ref .barre span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--muted); }
+  .ref.e-bad .barre span { background: var(--bad); } .ref.e-warn .barre span { background: var(--warn); }
+  .ref.e-good .barre span { background: var(--good); } .ref.moi .barre span { background: var(--accent); }
+  .ref .barre i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--text); }
+  .duo { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); column-gap: 0; row-gap: 4px;
+         margin: 8px 0; }
+  .duo-tete { font-weight: 700; padding: 4px 10px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .duo-tete.dm { text-align: right; border-bottom: 3px solid var(--accent); }
+  .duo-tete.dr { border-bottom: 3px solid var(--muted); }
+  .duo-minute { grid-column: 1 / -1; text-align: center; font-weight: 700; color: var(--muted); font-size: .85rem;
+                margin-top: 10px; border-top: 1px solid var(--border); padding-top: 4px; }
+  .duo-phase { grid-column: 1 / -1; text-align: center; font-style: italic; color: var(--muted); font-size: .88rem;
+               background: var(--row); border-radius: 6px; padding: 2px 8px; }
+  .duo-axe { background: linear-gradient(var(--border), var(--border)) center / 2px 100% no-repeat; }
+  .duo-c { padding: 3px 10px; border-radius: 6px; font-size: .92rem; }
+  .duo-c.cd:not(.vide) { background: color-mix(in srgb, var(--c) 12%, var(--surface)); }
+  .duo-c.dm { text-align: right; } .duo-c.dm.cd:not(.vide) { border-right: 4px solid var(--c); }
+  .duo-c.dr.cd:not(.vide) { border-left: 4px solid var(--c); }
+  .duo-c .t { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .85rem; }
+  .duo-c .absent { color: var(--muted); font-style: italic; font-size: .85rem; }
+  .duo-c .pourquoi { display: block; font-size: .85rem; color: var(--warn); }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases .mono { fill: var(--row); stroke: var(--border); } .phases .multi { fill: #eb6834; opacity: .55; }
+  .phases text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  section.boss > summary { font-size: 1.1rem; padding: 4px 0; }
+  section.boss { margin: 10px 0; }
+  details.boss { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px;
+                 margin: 10px 0; }
+  details.boss > summary { font-size: 1.08rem; }
+  .muted { color: var(--muted); }
+  @media (max-width: 600px) { .prio > li { padding-left: 16px; } .prio > li::before { position: static; margin-bottom: 6px; } }
+</style>
+<style>
+  .viz { --s1: #2a78d6; --s2: #eb6834; margin: 10px 0 4px; }
+  @media (prefers-color-scheme: dark) { .viz { --s1: #3987e5; --s2: #d95926; } }
+  .viz svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .viz text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  .viz text.lib { fill: var(--text); }
+  .viz .grille { stroke: var(--border); stroke-width: 1; }
+  .viz .s1 { fill: var(--s1); } .viz .s2 { fill: var(--s2); }
+  .viz .l1 { stroke: var(--s1); } .viz .l2 { stroke: var(--s2); }
+  .viz circle { stroke: var(--surface); stroke-width: 2; }
+  .viz [data-tip]:hover { opacity: .75; }
+  .viz .legende { display: flex; gap: 16px; flex-wrap: wrap; font-size: .88rem; color: var(--muted); margin: 0 0 4px; }
+  .viz .legende i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+  .viz .legende i.trou { border-radius: 2px; opacity: .45; }
+  #infobulle { position: fixed; pointer-events: none; display: none; z-index: 10; background: var(--surface);
+               color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px;
+               font-size: .85rem; box-shadow: 0 2px 8px rgba(0,0,0,.15); white-space: pre; }
+</style>
+<style>
+  .cause { display: flex; height: 10px; border-radius: 3px; overflow: hidden; background: var(--row); margin: 4px 0 2px; max-width: 420px; }
+  .cause span { display: block; height: 100%; }
+  .c-freq { background: #2a78d6; } .c-crit { background: #eb6834; } .c-coup { background: #9a6fd0; } .c-abs { background: #888; }
+  .pastille { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin: 0 4px 0 10px; }
+  .sorts-pourquoi { list-style: none; padding: 0; }
+  .sorts-pourquoi li { border-bottom: 1px solid var(--border); padding: 8px 0; }
+  .sorts-pourquoi .faits { color: var(--muted); font-size: .92rem; }
+  .centile { font-weight: 600; }
+  .c-legendaire { color: #e08a00; } .c-epique { color: #a335ee; } .c-rare { color: #0070dd; }
+  .c-peu { color: #1eaa1e; } .c-commun { color: var(--muted); }
+  .mecanisme { margin: 6px 0 0; padding: 6px 10px; border-left: 3px solid #eb6834; background: var(--row); font-size: .92rem; }
+  section.boss { border-top: 2px solid var(--border); margin-top: 28px; }
+</style>
+<style>
+  td.nu { color: var(--bad); font-weight: 600; }
+  .duo-c.coup { font-size: .88rem; }
+  .duo-c.coup.nu { color: var(--bad); font-weight: 600; }
+</style>
+<h1>Mon tank — Ragnarorc</h1>
+<p class="meta"><i class="ic ic-spec ic-spec-DeathKnightBlood" title="Blood DeathKnight"></i>Chevalier de la mort Sang · ilvl 327 · raid du 14/10/2026 · 5 boss tués, meilleur kill de chacun · <a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq">rapport Warcraft Logs</a> · <a href="https://murlok.io/death-knight/blood/m+" title="Talents, statistiques et équipement des meilleurs joueurs de ta spé en Mythique+ (Murlok)">builds du top M+ (Murlok) ↗</a></p>
+<p class="mode"><span class="etiq">Niveau d'analyse</span><strong>léger</strong> : rotation lue dans le log seulement : ni top mondial, ni joueur équivalent, ni simulation (fiche des PU).</p>
+<p class="note"><strong>Moyennes sur 5 boss</strong> (détail boss par boss juste en dessous)</p>
+<div class="cartes">
+<div class="carte"><div class="val bad">2</div><div class="lib">morts (kills, et wipes où tu tombes parmi les 3 premiers)</div></div>
+<div class="carte"><div class="val">74 %</div><div class="lib">de tes plus gros coups encaissés sous un défensif majeur</div></div>
+<div class="carte"><div class="val">83 %</div><div class="lib">du combat sous Bone Shield</div></div>
+<div class="carte"><div class="val bad">6</div><div class="lib">relais tardifs (3 s de plus que le rythme normal des relais du boss)</div></div>
+<div class="carte"><div class="val"><span class="pc gris" title="centile 15 : à travailler">15</span></div><div class="lib"><span class="verdict pc-t gris">à travailler</span> · centile moyen au DPS : tu fais mieux que 15 % des joueurs</div></div>
+<div class="carte"><div class="val">53 k</div><div class="lib">DPS moyen (pas de top 3 trouvé)</div></div>
+</div>
+<div class="bandeau"><strong>Survie d'abord</strong> : les constats de survie (morts, défensifs, relais, mitigation) passent toujours devant ceux de dégâts. simc ne simule pas la survie : elle est comparée aux références et à l'autre tank, sans gain chiffré. Les mécaniques de raid punitives se jugent mal dans un log seul : le croisement avec Wipefest viendra plus tard.</div>
+<div class="bandeau"><strong>Spé pas encore vérifiée</strong> : ce rapport repose sur des règles génériques qui n'ont pas encore été contrôlées sur des logs de cette spé (familiers, incantations, ressource, cooldowns propres à la classe). À lire avec prudence.</div>
+
+<h2 id="s-boss-par-boss">Boss par boss</h2>
+<div class="table-wrap">
+<table class="boss-soiree">
+<thead><tr><th>Boss</th><th class="num">Morts</th><th class="num">Gros coups sous défensif</th><th class="num">Mitigation active</th><th class="num">Relais tardifs / relais</th><th class="num">Centile DPS</th><th class="num">DPS</th><th class="num">Durée</th><th>Combat</th></tr></thead>
+<tbody>
+<tr><td><a href="#survie-nek-zali-the-soulcoiler">Nek&#x27;zali the Soulcoiler</a></td><td class="num">—</td><td class="num">33 %</td><td class="num">87 %</td><td class="num"><span class="bad">1</span> / 6</td><td class="num"><span class="pc gris" title="centile 13 : à travailler">13</span></td><td class="num">41 k</td><td class="num">6:41</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=2" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/YnNDhymZWRzLPHtq/fight/2" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/YnNDhymZWRzLPHtq/2/Ragnarorc/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#survie-entombed-sentinels">Entombed Sentinels</a></td><td class="num">—</td><td class="num">100 %</td><td class="num">84 %</td><td class="num"><span class="bad">1</span> / 3</td><td class="num"><span class="pc gris" title="centile 12 : à travailler">12</span></td><td class="num">53 k</td><td class="num">7:10</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=3" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/YnNDhymZWRzLPHtq/fight/3" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/YnNDhymZWRzLPHtq/3/Ragnarorc/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#survie-vashnik-the-malignant">Vashnik the Malignant</a></td><td class="num">—</td><td class="num">70 %</td><td class="num">96 %</td><td class="num"><span class="bad">1</span> / 3</td><td class="num"><span class="pc gris" title="centile 22 : à travailler">22</span></td><td class="num">67 k</td><td class="num">6:17</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=4" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/YnNDhymZWRzLPHtq/fight/4" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/YnNDhymZWRzLPHtq/4/Ragnarorc/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#survie-the-lost-explorers">The Lost Explorers</a></td><td class="num">—</td><td class="num">100 %</td><td class="num">75 %</td><td class="num"><span class="bad">2</span> / 5</td><td class="num"><span class="pc gris" title="centile 9 : à travailler">9</span></td><td class="num">48 k</td><td class="num">6:12</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=5" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/YnNDhymZWRzLPHtq/fight/5" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/YnNDhymZWRzLPHtq/5/Ragnarorc/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#survie-sszorak">Sszorak</a></td><td class="num">—</td><td class="num">67 %</td><td class="num">71 %</td><td class="num"><span class="bad">1</span> / 6</td><td class="num"><span class="pc gris" title="centile 18 : à travailler">18</span></td><td class="num">59 k</td><td class="num">5:28</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=11" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/YnNDhymZWRzLPHtq/fight/11" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/YnNDhymZWRzLPHtq/11/Ragnarorc/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Gros coups : tes coups encaissés d'au moins 75 % du plus gros (les tank busters). Relais : provocations où tu reprends le boss après le debuff de relais de l'autre tank. Centile au DPS (le classement Warcraft Logs des tanks), aux couleurs du site. Le nom du boss mène au détail de sa survie ; « Logs », « Wipefest » et « Analyzer » ouvrent le combat sur warcraftlogs.com, ses mécaniques sur wipefest.gg et ton analyse sur wowanalyzer.com.</p>
+<h2 id="s-corriger-en-priorit">À corriger en priorité</h2>
+<ol class="prio"><li><span class="gain grave">critique</span><span class="gain nc">gain non chiffré</span><h3>Parmi les 3 premiers morts sur 2 des 10 wipes</h3><span class="boss-chip">Nek&#x27;zali the Soulcoiler</span><span class="boss-chip">The Twin Fangs</span><p><span class="etiq">Cause</span>Nek&#x27;zali the Soulcoiler (essai 1) à 5:38 (3e mort sur 13), The Twin Fangs (essai 4) à 0:20 (2e mort sur 7). Coups fatals : Hollowing Strikes, Flames of Ula&#x27;tek.<br><strong>Nek&#x27;zali the Soulcoiler (essai 1) à 5:38</strong> : 15 coups en 10 s (0.3 M), les plus gros : Possession Barrage 90 k à 5:37 (sous Anti-Magic Zone, Bone Shield, Icebound Fortitude), Possession Barrage 90 k à 5:37 (sous Anti-Magic Zone, Bone Shield, Icebound Fortitude), Corpse Blight 9 k à 5:34 (sous Bone Shield, Icebound Fortitude), Corpse Blight 9 k à 5:36 (sous Bone Shield, Icebound Fortitude). <strong>À vérifier</strong> : mort par accumulation : 0.3 M encaissés en 10 s, dont un 90 k ; le dernier coup (90 k, sous tes 1115 k habituels) n&#x27;a fait qu&#x27;achever. Aucun défensif qui réduit les dégâts d&#x27;au moins 20 % n&#x27;était prêt (Icebound Fortitude, Vampiric Blood déjà utilisé juste avant) : il fallait des soins ou moins de dégâts subis.<br><strong>The Twin Fangs (essai 4) à 0:20</strong> : 5 coups en 10 s (0.3 M), les plus gros : Toxic Fumes 64 k à 0:12 (sans défensif), Toxic Fumes 64 k à 0:14 (sans défensif), Toxic Fumes 64 k à 0:16 (sans défensif), Toxic Fumes 64 k à 0:18 (sans défensif). Défensifs prêts et pas lancés : Vampiric Blood, Icebound Fortitude, Dancing Rune Weapon. <strong>Un défensif aurait probablement suffi</strong> : mort par accumulation : 0.3 M encaissés en 10 s, dont un 64 k ; le dernier coup (64 k, sous tes 1115 k habituels) n&#x27;a fait qu&#x27;achever. Icebound Fortitude pendant ces secondes aurait réduit le total.</p><p><span class="etiq">Conseil</span>Un tank mort fait tomber le raid. Pour chaque mort, le verdict dit si un défensif prêt aurait suffi, ou si c&#x27;est une mécanique à revoir (coup à éviter, relais) : dans ce cas, le défensif n&#x27;y aurait rien changé.</p><p class="note"><span class="etiq">Preuve</span>Morts des wipes (Warcraft Logs), sur tous les boss de la soirée.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=1&amp;type=deaths">Nek&#x27;zali the Soulcoiler 5:38</a> <a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=15&amp;type=deaths">The Twin Fangs 0:20</a> </p></li><li><span class="gain grave">grave</span><span class="gain nc">gain non chiffré</span><h3>1 relais tardif sur Hollowing Strikes (et 4 autres boss)</h3><span class="boss-chip">Nek&#x27;zali the Soulcoiler</span><span class="boss-chip">Entombed Sentinels</span><span class="boss-chip">Vashnik the Malignant</span><span class="boss-chip">The Lost Explorers</span><span class="boss-chip">Sszorak</span><p><span class="etiq">Cause</span><strong>Nek&#x27;zali the Soulcoiler</strong> : Tu reprends le boss 14.2 s après le dernier Hollowing Strikes sur Jairtrude (0:41, 1 stacks). L&#x27;autre tank reprend en 1.8 s en médiane. Seuil sur ce boss : 8.1 s (délai médian des relais + 3 s).<br><strong>Entombed Sentinels</strong> : Tu reprends le boss 10.8 s après le dernier Mark of Blood sur Jairtrude (0:55, 1 stacks). L&#x27;autre tank reprend en 10.1 s en médiane. Seuil sur ce boss : 10.1 s (délai médian des relais + 3 s).<br><strong>Vashnik the Malignant</strong> : Tu reprends le boss 8.6 s après le dernier Dripping Fangs sur Jairtrude (4:59, 2 stacks). L&#x27;autre tank reprend en 4.1 s en médiane. Seuil sur ce boss : 6.8 s (délai médian des relais + 3 s).<br><strong>The Lost Explorers</strong> : Tu reprends le boss 4.8 s après le dernier Steady Strikes sur Jairtrude (0:37, 22 stacks), 8.7 s après le dernier Steady Strikes sur Jairtrude (2:40, 1 stacks). L&#x27;autre tank reprend en 1.1 s en médiane. Seuil sur ce boss : 4.0 s (délai médian des relais + 3 s).<br><strong>Sszorak</strong> : Tu reprends le boss 9.5 s après le dernier Corroding Venom sur Jairtrude (1:05, 2 stacks). L&#x27;autre tank reprend en 6.2 s en médiane. Seuil sur ce boss : 7.4 s (délai médian des relais + 3 s).</p><p><span class="etiq">Conseil</span>Provoquer dès que l&#x27;autre tank prend son dernier Hollowing Strikes : chaque seconde de retard, il encaisse les coups du boss avec le debuff au maximum.</p><p class="note"><span class="etiq">Preuve</span>Provocations et stacks du debuff de relais (Warcraft Logs).</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=2&amp;view=events&amp;start=36000">Nek&#x27;zali the Soulcoiler 0:41</a> <a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=3&amp;view=events&amp;start=50000">Entombed Sentinels 0:55</a> <a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=4&amp;view=events&amp;start=294000">Vashnik the Malignant 4:59</a> <a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=5&amp;view=events&amp;start=32000">The Lost Explorers 0:37</a> <a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=5&amp;view=events&amp;start=155000">The Lost Explorers 2:40</a> <a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=11&amp;view=events&amp;start=60000">Sszorak 1:05</a> </p></li><li><span class="gain">+0 k · +0,5 % estimé</span><h3>Temps globaux dépensés en sorts utilitaires</h3><span class="boss-chip">Vashnik the Malignant</span><p><span class="etiq">Cause</span>Death Grip (Poigne de la mort) : 8 lancers, contre 0 chez les références (ramenés à ta durée de combat). Soit environ 8 temps globaux de recharge sans dégâts.</p><p><span class="etiq">Conseil</span>Ne les lancer que quand la mécanique l&#x27;exige : chaque temps global pris à la rotation est perdu pour les dégâts. À vérifier aux moments indiqués : certains peuvent être une consigne du raid ou imposés par le boss.</p><p class="note"><span class="etiq">Preuve</span>Lancers du log ; sorts de classe sans aucun dégât, qui prennent un temps global (données de simc), hors interruptions, cooldowns, bijoux et potion. Gain estimé : un temps global (1 s) au DPS moyen par lancer en trop.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=4&amp;type=casts&amp;source=6&amp;start=17249138&amp;end=17259138">Vashnik the Malignant 0:33 Death Grip (Poigne de la mort)</a> <a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=4&amp;type=casts&amp;source=6&amp;start=17251368&amp;end=17261368">Vashnik the Malignant 0:35 Death Grip (Poigne de la mort)</a> <a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=4&amp;type=casts&amp;source=6&amp;start=17335478&amp;end=17345478">Vashnik the Malignant 1:59 Death Grip (Poigne de la mort)</a> <a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=4&amp;type=casts&amp;source=6&amp;start=17336608&amp;end=17346608">Vashnik the Malignant 2:00 Death Grip (Poigne de la mort)</a> <a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=4&amp;type=casts&amp;source=6&amp;start=17423948&amp;end=17433948">Vashnik the Malignant 3:27 Death Grip (Poigne de la mort)</a> <a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=4&amp;type=casts&amp;source=6&amp;start=17426668&amp;end=17436668">Vashnik the Malignant 3:30 Death Grip (Poigne de la mort)</a> </p></li></ol>
+
+<h2 id="s-survie-boss-par-boss">Survie boss par boss</h2>
+<details class="boss" id="survie-nek-zali-the-soulcoiler"><summary><strong>Nek&#x27;zali the Soulcoiler</strong> · survie</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=2" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/YnNDhymZWRzLPHtq/fight/2" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/YnNDhymZWRzLPHtq/2/Ragnarorc/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Ragnarorc</b> (toi) <span class="det">· 41 k</span><div class="det"><b>rang ≈ 18 640</b> / 21 426 · centile 13 (9 à ton ilvl)</div></div><div class="ecart"><div class="dps">41 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">10</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<h4>Tes plus gros coups encaissés</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th class="num">Moment</th><th>Coup</th><th class="num">Dégâts</th><th>Actif à ce moment</th></tr></thead>
+<tbody>
+<tr><td class="num">2:52</td><td>Soul Transfer</td><td class="num">660 k</td><td>Bone Shield, Dancing Rune Weapon</td></tr>
+<tr><td class="num">2:14</td><td>Melee</td><td class="num">430 k</td><td class="nu">rien</td></tr>
+<tr><td class="num">2:11</td><td>Melee</td><td class="num">425 k</td><td class="nu">rien</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Sous un défensif majeur : toi 33 %, Jairtrude 0 %. En rouge : coup encaissé sans défensif majeur (la mitigation active seule ne suffit pas sur un tank buster).</p>
+<h4>Déroulé : tes défensifs et tes gros coups face à l'autre tank</h4><p class="note">À gauche toi, à droite Jairtrude (l'autre tank, même combat). Défensifs face à face quand vous les lancez à moins de 10 s d'écart ; vos plus gros coups encaissés (en rouge sans défensif majeur) ; sur toute la largeur, les relais.</p><div class="duo"><div class="duo-tete dm">Toi</div><div class="duo-tete t"></div><div class="duo-tete dr">Jairtrude</div><div class="duo-minute">0:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">0:02</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-phase">0:32 : Ragnarorc reprend le boss à Jairtrude (10 Hollowing Strikes, 5,1 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">0:37</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-phase">0:41 : Ragnarorc reprend le boss à Jairtrude (1 Hollowing Strikes, 14,2 s après le dernier) — tardif</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">0:54</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-minute">1:00</div><div class="duo-c dm cd" style="--c:#d0632b"><span class="t">1:08</span> <i class="ic ic-spell_deathknight_iceboundfortitude"></i>Icebound Fortitude</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-phase">1:11 : Jairtrude reprend le boss à Ragnarorc (14 Hollowing Strikes, 7,6 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">1:26</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">1:37</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-phase">1:45 : Ragnarorc reprend le boss à Jairtrude (9 Hollowing Strikes, 6,8 s après le dernier)</div><div class="duo-minute">2:00</div><div class="duo-c dm coup nu"><span class="t">2:11</span> Melee 425 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-c dm coup nu"><span class="t">2:14</span> Melee 430 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-phase">2:16 : Jairtrude reprend le boss à Ragnarorc (14 Hollowing Strikes, 1,8 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">2:18</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#c4447a"><span class="t">2:19</span> <i class="ic ic-spell_shadow_raisedead"></i>Lichborne</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#c4447a"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">2:22</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm coup"><span class="t">2:52</span> Soul Transfer 660 k sous Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">2:52</span> Soul Transfer 728 k sans défensif</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">2:57</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-minute">3:00</div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">3:03</span> Hungering Pyre 400 k sans défensif</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">3:27</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">3:43</span> Hungering Pyre 338 k sans défensif</div><div class="duo-minute">4:00</div><div class="duo-phase">4:50 : Ragnarorc reprend le boss à Jairtrude (1 Hollowing Strikes, 0,5 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">4:52</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">4:58</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-minute">5:00</div><div class="duo-phase">5:06 : Jairtrude reprend le boss à Ragnarorc (9 Hollowing Strikes, 0,1 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">5:11</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-phase">5:23 : Ragnarorc reprend le boss à Jairtrude (9 Hollowing Strikes, 1,7 s après le dernier)</div><div class="duo-phase">5:40 : Jairtrude reprend le boss à Ragnarorc (0 Hollowing Strikes, 15,2 s après le dernier) — tardif</div><div class="duo-minute">6:00</div><div class="duo-phase">6:00 : Ragnarorc reprend le boss à Jairtrude (8 Hollowing Strikes, 7,6 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">6:02</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-phase">6:23 : Jairtrude reprend le boss à Ragnarorc (10 Hollowing Strikes, 1,3 s après le dernier)</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">6:31</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div></div>
+<h4>Dégâts subis par capacité</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Capacité</th><th class="num">Encaissé / s</th><th class="num">Absorbé</th><th class="num">Atténué</th></tr></thead>
+<tbody>
+<tr><td>Hollowing Strikes</td><td class="num">26 k</td><td class="num">14 %</td><td class="num">21 %</td></tr>
+<tr><td>Melee</td><td class="num">18 k</td><td class="num">39 %</td><td class="num">50 %</td></tr>
+<tr><td>Soulcoil Rite</td><td class="num">11 k</td><td class="num">28 %</td><td class="num">25 %</td></tr>
+<tr><td>Corpse Blight</td><td class="num">9 k</td><td class="num">19 %</td><td class="num">21 %</td></tr>
+<tr><td>Possession Barrage</td><td class="num">6 k</td><td class="num">29 %</td><td class="num">25 %</td></tr>
+<tr><td>Latent Cultist</td><td class="num">4 k</td><td class="num">6 %</td><td class="num">22 %</td></tr>
+<tr><td>Slithering Flame</td><td class="num">3 k</td><td class="num">4 %</td><td class="num">22 %</td></tr>
+<tr><td>Uncoiling</td><td class="num">2 k</td><td class="num">30 %</td><td class="num">11 %</td></tr>
+<tr><td>Cremation</td><td class="num">2 k</td><td class="num">21 %</td><td class="num">25 %</td></tr>
+<tr><td>Soul Transfer</td><td class="num">2 k</td><td class="num">44 %</td><td class="num">18 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Ton auto-soin et tes boucliers : 37 k/s, soit 43 % de tous les soins que tu reçois (86 k/s).</p>
+</details>
+<details class="boss" id="survie-entombed-sentinels"><summary><strong>Entombed Sentinels</strong> · survie</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=3" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/YnNDhymZWRzLPHtq/fight/3" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/YnNDhymZWRzLPHtq/3/Ragnarorc/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Ragnarorc</b> (toi) <span class="det">· 53 k</span><div class="det"><b>rang ≈ 14 693</b> / 16 697 · centile 12 (7 à ton ilvl)</div></div><div class="ecart"><div class="dps">53 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">10</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<h4>Tes plus gros coups encaissés</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th class="num">Moment</th><th>Coup</th><th class="num">Dégâts</th><th>Actif à ce moment</th></tr></thead>
+<tbody>
+<tr><td class="num">6:28</td><td>Empowering Slam</td><td class="num">1 115 k</td><td>Lichborne</td></tr>
+<tr><td class="num">3:02</td><td>Empowering Slam</td><td class="num">1 063 k</td><td>Vampiric Blood</td></tr>
+<tr><td class="num">4:48</td><td>Bloodvenom Injection</td><td class="num">1 007 k</td><td>Anti-Magic Zone, Vampiric Blood</td></tr>
+<tr><td class="num">6:06</td><td>Empowering Slam</td><td class="num">966 k</td><td>Vampiric Blood</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Sous un défensif majeur : toi 100 %, Jairtrude 0 %. En rouge : coup encaissé sans défensif majeur (la mitigation active seule ne suffit pas sur un tank buster).</p>
+<h4>Déroulé : tes défensifs et tes gros coups face à l'autre tank</h4><p class="note">À gauche toi, à droite Jairtrude (l'autre tank, même combat). Défensifs face à face quand vous les lancez à moins de 10 s d'écart ; vos plus gros coups encaissés (en rouge sans défensif majeur) ; sur toute la largeur, les relais.</p><div class="duo"><div class="duo-tete dm">Toi</div><div class="duo-tete t"></div><div class="duo-tete dr">Jairtrude</div><div class="duo-minute">0:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">0:05</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">0:06</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-phase">0:17 : Ragnarorc reprend le boss à Jairtrude (3 Mark of Blood, 2,2 s après le dernier)</div><div class="duo-c dm cd" style="--c:#c4447a"><span class="t">0:25</span> <i class="ic ic-spell_shadow_raisedead"></i>Lichborne</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#c4447a"><span class="absent">pas lancé</span></div><div class="duo-phase">0:55 : Ragnarorc reprend le boss à Jairtrude (1 Mark of Blood, 10,8 s après le dernier) — tardif</div><div class="duo-minute">1:00</div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">1:01</span> Empowering Slam 430 k sans défensif</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">1:03</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#3b8fa0"><span class="t">1:17</span> <i class="ic ic-spell_deathknight_antimagiczone"></i>Anti-Magic Zone</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#3b8fa0"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">1:23</span> Empowering Slam 459 k sans défensif</div><div class="duo-phase">1:29 : Jairtrude reprend le boss à Ragnarorc (4 Mark of Blood, 4,6 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">1:30</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">1:40</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">1:45</span> Empowering Slam 528 k sans défensif</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">1:45</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-phase">1:52 : Jairtrude reprend le boss à Ragnarorc (8 Mark of Blood, 7,1 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">1:57</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-minute">2:00</div><div class="duo-c dm cd" style="--c:#c4447a"><span class="t">2:08</span> <i class="ic ic-spell_shadow_raisedead"></i>Lichborne</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#c4447a"><span class="absent">pas lancé</span></div><div class="duo-phase">2:33 : Jairtrude reprend le boss à Ragnarorc (1 Mark of Blood, 13,0 s après le dernier) — tardif</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">2:37</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#d0632b"><span class="t">2:40</span> <i class="ic ic-spell_deathknight_iceboundfortitude"></i>Icebound Fortitude</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">2:42</span> Bloodvenom Injection 400 k sans défensif</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">2:55</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-minute">3:00</div><div class="duo-c dm coup"><span class="t">3:02</span> Empowering Slam 1 063 k sous Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">3:04</span> Bloodvenom Injection 404 k sans défensif</div><div class="duo-phase">3:17 : Ragnarorc reprend le boss à Jairtrude (8 Mark of Blood, 3,6 s après le dernier)</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">3:23</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">3:24</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">3:26</span> Bloodvenom Injection 400 k sans défensif</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">3:34</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#c4447a"><span class="t">3:46</span> <i class="ic ic-spell_shadow_raisedead"></i>Lichborne</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#c4447a"><span class="absent">pas lancé</span></div><div class="duo-minute">4:00</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">4:01</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">4:26</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">4:44</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#3b8fa0"><span class="t">4:44</span> <i class="ic ic-spell_deathknight_antimagiczone"></i>Anti-Magic Zone</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#3b8fa0"><span class="absent">pas lancé</span></div><div class="duo-c dm coup"><span class="t">4:48</span> Bloodvenom Injection 1 007 k sous Anti-Magic Zone, Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-minute">5:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">5:03</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">5:13</span> Empowering Slam 459 k sans défensif</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">5:23</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">5:35</span> Empowering Slam 464 k sans défensif</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">5:35</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-phase">5:57 : Jairtrude reprend le boss à Ragnarorc (1 Mark of Blood, 13,3 s après le dernier) — tardif</div><div class="duo-minute">6:00</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">6:05</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm coup"><span class="t">6:06</span> Empowering Slam 966 k sous Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm cd" style="--c:#d0632b"><span class="t">6:06</span> <i class="ic ic-spell_deathknight_iceboundfortitude"></i>Icebound Fortitude</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">6:07</span> Bloodvenom Injection 429 k sans défensif</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">6:19</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#c4447a"><span class="t">6:28</span> <i class="ic ic-spell_shadow_raisedead"></i>Lichborne</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#c4447a"><span class="absent">pas lancé</span></div><div class="duo-c dm coup"><span class="t">6:28</span> Empowering Slam 1 115 k sous Lichborne</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">6:38</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">6:44</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div></div>
+<h4>Dégâts subis par capacité</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Capacité</th><th class="num">Encaissé / s</th><th class="num">Absorbé</th><th class="num">Atténué</th></tr></thead>
+<tbody>
+<tr><td>Melee</td><td class="num">53 k</td><td class="num">45 %</td><td class="num">52 %</td></tr>
+<tr><td>Bloodvenom Injection</td><td class="num">32 k</td><td class="num">20 %</td><td class="num">20 %</td></tr>
+<tr><td>Empowering Slam</td><td class="num">16 k</td><td class="num">34 %</td><td class="num">53 %</td></tr>
+<tr><td>Mark of Blood</td><td class="num">16 k</td><td class="num">19 %</td><td class="num">24 %</td></tr>
+<tr><td>Bloodvenom Injection</td><td class="num">11 k</td><td class="num">40 %</td><td class="num">55 %</td></tr>
+<tr><td>Mark of Acid</td><td class="num">11 k</td><td class="num">25 %</td><td class="num">23 %</td></tr>
+<tr><td>Contaminate</td><td class="num">9 k</td><td class="num">18 %</td><td class="num">24 %</td></tr>
+<tr><td>Toxic Droplets</td><td class="num">6 k</td><td class="num">37 %</td><td class="num">21 %</td></tr>
+<tr><td>Cultivated Burst</td><td class="num">5 k</td><td class="num">11 %</td><td class="num">17 %</td></tr>
+<tr><td>Living Venom</td><td class="num">3 k</td><td class="num">32 %</td><td class="num">23 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Ton auto-soin et tes boucliers : 116 k/s, soit 67 % de tous les soins que tu reçois (174 k/s).</p>
+</details>
+<details class="boss" id="survie-vashnik-the-malignant"><summary><strong>Vashnik the Malignant</strong> · survie</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=4" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/YnNDhymZWRzLPHtq/fight/4" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/YnNDhymZWRzLPHtq/4/Ragnarorc/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Ragnarorc</b> (toi) <span class="det">· 67 k</span><div class="det"><b>rang ≈ 12 862</b> / 16 491 · centile 22 (18 à ton ilvl)</div></div><div class="ecart"><div class="dps">67 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">10</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<h4>Tes plus gros coups encaissés</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th class="num">Moment</th><th>Coup</th><th class="num">Dégâts</th><th>Actif à ce moment</th></tr></thead>
+<tbody>
+<tr><td class="num">2:50</td><td>Melee</td><td class="num">635 k</td><td class="nu">seulement Bone Shield</td></tr>
+<tr><td class="num">0:40</td><td>Melee</td><td class="num">589 k</td><td class="nu">seulement Bone Shield</td></tr>
+<tr><td class="num">5:33</td><td>Melee</td><td class="num">580 k</td><td>Bone Shield, Vampiric Blood</td></tr>
+<tr><td class="num">5:35</td><td>Melee</td><td class="num">576 k</td><td>Bone Shield, Vampiric Blood</td></tr>
+<tr><td class="num">5:38</td><td>Melee</td><td class="num">563 k</td><td>Bone Shield, Vampiric Blood</td></tr>
+<tr><td class="num">2:53</td><td>Melee</td><td class="num">563 k</td><td class="nu">seulement Bone Shield</td></tr>
+<tr><td class="num">1:08</td><td>Melee</td><td class="num">563 k</td><td>Bone Shield, Dancing Rune Weapon, Vampiric Blood</td></tr>
+<tr><td class="num">5:28</td><td>Melee</td><td class="num">563 k</td><td>Bone Shield, Dancing Rune Weapon</td></tr>
+<tr><td class="num">2:32</td><td>Melee</td><td class="num">560 k</td><td>Anti-Magic Shell, Bone Shield, Dancing Rune Weapon</td></tr>
+<tr><td class="num">2:47</td><td>Melee</td><td class="num">555 k</td><td>Bone Shield, Vampiric Blood</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Sous un défensif majeur : toi 70 %, Jairtrude 0 %. En rouge : coup encaissé sans défensif majeur (la mitigation active seule ne suffit pas sur un tank buster).</p>
+<h4>Déroulé : tes défensifs et tes gros coups face à l'autre tank</h4><p class="note">À gauche toi, à droite Jairtrude (l'autre tank, même combat). Défensifs face à face quand vous les lancez à moins de 10 s d'écart ; vos plus gros coups encaissés (en rouge sans défensif majeur) ; sur toute la largeur, les relais.</p><div class="duo"><div class="duo-tete dm">Toi</div><div class="duo-tete t"></div><div class="duo-tete dr">Jairtrude</div><div class="duo-minute">0:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">0:07</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-phase">0:13 : Ragnarorc reprend le boss à Jairtrude (1 Dripping Fangs, 3,1 s après le dernier)</div><div class="duo-c dm coup nu"><span class="t">0:40</span> Melee 589 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">0:41</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-phase">0:42 : Jairtrude reprend le boss à Ragnarorc (1 Dripping Fangs, 3,4 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">0:59</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-minute">1:00</div><div class="duo-phase">1:06 : Ragnarorc reprend le boss à Jairtrude (1 Dripping Fangs, 0,9 s après le dernier)</div><div class="duo-c dm coup"><span class="t">1:08</span> Melee 563 k sous Dancing Rune Weapon, Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm cd" style="--c:#d0632b"><span class="t">1:20</span> <i class="ic ic-spell_deathknight_iceboundfortitude"></i>Icebound Fortitude</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">1:31</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">1:33</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-phase">1:38 : Jairtrude reprend le boss à Ragnarorc (1 Dripping Fangs, 4,1 s après le dernier)</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">1:48</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-minute">2:00</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">2:30</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-c dm coup"><span class="t">2:32</span> Melee 560 k sous Anti-Magic Shell, Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">2:38</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm coup"><span class="t">2:47</span> Melee 555 k sous Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm coup nu"><span class="t">2:50</span> Melee 635 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-c dm coup nu"><span class="t">2:53</span> Melee 563 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-minute">3:00</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">3:08</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">3:18</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">3:34</span> Melee 578 k sans défensif</div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">3:42</span> Melee 631 k sans défensif</div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">3:46</span> Melee 583 k sans défensif</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">3:53</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-minute">4:00</div><div class="duo-phase">4:04 : Jairtrude reprend le boss à Ragnarorc (1 Dripping Fangs, 10,1 s après le dernier) — tardif</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">4:07</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">4:35</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">4:40</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">4:51</span> Dripping Fangs 528 k sans défensif</div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">4:56</span> Melee 474 k sans défensif</div><div class="duo-phase">4:59 : Ragnarorc reprend le boss à Jairtrude (2 Dripping Fangs, 8,6 s après le dernier) — tardif</div><div class="duo-minute">5:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">5:12</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm coup"><span class="t">5:28</span> Melee 563 k sous Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">5:33</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm coup"><span class="t">5:33</span> Melee 580 k sous Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm coup"><span class="t">5:35</span> Melee 576 k sous Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm coup"><span class="t">5:38</span> Melee 563 k sous Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-minute">6:00</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">6:14</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">6:15</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div></div>
+<h4>Dégâts subis par capacité</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Capacité</th><th class="num">Encaissé / s</th><th class="num">Absorbé</th><th class="num">Atténué</th></tr></thead>
+<tbody>
+<tr><td>Melee</td><td class="num">32 k</td><td class="num">40 %</td><td class="num">42 %</td></tr>
+<tr><td>Dripping Fangs</td><td class="num">18 k</td><td class="num">25 %</td><td class="num">22 %</td></tr>
+<tr><td>Toxic Vapor</td><td class="num">11 k</td><td class="num">39 %</td><td class="num">23 %</td></tr>
+<tr><td>Caustic Explosion</td><td class="num">6 k</td><td class="num">28 %</td><td class="num">25 %</td></tr>
+<tr><td>Burning Presence</td><td class="num">5 k</td><td class="num">26 %</td><td class="num">27 %</td></tr>
+<tr><td>Dripping Fangs</td><td class="num">3 k</td><td class="num">39 %</td><td class="num">56 %</td></tr>
+<tr><td>Caustic Surge</td><td class="num">4 k</td><td class="num">15 %</td><td class="num">29 %</td></tr>
+<tr><td>Congealing Bolt</td><td class="num">3 k</td><td class="num">32 %</td><td class="num">20 %</td></tr>
+<tr><td>Malignant Catalyst</td><td class="num">3 k</td><td class="num">17 %</td><td class="num">30 %</td></tr>
+<tr><td>Conflagrating Expulsion</td><td class="num">2 k</td><td class="num">33 %</td><td class="num">29 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Ton auto-soin et tes boucliers : 49 k/s, soit 53 % de tous les soins que tu reçois (92 k/s).</p>
+</details>
+<details class="boss" id="survie-the-lost-explorers"><summary><strong>The Lost Explorers</strong> · survie</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=5" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/YnNDhymZWRzLPHtq/fight/5" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/YnNDhymZWRzLPHtq/5/Ragnarorc/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Ragnarorc</b> (toi) <span class="det">· 48 k</span><div class="det"><b>rang ≈ 15 000</b> / 16 484 · centile 9 (6 à ton ilvl)</div></div><div class="ecart"><div class="dps">48 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">10</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<h4>Tes plus gros coups encaissés</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th class="num">Moment</th><th>Coup</th><th class="num">Dégâts</th><th>Actif à ce moment</th></tr></thead>
+<tbody>
+<tr><td class="num">1:33</td><td>Blast Wave</td><td class="num">936 k</td><td>Dancing Rune Weapon, Lichborne</td></tr>
+<tr><td class="num">5:19</td><td>Shredding Shards</td><td class="num">631 k</td><td>Bone Shield, Lichborne, Vampiric Blood</td></tr>
+<tr><td class="num">2:05</td><td>Blast Wave</td><td class="num">631 k</td><td>Bone Shield, Dancing Rune Weapon, Icebound Fortitude, Vampiric Blood</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Sous un défensif majeur : toi 100 %, Jairtrude 0 %. En rouge : coup encaissé sans défensif majeur (la mitigation active seule ne suffit pas sur un tank buster).</p>
+<h4>Déroulé : tes défensifs et tes gros coups face à l'autre tank</h4><p class="note">À gauche toi, à droite Jairtrude (l'autre tank, même combat). Défensifs face à face quand vous les lancez à moins de 10 s d'écart ; vos plus gros coups encaissés (en rouge sans défensif majeur) ; sur toute la largeur, les relais.</p><div class="duo"><div class="duo-tete dm">Toi</div><div class="duo-tete t"></div><div class="duo-tete dr">Jairtrude</div><div class="duo-minute">0:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">0:07</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">0:12</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">0:26</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-phase">0:37 : Ragnarorc reprend le boss à Jairtrude (22 Steady Strikes, 4,8 s après le dernier) — tardif</div><div class="duo-minute">1:00</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">1:30</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#c4447a"><span class="t">1:31</span> <i class="ic ic-spell_shadow_raisedead"></i>Lichborne</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#c4447a"><span class="absent">pas lancé</span></div><div class="duo-c dm coup"><span class="t">1:33</span> Blast Wave 936 k sous Dancing Rune Weapon, Lichborne</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">1:42</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-minute">2:00</div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">2:02</span> Melee 549 k sans défensif</div><div class="duo-c dm cd" style="--c:#d0632b"><span class="t">2:03</span> <i class="ic ic-spell_deathknight_iceboundfortitude"></i>Icebound Fortitude</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">2:04</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm coup"><span class="t">2:05</span> Blast Wave 631 k sous Dancing Rune Weapon, Icebound Fortitude, Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">2:14</span> Melee 923 k sans défensif</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">2:27</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">2:28</span> Melee 753 k sans défensif</div><div class="duo-phase">2:32 : Ragnarorc reprend le boss à Jairtrude (99 Steady Strikes, 0,7 s après le dernier)</div><div class="duo-phase">2:40 : Ragnarorc reprend le boss à Jairtrude (1 Steady Strikes, 8,7 s après le dernier) — tardif</div><div class="duo-phase">2:50 : Jairtrude reprend le boss à Ragnarorc (3 Steady Strikes, 1,3 s après le dernier)</div><div class="duo-c dm cd" style="--c:#3b8fa0"><span class="t">2:57</span> <i class="ic ic-spell_deathknight_antimagiczone"></i>Anti-Magic Zone</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#3b8fa0"><span class="absent">pas lancé</span></div><div class="duo-minute">3:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">3:16</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">3:27</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-phase">3:29 : Jairtrude reprend le boss à Ragnarorc (31 Steady Strikes, 0,9 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">3:34</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-phase">3:37 : Jairtrude reprend le boss à Ragnarorc (35 Steady Strikes, 4,9 s après le dernier) — tardif</div><div class="duo-c dm cd" style="--c:#c4447a"><span class="t">3:44</span> <i class="ic ic-spell_shadow_raisedead"></i>Lichborne</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#c4447a"><span class="absent">pas lancé</span></div><div class="duo-minute">4:00</div><div class="duo-phase">4:00 : Ragnarorc reprend le boss à Jairtrude (14 Steady Strikes, 0,4 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">4:08</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">4:14</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#d0632b"><span class="t">4:19</span> <i class="ic ic-spell_deathknight_iceboundfortitude"></i>Icebound Fortitude</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">4:52</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-minute">5:00</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">5:07</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-phase">5:13 : Ragnarorc reprend le boss à Jairtrude (50 Steady Strikes, 0,8 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">5:16</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#c4447a"><span class="t">5:18</span> <i class="ic ic-spell_shadow_raisedead"></i>Lichborne</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#c4447a"><span class="absent">pas lancé</span></div><div class="duo-c dm coup"><span class="t">5:19</span> Shredding Shards 631 k sous Lichborne, Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-phase">5:24 : Jairtrude reprend le boss à Ragnarorc (7 Steady Strikes, 0,9 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">5:52</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-minute">6:00</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">6:08</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div></div>
+<h4>Dégâts subis par capacité</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Capacité</th><th class="num">Encaissé / s</th><th class="num">Absorbé</th><th class="num">Atténué</th></tr></thead>
+<tbody>
+<tr><td>Melee</td><td class="num">54 k</td><td class="num">34 %</td><td class="num">43 %</td></tr>
+<tr><td>Shredding Shards</td><td class="num">27 k</td><td class="num">21 %</td><td class="num">0 %</td></tr>
+<tr><td>Malevolent Presence</td><td class="num">22 k</td><td class="num">30 %</td><td class="num">22 %</td></tr>
+<tr><td>Splinters</td><td class="num">13 k</td><td class="num">39 %</td><td class="num">12 %</td></tr>
+<tr><td>Blast Wave</td><td class="num">11 k</td><td class="num">21 %</td><td class="num">27 %</td></tr>
+<tr><td>Blink Nova</td><td class="num">5 k</td><td class="num">18 %</td><td class="num">23 %</td></tr>
+<tr><td>Mighty Thud</td><td class="num">2 k</td><td class="num">34 %</td><td class="num">44 %</td></tr>
+<tr><td>Piercing Frost</td><td class="num">0 k</td><td class="num">34 %</td><td class="num">16 %</td></tr>
+<tr><td>Frostfire Volley</td><td class="num">0 k</td><td class="num">34 %</td><td class="num">20 %</td></tr>
+<tr><td>Aftershock</td><td class="num">0 k</td><td class="num">0 %</td><td class="num">55 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Ton auto-soin et tes boucliers : 76 k/s, soit 56 % de tous les soins que tu reçois (134 k/s).</p>
+</details>
+<details class="boss" id="survie-sszorak"><summary><strong>Sszorak</strong> · survie</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=11" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/YnNDhymZWRzLPHtq/fight/11" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/YnNDhymZWRzLPHtq/11/Ragnarorc/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Ragnarorc</b> (toi) <span class="det">· 59 k</span><div class="det"><b>rang ≈ 9 725</b> / 11 860 · centile 18 (14 à ton ilvl)</div></div><div class="ecart"><div class="dps">59 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">10</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<h4>Tes plus gros coups encaissés</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th class="num">Moment</th><th>Coup</th><th class="num">Dégâts</th><th>Actif à ce moment</th></tr></thead>
+<tbody>
+<tr><td class="num">4:48</td><td>Ravage</td><td class="num">1 018 k</td><td>Anti-Magic Shell, Dancing Rune Weapon</td></tr>
+<tr><td class="num">3:35</td><td>Ravage</td><td class="num">827 k</td><td class="nu">seulement Bone Shield</td></tr>
+<tr><td class="num">2:26</td><td>Ravage</td><td class="num">656 k</td><td>Anti-Magic Shell, Bone Shield, Dancing Rune Weapon</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Sous un défensif majeur : toi 67 %, Jairtrude 0 %. En rouge : coup encaissé sans défensif majeur (la mitigation active seule ne suffit pas sur un tank buster).</p>
+<h4>Déroulé : tes défensifs et tes gros coups face à l'autre tank</h4><p class="note">À gauche toi, à droite Jairtrude (l'autre tank, même combat). Défensifs face à face quand vous les lancez à moins de 10 s d'écart ; vos plus gros coups encaissés (en rouge sans défensif majeur) ; sur toute la largeur, les relais.</p><div class="duo"><div class="duo-tete dm">Toi</div><div class="duo-tete t"></div><div class="duo-tete dr">Jairtrude</div><div class="duo-minute">0:00</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">0:03</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-phase">0:11 : Ragnarorc reprend le boss à Jairtrude (3 Corroding Venom, 5,8 s après le dernier)</div><div class="duo-phase">0:31 : Ragnarorc reprend le boss à Jairtrude (5 Corroding Venom, 2,8 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">0:40</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-phase">0:53 : Jairtrude reprend le boss à Ragnarorc (5 Corroding Venom, 5,9 s après le dernier)</div><div class="duo-minute">1:00</div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">1:04</span> Ravage 599 k sans défensif</div><div class="duo-phase">1:05 : Ragnarorc reprend le boss à Jairtrude (2 Corroding Venom, 9,5 s après le dernier) — tardif</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">1:16</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">1:21</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">1:56</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-minute">2:00</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">2:26</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-c dm coup"><span class="t">2:26</span> Ravage 656 k sous Anti-Magic Shell, Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-c dm cd" style="--c:#c4447a"><span class="t">2:34</span> <i class="ic ic-spell_shadow_raisedead"></i>Lichborne</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#c4447a"><span class="absent">pas lancé</span></div><div class="duo-phase">2:36 : Jairtrude reprend le boss à Ragnarorc (2 Corroding Venom, 13,4 s après le dernier) — tardif</div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">2:39</span> Ravage 502 k sans défensif</div><div class="duo-phase">2:51 : Ragnarorc reprend le boss à Jairtrude (3 Corroding Venom, 2,7 s après le dernier)</div><div class="duo-minute">3:00</div><div class="duo-c dm cd" style="--c:#d0632b"><span class="t">3:05</span> <i class="ic ic-spell_deathknight_iceboundfortitude"></i>Icebound Fortitude</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">3:06</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-phase">3:21 : Jairtrude reprend le boss à Ragnarorc (5 Corroding Venom, 6,5 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">3:24</span> <i class="ic ic-spell_shadow_lifedrain"></i>Vampiric Blood</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2a78d6"><span class="absent">pas lancé</span></div><div class="duo-c dm coup nu vide"></div><div class="duo-axe"></div><div class="duo-c dr coup nu"><span class="t">3:26</span> Ravage 755 k sans défensif</div><div class="duo-c dm coup nu"><span class="t">3:35</span> Ravage 827 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">3:39</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">3:46</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-phase">3:55 : Jairtrude reprend le boss à Ragnarorc (7 Corroding Venom, 1,2 s après le dernier)</div><div class="duo-minute">4:00</div><div class="duo-phase">4:42 : Ragnarorc reprend le boss à Jairtrude (2 Corroding Venom, 0,9 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">4:47</span> <i class="ic ic-spell_holy_righteousnessaura"></i>Anti-Magic Shell</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#2f9e6e"><span class="absent">pas lancé</span></div><div class="duo-c dm coup"><span class="t">4:48</span> Ravage 1 018 k sous Anti-Magic Shell, Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr coup vide"></div><div class="duo-minute">5:00</div><div class="duo-phase">5:08 : Ragnarorc reprend le boss à Jairtrude (4 Corroding Venom, 3,0 s après le dernier)</div><div class="duo-c dm cd" style="--c:#8a56c9"><span class="t">5:17</span> <i class="ic ic-inv_sword_07"></i>Dancing Rune Weapon</div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#8a56c9"><span class="absent">pas lancé</span></div></div>
+<h4>Dégâts subis par capacité</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Capacité</th><th class="num">Encaissé / s</th><th class="num">Absorbé</th><th class="num">Atténué</th></tr></thead>
+<tbody>
+<tr><td>Melee</td><td class="num">35 k</td><td class="num">42 %</td><td class="num">48 %</td></tr>
+<tr><td>Ula&#x27;tek&#x27;s Presence</td><td class="num">21 k</td><td class="num">29 %</td><td class="num">26 %</td></tr>
+<tr><td>Mutilated Gash</td><td class="num">17 k</td><td class="num">28 %</td><td class="num">24 %</td></tr>
+<tr><td>Ravage</td><td class="num">11 k</td><td class="num">47 %</td><td class="num">51 %</td></tr>
+<tr><td>Viscous Cyst</td><td class="num">9 k</td><td class="num">10 %</td><td class="num">31 %</td></tr>
+<tr><td>Mutilate</td><td class="num">4 k</td><td class="num">24 %</td><td class="num">23 %</td></tr>
+<tr><td>Venomous Surge</td><td class="num">3 k</td><td class="num">24 %</td><td class="num">29 %</td></tr>
+<tr><td>Tempest</td><td class="num">2 k</td><td class="num">37 %</td><td class="num">22 %</td></tr>
+<tr><td>Raging Crosswinds</td><td class="num">1 k</td><td class="num">0 %</td><td class="num">26 %</td></tr>
+<tr><td>Raging Crosswinds</td><td class="num">0 k</td><td class="num">21 %</td><td class="num">20 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Ton auto-soin et tes boucliers : 67 k/s, soit 66 % de tous les soins que tu reçois (102 k/s).</p>
+</details>
+<h2 id="s-d-g-ts-second-plan">Dégâts (second plan)</h2><p class="note">La même analyse que le rapport DPS : rotation, cooldowns offensifs, simulations selon le niveau d'analyse.</p>
+<h3 id="s-rotation">Rotation</h3>
+<h4>Synthèse de la soirée</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">DPS</th><th class="num">vs équivalent</th><th class="num">vs top 3</th><th class="num">Multicible</th><th class="num">Cooldowns manqués</th><th class="num">vs potentiel simc</th></tr></thead>
+<tbody>
+<tr><td>Nek&#x27;zali the Soulcoiler</td><td class="num">41 k</td><td class="num">—</td><td class="num">—</td><td class="num">21 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Entombed Sentinels</td><td class="num">53 k</td><td class="num">—</td><td class="num">—</td><td class="num">46 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Vashnik the Malignant</td><td class="num">67 k</td><td class="num">—</td><td class="num">—</td><td class="num">19 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>The Lost Explorers</td><td class="num">48 k</td><td class="num">—</td><td class="num">—</td><td class="num">89 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Sszorak</td><td class="num">59 k</td><td class="num">—</td><td class="num">—</td><td class="num">0 %</td><td class="num">0</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+
+<p class="note">Potentiel simc : ton équipement simulé avec une rotation parfaite, à la durée du kill, chaque phase au nombre d'ennemis qu'elle a en moyenne (1, 2, ou 3 et plus). Un vrai combat (déplacements, phases, cibles qui changent) reste en dessous : l'écart sert surtout à comparer les boss entre eux et d'une soirée à l'autre.</p>
+<details class="boss" id="boss-nek-zali-the-soulcoiler"><summary><strong>Nek&#x27;zali the Soulcoiler</strong> · 41 k · — face à l'équivalent · 21 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=2" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/YnNDhymZWRzLPHtq/fight/2" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/YnNDhymZWRzLPHtq/2/Ragnarorc/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Ragnarorc</b> (toi) <span class="det">· 41 k</span><div class="det"><b>rang ≈ 18 640</b> / 21 426 · centile 13 (9 à ton ilvl)</div></div><div class="ecart"><div class="dps">41 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">10</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="105.7" height="18"><title>Monocible : 0:00 → 0:57 (1,0 ennemis)</title></rect><rect class="multi" x="305.7" y="4" width="40.8" height="18"><title>Multicible : 0:57 → 1:19 (3,6 ennemis)</title></rect><rect class="mono" x="346.4" y="4" width="85.3" height="18"><title>Monocible : 1:19 → 2:05 (1,0 ennemis)</title></rect><rect class="multi" x="431.7" y="4" width="26.0" height="18"><title>Multicible : 2:05 → 2:19 (4,4 ennemis)</title></rect><rect class="mono" x="457.7" y="4" width="120.5" height="18"><title>Monocible : 2:19 → 3:24 (1,2 ennemis)</title></rect><rect class="multi" x="578.1" y="4" width="37.1" height="18"><title>Multicible : 3:24 → 3:44 (3,9 ennemis)</title></rect><rect class="mono" x="615.2" y="4" width="190.9" height="18"><title>Monocible : 3:44 → 5:27 (1,3 ennemis)</title></rect><rect class="multi" x="806.1" y="4" width="24.1" height="18"><title>Multicible : 5:27 → 5:40 (4,5 ennemis)</title></rect><rect class="mono" x="830.2" y="4" width="48.2" height="18"><title>Monocible : 5:40 → 6:06 (1,2 ennemis)</title></rect><rect class="multi" x="878.4" y="4" width="27.8" height="18"><title>Multicible : 6:06 → 6:21 (4,5 ennemis)</title></rect><rect class="mono" x="906.2" y="4" width="37.8" height="18"><title>Monocible : 6:21 → 6:41 (1,2 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><p class="note">Pas de règles expertes pour cette spé : seuls les cooldowns, les trous et les dégâts sont comparés.</p>
+<h4>Dégâts par sort en phase monocible <span class="muted">(317 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(84 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-entombed-sentinels"><summary><strong>Entombed Sentinels</strong> · 53 k · — face à l'équivalent · 46 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=3" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/YnNDhymZWRzLPHtq/fight/3" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/YnNDhymZWRzLPHtq/3/Ragnarorc/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Ragnarorc</b> (toi) <span class="det">· 53 k</span><div class="det"><b>rang ≈ 14 693</b> / 16 697 · centile 12 (7 à ton ilvl)</div></div><div class="ecart"><div class="dps">53 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">10</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="27.7" height="18"><title>Monocible : 0:00 → 0:16 (2,0 ennemis)</title></rect><rect class="multi" x="227.7" y="4" width="29.4" height="18"><title>Multicible : 0:16 → 0:33 (3,0 ennemis)</title></rect><rect class="mono" x="257.1" y="4" width="67.4" height="18"><title>Monocible : 0:33 → 1:12 (2,0 ennemis)</title></rect><rect class="multi" x="324.5" y="4" width="38.0" height="18"><title>Multicible : 1:12 → 1:34 (3,0 ennemis)</title></rect><rect class="mono" x="362.6" y="4" width="50.2" height="18"><title>Monocible : 1:34 → 2:03 (2,0 ennemis)</title></rect><rect class="multi" x="412.7" y="4" width="22.5" height="18"><title>Multicible : 2:03 → 2:16 (3,0 ennemis)</title></rect><rect class="mono" x="435.2" y="4" width="62.3" height="18"><title>Monocible : 2:16 → 2:52 (2,0 ennemis)</title></rect><rect class="multi" x="497.5" y="4" width="65.7" height="18"><title>Multicible : 2:52 → 3:30 (3,0 ennemis)</title></rect><rect class="mono" x="563.2" y="4" width="22.5" height="18"><title>Monocible : 3:30 → 3:43 (2,0 ennemis)</title></rect><rect class="multi" x="585.7" y="4" width="65.7" height="18"><title>Multicible : 3:43 → 4:21 (3,0 ennemis)</title></rect><rect class="mono" x="651.4" y="4" width="29.4" height="18"><title>Monocible : 4:21 → 4:38 (2,0 ennemis)</title></rect><rect class="multi" x="680.8" y="4" width="51.9" height="18"><title>Multicible : 4:38 → 5:08 (3,0 ennemis)</title></rect><rect class="mono" x="732.7" y="4" width="43.2" height="18"><title>Monocible : 5:08 → 5:33 (2,0 ennemis)</title></rect><rect class="multi" x="775.9" y="4" width="31.1" height="18"><title>Multicible : 5:33 → 5:51 (3,0 ennemis)</title></rect><rect class="mono" x="807.0" y="4" width="46.7" height="18"><title>Monocible : 5:51 → 6:18 (2,0 ennemis)</title></rect><rect class="multi" x="853.7" y="4" width="39.8" height="18"><title>Multicible : 6:18 → 6:41 (3,0 ennemis)</title></rect><rect class="mono" x="893.5" y="4" width="50.5" height="18"><title>Monocible : 6:41 → 7:10 (1,6 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><p class="note">Pas de règles expertes pour cette spé : seuls les cooldowns, les trous et les dégâts sont comparés.</p>
+<h4>Dégâts par sort en phase monocible <span class="muted">(231 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(199 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-vashnik-the-malignant"><summary><strong>Vashnik the Malignant</strong> · 67 k · — face à l'équivalent · 19 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=4" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/YnNDhymZWRzLPHtq/fight/4" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/YnNDhymZWRzLPHtq/4/Ragnarorc/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Ragnarorc</b> (toi) <span class="det">· 67 k</span><div class="det"><b>rang ≈ 12 862</b> / 16 491 · centile 22 (18 à ton ilvl)</div></div><div class="ecart"><div class="dps">67 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">10</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="219.0" height="18"><title>Monocible : 0:00 → 1:51 (1,2 ennemis)</title></rect><rect class="multi" x="419.0" y="4" width="39.5" height="18"><title>Multicible : 1:51 → 2:11 (4,2 ennemis)</title></rect><rect class="mono" x="458.4" y="4" width="124.3" height="18"><title>Monocible : 2:11 → 3:14 (1,0 ennemis)</title></rect><rect class="multi" x="582.7" y="4" width="57.2" height="18"><title>Multicible : 3:14 → 3:43 (3,8 ennemis)</title></rect><rect class="mono" x="640.0" y="4" width="114.4" height="18"><title>Monocible : 3:43 → 4:41 (1,1 ennemis)</title></rect><rect class="multi" x="754.4" y="4" width="47.3" height="18"><title>Multicible : 4:41 → 5:05 (4,2 ennemis)</title></rect><rect class="mono" x="801.7" y="4" width="142.3" height="18"><title>Monocible : 5:05 → 6:17 (1,2 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><p class="note">Pas de règles expertes pour cette spé : seuls les cooldowns, les trous et les dégâts sont comparés.</p>
+<h4>Dégâts par sort en phase monocible <span class="muted">(304 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée 30 s de recharge 1 Charge Requiert Chevalier de la mort Niveau 3 requis Vous corrompez le sol ciblé et infligez [([8.3% of Attack Power]) * 11] points de dégâts d’ombre en 10 s aux cibles situées dans cette zone. [ Tant que vous restez dans la zone, vos utilisations de Frappe au cœur touchent jusqu’à 0 cibles supplémentaires.]"><i class="ic ic-spell_shadow_deathanddecay"></i>Death and Decay <span class="fr">(Mort et décomposition)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(73 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée 30 s de recharge 1 Charge Requiert Chevalier de la mort Niveau 3 requis Vous corrompez le sol ciblé et infligez [([8.3% of Attack Power]) * 11] points de dégâts d’ombre en 10 s aux cibles situées dans cette zone. [ Tant que vous restez dans la zone, vos utilisations de Frappe au cœur touchent jusqu’à 0 cibles supplémentaires.]"><i class="ic ic-spell_shadow_deathanddecay"></i>Death and Decay <span class="fr">(Mort et décomposition)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-the-lost-explorers"><summary><strong>The Lost Explorers</strong> · 48 k · — face à l'équivalent · 89 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=5" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/YnNDhymZWRzLPHtq/fight/5" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/YnNDhymZWRzLPHtq/5/Ragnarorc/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Ragnarorc</b> (toi) <span class="det">· 48 k</span><div class="det"><b>rang ≈ 15 000</b> / 16 484 · centile 9 (6 à ton ilvl)</div></div><div class="ecart"><div class="dps">48 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">10</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="multi" x="200.0" y="4" width="30.0" height="18"><title>Multicible : 0:00 → 0:15 (2,9 ennemis)</title></rect><rect class="mono" x="230.0" y="4" width="32.0" height="18"><title>Monocible : 0:15 → 0:31 (2,0 ennemis)</title></rect><rect class="multi" x="262.0" y="4" width="633.8" height="18"><title>Multicible : 0:31 → 5:48 (3,0 ennemis)</title></rect><rect class="mono" x="895.8" y="4" width="48.2" height="18"><title>Monocible : 5:48 → 6:12 (2,0 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><p class="note">Pas de règles expertes pour cette spé : seuls les cooldowns, les trous et les dégâts sont comparés.</p>
+<h4>Dégâts par sort en phase monocible <span class="muted">(40 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée 30 s de recharge 1 Charge Requiert Chevalier de la mort Niveau 3 requis Vous corrompez le sol ciblé et infligez [([8.3% of Attack Power]) * 11] points de dégâts d’ombre en 10 s aux cibles situées dans cette zone. [ Tant que vous restez dans la zone, vos utilisations de Frappe au cœur touchent jusqu’à 0 cibles supplémentaires.]"><i class="ic ic-spell_shadow_deathanddecay"></i>Death and Decay <span class="fr">(Mort et décomposition)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="La consommation de Dette de sang permet à votre prochaine Déchirure de moelle de générer 3 boucliers d’os supplémentaires et d’infliger ([900% of Attack Power]) points de dégâts d’ombre à votre cible et ([600% of Attack Power]) points de dégâts d’ombre aux adversaires proches."><i class="ic ic-ability_gouge"></i>Bloody Demise <span class="fr">(Trépas sanglant)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(332 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-sszorak"><summary><strong>Sszorak</strong> · 59 k · — face à l'équivalent · 0 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/YnNDhymZWRzLPHtq?fight=11" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/YnNDhymZWRzLPHtq/fight/11" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/YnNDhymZWRzLPHtq/11/Ragnarorc/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Ragnarorc</b> (toi) <span class="det">· 59 k</span><div class="det"><b>rang ≈ 9 725</b> / 11 860 · centile 18 (14 à ton ilvl)</div></div><div class="ecart"><div class="dps">59 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">10</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="744.0" height="18"><title>Monocible : 0:00 → 5:28 (1,0 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><p class="note">Pas de règles expertes pour cette spé : seuls les cooldowns, les trous et les dégâts sont comparés.</p>
+<h4>Dégâts par sort en phase monocible <span class="muted">(328 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Crée une bête de sang qui combat à vos côtés. Vous ne pouvez pas avoir plus d’une bête de sang à la fois. Dure 10 s."><i class="ic ic-achievement_nazmir_boss_bloodofghuun"></i>Blood Beast <span class="fr">(Bête de sang)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2 Charges Requiert Chevalier de la mort Inflige ([164% of Attack Power]) points de dégâts d’ombre et inocule Peste de sang aux adversaires à moins de 10 m. Peste de sang Une maladie ténébreuse qui draine 64 points de vie de la cible en 24 s."><i class="ic ic-spell_deathknight_bloodboil"></i>Blood Boil <span class="fr">(Furoncle sanglant)</span></span></td><td class="num">2 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<h3 id="s-build-et-stats">Build et stats</h3>
+<p class="note">Pas de simulation (mode rapide ou export de l'addon absent).</p>
+
+<h3 id="s-quipement">Équipement</h3>
+<p class="note">Pas d'analyse d'équipement (mode rapide ou export absent).</p>
+
+<h2 id="s-progression">Progression</h2>
+<h3 id="s-centiles-par-boss">Centiles par boss</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">24/09</th><th class="num">14/10</th></tr></thead>
+<tbody>
+<tr><td>The Twin Fangs</td><td class="num">16 <span class="muted">· 9</span></td><td class="num">—</td></tr>
+<tr><td>Nek&#x27;zali the Soulcoiler</td><td class="num">—</td><td class="num">13 <span class="muted">· 9</span></td></tr>
+<tr><td>Entombed Sentinels</td><td class="num">—</td><td class="num">12 <span class="muted">· 7</span></td></tr>
+<tr><td>Vashnik the Malignant</td><td class="num">—</td><td class="num">22 <span class="muted">· 18</span></td></tr>
+<tr><td>The Lost Explorers</td><td class="num">—</td><td class="num">9 <span class="muted">· 6</span></td></tr>
+<tr><td>Sszorak</td><td class="num">—</td><td class="num">18 <span class="muted">· 14</span></td></tr>
+<tr><td><strong>Écart au potentiel simc</strong></td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Centile global · centile à ton ilvl. Écart au potentiel : ton DPS rapporté à ce que ton équipement ferait avec une rotation parfaite (simulation).</p>
+<h3 id="s-conseils-du-24-09">Conseils du 24/09</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Conseil</th><th class="num">Gain alors</th><th class="num">Gain aujourd&#x27;hui</th><th>Statut</th></tr></thead>
+<tbody>
+<tr><td class="wrap">Familier rappelé en plein combat</td><td class="num">9,7 %</td><td class="num">—</td><td class="muted">pas comparable</td></tr>
+
+</tbody>
+</table>
+</div>
+
+<p>0 corrigé, 0 en progrès, 0 toujours là, 1 pas comparable (boss non affrontés ce soir).</p>
+
+<details class="methode"><summary><h2 id="s-m-thode" style="display:inline">Méthode</h2> <span class="muted">(cliquer pour déplier)</span></summary><div class="cartes"><div class="carte"><div class="lib"><strong>Combats analysés</strong></div><p>Ton meilleur kill de chaque boss ; pour les morts, tous les wipes de la soirée (comptées si tu es parmi les 3 premiers à tomber).</p></div><div class="carte"><div class="lib"><strong>Références</strong></div><p>Le top 3 mondial de ta spé et un tank équivalent, trouvés au classement Warcraft Logs des tanks (au DPS) ; et l&#x27;autre tank de la soirée sur le même combat, la comparaison la plus juste pour les relais.</p></div><div class="carte"><div class="lib"><strong>Gros coups</strong></div><p>Les coups encaissés d&#x27;au moins 75 % du plus gros du combat (avant absorption) : les tank busters, avec les buffs actifs à ce moment-là (défensif majeur, mitigation active, ou rien).</p></div><div class="carte"><div class="lib"><strong>Relais</strong></div><p>Le debuff de relais est reconnu sans liste écrite à la main : celui dont les stacks viennent de monter sur un tank (au moins 2 stacks) juste avant que l&#x27;autre provoque. Relais tardif : 3 s de plus que le délai médian des relais du combat, et au moins 4 s.</p></div><div class="carte"><div class="lib"><strong>Classement des constats</strong></div><p>Critique : ta mort. Grave : gros coups sans défensif, relais tardif, boss qui frappe un autre joueur. Puis mitigation et défensifs sous-utilisés ; les constats de dégâts viennent après.</p></div><div class="carte"><div class="lib"><strong>Limites</strong></div><p>simc ne simule pas la survie. Les mécaniques punitives (coups qui tuent d&#x27;un coup) et le bon moment d&#x27;un relais dépendent du boss : le log ne dit pas tout, Wipefest viendra en complément.</p></div></div></details>
+<div id="infobulle"></div>
+<script>
+(() => {
+  const bulle = document.getElementById("infobulle");
+  const montrer = (ev, texte) => {
+    bulle.textContent = texte; bulle.style.display = "block";
+    const x = Math.min(ev.clientX + 14, window.innerWidth - bulle.offsetWidth - 8);
+    bulle.style.left = x + "px"; bulle.style.top = (ev.clientY + 14) + "px";
+  };
+  const cacher = () => { bulle.style.display = "none"; };
+  document.querySelectorAll("[data-tip]").forEach(el => {
+    el.addEventListener("pointermove", ev => montrer(ev, el.dataset.tip));
+    el.addEventListener("pointerleave", cacher);
+  });
+  document.querySelectorAll("svg[data-courbes]").forEach(svg => {
+    const d = JSON.parse(svg.dataset.courbes), zone = svg.querySelector(".zone"), ligne = svg.querySelector(".reticule");
+    zone.addEventListener("pointermove", ev => {
+      const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY;
+      const q = p.matrixTransform(svg.getScreenCTM().inverse());
+      const i = Math.max(0, Math.min(d.t.length - 1, Math.round((q.x - d.x0) / d.dx)));
+      ligne.setAttribute("x1", d.x0 + i * d.dx); ligne.setAttribute("x2", d.x0 + i * d.dx); ligne.style.display = "";
+      montrer(ev, d.t[i] + "\n" + d.series.map(s => (s.v[i] == null ? "—" : s.v[i]) + " lancers/min  " + s.nom).join("\n"));
+    });
+    zone.addEventListener("pointerleave", () => { ligne.style.display = "none"; cacher(); });
+  });
+})();
+</script>
+<script>
+function ouvrirAncre() {
+  const d = location.hash && document.getElementById(location.hash.slice(1));
+  if (d && d.tagName === "DETAILS") { d.open = true; d.scrollIntoView(); }
+}
+addEventListener("hashchange", ouvrirAncre); addEventListener("DOMContentLoaded", ouvrirAncre);
+</script>
+
+</main>
+</div>
+<script>
+(function () {
+  var nav = document.querySelector('.sommaire'); if (!nav) return;
+  var det = nav.querySelector('details'), petit = window.matchMedia('(max-width: 1100px)');
+  if (petit.matches) det.open = false;
+  var liens = {}; nav.querySelectorAll('a').forEach(function (a) { liens[a.getAttribute('href').slice(1)] = a; });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A' && petit.matches) det.open = false; });
+  var titres = Array.prototype.filter.call(document.querySelectorAll('main h2[id], main h3[id]'),
+                                           function (h) { return liens[h.id]; });
+  function actif() {
+    var courant = titres[0];
+    titres.forEach(function (h) { if (h.getBoundingClientRect().top < 120) courant = h; });
+    Object.keys(liens).forEach(function (k) { liens[k].classList.toggle('actif', courant && k === courant.id); });
+  }
+  window.addEventListener('scroll', actif, {passive: true}); actif();
+})();
+</script>
+</body>
+</html>
