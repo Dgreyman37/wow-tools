@@ -615,6 +615,178 @@
    ]
   },
   {
+   "date": "2026-09-20",
+   "saison": "midnight-2",
+   "page": "raid_rgHGVNFzJY8XL9A7.html",
+   "zone": "The Venomous Abyss",
+   "difficulte": "Héroïque",
+   "tues": 1,
+   "affrontes": 2,
+   "essais": 16,
+   "joueurs": [
+    {
+     "nom": "Dïnnen",
+     "personnage": "Dïnnen",
+     "role": "tank",
+     "classe": "Warrior",
+     "spec_fr": "Protection",
+     "page": "Dïnnen_soiree.html"
+    },
+    {
+     "nom": "Thanlosk",
+     "personnage": "Thanlosk",
+     "role": "tank",
+     "classe": "DeathKnight",
+     "spec_fr": "Sang",
+     "page": "Thanlosk_soiree.html"
+    },
+    {
+     "nom": "Darkspammer",
+     "personnage": "Darkspammer",
+     "role": "soigneur",
+     "classe": "Druid",
+     "spec_fr": "Restauration",
+     "page": "Darkspammer_soiree.html"
+    },
+    {
+     "nom": "Gonzochimy",
+     "personnage": "Gonzochimy",
+     "role": "soigneur",
+     "classe": "Shaman",
+     "spec_fr": "Restauration",
+     "page": "Gonzochimy_soiree.html"
+    },
+    {
+     "nom": "Mönche",
+     "personnage": "Mönche",
+     "role": "soigneur",
+     "classe": "Monk",
+     "spec_fr": "Tisse-brume",
+     "page": "Mönche_soiree.html"
+    },
+    {
+     "nom": "Orelïnde",
+     "personnage": "Orelïnde",
+     "role": "soigneur",
+     "classe": "Druid",
+     "spec_fr": "Restauration",
+     "page": "Orelïnde_soiree.html"
+    },
+    {
+     "nom": "Ceek",
+     "personnage": "Ceek",
+     "role": "DPS",
+     "classe": "Shaman",
+     "spec_fr": "Élémentaire",
+     "page": "Ceek_soiree.html"
+    },
+    {
+     "nom": "Falconnard",
+     "personnage": "Falconnard",
+     "role": "DPS",
+     "classe": "Evoker",
+     "spec_fr": "Augmentation",
+     "page": "Falconnard_soiree.html"
+    },
+    {
+     "nom": "Kinqsman",
+     "personnage": "Kinqsman",
+     "role": "DPS",
+     "classe": "Warrior",
+     "spec_fr": "Armes",
+     "page": "Kinqsman_soiree.html"
+    },
+    {
+     "nom": "Latoxikah",
+     "personnage": "Latoxikah",
+     "role": "DPS",
+     "classe": "Rogue",
+     "spec_fr": "Assassinat",
+     "page": "Latoxikah_soiree.html"
+    },
+    {
+     "nom": "Mannifas",
+     "personnage": "Mannifas",
+     "role": "DPS",
+     "classe": "Warlock",
+     "spec_fr": "Destruction",
+     "page": "Mannifas_soiree.html"
+    },
+    {
+     "nom": "Obscurity",
+     "personnage": "Obscurity",
+     "role": "DPS",
+     "classe": "Priest",
+     "spec_fr": "Ombre",
+     "page": "Obscurity_soiree.html"
+    },
+    {
+     "nom": "Sempere",
+     "personnage": "Sempere",
+     "role": "DPS",
+     "classe": "Paladin",
+     "spec_fr": "Vindicte",
+     "page": "Sempere_soiree.html"
+    },
+    {
+     "nom": "Syrpha",
+     "personnage": "Syrpha",
+     "role": "DPS",
+     "classe": "Druid",
+     "spec_fr": "Équilibre",
+     "page": "Syrpha_soiree.html"
+    },
+    {
+     "nom": "Treont",
+     "personnage": "Treont",
+     "role": "DPS",
+     "classe": "Mage",
+     "spec_fr": "Arcanes",
+     "page": "Treont_soiree.html"
+    },
+    {
+     "nom": "Wrecka",
+     "personnage": "Wrecka",
+     "role": "DPS",
+     "classe": "Paladin",
+     "spec_fr": "Vindicte",
+     "page": "Wrecka_soiree.html"
+    },
+    {
+     "nom": "Xelganas",
+     "personnage": "Xelganas",
+     "role": "DPS",
+     "classe": "Warlock",
+     "spec_fr": "Démonologie",
+     "page": "Xelganas_soiree.html"
+    },
+    {
+     "nom": "Zael",
+     "personnage": "Zael",
+     "role": "DPS",
+     "classe": "Warrior",
+     "spec_fr": "Armes",
+     "page": "Zael_soiree.html"
+    },
+    {
+     "nom": "Денжер",
+     "personnage": "Денжер",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévoreur",
+     "page": "Денжер_soiree.html"
+    },
+    {
+     "nom": "Мафеста",
+     "personnage": "Мафеста",
+     "role": "DPS",
+     "classe": "Druid",
+     "spec_fr": "Équilibre",
+     "page": "Мафеста_soiree.html"
+    }
+   ]
+  },
+  {
    "date": "2026-09-17",
    "saison": "midnight-2",
    "page": "raid_X7MAtFxNr4YHZpaf.html",
