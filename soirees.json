@@ -4993,6 +4993,33 @@
    ]
   },
   {
+   "date": "2026-05-14",
+   "saison": "midnight-1",
+   "page": "raid_cNapqn2AQm1TjdCK.html",
+   "zone": "VS / DR / MQD",
+   "difficulte": "Héroïque",
+   "tues": 1,
+   "affrontes": 2,
+   "essais": 20,
+   "boss": [
+    {
+     "nom": "Belo'ren, Child of Al'ar",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 3,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Midnight Falls",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 17,
+     "meilleur_pv": 66.19
+    }
+   ],
+   "joueurs": []
+  },
+  {
    "date": "2026-05-13",
    "saison": "midnight-1",
    "page": "raid_GNBCxnJM2D4FcaTZ.html",
