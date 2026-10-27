@@ -5034,6 +5034,47 @@
    "joueurs": []
   },
   {
+   "date": "2026-03-19",
+   "saison": "midnight-1",
+   "page": "raid_DR9mF1t3fgzdnXQG.html",
+   "zone": "VS / DR / MQD",
+   "difficulte": "Normal",
+   "tues": 3,
+   "affrontes": 4,
+   "essais": 19,
+   "boss": [
+    {
+     "nom": "Vaelgor & Ezzorak",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 7,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Lightblinded Vanguard",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 8,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Crown of the Cosmos",
+     "difficulte": "Normal",
+     "tue": false,
+     "essais": 1,
+     "meilleur_pv": 99.03
+    },
+    {
+     "nom": "Chimaerus, the Undreamt God",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 3,
+     "meilleur_pv": null
+    }
+   ],
+   "joueurs": []
+  },
+  {
    "date": "2026-03-18",
    "saison": "midnight-1",
    "page": "raid_Aga4WYMxD9XfB2tK.html",
