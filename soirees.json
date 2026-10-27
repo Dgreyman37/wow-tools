@@ -5460,6 +5460,33 @@
    "joueurs": []
   },
   {
+   "date": "2026-05-07",
+   "saison": "midnight-1",
+   "page": "raid_ZpKHT8BjYvDgncyr.html",
+   "zone": "VS / DR / MQD",
+   "difficulte": "Héroïque",
+   "tues": 1,
+   "affrontes": 2,
+   "essais": 18,
+   "boss": [
+    {
+     "nom": "Crown of the Cosmos",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 10,
+     "meilleur_pv": 5.05
+    },
+    {
+     "nom": "Belo'ren, Child of Al'ar",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 8,
+     "meilleur_pv": null
+    }
+   ],
+   "joueurs": []
+  },
+  {
    "date": "2026-05-06",
    "saison": "midnight-1",
    "page": "raid_6fPcmyJTwN49dCKz.html",
