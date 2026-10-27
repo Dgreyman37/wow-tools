@@ -4993,6 +4993,33 @@
    ]
   },
   {
+   "date": "2026-04-23",
+   "saison": "midnight-1",
+   "page": "raid_Pmgavct9qVAf8wHF.html",
+   "zone": "VS / DR / MQD",
+   "difficulte": "Normal",
+   "tues": 2,
+   "affrontes": 2,
+   "essais": 19,
+   "boss": [
+    {
+     "nom": "Belo'ren, Child of Al'ar",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 15,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Midnight Falls",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 4,
+     "meilleur_pv": null
+    }
+   ],
+   "joueurs": []
+  },
+  {
    "date": "2026-04-22",
    "saison": "midnight-1",
    "page": "raid_kwZHyTJmbfDvqjcC.html",
