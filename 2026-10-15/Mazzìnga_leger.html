@@ -4,8 +4,8 @@
 <meta name="robots" content="noindex, nofollow">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="ga-genere" content="2026-10-24T13:48">
-<meta name="ga-version" content="e9f88b8">
+<meta name="ga-genere" content="2026-10-27T08:54">
+<meta name="ga-version" content="6fff801">
 <title>Mon DPS Mazzìnga</title>
 <style>
   .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
@@ -84,7 +84,7 @@
 <div class="avec-nav">
 <nav class="sommaire"><details open><summary>Sur cette page</summary><ul><li><a href="#s-boss-par-boss">Boss par boss</a></li><li><a href="#s-corriger-en-priorit">À corriger en priorité</a></li><li><a href="#s-rotation">Rotation</a><ul><li class="sous"><a href="#s-synth-se-de-la-soir-e">Synthèse de la soirée</a></li><li class="sous"><a href="#s-d-tail-de-chaque-boss">Détail de chaque boss</a></li></ul></li><li><a href="#s-build-et-stats">Build et stats</a></li><li><a href="#s-quipement">Équipement</a></li><li><a href="#s-progression">Progression</a></li><li><a href="#s-m-thode">Méthode</a></li></ul></details></nav>
 <main>
-<p class="badges"><span class="badge">Généré le 24/10/2026 à 13:48</span><span class="badge" title="Commit du code guild_analyser qui a produit cette page">Version e9f88b8</span><span class="badge badge-verif non" title="Pas encore relue par le vérificateur (intégrité des données, anomalies)">Non vérifié</span></p>
+<p class="badges"><span class="badge">Généré le 27/10/2026 à 08:54</span><span class="badge" title="Commit du code guild_analyser qui a produit cette page">Version 6fff801</span><span class="badge badge-verif non" title="Pas encore relue par le vérificateur (intégrité des données, anomalies)">Non vérifié</span></p>
 <style>
   main { max-width: 1100px; }
   .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 16px 0; }
@@ -203,22 +203,7 @@
   @media (max-width: 600px) { .prio > li { padding-left: 16px; } .prio > li::before { position: static; margin-bottom: 6px; } }
 </style>
 <style>
-  .viz { --s1: #2a78d6; --s2: #eb6834; margin: 10px 0 4px; }
-  @media (prefers-color-scheme: dark) { .viz { --s1: #3987e5; --s2: #d95926; } }
-  .viz svg { width: 100%; height: auto; display: block; overflow: visible; }
-  .viz text { fill: var(--muted); font: 12px system-ui, sans-serif; }
-  .viz text.lib { fill: var(--text); }
-  .viz .grille { stroke: var(--border); stroke-width: 1; }
-  .viz .s1 { fill: var(--s1); } .viz .s2 { fill: var(--s2); }
-  .viz .l1 { stroke: var(--s1); } .viz .l2 { stroke: var(--s2); }
-  .viz circle { stroke: var(--surface); stroke-width: 2; }
-  .viz [data-tip]:hover { opacity: .75; }
-  .viz .legende { display: flex; gap: 16px; flex-wrap: wrap; font-size: .88rem; color: var(--muted); margin: 0 0 4px; }
-  .viz .legende i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
-  .viz .legende i.trou { border-radius: 2px; opacity: .45; }
-  #infobulle { position: fixed; pointer-events: none; display: none; z-index: 10; background: var(--surface);
-               color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px;
-               font-size: .85rem; box-shadow: 0 2px 8px rgba(0,0,0,.15); white-space: pre; }
+  .graphique { margin: 10px 0 4px; } .graphique .zone { position: relative; min-width: 0; }
 </style>
 <style>
   .cause { display: flex; height: 10px; border-radius: 3px; overflow: hidden; background: var(--row); margin: 4px 0 2px; max-width: 420px; }
@@ -284,31 +269,179 @@
 <p>Première soirée analysée : la progression apparaîtra à la prochaine analyse.</p>
 
 <details class="methode"><summary><h2 id="s-m-thode" style="display:inline">Méthode</h2> <span class="muted">(cliquer pour déplier)</span></summary><div class="cartes"><div class="carte"><div class="lib"><strong>Combats analysés</strong></div><p>Pour chaque boss, ton meilleur kill de la soirée (centile le plus haut).</p></div><div class="carte"><div class="lib"><strong>Top 3</strong></div><p>Les trois premiers de ta spé au classement héroïque du boss, logs postérieurs au 14/10 à 06 h (maintenance du mercredi, ou dernier correctif de tes sorts intégré à simc).</p></div><div class="carte"><div class="lib"><strong>Joueur équivalent</strong></div><p>Même tranche d&#x27;ilvl, raid de taille (±5) et de durée (±25 %) proches, sans Évocateur Augmentation, 10 à 45 % de DPS en plus ; parmi les plus proches de +25 %, le plus proche en talents et bijoux. Critères élargis (tranches voisines, ±8 joueurs, ±35 %) si personne après le correctif.</p></div><div class="carte"><div class="lib"><strong>Phases</strong></div><p>Multicible quand 3 ennemis ou plus sont attaqués par le raid (seuil de la rotation simc).</p></div><div class="carte"><div class="lib"><strong>Règles de rotation</strong></div><p>Conditions de la rotation simc vérifiées lancer par lancer ; retenues seulement si tu fais nettement moins bien que les références.</p></div><div class="carte"><div class="lib"><strong>Gains</strong></div><p>Estimés à partir des écarts mesurés, puis validés en simulation pour les plus gros (fautes imitées dans simc à ton rythme et à celui des références ; gain = écart des deux).</p></div><div class="carte"><div class="lib"><strong>Limites</strong></div><p>Une référence joue un autre combat que le tien (raid, durée, adds) : un écart est une piste, pas une preuve. Avec moins de 0,5 % d&#x27;écart, une simulation n&#x27;est pas significative.</p></div></div></details>
-<div id="infobulle"></div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.js" integrity="sha384-G436+Z2nlA8+PNoeRvWdxKbvOf8E/y+lYxqht2iBwNHTQDV5CJr3+AGVj8fGZi5t" crossorigin="anonymous"></script>
 <script>
+// Graphiques des pages (controleurs/commun/graphiques.py) : chaque <div class="graphique"> porte sa description en
+// JSON, traduite ici pour Chart.js (chargé juste avant, templates/commun/_chart_js.html.j2). Sans Chart.js (hors ligne),
+// la zone reste vide : les tableaux de la page disent l'essentiel.
 (() => {
-  const bulle = document.getElementById("infobulle");
-  const montrer = (ev, texte) => {
-    bulle.textContent = texte; bulle.style.display = "block";
-    const x = Math.min(ev.clientX + 14, window.innerWidth - bulle.offsetWidth - 8);
-    bulle.style.left = x + "px"; bulle.style.top = (ev.clientY + 14) + "px";
+  if (typeof Chart === 'undefined') return;
+
+  // « --a|--b » : la première variable CSS définie (les fiches ont leurs propres noms), lue sur la figure ; alpha < 1 :
+  // la même couleur, transparente
+  function couleur(figure, nom, alpha = 1) {
+    if (!nom) return undefined;
+    const valeur = nom.startsWith('--')
+      ? nom.split('|').reduceRight((secours, v) => `var(${v.trim()}, ${secours})`, '#888')
+      : nom;
+    const span = document.createElement('span');
+    span.style.color = valeur;
+    figure.appendChild(span);
+    const rgb = getComputedStyle(span).color;
+    span.remove();
+    if (alpha === 1) return rgb;
+    const [r, g, b] = rgb.match(/[\d.]+/g);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+  const parPoint = (v, i) => (Array.isArray(v) ? v[i] : v);
+  const chaquePoint = (v, f) => (Array.isArray(v) ? v.map(f) : f(v));
+
+  function axe(figure, a) {
+    const o = {
+      type: a.type,
+      grid: { color: couleur(figure, '--border') },
+      border: { display: false },
+      ticks: { color: couleur(figure, '--mut|--muted'), maxRotation: 0, autoSkipPadding: 10 },
+    };
+    // axe en temps sous des barres : 0:00 au bord, pas décalé d'une demi-barre comme sous des catégories
+    if (a.type === 'linear') { o.offset = false; o.grid.offset = false; }
+    if (a.etiquettes) o.labels = a.etiquettes;
+    if (a.min !== undefined) o.min = a.min;
+    if (a.max !== undefined) o.max = a.max;
+    if (a.graduations) {
+      const textes = new Map(a.graduations);
+      o.afterBuildTicks = axis => { axis.ticks = a.graduations.map(([v]) => ({ value: v })); };
+      o.ticks.callback = v => textes.get(v) ?? '';
+    }
+    if (a.titre) o.title = { display: true, text: a.titre, color: o.ticks.color };
+    return o;
+  }
+
+  function jeuDeDonnees(figure, s, g) {
+    const type = s.type || g.type;
+    const c = couleur(figure, s.couleur);
+    const rayons = s.rayons ?? (type === 'line' ? 3 : 4);
+    const d = {
+      type, label: s.libelle, bulles: s.bulles, etiquettes: s.etiquettes, centrees: s.etiquettes_centrees,
+      dessous: s.etiquettes_dessous,
+      data: s.points.map(p => (Array.isArray(p) ? { x: p[0], y: p[1] } : p)),
+      borderColor: c, backgroundColor: c, fill: false, spanGaps: true,
+      borderWidth: s.epaisseur ?? 2.5, borderDash: s.pointilles ? [7, 5] : [],
+      pointRadius: rayons, pointHoverRadius: chaquePoint(rayons, r => r + 2),
+      pointBackgroundColor: s.fonds ? chaquePoint(s.fonds, f => couleur(figure, f)) : c,
+      pointBorderColor: s.bordures ? chaquePoint(s.bordures, f => couleur(figure, f)) : c,
+      pointBorderWidth: s.bordures_epaisseur ?? 2, pointStyle: s.style_point || 'circle',
+    };
+    if (type === 'bar') {
+      Object.assign(d, { borderWidth: 0, borderRadius: 2, barPercentage: 0.9, categoryPercentage: g.horizontal ? 0.8 : 1 });
+      if (s.couleurs) d.backgroundColor = s.couleurs.map((x, i) => couleur(figure, x, parPoint(s.opacites ?? 1, i)));
+    }
+    if (type === 'scatter') d.showLine = false;
+    return d;
+  }
+
+  // traits verticaux (cooldowns, morts) : un point en haut, survolable, et son trait dessiné par le greffon
+  function jeuDeReperes(figure, r, g) {
+    const c = couleur(figure, r.couleur);
+    return {
+      type: 'scatter', label: r.libelle, repere: true, pointilles: r.pointilles, epaisseurTrait: r.epaisseur,
+      data: r.points.map(([x]) => ({ x, y: g.y.max })), bulles: r.points.map(([, bulle]) => bulle),
+      borderColor: c, backgroundColor: c, pointRadius: r.rond ? 4 : 2.5, pointHoverRadius: 6,
+    };
+  }
+
+  const traits = {
+    id: 'traits',
+    beforeDatasetsDraw(chart) {
+      const { ctx, chartArea: zone } = chart;
+      chart.data.datasets.forEach((d, i) => {
+        if (!d.repere || !chart.isDatasetVisible(i)) return;
+        ctx.save();
+        ctx.strokeStyle = d.borderColor;
+        ctx.lineWidth = d.epaisseurTrait;
+        ctx.setLineDash(d.pointilles ? [3, 3] : []);
+        chart.getDatasetMeta(i).data.forEach(p => {
+          ctx.beginPath(); ctx.moveTo(p.x, zone.top); ctx.lineTo(p.x, zone.bottom); ctx.stroke();
+        });
+        ctx.restore();
+      });
+    },
   };
-  const cacher = () => { bulle.style.display = "none"; };
-  document.querySelectorAll("[data-tip]").forEach(el => {
-    el.addEventListener("pointermove", ev => montrer(ev, el.dataset.tip));
-    el.addEventListener("pointerleave", cacher);
-  });
-  document.querySelectorAll("svg[data-courbes]").forEach(svg => {
-    const d = JSON.parse(svg.dataset.courbes), zone = svg.querySelector(".zone"), ligne = svg.querySelector(".reticule");
-    zone.addEventListener("pointermove", ev => {
-      const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY;
-      const q = p.matrixTransform(svg.getScreenCTM().inverse());
-      const i = Math.max(0, Math.min(d.t.length - 1, Math.round((q.x - d.x0) / d.dx)));
-      ligne.setAttribute("x1", d.x0 + i * d.dx); ligne.setAttribute("x2", d.x0 + i * d.dx); ligne.style.display = "";
-      montrer(ev, d.t[i] + "\n" + d.series.map(s => (s.v[i] == null ? "—" : s.v[i]) + " lancers/min  " + s.nom).join("\n"));
+
+  // texte près d'un point (valeur), sur un liseré de la couleur du fond pour rester lisible ; centré : dans le point
+// (numéro d'essai), de la couleur du fond
+  const etiquettes = {
+    id: 'etiquettes',
+    afterDatasetsDraw(chart, _args, options) {
+      const { ctx } = chart;
+      chart.data.datasets.forEach((d, i) => {
+        if (!d.etiquettes || !chart.isDatasetVisible(i)) return;
+        const points = chart.getDatasetMeta(i).data;
+        ctx.save();
+        ctx.font = d.centrees ? 'bold 10px system-ui, sans-serif' : 'bold 11px system-ui, sans-serif';
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = options.fond;
+        ctx.fillStyle = d.centrees ? options.fond : d.borderColor;
+        ctx.textBaseline = 'middle';
+        points.forEach((p, j) => {
+          const texte = d.etiquettes[j];
+          if (!texte || p.skip) return;
+          const premier = j === 0, dernier = j === points.length - 1;
+          ctx.textAlign = d.centrees ? 'center' : premier ? 'left' : dernier ? 'right' : 'center';
+          const y = d.centrees ? p.y : d.dessous && d.dessous[j] ? p.y + 14 : p.y - 12;
+          if (!d.centrees) ctx.strokeText(texte, p.x, y);
+          ctx.fillText(texte, p.x, y);
+        });
+        ctx.restore();
+      });
+    },
+  };
+
+  const SURVOL = {
+    index: { mode: 'index', intersect: false },
+    point: { mode: 'nearest', intersect: true },
+    x: { mode: 'nearest', axis: 'x', intersect: false },
+  };
+
+  function dessiner(figure) {
+    const g = JSON.parse(figure.querySelector('script[type="application/json"]').textContent);
+    const jeux = g.series.map(s => jeuDeDonnees(figure, s, g)).concat(g.reperes.map(r => jeuDeReperes(figure, r, g)));
+    return new Chart(figure.querySelector('canvas'), {
+      type: g.type,
+      data: { datasets: jeux, labels: g.horizontal ? g.y.etiquettes : g.x.etiquettes },
+      options: {
+        responsive: true, maintainAspectRatio: false, animation: false, indexAxis: g.horizontal ? 'y' : 'x',
+        layout: { padding: { top: 14, right: 8 } },  // étiquettes et points au bord du cadre
+        interaction: SURVOL[g.survol],
+        scales: { x: axe(figure, g.x), y: axe(figure, g.y) },
+        plugins: {
+          legend: {
+            display: g.legende, position: 'bottom',
+            labels: { color: couleur(figure, '--mut|--muted'), usePointStyle: true, boxWidth: 8, boxHeight: 8 },
+          },
+          tooltip: {
+            filter: item => !item.dataset.bulles || item.dataset.bulles[item.dataIndex] != null,
+            callbacks: {
+              title: () => '',
+              label: item => {
+                const bulles = item.dataset.bulles;
+                return bulles ? String(bulles[item.dataIndex]).split('\n') : `${item.dataset.label} : ${item.formattedValue}`;
+              },
+            },
+          },
+          etiquettes: { fond: couleur(figure, '--card|--surface') },
+        },
+      },
+      plugins: [traits, etiquettes],
     });
-    zone.addEventListener("pointerleave", () => { ligne.style.display = "none"; cacher(); });
-  });
+  }
+
+  const figures = [...document.querySelectorAll('div.graphique')];
+  let graphiques = figures.map(dessiner);
+  // palette changée (data-theme) ou mode sombre du système : redessinés avec les couleurs du moment
+  const redessiner = () => { graphiques.forEach(c => c.destroy()); graphiques = figures.map(dessiner); };
+  new MutationObserver(redessiner).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', redessiner);
 })();
 </script>
 <script>
