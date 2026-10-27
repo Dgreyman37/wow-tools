@@ -4993,6 +4993,54 @@
    ]
   },
   {
+   "date": "2026-04-16",
+   "saison": "midnight-1",
+   "page": "raid_PJAGcagTMYymFhN2.html",
+   "zone": "VS / DR / MQD",
+   "difficulte": "Héroïque, Normal",
+   "tues": 4,
+   "affrontes": 5,
+   "essais": 15,
+   "boss": [
+    {
+     "nom": "Lightblinded Vanguard",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 3,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Crown of the Cosmos",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 8,
+     "meilleur_pv": 49.46
+    },
+    {
+     "nom": "Chimaerus, the Undreamt God",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Belo'ren, Child of Al'ar",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Midnight Falls",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    }
+   ],
+   "joueurs": []
+  },
+  {
    "date": "2026-04-09",
    "saison": "midnight-1",
    "page": "raid_Y2JbAF46f8ndQzvp.html",
