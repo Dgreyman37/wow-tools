@@ -5032,6 +5032,47 @@
     }
    ],
    "joueurs": []
+  },
+  {
+   "date": "2026-03-18",
+   "saison": "midnight-1",
+   "page": "raid_Aga4WYMxD9XfB2tK.html",
+   "zone": "VS / DR / MQD",
+   "difficulte": "Normal",
+   "tues": 3,
+   "affrontes": 4,
+   "essais": 20,
+   "boss": [
+    {
+     "nom": "Imperator Averzian",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vorasius",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 4,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Fallen-King Salhadaar",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vaelgor & Ezzorak",
+     "difficulte": "Normal",
+     "tue": false,
+     "essais": 14,
+     "meilleur_pv": 39.21
+    }
+   ],
+   "joueurs": []
   }
  ]
 }
