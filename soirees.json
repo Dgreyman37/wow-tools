@@ -4993,6 +4993,40 @@
    ]
   },
   {
+   "date": "2026-04-29",
+   "saison": "midnight-1",
+   "page": "raid_V2mQDfkqXvZxTby1.html",
+   "zone": "VS / DR / MQD",
+   "difficulte": "Héroïque",
+   "tues": 2,
+   "affrontes": 3,
+   "essais": 23,
+   "boss": [
+    {
+     "nom": "Chimaerus, the Undreamt God",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Belo'ren, Child of Al'ar",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 15,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Midnight Falls",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 6,
+     "meilleur_pv": 80.7
+    }
+   ],
+   "joueurs": []
+  },
+  {
    "date": "2026-04-26",
    "saison": "midnight-1",
    "page": "raid_kKhyMm4JaCg8HTQR.html",
