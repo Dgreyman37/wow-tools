@@ -4993,6 +4993,68 @@
    ]
   },
   {
+   "date": "2026-06-10",
+   "saison": "midnight-1",
+   "page": "raid_WgcwpjanBKQb2x7D.html",
+   "zone": "VS / DR / MQD",
+   "difficulte": "Héroïque",
+   "tues": 6,
+   "affrontes": 7,
+   "essais": 19,
+   "boss": [
+    {
+     "nom": "Imperator Averzian",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vorasius",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Fallen-King Salhadaar",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vaelgor & Ezzorak",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Lightblinded Vanguard",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 6,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Crown of the Cosmos",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 3,
+     "meilleur_pv": 4.81
+    },
+    {
+     "nom": "Chimaerus, the Undreamt God",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 5,
+     "meilleur_pv": null
+    }
+   ],
+   "joueurs": []
+  },
+  {
    "date": "2026-05-27",
    "saison": "midnight-1",
    "page": "raid_yjCNvw9D71RxZK2c.html",
