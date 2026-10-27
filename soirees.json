@@ -4993,6 +4993,26 @@
    ]
   },
   {
+   "date": "2026-05-21",
+   "saison": "midnight-1",
+   "page": "raid_zpdfCYXGJcMWxykA.html",
+   "zone": "VS / DR / MQD",
+   "difficulte": "Héroïque",
+   "tues": 1,
+   "affrontes": 1,
+   "essais": 17,
+   "boss": [
+    {
+     "nom": "Midnight Falls",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 17,
+     "meilleur_pv": null
+    }
+   ],
+   "joueurs": []
+  },
+  {
    "date": "2026-05-20",
    "saison": "midnight-1",
    "page": "raid_MjkQmYKZ4xpf7h6H.html",
