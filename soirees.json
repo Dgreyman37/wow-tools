@@ -4993,6 +4993,54 @@
    ]
   },
   {
+   "date": "2026-04-09",
+   "saison": "midnight-1",
+   "page": "raid_Y2JbAF46f8ndQzvp.html",
+   "zone": "VS / DR / MQD",
+   "difficulte": "Héroïque",
+   "tues": 4,
+   "affrontes": 5,
+   "essais": 20,
+   "boss": [
+    {
+     "nom": "Imperator Averzian",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vorasius",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Fallen-King Salhadaar",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 4,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vaelgor & Ezzorak",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 10,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Lightblinded Vanguard",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 4,
+     "meilleur_pv": 54.18
+    }
+   ],
+   "joueurs": []
+  },
+  {
    "date": "2026-04-08",
    "saison": "midnight-1",
    "page": "raid_JdnTWY4gAtHjBNCq.html",
