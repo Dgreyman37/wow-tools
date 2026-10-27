@@ -4993,6 +4993,82 @@
    ]
   },
   {
+   "date": "2026-05-20",
+   "saison": "midnight-1",
+   "page": "raid_MjkQmYKZ4xpf7h6H.html",
+   "zone": "VS / DR / MQD",
+   "difficulte": "Héroïque",
+   "tues": 8,
+   "affrontes": 9,
+   "essais": 22,
+   "boss": [
+    {
+     "nom": "Imperator Averzian",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vorasius",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Fallen-King Salhadaar",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vaelgor & Ezzorak",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Lightblinded Vanguard",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Crown of the Cosmos",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Chimaerus, the Undreamt God",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Belo'ren, Child of Al'ar",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Midnight Falls",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 11,
+     "meilleur_pv": 26.13
+    }
+   ],
+   "joueurs": []
+  },
+  {
    "date": "2026-05-17",
    "saison": "midnight-1",
    "page": "raid_arQ9mncL67H8wRbB.html",
