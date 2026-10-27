@@ -4993,6 +4993,75 @@
    ]
   },
   {
+   "date": "2026-04-26",
+   "saison": "midnight-1",
+   "page": "raid_kKhyMm4JaCg8HTQR.html",
+   "zone": "VS / DR / MQD",
+   "difficulte": "Normal",
+   "tues": 7,
+   "affrontes": 8,
+   "essais": 14,
+   "boss": [
+    {
+     "nom": "Imperator Averzian",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 3,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vorasius",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 3,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Fallen-King Salhadaar",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vaelgor & Ezzorak",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Lightblinded Vanguard",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Crown of the Cosmos",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Chimaerus, the Undreamt God",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Belo'ren, Child of Al'ar",
+     "difficulte": "Normal",
+     "tue": false,
+     "essais": 3,
+     "meilleur_pv": 11.71
+    }
+   ],
+   "joueurs": []
+  },
+  {
    "date": "2026-04-23",
    "saison": "midnight-1",
    "page": "raid_Pmgavct9qVAf8wHF.html",
