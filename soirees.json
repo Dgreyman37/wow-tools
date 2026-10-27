@@ -4993,6 +4993,47 @@
    ]
   },
   {
+   "date": "2026-04-02",
+   "saison": "midnight-1",
+   "page": "raid_rGwW6FmVBD3gfpqJ.html",
+   "zone": "VS / DR / MQD",
+   "difficulte": "Héroïque, Normal",
+   "tues": 3,
+   "affrontes": 4,
+   "essais": 15,
+   "boss": [
+    {
+     "nom": "Imperator Averzian",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vorasius",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 6,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Chimaerus, the Undreamt God",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 5,
+     "meilleur_pv": 37.67
+    },
+    {
+     "nom": "Belo'ren, Child of Al'ar",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 3,
+     "meilleur_pv": null
+    }
+   ],
+   "joueurs": []
+  },
+  {
    "date": "2026-04-01",
    "saison": "midnight-1",
    "page": "raid_Ydq8yWVvMr93Ak2J.html",
