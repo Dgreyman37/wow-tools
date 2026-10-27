@@ -4993,6 +4993,47 @@
    ]
   },
   {
+   "date": "2026-05-24",
+   "saison": "midnight-1",
+   "page": "raid_3GTWMHmQRpvDVAdw.html",
+   "zone": "VS / DR / MQD",
+   "difficulte": "Normal",
+   "tues": 4,
+   "affrontes": 4,
+   "essais": 9,
+   "boss": [
+    {
+     "nom": "Crown of the Cosmos",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Chimaerus, the Undreamt God",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 4,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Belo'ren, Child of Al'ar",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Midnight Falls",
+     "difficulte": "Normal",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    }
+   ],
+   "joueurs": []
+  },
+  {
    "date": "2026-05-21",
    "saison": "midnight-1",
    "page": "raid_zpdfCYXGJcMWxykA.html",
