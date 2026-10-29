@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ga-genere" content="2026-10-29T08:45">
+<meta name="ga-version" content="adb28e1">
+<title>Coaching Endhaim</title>
+<style>
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .badge { font-size: .74rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px;
+           padding: 2px 10px; background: var(--surface); }
+  .badge-verif.ok { color: var(--good); border-color: var(--good); }
+  .badge-verif.alerte { color: var(--warn); border-color: var(--warn); }
+  .badge-verif.non { font-style: italic; }
+  :root { --bg: #f7f6f3; --surface: #ffffff; --text: #1f2328; --muted: #5f6670; --border: #e1e0dc;
+          --accent: #b8860b; --good: #1f7a4d; --bad: #b23b2e; --warn: #9a6400; --row: #faf9f7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #16171a; --surface: #1f2125; --text: #e6e6e3; --muted: #9ba1a8; --border: #33363c;
+            --accent: #e3b341; --good: #5cc48f; --bad: #ef7a6c; --warn: #e0b04f; --row: #23252a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  h2 { font-size: 1.35rem; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.08rem; margin: 26px 0 8px; }
+  a { color: var(--accent); }
+  .meta { color: var(--muted); margin: 0 0 20px; font-size: .95rem; }
+  .lead { background: var(--surface); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 6px; }
+  .lead ul { margin: 6px 0 0; padding-left: 20px; }
+  .note { color: var(--muted); font-size: .92rem; }
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+  th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; vertical-align: top; }
+  td.wrap { white-space: normal; min-width: 240px; }
+  th { background: var(--row); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--good); font-weight: 600; } .mid { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; } .muted { color: var(--muted); }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 8px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  td details { background: none; border: 0; padding: 0; margin: 4px 0 0; }
+  td summary { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  td details p { margin: 4px 0; max-width: 46em; }
+  .faire { display: block; margin-top: 2px; }
+</style>
+<style>
+  .avec-nav { display: grid; grid-template-columns: 230px minmax(0, 1040px); gap: 28px; justify-content: center;
+              padding: 0 16px; }
+  .avec-nav main { max-width: none; margin: 0; padding: 32px 0 64px; }
+  .sommaire { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 32px 0 24px;
+              font-size: .9rem; }
+  .sommaire summary { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+                      font-size: .75rem; margin-bottom: 8px; cursor: pointer; list-style: none; }
+  .sommaire summary::-webkit-details-marker { display: none; }
+  .sommaire ul { list-style: none; margin: 0; padding: 0; }
+  .sommaire li { margin: 0; }
+  .sommaire a { display: block; padding: 4px 10px; border-left: 3px solid var(--border); color: var(--text);
+                text-decoration: none; line-height: 1.35; }
+  .sommaire li ul a { padding-left: 22px; color: var(--muted); font-size: .85rem; }
+  .sommaire a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .sommaire a.actif { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  /* sections bien séparées : un bandeau par grande partie */
+  .avec-nav main > h2, .avec-nav main section > h2 {
+    margin: 64px 0 18px; padding: 12px 16px; font-size: 1.45rem; background: var(--surface);
+    border: 1px solid var(--border); border-left: 6px solid var(--accent); border-radius: 10px; }
+  .avec-nav main > h2:first-of-type { margin-top: 36px; }
+  .avec-nav h2, .avec-nav h3 { scroll-margin-top: 16px; }
+  .avec-nav main > h3 { padding-bottom: 4px; border-bottom: 1px dashed var(--border); }
+  @media (max-width: 1100px) {
+    .avec-nav { display: block; padding: 0; }
+    .avec-nav main { padding: 16px 16px 64px; }
+    .sommaire { position: sticky; top: 0; z-index: 5; max-height: 70vh; padding: 8px 16px; background: var(--bg);
+                border-bottom: 1px solid var(--border); }
+    .sommaire summary { margin: 0; padding: 6px 0; }
+    .sommaire summary::after { content: " ▾"; }
+  }
+</style>
+<style>.ic{display:inline-block;width:1.2em;height:1.2em;border-radius:3px;background-size:cover;vertical-align:-.25em;margin-right:.3em;flex:none}.ic-spec{border-radius:50%}.ic-ability_druid_ferociousbite,.io-ability_druid_ferociousbite,.fi-ability_druid_ferociousbite{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAYHBQQD/8QAKxAAAQMEAQMEAgEFAAAAAAAAAQIDBAUGESEAEhMxByJBURQjYRUkMnGB/8QAFwEAAwEAAAAAAAAAAAAAAAAAAwQGBf/EACURAAICAgIBAwUBAAAAAAAAAAECAAMEEQUhEjFRYSIykaHR8P/aAAwDAQACEQMRAD8AXaLUbZYbfkuwZclxoFTjwYW6E42olXgY+TzwtCsw7y9TItForD0xx6I4uIttruNx39BLzqc/4IGVb+cc9rbrtAlFSa5AlTIIBT+RcE9TETBOCERm9rP8bzj442x0Q6U4iv8Apb6erp1wxiVsRyR++EpKu4ZDeR2kqx7EklR8ga4CmlFQbEps7lL3vcKxA/Uw/Umh0q2ILNsB6oyEtuqcX0Ycn1h7O/A/WyFHa1ec+0HGeTmmR7luGrS4lKagOS2sLdYQFLYhoGggFOSpf358HO+V+i1ui3DZEO/LgqUKHSHqgIVwUynRO0IxWFJQXVAl5aB7c5ODnIGscRPVS7X7RuWJS7OfRDq1AmOsKnRUgt1GG4hDjPcxpRAICvs7GMnhHFZHpEBkZfkAjHfxE1NZuClvyIE9RiSWHSlxtsKSM4G/O9Y3w5RapConqK3Cu1aIsGVMjAS44f6eh5KlJXjfjIyP4I4cUNSbm0nKWBQGPf8AviKVyUir0OhpvBqkPvsh1DTs+YoOPN5xgIScpbOxvZHGJFyt2S3A9R/Sm6jUpEkBmv0yqnrdQpR9hcb0SnPt60nzg5wcc5LU9Q0wrVm2ZdtMk1SiSkFv8uLhbzXwFKQfOPOR9eOTGEYTchxCe3KZbWpLLqm8FSQdHex8a4wzME3qZtdKXZBRzrua6IiZEmoSXGTAMx9a1MRnT2+2V9Yb35SlQ1nehweilPbjw2S4886lttAO1rUQlIyfskDndR4tTq70eBSKZJkSZfdTFSEYD3bSVL7ZOlEY2BvlMYsax7VlNybjrs6t1VpxqXBh05xIWptwJDTvQSApxp1DnUjqwRjWuIV0X3OGY9e0p8rleN4/HNeOvlYRrf8AZDpDJakOsyWHY8hpam3mljCkLBwUkHwQeHKhfN7RbjqzNRuykWl/WfxkNyliC+pS1An3L6HAAo52N40M8OOnFPvJ0coSNsncWEx0R56ltFSSFZG/G+bdy0+HOpC33WEJdaQFpWgYOfG/vhw4DGZivZlPn4tIckIPWbdsVmo0/wBPLYpNPkrhg1t59Epn2vtK6ST0L+M+DrY5lV6QulKTSKalERqSv+5ebTh54lSiSpfk7JP/AHhw43SSF6mHZTX5faPWcQolNaJT+Mlwk5Kl7JP++HDhxNnbZ7lTXiUeA+gfif/Z)}.ic-ability_hunter_barbedshot,.io-ability_hunter_barbedshot,.fi-ability_hunter_barbedshot{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAYFBwIDCAT/xAAvEAABAwIEBQIFBQEAAAAAAAABAgMEABEFBhIhBxMxQVEicTJhgZGhFBUWFyPB/8QAGgEAAgMBAQAAAAAAAAAAAAAAAgQBAwUABv/EACgRAAIBAwIFAwUAAAAAAAAAAAECEQADIQQSBTFBUYFxofETIjJhkf/aAAwDAQACEQMRAD8A5zw6ZGcdS5JTzWHgUSNyQQe47hQ6+b16Z2ErjTQmQlUuKqwDiRZRB8jyO3Y/irMyDwXz1mGH+7O4ArCQ63duTLWG2n02vr5e5UbAAbb3J32FR2ccuYtlttt6aoTI775QZDaFchPpJ0BJTqSSR0Xt4tWbeS4jbkyPf5+K9Jw99FeT6GpMPI2mBA7zkSpxPUGSDmKR+SuA4GHyHUAamnCOqT0PzHy6itKAF85nlhKgNSfBHQj70wTmVyoUcvwn2GFoIAdaKFoUCfUNW9vxt4rwt62UqjqbUvRdYX5IFz73Tf7UurmPuGaLiHDEs3JtNuQ8iM5iYnr1g88QQDNLzbkuPqRFfkNIKrlKHlJ36dB7UVsxNtK5ZdbI0uAK80U4GaKwyFnnUzlFMEy1fyCRjoaB2TCQwRp83cWnf6EVfWF8R+HWA4Gxg2BMZmQ4jQ2mVKabfXpF9jpcOlNz0Sn5W6CuaYasFirQszkqKSCpClKVrHcbdPe23irhyFjvBSU60jFsjY29JSLL5WLrlskd1KbJaUPYXqA7TOAP2CK230qG2qHc7dAGVvYZ9qbc25Nh57gwcay5iEFxx1t3lrdLiGHwSAQOimXErRaxAAIIIFVziOTsXwGMk4gHlTIZKZKFI2Avfxc+nv36ir7gZ94HtxGo7eI4pl6JFRy2WnMMeaaQBdVgNCttzfe5J381OScb4QZnwuNC/sPBOZt+mdckoZfSLg2CVlJINrFJFu4saJrS3ZPfrStnW6zh5VHBABmCCOs9gfPf1M8UzC3DlOM2f06tSOWNrH/tFOfFfLGK5fzrLgRMNVPhn/SK/BcS40psk2F03FxYj6UUKm4ogrVV5d1xjYK7CcTEx2Ppy8UhIbSSygehKzuE7dqyDy1jkg6GgfgRsDv37n60UUTGlbbFRgxM1uexB4oTHQhptDHwFKN72ve/W9ZsR2JAcdkNB5encuKKife5ooqbihPxEVy6i7qJN1pjH8HioiQ+lh5TbMaO2gE7JRRRRU1Ua//Z)}.ic-ability_hunter_killcommand,.io-ability_hunter_killcommand,.fi-ability_hunter_killcommand{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAYHCAIEBQP/xAAuEAABAwMDAwMDBAMBAAAAAAABAgMEBQYRAAchEhMxIkFhFBVCCDJRgRYzUpH/xAAaAQEAAgMBAAAAAAAAAAAAAAAFAwQAAQYC/8QAKREAAgEDAgQFBQAAAAAAAAAAAQIDABEhBAUiMUFhcYGx0fASUWKh4f/aAAwDAQACEQMRAD8AjK74T1SrjFt0aVGLMb0uOuyQFOvc9xZzyeQfA8f3rl7hVekWfaK7ep7EGRcdXY7dSlMuh5hEJRStASPAdUoAk/iEjwVcMd937btgXO59stmkVa7kL70uoOuuKbiP5JQEJCukqAwVDlKiVA8car9ITKmPmS4e4p9zK1cfuUffHjQ+h03CsjYHr3rrt+3eTUMYUPz7VIFPqVQuCx6o/MjwW1wHWUsSmGO28+4+opLKwkdKwpKFLyfVlAIzk6ZNtLEkXo69HYYU4D3EYYbWt2E4k+npSvHcSU5BQo5GPIONYWjE3Be27VT9u7QfxEn/AFE+rREhciWoJylkhX7w3nq6EBWP3HHk9ObTdzrhoqUVTd0MSHXAmo02RUHm0MlWOlKi0Chx33U2AVIBGffEr5BKsAL/ADAoldTKnBYkiiJtOT3o8Pc+3YbkV5ceUhiY84hTqTyoFCMDKeng5IIPOMaNbduX21Z1P/xm27WgXTDgLLS6kVjtuvYBc7WWyrt9RJHUT5OMDABryXkBsB+x71sO55n19q8v1IbZlusSbhoFPfkR5S+4pUUdYVyQSpPlKh4OODqFbdgVVdyRKZGhPLly3kx22FJ6StSiAkYPydWd2l3Kps+kTLeusF2Op0vocJ9SEL4Xg4/EkK/9010vZG2Y14w7vtyprdfYIfZQSChRUlQS4OTxzkEHyP61Ug1xhQxTDwNLbhtqtKJENjfyPe/QnqCO9Vz3Erb1tuNWXSayXBTmVxpsmGo9Dj7yuqUEKHkehprP5BH8HlVjuVSU41Dggrecj9plmMCr6VlZ9QGD/sXyFe/Jz5wLBq/SvOfqxf8Au6YkMK6ipCC68oe5KlEJB+fGpYs7bawNvIrS20wu82C4VyZaA64v/pa1Ec/A8fGpjuEMaAR5NHDb2eYmRsfjk/zzxWlsltUKNtvTIj8SIZakl2SX8dXcVyQPgcJ/o6NLV476CnV+RDiNW++w0cIUuR3OP4BScY+NGiGWZ2LEc/Gnki1SqFQoB0GKrFGedjvJcZWUqBwCNSdRK5WodpwvpqrLb6XHu2UrwWgFeEkcgHzjxnkY0aNXNQBil9PkZp/tG77lr9uVMy6zMYfgMFbUiM4W1qKfHV+J+ePYaha7bzr1bdV92kNy1gdHcW2AsjHuRjOjRqLTKC5vWTgIl1FqQJa1LkLUSc50aNGnVAtXKMx+o1//2Q==)}.ic-ability_hunter_sickem,.io-ability_hunter_sickem,.fi-ability_hunter_sickem{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAcDBQYBCP/EAC4QAAIBAwQBAwIEBwAAAAAAAAECAwQFEQAGEiExE0FRFHEHMmGBCBUiI0Khsf/EABgBAAMBAQAAAAAAAAAAAAAAAAUGBwQD/8QAKhEAAQMDAwIEBwAAAAAAAAAAAQIDEQAEIQUSMUFhBhRRkRMjUnGBocH/2gAMAwEAAhEDEQA/AF1dKX8Qt73yw3OWGKJKORZFeeujo+BGMyKc84yRjIA7Kg48jTn3Rura1ouVLd66z0V+rLZg09SpinenkIBLKmRjsecefjS5sJqq2i4VpafiP8jGgU/JyPzaiqbYZw9MsaTIQQwUhlx75PjRDy00DNwcdq9C7cvuzvxW2Zc4b9syke7Ugb623SwiOcAoQJULAOMp7+R476ykP4mtt7c2BTbftm39m/yWySKawVpYSS1tSRgRPISzDgpJwTg8uvGsdTpb9uXU1FNeZKa4SAKHSrKNjGAFwR7dfrq537u3Z10s9ssd8p9x0ElZxgkqxdPqKOJY2BX+3MGZfnCEY7we9YLq2Kmyk9eYo5omqLtLpt0gEpzniY5jrHMdvxSri3Del5G2pUCFmySjMAW/Y/bRqa+3amtN2qLbQVdLXUtO3GKppCGilXAIKn9+/wBc6NLhbdSYCB71Y03enPAOLulEnJIbTH7TPvmtJtmrmloIpHn+qZ2y07sApPwgx2B8/fV9VXyqeFqaad/SUFgpwA/EZPQ9vvpW0t6raV8z85VLBeXuqe4UAdZ8Z+NTpeq2ur6Z1RuBcxlQp7DjBT9Oux9tNvxoTFQoWilqwO9Vu154J960E18qmhoqyviW4TE9rA8g9Q95xhScfHWmBVptevtla1JVVwkiIeip7hEWy3qqFHnDcV5EllwQoBH9XU0Vo2xe7FYLbdPXtslreQXARemGrS8xYyKzEcSUVEB7x51k7hFcrtcqqUUq2qgeokaOiBIEKFzhDns48d9nGg95cKbEgxT14d0hF67tWgrEAgCCORM5wI6/2u1bWY1c0tbUrNVSyNJM4QHkxOT4GB9h0NGhaK2xL6clQ5YeeHQ/1o0BK0kyVKqqotnEJCUNspA4GMduaqKd/TqIn4q3GRTxYZB7HRHxq0rbXTteb0C82Karl9Icvy950aNMWpLUhkFJgyKkfgphu41Itup3JKFYP2rY7Q37uzb73emtl4mjWls1TNCXw5V1KMpw2R1jGMYwT13pbrda28XB5amX0/qJGldYlCqGZuRwPudGjXJ8lTCSrJrZpjabfU3W2htTuIgek8c8Volslu4KXiaRiMlnkOf+6NGjSt5h36jV3TpVjtHyU8DoPSv/2Q==)}.ic-spec-HunterBeastMastery,.io-spec-HunterBeastMastery,.fi-spec-HunterBeastMastery{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACQAJAMBIgACEQEDEQH/xAAaAAACAwEBAAAAAAAAAAAAAAAFBgECBwQI/9oACAEBAAAAAE0QWeMvbM972o0LDWa7IDTmzrSXHz1sEf/EABYBAQEBAAAAAAAAAAAAAAAAAAYEBf/aAAgBAhAAAAApsGWsZxlNhf/EABcBAQEBAQAAAAAAAAAAAAAAAAUEAgP/2gAIAQMQAAAAXlQF6KDbv//EACwQAAICAQMDAgMJAAAAAAAAAAECAwQRAAUSBiFBE1ExMlIHFSIjQ2FxsdH/2gAIAQEAAT8AlB2zb44hl7dg8m8nLeTopWpSvBKjyFcCYoRyZ8ZKgn4BfJ1sk9Fq9mCeIPVkfK15QQsLIMgqcgg41sJ6Av0322WtQqsWDCyUIEnEEcfVPldTT7g0riHJRWKgouQ3E4z299E16tW51JcYAMzR7fE3Ys47Bv4XVBpJWnllSRlQF3PElgo7s7aEVVyhM0RUkMvPsrAjscHW3dPbnYUWEgmigBUO3AojhhgBVbAK+WOpr2x0mWtHKAkSKoCAlRjVi9VuCs8lVHeGPgglcyqieQi4AGfJ+Otnls27npbfEyciwUJxQyswxjLdgP21PPU6ckmo16Up3qOYd5YgiwKPoz8zN9erW5dQ9TtWWzbVa7IodIvHg89Wdn6UozNXmtBnX5iX/wA1TnBA4sWy3EH3OcZA/oai6Y3VKk+6T2XpVoYGmjlfADSfpooPlm1967nud43blp5bLhQzuckgDAA1tt2FHBlsRV5EQ+kVJwCT5UcsA+RqJ2umWUdOMDzKuYJT6bMB3KjwDrptEO7QAoCFOQD7r319vF62Lew0hMwrmkXaMdlZmK6DH1lUHGrm0Vdjo7tDTL/nUaRZ3IZsvLq1tkMM3FJZgCkbn8fl0DHX/8QAJREAAgECBQMFAAAAAAAAAAAAAQIDABEEBRIhQRMicTEyUVJh/9oACAECAQE/AMsQyGWRl1Wbu/W5HhamzDDwxjq6R52o5mxJKYR9PGxpIY4l0oLD6j0qbJ8HMzOyXmuSsh3Iv8UckxQJBxst/K1zUruJkAY2K1OzdaXc+41//8QAJBEAAgECAwkAAAAAAAAAAAAAAQIAAxEUITEFIiQyU3GBkcH/2gAIAQMBAT8ArWBRRl8Ew1Rn3WvMI3WhJbMtEruhW2kG0KFhw6+jBF0bxKfIvaf/2Q==)}</style>
+</head>
+<body>
+<div class="avec-nav">
+<nav class="sommaire"><details open><summary>Sur cette page</summary><ul><li><a href="#s-ce-que-tu-fais-bien">Ce que tu fais bien</a><ul><li class="sous"><a href="#s-bestial-wrath-r-gulier">Bestial Wrath régulier</a></li><li class="sous"><a href="#s-barbed-shot-bien-entretenu">Barbed Shot bien entretenu</a></li><li class="sous"><a href="#s-potion-au-bon-moment">Potion au bon moment</a></li></ul></li><li><a href="#s-tes-3-axes-de-progr-s">Tes 3 axes de progrès</a><ul><li class="sous"><a href="#s-relancer-wild-thrash-chaque-recharge-d-s-2-cibles">Relancer Wild Thrash à chaque recharge dès 2 cibles</a></li><li class="sous"><a href="#s-wild-thrash-juste-avant-bestial-wrath">Wild Thrash juste avant Bestial Wrath</a></li><li class="sous"><a href="#s-garder-le-focus-qui-travaille-pendant-les-pauses">Garder le Focus qui travaille pendant les pauses</a></li></ul></li><li><a href="#s-garder-en-t-te">À garder en tête</a></li></ul></details></nav>
+<main>
+<p class="badges"><span class="badge">Généré le 29/10/2026 à 08:45</span><span class="badge" title="Commit du code guild_analyser qui a produit cette page">Version adb28e1</span><span class="badge badge-verif non" title="Pas encore relue par le vérificateur (intégrité des données, anomalies)">Non vérifié</span></p>
+<style>
+  .accroche { font-size: 1.1rem; background: var(--surface); border: 1px solid var(--border);
+              border-left: 6px solid var(--good); border-radius: 10px; padding: 14px 18px; margin: 18px 0; }
+  .forts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .fort { background: var(--surface); border: 1px solid var(--border); border-top: 4px solid var(--good);
+          border-radius: 10px; padding: 12px 14px; }
+  .fort h3 { margin: 0 0 6px; font-size: 1rem; }
+  .fort p { margin: 0; color: var(--muted); }
+  ol.conseils { list-style: none; counter-reset: c; padding: 0; margin: 0; }
+  ol.conseils > li { counter-increment: c; position: relative; background: var(--surface);
+                     border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px 14px 62px; margin: 0 0 14px; }
+  ol.conseils > li::before { content: counter(c); position: absolute; left: 16px; top: 14px; width: 32px; height: 32px;
+                             border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700;
+                             display: flex; align-items: center; justify-content: center; }
+  ol.conseils h3 { margin: 4px 0 10px; font-size: 1.08rem; }
+  .ligne { margin: 6px 0; } .ligne .etiq { display: inline-block; min-width: 92px; color: var(--muted);
+          font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; }
+  .gain { float: right; font-size: .85rem; border: 1px solid var(--border); border-radius: 999px; padding: 2px 10px; }
+  .gain.ok { color: var(--good); border-color: var(--good); }
+  .objectif { background: var(--row); border-radius: 8px; padding: 8px 12px; margin-top: 8px; }
+  .preuve { color: var(--muted); font-size: .86rem; margin-top: 8px; }
+  .statut-corrige { color: var(--good); font-weight: 600; } .statut-progres { color: var(--warn); font-weight: 600; }
+  .statut-la { color: var(--bad); font-weight: 600; }
+</style>
+<h1>Ton coaching — Endhaim</h1>
+<p class="meta"><i class="ic ic-spec ic-spec-HunterBeastMastery" title="BeastMastery Hunter"></i>BeastMastery Hunter · raid du 2026-10-28 · <a href="Endhaim_leger.html">ta fiche détaillée</a></p>
+<p class="accroche">Tu es à l&#x27;heure sur tes cooldowns : Bestial Wrath part toutes les 31 s environ, sans trou, sur chaque boss. Un seul réglage, Wild Thrash, peut changer ton combat à plusieurs cibles.</p>
+<h2 id="s-ce-que-tu-fais-bien">Ce que tu fais bien</h2><div class="forts"><div class="fort"><h3 id="s-bestial-wrath-r-gulier"><i class="ic ic-ability_druid_ferociousbite"></i>Bestial Wrath régulier</h3><p>12 lancers en 357 s sur The Lost Explorers (0:00, 0:31, 1:02, 1:32...), 10 en 293 s sur Nek&#x27;zali : à chaque recharge, sans retard.</p></div><div class="fort"><h3 id="s-barbed-shot-bien-entretenu"><i class="ic ic-ability_hunter_barbedshot"></i>Barbed Shot bien entretenu</h3><p><i class="ic ic-ability_hunter_barbedshot"></i>Barbed Shot actif 75 à 86 % du temps selon les boss (86 % sur Sszorak, 79 % sur The Lost Explorers) : ton Frenzy est quasi permanent.</p></div><div class="fort"><h3 id="s-potion-au-bon-moment">Potion au bon moment</h3><p>Sur Nek&#x27;zali, la potion est bue dans <i class="ic ic-ability_druid_ferociousbite"></i>Bestial Wrath et aucun trou de Focus n&#x27;est signalé en fenêtre de cooldown : propre sur les kills.</p></div></div>
+<h2 id="s-tes-3-axes-de-progr-s">Tes 3 axes de progrès</h2><ol class="conseils">
+<li><h3 id="s-relancer-wild-thrash-chaque-recharge-d-s-2-cibles">Relancer <i class="ic ic-ability_hunter_sickem"></i>Wild Thrash à chaque recharge dès 2 cibles</h3><p class="ligne"><span class="etiq">Pourquoi</span>Sur The Lost Explorers (357 s à plusieurs cibles), tu n&#x27;as lancé <i class="ic ic-ability_hunter_sickem"></i>Wild Thrash que 3 fois (à partir de 3:10) : 39 recharges sur 42 sont passées. <i class="ic ic-ability_hunter_sickem"></i>Beast Cleave n&#x27;est actif que 8 % du combat, contre 27 % sur Nek&#x27;zali où tu l&#x27;utilisais (8 lancers, aucune faute).</p><p class="ligne"><span class="etiq">Comment</span>Dès qu&#x27;il y a 2 ennemis ou plus, lance <i class="ic ic-ability_hunter_sickem"></i>Wild Thrash (recharge 8 s) : il pose <i class="ic ic-ability_hunter_sickem"></i>Beast Cleave pour 10 s. C&#x27;est la priorité de la liste cleave de la rotation simc : wild_thrash,if=talent.beast_cleave&amp;(prev_gcd.1.bestial_wrath|!buff.beast_cleave.up). Mets-le sur une touche facile.</p><p class="objectif"><strong>Objectif au prochain raid :</strong> Sur un combat à plusieurs cibles, au moins 1 <i class="ic ic-ability_hunter_sickem"></i>Wild Thrash par 10 s (30 lancers ou plus sur 5 min) et <i class="ic ic-ability_hunter_sickem"></i>Beast Cleave actif plus de 50 % du temps.</p><p class="preuve">Règle vérifiée lancer par lancer : 39 fautes sur 42 occasions (The Lost Explorers). Gain non simulé (fiche légère).</p></li>
+<li><h3 id="s-wild-thrash-juste-avant-bestial-wrath"><i class="ic ic-ability_hunter_sickem"></i>Wild Thrash juste avant <i class="ic ic-ability_druid_ferociousbite"></i>Bestial Wrath</h3><p class="ligne"><span class="etiq">Pourquoi</span>11 de tes 12 <i class="ic ic-ability_druid_ferociousbite"></i>Bestial Wrath sur The Lost Explorers sont partis sans <i class="ic ic-ability_hunter_sickem"></i>Beast Cleave actif : tes dégâts de zone les plus forts passent sans le bonus.</p><p class="ligne"><span class="etiq">Comment</span>Environ 1 à 2 s avant ta recharge de <i class="ic ic-ability_druid_ferociousbite"></i>Bestial Wrath, place un <i class="ic ic-ability_hunter_sickem"></i>Wild Thrash : <i class="ic ic-ability_hunter_sickem"></i>Beast Cleave est alors actif quand Bestial Wrath démarre, comme dans la liste cleave de simc.</p><p class="objectif"><strong>Objectif au prochain raid :</strong> Au moins 10 <i class="ic ic-ability_druid_ferociousbite"></i>Bestial Wrath sur 12 lancés avec <i class="ic ic-ability_hunter_sickem"></i>Beast Cleave actif lors d&#x27;un combat à plusieurs cibles.</p><p class="preuve">11 fautes sur 12 occasions, The Lost Explorers.</p></li>
+<li><h3 id="s-garder-le-focus-qui-travaille-pendant-les-pauses">Garder le Focus qui travaille pendant les pauses</h3><p class="ligne"><span class="etiq">Pourquoi</span>Sur Entombed Sentinels, 4 trous sans lancer (12 à 14 s) à 0:46, 2:27 et 4:11 ; sur Vashnik 5 trous dont 3 jugés fautifs. Certains sont peut-être des déplacements.</p><p class="ligne"><span class="etiq">Comment</span>Quand tu dois bouger, garde un sort mobile à portée (<i class="ic ic-ability_hunter_killcommand"></i>Kill Command, <i class="ic ic-ability_hunter_barbedshot"></i>Barbed Shot) plutôt que de ne rien lancer ; vérifie les trous les plus longs dans le log.</p><p class="objectif"><strong>Objectif au prochain raid :</strong> Aucun trou de plus de 5 s hors mécanique sur un combat de 5 min.</p><p class="preuve">Trous du log : 14,4 s à 2:27, 12,6 s à 0:46, 12,2 s à 4:11 sur Entombed Sentinels.</p></li>
+</ol>
+<h2 id="s-garder-en-t-te">À garder en tête</h2><p class="note">Fiche légère (PU) : ni références ni simulation, donc aucun gain chiffré. Les trous de lancers peuvent venir de mécaniques de boss. Sur Sszorak (non tué), je n&#x27;ai tiré aucun conseil de rotation.</p>
+
+</main>
+</div>
+<script>
+(function () {
+  var nav = document.querySelector('.sommaire'); if (!nav) return;
+  var det = nav.querySelector('details'), petit = window.matchMedia('(max-width: 1100px)');
+  if (petit.matches) det.open = false;
+  var liens = {}; nav.querySelectorAll('a').forEach(function (a) { liens[a.getAttribute('href').slice(1)] = a; });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A' && petit.matches) det.open = false; });
+  var titres = Array.prototype.filter.call(document.querySelectorAll('main h2[id], main h3[id]'),
+                                           function (h) { return liens[h.id]; });
+  function actif() {
+    var courant = titres[0];
+    titres.forEach(function (h) { if (h.getBoundingClientRect().top < 120) courant = h; });
+    Object.keys(liens).forEach(function (k) { liens[k].classList.toggle('actif', courant && k === courant.id); });
+  }
+  window.addEventListener('scroll', actif, {passive: true}); actif();
+})();
+</script>
+</body>
+</html>

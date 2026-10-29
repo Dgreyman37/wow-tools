@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ga-genere" content="2026-10-29T08:18">
+<meta name="ga-version" content="adb28e1">
+<title>Mon DPS Dibbuk</title>
+<style>
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .badge { font-size: .74rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px;
+           padding: 2px 10px; background: var(--surface); }
+  .badge-verif.ok { color: var(--good); border-color: var(--good); }
+  .badge-verif.alerte { color: var(--warn); border-color: var(--warn); }
+  .badge-verif.non { font-style: italic; }
+  :root { --bg: #f7f6f3; --surface: #ffffff; --text: #1f2328; --muted: #5f6670; --border: #e1e0dc;
+          --accent: #b8860b; --good: #1f7a4d; --bad: #b23b2e; --warn: #9a6400; --row: #faf9f7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #16171a; --surface: #1f2125; --text: #e6e6e3; --muted: #9ba1a8; --border: #33363c;
+            --accent: #e3b341; --good: #5cc48f; --bad: #ef7a6c; --warn: #e0b04f; --row: #23252a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  h2 { font-size: 1.35rem; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.08rem; margin: 26px 0 8px; }
+  a { color: var(--accent); }
+  .meta { color: var(--muted); margin: 0 0 20px; font-size: .95rem; }
+  .lead { background: var(--surface); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 6px; }
+  .lead ul { margin: 6px 0 0; padding-left: 20px; }
+  .note { color: var(--muted); font-size: .92rem; }
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+  th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; vertical-align: top; }
+  td.wrap { white-space: normal; min-width: 240px; }
+  th { background: var(--row); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--good); font-weight: 600; } .mid { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; } .muted { color: var(--muted); }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 8px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  td details { background: none; border: 0; padding: 0; margin: 4px 0 0; }
+  td summary { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  td details p { margin: 4px 0; max-width: 46em; }
+  .faire { display: block; margin-top: 2px; }
+</style>
+<style>
+  .avec-nav { display: grid; grid-template-columns: 230px minmax(0, 1040px); gap: 28px; justify-content: center;
+              padding: 0 16px; }
+  .avec-nav main { max-width: none; margin: 0; padding: 32px 0 64px; }
+  .sommaire { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 32px 0 24px;
+              font-size: .9rem; }
+  .sommaire summary { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+                      font-size: .75rem; margin-bottom: 8px; cursor: pointer; list-style: none; }
+  .sommaire summary::-webkit-details-marker { display: none; }
+  .sommaire ul { list-style: none; margin: 0; padding: 0; }
+  .sommaire li { margin: 0; }
+  .sommaire a { display: block; padding: 4px 10px; border-left: 3px solid var(--border); color: var(--text);
+                text-decoration: none; line-height: 1.35; }
+  .sommaire li ul a { padding-left: 22px; color: var(--muted); font-size: .85rem; }
+  .sommaire a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .sommaire a.actif { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  /* sections bien séparées : un bandeau par grande partie */
+  .avec-nav main > h2, .avec-nav main section > h2 {
+    margin: 64px 0 18px; padding: 12px 16px; font-size: 1.45rem; background: var(--surface);
+    border: 1px solid var(--border); border-left: 6px solid var(--accent); border-radius: 10px; }
+  .avec-nav main > h2:first-of-type { margin-top: 36px; }
+  .avec-nav h2, .avec-nav h3 { scroll-margin-top: 16px; }
+  .avec-nav main > h3 { padding-bottom: 4px; border-bottom: 1px dashed var(--border); }
+  @media (max-width: 1100px) {
+    .avec-nav { display: block; padding: 0; }
+    .avec-nav main { padding: 16px 16px 64px; }
+    .sommaire { position: sticky; top: 0; z-index: 5; max-height: 70vh; padding: 8px 16px; background: var(--bg);
+                border-bottom: 1px solid var(--border); }
+    .sommaire summary { margin: 0; padding: 6px 0; }
+    .sommaire summary::after { content: " ▾"; }
+  }
+</style>
+<style>.ic{display:inline-block;width:1.2em;height:1.2em;border-radius:3px;background-size:cover;vertical-align:-.25em;margin-right:.3em;flex:none}.ic-spec{border-radius:50%}.ic-8026694,.io-8026694,.fi-8026694{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAgIDAQEAAAAAAAAAAAAAAAcGCAMEBQIJ/8QAMBAAAgEDAwIDBgYDAAAAAAAAAQIDBAURAAYSITEHQVETFBVxgZEiMkJhYqGxwfD/xAAaAQACAgMAAAAAAAAAAAAAAAAFBgIDAQQH/8QAKhEAAQMBBwMDBQAAAAAAAAAAAQIDEQAEBSExQVFhEoHBBhMiMkJxkaH/2gAMAwEAAhEDEQA/AKex855GkkZndiWZmOSSe5Op3srZs91rY1mxDEMNKzdOPnj7dT6a4mxLNLcNy0lBLA/EycpRj9IHI/40+Nn2FLnX2i0MnCK5VQmqwjHk0WQeIPqcgY023JYWghT7w+nxUm3mWlLW9kgTG+w70y/CTwhtFbZYamniSdHOFnYHi65/MucZH0x6akW+vAym+ESy0/sW4qSQBjH/AHr/AFp32OnpbdBHRQIkccKBEVegHTy1v1TRiBlbBUjrg+XnrTX6gtfvdST8duKLNX1bAsFUQftgQOJz7zXzK3PYbjY79V26OaopxHIcorsvX6fTRp2eOe3lrN+S1lJLHFHNCG745EMy5/ofbRpwbZsrqA4pIk40fN3oUZCc+aVWzISr116gpVL0lmnmLIPwh2HBB+3cn7adHhBTCTebXZQ7U9kjKSqVAX2iqFjRT+osSD6jBGsGztkCj2rU09xlSlop6Juc7fmnHQ5RcElFCk5x1J6dNept17fslHNS2I1snt5DLK8a1ETSORgtkRHGex7aFIksqaRiT5zmuc3ipt1aihUkkabfoZ/nmKb0m/IbfE1Zfa+ChVivvAgRpZSw6cFRcmMZBGWx/vWLc3idDV2gGyW+5JSTEIJXhKPJ/FA3b92boNV7TcNoskz19JZLJb6qRuXvFTUyyyFj3PBioz59hqJ788UqyvEq/FHqXkBUujdAPRQAFUfLJ1hN22VB9xzIc+BP9PamexWxgoS4tEnQaDk7mux4veIAqt5SLbooTDTxLCwRsorAklVJ7gZxnzOdGkJXXSWapaTnxB7AdgNGoG/GG/gkYCrF3s91GDV36eeW926srKxyslW6UriL8IWPgGKr6ZwB8hqvu+rjW8KxIZ3p4Y6qSBYoTwXiOnUjqT8zo0am8SkAJwzq+1sNBwgJGug0y0pZ3G8XKnq6enWrkeOiL+7h+pTn1Y575J8++o/UTyNIct09NGjSq+6uCJ1oEskYCtq2UMNVTmSRpA3LHQ/LRo0aFkmarr//2Q==)}.ic-ability_mage_arcanesurge,.io-ability_mage_arcanesurge,.fi-ability_mage_arcanesurge{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAQUBAQAAAAAAAAAAAAAAAAEFBgcIBAn/xAAxEAACAQMDAwQBAgQHAAAAAAABAgMEBREABhIHITETFCJBMggzFyNCUVJhYnGBkaH/xAAYAQADAQEAAAAAAAAAAAAAAAABBQYEA//EACsRAAECBQIEBgMBAAAAAAAAAAECEQADBBIxISJBUWHwBRNxgZGhcoKx0f/aAAwDAQACEQMRAD8AzrQUlfHM03uRBOzcJDO3wkY5zlj2wf8AV2OfOrO2h08t8lKl43ZaTRxuBJTUsVXxNSmQPVYfIxwDP5qSzH4oD5CdObJSRbQk3DuKhNZbqeTFNR8M+7KfkXOP2UYpyxgsSEHk4790XJKue61LxwO0pgFRMx+bwsrAKpH4EFBhVwqgBQMDOqejoFSVndt/py2C3qIpaWjtF6ztzr399hLjuGV1jFvRIFt0MkQo6eRaeKg5nAfB/a7YHI8mZmOTnA0yWqrFyhajWpLCnVIo46VS8QXkfiSwyxHIyclA7jJPgjupa+dLbD7GjWogpfTjhq3bjKIcn4TMPy4EkFSMFSCPvU06A7Cfcu48pDJDaxI0000fwXgWyygfl8gAoHb4jvnxpxcqy+aAEJ5fLd5eGfmGYL1AJlpDlsDp3kxonoTtxLZ0qslNVQtzMPqL6gHIKxJXOSe+CPvRqL3r9Q+z9t3qu2/cLTdYJ7dO1MVVUIIXsCMkYBH/AJo1MzqDxCbMKwgsdcp4/tE7No62asrCM65H+xnfet5p6wxUVmrJKahytJTUZTjDSxQglWzjLlVLOT/jYnzg6jFyqPSta2yipp3hMUMnuH+KsoVmDfYH7hGc+ABpwu1ILqKw++lZl5QQP6hmPptxLjm2MdwAGwFIc4Ax3l3SvohuDdcaidHt9pPEtLKC0bryJYZPd/xGOOFyQfrVDNmmVuItT171+4cVBWDcdqQOPLv1iM9KdnXTd99ShtkKy8yGlkkDLF6YI5dx/SP+C31rWN5t/wDD3pubBsmrpYdxTRtNSeqilq6VMGQKCCGYjwvnHj++oTX7q2Ps2K5dL7BI1lqqql9vDfPUAElVx44lPYocjjnGBn6HfWSa/ee7NqXy57avU1VNSrNl6eSU8onByssbd8MPph5H3jQqHmJlqqDZLcMCHucEhSunBmfLtpGerqbkIQrbLBGhGdNCenIe8XvNvbo/vxhfOoNrrbduZR7avjpZvSRnTtyKnJBwQD/to1Rdy3rtTclQLnuuySVl2ZQk1VBMIjUY8O4wcv3wT94B850aKZtoZE0AcGWoD2DRwFQQGSsN+REeh9k6bbHtU3uKLbdvjkzzGYgQG/uAe2f89NvXUy0nTOvraConoqmgaOpp5adyjI4cD/rBPbRo1L+HzVzq2V5hJ3DOvERhopq5tZL8wvuGfWMgfqqVa/a21N5yKsV1vET++aIcUlePAEmPpiD3I7HA7aoO6XKsudvheumaeSD+Wkj93448E/ePrRo028RWoTVofRlhuiVG344coNcSJy0jGv0TDWB28nRo0anHMLI//9k=)}.ic-inv_ability_mage_radiantspark,.io-inv_ability_mage_radiantspark,.fi-inv_ability_mage_radiantspark{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAcFBggDBP/EAC0QAAEEAQMDAwMDBQAAAAAAAAECAwQFEQAGEgchIhQxQRMVUQgyYRYjQrHw/8QAGAEAAwEBAAAAAAAAAAAAAAAAAgQFAQP/xAAgEQACAgICAwEBAAAAAAAAAAABAgADETEhQQQSIlHw/9oADAMBAAIRAxEAPwDK2yNr3G9Nw+ggDks5dkyHSeDKM+S1n/iT2HfTz2t0+2vWWiaav2jKvpTLResL6/QuLWQ2091u4+Uj8dyo9gdSXR7ZdvVUW36eAmJEtJsxu1u1vlSS1CbWMAqxhOPHxJBJOBknU6WazcdO3UuP2Tex0yZD0hyZKWy9ZiOcvzZSjlSGUHKGo6cEqA5EY72EqWhAMfe+ep2WoEc7ngkq6Zbkq5y9qdO4F8K1sqmQTFMKdIj+wnRAg+bZOct/uSMHVM3H0s2xHqjcU1DdyIjgS9JiyH1Ny4jCwPJpPHi7w/yBJPx+SLlA3PtHqA+m1os1F5tUD7ZIrEGLIi1wIS3hCiUyPpKI5pPHkhasYx3kbe+t3WZZqmGv6m29Z+s3FUJJWHYqk/3JcAK8g0sFLqmx+wnIGDokKE4sAIPcIKoyZlS0NjQW86pi2cgNxpC28tOqQFEHGcfB7D/WjU91qoWqLqHPZhFTsOWEzY6u58HRzHf57k6NTLaCrkARY7mj7BVTvzp/VUAvfsEe+dblQJv1uKpUgLI9LIT7r78uCgcJUMkdxrp1K2bv246Ux6yoplxbeUlf3VhyU3zZiiQtxuOolXgtalhxecc+KQCeONKToTuqsMeJtHcSm0MRrJuxqJDhwll8Ecm1KPslePf2BJz79m44iC/bx6K9mXtPethTMG7mQ2S1KZzlMOQSShxHsELcHj2B7Yxb9DYvuNHY/uv2Pp9jmLDpl0j6sba3pBt2dvBtLJV6htx9l1MhgpIcZKErJWFoJTj+fjGdXzfGy5tH1gV1Ily7Cu25UswU1r0KR9WZPcSyEIioWCRy8SlxZJSAD78hr0qp6yFXWEvcH3bb9fHkGNJiRKKJDk2jmRyitqa8yMd1KHiAfnOpqwUG3485frmK6DKLlVDQlEeM2wG+CWwASENAEqcLmCSCVAnA1i+KGIA13DaoDiIX9T1kh3qd5sR2XkwGC8zGGG2VqysoSPwOYGjVG37ZLud63Np6hT6ZMxxaXPfknlhOM/GAMD8Y0aWsuPsYi1RzONc2n1K0EZAJHf8Ag6c+yN438SvRVrmCbAQgpRHmIDyUjIGAVdwO/tnGjRp7xdCVK0VqxkS47k3fdCK0/wDUaU6w0I7C1o5lpsdwhPInAGktvaysbB95ybPkvl3BWFuHCj/I9tGjTnkAKMCbUoCtxKhGiNvpWtalghRHbGjRo1Ac/RiLbn//2Q==)}.ic-inv_ability_sunfurymage_spellfirespheres,.io-inv_ability_sunfurymage_spellfirespheres,.fi-inv_ability_sunfurymage_spellfirespheres{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAAAAYEBQcDAQL/xAArEAACAQMDAgUEAwEAAAAAAAABAgMEBREABiESMRMiQVFhB0JicRQjMnL/xAAZAQACAwEAAAAAAAAAAAAAAAAEBgIDBQf/xAAoEQABAwMCBQQDAAAAAAAAAAABAgMRAAQhBUESIjFRgRNhcaEUwfD/2gAMAwEAAhEDEQA/AMHirLdevEt6TVk9M0bKa54wrrIGYq2OOylc9v8AJ7dWudi29bamtjpKMVNdICOrpfgZIzyRzjPOFH7OM6+KijWi2tA0DdSrKUnUL08BQ+D6855z6/8AI1odLs242Pd7XjY89NeaJAkwozVRrVQxyKGAZXI8RcMMOmcjuAcgBanqMtKQgwrIE9JG0+d6fdPtGrd9tdyJkT7D6O/zXu+tp0lst1NXzNGJ6eeZz4i/6BJbIz7lcDtz8ayy62O01dU9xhqpDTDMlQnaQfiAc4z26ssB347a0365XXetbbEqLptqqt9B1qpnKh4weQAWUkDnPc9zrMrAZXNRNC2JaaEy9sgAEAg+4IJ40FoLj7NlNyZz3BiT7UVqzNpfXAQiOKJJHSc/oVHbdAtjGjttNLBAn2xv4Qz+sEn9sST8cAGr97BarsqV3gTqJEHlgYYXHdTk+hyB+IXRpnhRyFUpK098KICabrPttK3Zl5uIiNbUzRiSSFcKWIYkqp9+3HxrtU3lr7Z457nBm72CKGnuMS+SfwFxGs8bfcpyvUpGVYgjyt5bGi3JT/T6Ot21uW2CSq8FGDRv5XLKCJFJ+QQfkHSrsKGqui7x3RUyCKD+Iac9QOXMsikhffCpz7Z0hcDq1Pu3A5JBSrvJAERsRXQXbpv1GDbq5sJgR0jmncEHv4xVnS7kmFA4tda1NaKGEtdJ66mWp/kK79Kq8R8rksygIAq+UMcEE6mW7btvvQmrduRxvSPEjpDHAYI+uQf3oFYlseQ9K5IGSASMaX9rx26vtN7sMtSKZ7nGkdO8pAVZFkDox/HqGDjsCT6Y1fbH3xQ7UsNbYrvbXS606+CFyA0bjOADzxnkH11C69X8cptkkrBGMTHfbeQTt5qTbSGb0rcgDhx2OcySdhtM0n1dRLZLhV2+LrVEmYgKcY+NGoO4aqorbvUVrUqsZ3L46+kLyR08jnBGM+4OjT1ZgJt0Bw80CfmKx7rVGkvrShOJMQBTQ13Fymprfe7ZQXeERdaNVK/iRkD7ZEZWweMjODjOM5Jh3i+Ti2LYaKmpqC2RN4gpqfr6WcgZdupiS3A7n00aNJXCOMJ2GQMx1O0x9UwtMth4rCRMDPgUvxSPTzRyxthhzzzrZ9kbbt/1HsdNcdwGWOtoZFp1qKQJHJLH0nAkYqS2OwPBGjRqq8dWylLrZhQ3HWqNTANrJ7ikjdF7qaG7PbaCno6Wjoh4EESwKwVAT6tkk8kkk8kk9ydGjRoq3t2ltJUpMkj+3rQt2WyyjlHQbDsK/9k=)}.ic-inv_knife_1h_zuljin_d_01,.io-inv_knife_1h_zuljin_d_01,.fi-inv_knife_1h_zuljin_d_01{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAYEBQcDCP/EACoQAAIBAwMEAQQCAwAAAAAAAAECAwQFEQASIQYTIjFRBxRBYUKBIzJx/8QAGAEAAwEBAAAAAAAAAAAAAAAAAQMEAgX/xAAmEQABBAEDAwQDAAAAAAAAAAABAAIDEQQhQVESEzEFcYHRM2HB/9oADAMBAAIRAxEAPwDyVUWisc92QSMXyxZs+XJycn3znn51a2fou4XCHvrG6RbtgkfhNwAJXJ4zgg41q0Vlp6jpuluW1pILdUy0dVt8tkLv3Fk/6C/r9N+tX9mak6ZvwoLfcKSreRA7xA74Wdd3ixBwfFgca5LsyQvDG7iwataDDdLPOmPpZPUVYjCtVy7gNsXKDgHyf/VffyT8A6e6+zWvpeIQUkEd1vEY7YSJQ1PROwzlvRaTGfH3hSTsGp196wuldNUW+gWK10lKzRGOnZu/OFIEjBwPBRk+MeGP5IBxqDBHblp2uHYWW1q5+0RE2CXKnKBScFDgEkgnxY4PjufHC78kptRy5NP7cYtyVo7LXV6/ewXuqgSbDbuymZeMbzudcesYAwAAPwdGuVzhuN1rJKyQJK7EqS8u0AgkbVB/iPX9HRonNjaaWxjcuVn9Ob3NQ/aTQLDVNc42pamhqPGBlCHE8rggqi+O4AEsOBg4OmaKzdNGnaCO1VhIcMtfLXmKozjcCsSYiiHoiLDbf5EnOl36Z2WmrIpWmqKeFLVS7i03CSSO3lGT+QAq5A9E6caOaw1kIet6joaahpdxre1IyTAEHKsvvHHpQN3AyBnW8OgCCTv442Gm3ujkvyu2BiUXE1r4A3/Z4+bSi62y2Xyahuct0nmaRKtWhWIJIrYKuCSCGI444wTjIOp9wArqJKqGSWKLvCCNp2QyoGdV3OF4DchvQHAA4Ua5dX29+oLqL7HNPSdOVfYikaJRM6xIoVO4qncHYZYqM7Ay5Gc6oetrvbLdU1TWVooqSePb2lk7kePaspPKkEA/161PkTttsbbsg7aDj7TRFGw9QGpSZ1teZF6hnipj2oIsRxIp4VR6GjSrda01NdJO2CWOSfWjTosZjWAEIrSblVTwta7XTyNT08tUIz2iVYAkAnPycnk6YLp07aorFWBIZRKhjzN333yBpFGG5wQATjjjRo1H6jLJFkQ9DiLI8abgf1IxSQPn6U+sqa/pilrau1XGoQmtSMxyBHQ/4lO7BX3+M/Gsy68qp60NWVDRmVpXQ7IUjGAc5woHP7OjRq7IaG5krWigHED2V04pxA5KUrbQQ1UDSSM4IfHiR8D9fvRo0arSF//Z)}.ic-racial_troll_berserk,.io-racial_troll_berserk,.fi-racial_troll_berserk{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAYEBQcDCP/EAC4QAAIBAwMDAgUDBQAAAAAAAAECAwQFEQAGEgcTITFBFBUiMmEjQlFxcoGhwf/EABkBAAMBAQEAAAAAAAAAAAAAAAMFBgQHAv/EAC0RAAIABAQEAwkAAAAAAAAAAAECAAMRIQQSMUEFUbHwBnGBExQiIyRhweHx/9oADAMBAAIRAxEAPwBWuXUO1xUtJYdtWuC1LWVEa/MJKyOeYQ8xkywBCiE/dwDknGG8E6mXkWK4bqkotwbqegsovDivo7FAOwjqqp8ZGvFu0JAYXdfQcmIyU8Q6DpTt/dUVFPtDcVe1XV10cAimhUGFvLvIceyLgnAA8j3OtZ6s7qsO19qz9Mdi2ynra+UpRSFRkGeQYJdx5eU4LN5yADkjGsWHWStPdbKdbUvuTWGHEi7LkxYYTgb5uXKnSEjc9ds28V++Kzb26Htb2eKEWEW2q4RTyIihpGPrKpPJQMlRhm+5idYvT2jd/VCuttBSsbhWq3ZTuMASMe7HzhcAZc+mPJxrSN47PpdjWSGzNeKSejq6Z2qeVuSepp6tFy3wz+CqyFguPq4s48E4IVL9fLp02vMVrsd6lFTT0SQVszQrxppmQNJHEyfWQjHjhsjIwSDoslXSYcrVrpUQA4nCT8EqYaX8e5+2npfn6Q21O1NndLe1tneextx3q7NEtU9ZaLk7QSBxjGAU4kFSCMH0Byc6NQ5eoVFUWayVm55aWavqbck2aipPJVLv4HI5wW5EDJxywPAGjXohyakmvmYWezbs/qHnpluGnsPSGt+X9ukvNVUCiFSPMsELqT3Ex5LM5YDAOSoHniNJ9iN0oL1V0W1rZFa6ukoKieGuvKhmeGMjvdlM4RicAlySQCcjB1nuzN7V0dOiUU7RurfpsEHdiz4PBvVQfcA4PrrYN+zzUW1bjuGjjMtVarWytF2uQPxE4Rg38AxCXP4Of41iwc7J8pl0tfnYDrFx4g4RLeY2PSbmWaSQBsKb92impLbvKqrK643hqr51bpoqVZqp41+DWapEHOkjRQGbuAjuk/Tg4BOCEDfWxpUobheLJXQ1VJTVFTSRlZCytHGZcMGJJLMYpCfOMkY0o1G8b9VKthqb5XVVpbkvZkk+4NJ3sM33MO4eeCccvOr7pruSah2vurbNfKGplo3rKNn/AGSxyKHC/wByM39CPydO2kOpLk/ywialzUUZUFAexeFrdEdNWXbjIXljpYYqWFgfBSONVyMexOT/AJ0aorhVyRvFDGQBHCin3ycedGtAlCFxDbGGHp4oju6R4DKs/HDecjkPXW376qqqLcW8NrrUy/LKK01HCMt5dnVGLuf3MA3EewUAAeuTRqTnn6o+Y6iOoYVQ3B0qNFf8R5wqhloqgkmTswtn8+n/AAakXGaWK6zLHIyh43DAe4ZfI/1o0atBdLxzc2jmaSOomldywIbiMY9MDRo0aESYBH//2Q==)}.ic-spec-MageArcane,.io-spec-MageArcane,.fi-spec-MageArcane{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACQAJAMBIgACEQEDEQH/xAAZAAACAwEAAAAAAAAAAAAAAAAFBwIDBgT/2gAIAQEAAAAAxfJDaJ9lcossJJVTvCG7SWcVDsWDQRI3/8QAGQEAAgMBAAAAAAAAAAAAAAAAAgMBBAYH/9oACAECEAAAAOnFBHQWjC//xAAZAQACAwEAAAAAAAAAAAAAAAAEBQEDBgf/2gAIAQMQAAAA5zU4VxoxCtN//8QAKRAAAgICAQMCBgMBAAAAAAAAAQIDBAURAAYSITFBExQVIkJxUWGBEP/aAAgBAQABPwCTFdLYZESeGzbtfDQmJgI4x3DfqPLcsZ5zGI4K1WsmvCxRjf8ApO+Y6gl+QmTJx1zv8ye48FLGUabw5CU2kYbB+EoP7B5mIsFHflFZ2aI6I7l8jftyjkPqWHryW8dHNOirXrkkqX0PG/6Uep4mMw/zUXdM7wpTexZlUaL/AHdoCD+ByLG05YbpTJRSukDyxLGCQwj8nv3rXHFKCJ41d/k+yIzxH7nrGVQwkQnyU4ej605LpdgdSfDIO4cx1mHMxUDjZjWswQMgruNxSADbkH2J9w3KeQaVEWpjJpJYlKPGo+JG8Mh2yHXkDfpy1VevBI0XTtilXYD5l/uJKA7Kgt4HINymbIxRihDZBR5XYyzOgGikanQ/3ljqFq7LXoI8NeJe1F1snzss39nnRdeqmDvyNWllklh+CoQkNtvRR++fU0wFGSpGYpLUpBcjysf7Puw5GLN3ppabwkmVzIrM7DwD5lkJ9h6DmY6nFWoKMEyuUQI0/aBtQNBI/wCByzk3klLb5ayM+J6KwopBY2sxyGR/y5hZHvZiFZzsM6jX7IHOv8var2Pp0ASOvHEmlUa2F8AHl2xK8rlj/wA//8QAJhEAAgAEBQMFAAAAAAAAAAAAAQIAAxEhBAUSEyIQUZExUmFxgf/aAAgBAgEBPwBBLVF3Bqbz4pBEp2X2/QEGVLqbp+iJcosCo5Hj6/IqYVAF00UBGNe1O94fH5cHYby2MYZm0pyN2FYxTuMrsxFTfp//xAAjEQACAgAFBAMAAAAAAAAAAAABAgMRAAQSIUEFEyJREDHR/9oACAEDAQE/ADKpll76SuyMedQ29AYzkTzMumaQAMPEJR97N94Tq2SjRUOYntRXP5idl78sMUJcrJpVbrbkkjCGWYiKKNi+sq1sT4+zd4Xo66RaWeSTZxk0TtZ1tI1W+/OOiKKuh8f/2Q==)}.ic-spell_arcane_blast,.io-spell_arcane_blast,.fi-spell_arcane_blast{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAYHCAUB/8QALhAAAQMDBAEEAAQHAAAAAAAAAQIDBAUGEQAHEiExEyJBURQyQrEII2FigaHw/8QAGgEAAgMBAQAAAAAAAAAAAAAAAgYBAwQFB//EACcRAAEDAwMDBAMAAAAAAAAAAAECAxEABCEFMUESIlEGYXGBEzPw/9oADAMBAAIRAxEAPwCNbC2zIve+jS57cl1TrK1rkNq9zWB2olWQT34P+vOrnG2q2/2ytSRBuVmp3bKmTVSWJFNaEdMNCEgcXHVrCG8hQUQo99EA4zro7bUq2rC28l3FNrkZmo1RJcW8YrjhbStwIQ2A2Coj1PIHkpA+9S/+Lis1i2qyLTj3GhyHJhNOTKd+BUA+XEkl9alDBXlIx3lPx406atdBt5IbWopbwCcE+YMYEmMbxniiDYSiCM1Yata+1lTpkKru2HImxItMaeUmlVVuRJ4FxQ9P0W18nAnJUVJIBGcEkY0sXTsdbcRq4bziVCVOguJMuDTWGyy5EykFLbucqTx6TxACgPODrJVqXNWqHXItUp1UXDmx2/RjylJLioyT1lGc8cAkjHj471u3b7cC3qvSrXqhrdKbqNVUuNNcYhupMuYEjKgniAB2CQofq1hsdTufypdQpRKfcnGccxORI8/NShCFdpFZLl1G9Ki8Xk1Axko/lpbHJOAP6f8AdY0are9VItem308KfMcDEphuUlLTKylIcBIA/wAY0aemNHZu20v9/dnnn6q0ING2dLubcGzbddotVl06p0qTJbVJb9voqVl+M6v6bKi4kq+COs6erytGHuXbcu1apUWYl9UeE3GqFckUxPGS0lzkpIB7QgKwSscVfP5VKSUzYHcGFR67SrQohhNLcfaakFQ5KnOLX3k+QlORxA8EZ7ydaJvqLZdXimFdS4sJyWhUUJflfhJDjXLtJUFDkk4BAPn60qaq2pDiWXUyIMEQSM90gbjfE4wTmiWiADvNZIqOyMiz69bc56sUF2CuIhcx119K2JAKlhfD1PzApKRhKVEdkd407vbbt3mzErW3SJdPpVBS4liEGVJeclq4hJaX+psgJypR5pSgk5Jzqx1ewdpY5t2ZWjTlpptPaiwDJqgCfRStWOuQ59kj5z41092LsVZ22j9RtxlmO0ytppqQy2j0koUFHLXwT1g5HWdZLZ8NdCbdB6id1CE7/c7cbZxJoEJBwKylu9XYr99zIkSW24xTW2qelxKklLimW0oWoH5BWFYP1o0p3lNpFxXA/W48iFCMsJcdaCcJ9TGFKSB0Aojlj4JOjTvb3uoMtJbQkEAf3NSVQYkUubfVCTb8xNepykpqMdxPoPLHItKIPvA8ch5BOcHvTheVerFUp9NkTqg88+47zdcUcqcP92fPnRo0Km0N6CHUCFYE87+d6utv1r+K5G4NcqzsG3yqa5lmitNI8dJEh4ft+2vGb0uR62pNryam9IpMtHvYdUVAKT2FJ+iPv660aNb/AEo2m4YeQ8OoAAicwZVkTXHWtQwDU4kuLafUhCjxHjRo0a8tvbh5Fw4lKiACeferBtX/2Q==)}.ic-spell_mage_arcaneorb,.io-spell_mage_arcaneorb,.fi-spell_mage_arcaneorb{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAQFBgcIAv/EACwQAAEDAwIFAwQDAQAAAAAAAAECAwQABREGIRITMUFhBzJRFXGRsSKBofH/xAAZAQACAwEAAAAAAAAAAAAAAAAEBQECBgP/xAAqEQACAQMCBAQHAAAAAAAAAAABAwIABCERQRMxUaESMmHwBRQiI3GBwf/aAAwDAQACEQMRAD8A59ftEaxQfqmpQqTPlJ5keEtw8W5yXHe+PhPU96V0zp+VqGZMuc59EK3xEBcl9YyGUE4SlKR1JOAEj5pLWV2GoNRy5xcUkPrKipzrgbBIHgbVqXo4kL08YKRGLbkvieQ+2FcSAgYx5zn+8GtjZI+ad4I+Ud/Y2o+QDm8OPL3k+8VJaX9K7BLwlFjcfLjBWyp9fuJ3AV2z228fNVDXOjkxXpMW1212OxDUUFXCeArABWd90jfbPYV2p6XwbP8AQQXorcdxtOUJKvbt2+3SsY9cY8f6sygOlId40cCVe/PtUfwaaW8lXT5WwWIgDoB305b/AKo19opa5DeO/X8VyJzrlDUpiKJCW0qO6FrSFH52IH/KKZvbyE3N9KVq4UrIGFH5NFZVtosTIEt/SkelNaosztou7kVxvjebXw43Cc+B1qc0Tq6ZbHVx1rW00oAKKBgjz/XnrXQuvfT7T+pmTcrZJjLTISnMhhQypPXAV2z3FZLqn0pvMaGpq1QHXGwsdBla+/Ft+ANsbk5zscqNzZt4icinDbBsJeNWR6VfNK+oLqLPIccusZSG1IbSppXt4ic/xyCDhP8AlVvVeuYZYlXFzhnXBxvlR8ObRV7gun5PD7QehJ+BWbt6T1hAt70VyyTmua6lzKhsMDb90pIskmAgm8TY8TjSctcwLcV44Unr98UyZ8UZJfk0J57VzYx8liExoB1quPPtqeWeUXRnZRQMkefNFTtusy5sbnRm3uXkj+EZTn5I7+KKz3Bac6dqC4MjnSvTF9vFraUq3XKVE3OzThA6/HSm2fUXWJCmTe3+AZ2GB+qKKMdOQng1IbOJ0BNRk/VF+uDXDKuchYxjdZP7q26U01aXNNq1BMZXNkoIPLeWeWT5CcE/miirWYDG/XnH9oq2+5LWeajp/qhqq3ylw7W7Ct8VvZDEeKlKE/YHNFFFUa9omQJGg2XThIgSNf/Z)}.ic-spell_mage_meteor,.io-spell_mage_meteor,.fi-spell_mage_meteor{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAgEFAQAAAAAAAAAAAAAAAAcGAQMEBQgJ/8QALxAAAgEDAgQEBAcBAAAAAAAAAQIDBAURACEGEjFBBxNRYRQiMoEjM0JScZGh8f/EABcBAQEBAQAAAAAAAAAAAAAAAAYFBAf/xAAlEQABAwQBAwUBAAAAAAAAAAABAgMRAAQhMQUSQVEiYXGB4TL/2gAMAwEAAhEDEQA/AEvRU3xbFHkxUyZIkY55ieoJPf31jXm1yxsRUwYdAS7tvzEdNj/zVYL2rVCSTQxKY8JJyfq264+2nVwRbbXxVbBR13I7Mn4M5OMezf5v20Eu7pdmQtQwa6g2204gmcCuWuISDUSHqAAuMdPTGo+fr++ugPFzwYvlm86vt1O09MrEuoHzIMZ/rSQktdYKz4cU0nm83KEKkMSegA6k76UcdesvtShX5QvlrJ1DvXEg6I0atUt2uVEjRUNwq6WItzFIpmUZ9dj7DRq3LSSpIyOjBlJBBGCCOo0apSPNRi2qdVuKS6yRhlRzlxnLY30wPCnjqosV1gWWUmFmAG49ffSiErEknfPXWXDI6IKgfOoODnU2845q4bLahg1csOZdYcCtjuO0d69J7LxBY7hwQt7qaiKOjVArs7DMZJC8hB+oNkYB9SOo1znx3S+HXFlfJPbLZdbS5neJateU08cyEjcAllGxx6Y2zrReE92i4o4NvPBVbV1kNI6U8qEsPOPIwLFR3bc40eHMtwt1RxhQcFU0d3t/xOFNTKRM4x2XG5yNzsdEFtqtwpKcLRHsIJierU50fFJrVDQcJSZbXmJ1iYI7xkT8RulnduGHs9yqKG4fnpITzllIkB3Dg9wRvnRqT+IxhS422mqpEkq6e2wxVPlOWVZBzZXPqAQPto0it7lxxpKyd+379/dYl8bbhRgUm4pGhlDpjI6ZGdX7a3LVRuVVwrBuRhlWwehHcaNGrq9GhjX9p+alNhrJqeYTwYjkJYhlJHJn9uDtjtqTVPHl+ihkWI0sdXOPJqK5IuWpmTbZnB3/AJ7986NGoz7DbjnrSDSxlxSWhBqMVNwqpnWSR8sV3OTufXRo0a09CRgCsy3FlRJNf//Z)}</style>
+</head>
+<body>
+<div class="avec-nav">
+<nav class="sommaire"><details open><summary>Sur cette page</summary><ul><li><a href="#s-boss-par-boss">Boss par boss</a></li><li><a href="#s-corriger-en-priorit">À corriger en priorité</a></li><li><a href="#s-rotation">Rotation</a><ul><li class="sous"><a href="#s-synth-se-de-la-soir-e">Synthèse de la soirée</a></li><li class="sous"><a href="#s-d-tail-de-chaque-boss">Détail de chaque boss</a></li></ul></li><li><a href="#s-build-et-stats">Build et stats</a></li><li><a href="#s-quipement">Équipement</a></li><li><a href="#s-progression">Progression</a></li><li><a href="#s-m-thode">Méthode</a></li></ul></details></nav>
+<main>
+<p class="badges"><span class="badge">Généré le 29/10/2026 à 08:18</span><span class="badge" title="Commit du code guild_analyser qui a produit cette page">Version adb28e1</span><span class="badge badge-verif alerte" title="Relue par le vérificateur (intégrité des données, anomalies) : 1 anomalie ouverte dans le registre">Vérifié le 29/10/2026 · 1 anomalie</span></p>
+<style>
+  main { max-width: 1100px; }
+  .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 16px 0; }
+  .carte { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .carte .val { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .carte .lib { color: var(--muted); font-size: .85rem; }
+  .prio { list-style: none; padding: 0; margin: 0; counter-reset: p; }
+  .prio > li { counter-increment: p; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+               padding: 14px 16px 12px 56px; margin: 12px 0; position: relative; }
+  .prio > li::before { content: counter(p); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px;
+                       border-radius: 50%; background: var(--accent); color: var(--surface); font-weight: 700;
+                       display: flex; align-items: center; justify-content: center; }
+  .prio h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .gain { float: right; margin-left: 10px; background: var(--row); border: 1px solid var(--border); border-radius: 999px;
+          padding: 2px 10px; font-size: .85rem; font-weight: 600; white-space: nowrap; }
+  .gain.nc { color: var(--muted); font-weight: 400; }
+  .gain.grave { color: var(--bad); border-color: var(--bad); }
+  .gain.ok { border-color: var(--good); }
+  .prio p { margin: 6px 0; }
+  .etiq { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; margin-right: 6px; }
+  pre.macro { background: var(--row); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin: 6px 0;
+              font-size: .88rem; white-space: pre-wrap; }
+  code { background: var(--row); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: .86em;
+         word-break: break-word; }
+  .moments a { margin-right: 4px; white-space: nowrap; display: inline-block; }
+  .boss-chip { display: inline-block; font-size: .8rem; color: var(--muted); border: 1px solid var(--border);
+               border-radius: 999px; padding: 0 8px; margin: 2px 4px 2px 0; }
+  .sort { border-bottom: 1px dotted var(--muted); cursor: help; }
+  .fr { color: var(--muted); }
+  .bandeau { background: color-mix(in srgb, var(--warn) 14%, var(--surface)); border: 1px solid var(--warn);
+             border-radius: 8px; padding: 8px 12px; margin: 8px 0; font-size: .92rem; }
+  .pc { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .gris { --pc: #7d838b; } .vert { --pc: #1b9a1b; } .bleu { --pc: #0070dd; } .violet { --pc: #a335ee; }
+  .orange { --pc: #e07800; } .rose { --pc: #d6559b; } .dore { --pc: #b8942a; }
+  .pc, .pc-t { color: var(--pc, var(--muted)); }
+  .verdict { font-weight: 700; }
+  table.boss-soiree td a, .liens a { white-space: nowrap; }
+  .e-pos { color: var(--good); font-weight: 600; } .e-mid { color: var(--warn); font-weight: 600; }
+  .e-neg { color: var(--bad); font-weight: 600; }
+  .methode .carte p { margin: 4px 0 0; font-size: .92rem; }
+  .methode summary { cursor: pointer; }
+  p.mode { margin: 4px 0 10px; }
+  .refs { display: grid; gap: 10px; margin: 12px 0 16px; }
+  .ref { display: grid; grid-template-columns: minmax(0, 1fr) 11rem; gap: 4px 16px; align-items: center;
+         background: var(--surface); border: 1px solid var(--border); border-left: 6px solid var(--muted);
+         border-radius: 10px; padding: 10px 14px; }
+  .ref.e-bad { border-left-color: var(--bad); } .ref.e-warn { border-left-color: var(--warn); }
+  .ref.e-good { border-left-color: var(--good); } .ref.moi { border-left-color: var(--accent); }
+  .ref .qui { font-size: 1.05rem; } .ref .qui b { font-size: 1.15rem; }
+  .ref .det { color: var(--muted); font-size: .85rem; } .ref .det b { color: var(--text); font-size: inherit; }
+  .ref .ecart { grid-row: span 2; text-align: right; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .ref .ecart .dps { font-size: 1.9rem; font-weight: 800; }
+  .ref .ecart .pc { font-size: 1.05rem; font-weight: 700; }
+  .ref .ecart .lib { color: var(--muted); font-size: .8rem; }
+  .ref.e-bad .ecart .dps, .ref.e-bad .ecart .pc { color: var(--bad); }
+  .ref.e-warn .ecart .dps, .ref.e-warn .ecart .pc { color: var(--warn); }
+  .ref.e-good .ecart .dps, .ref.e-good .ecart .pc { color: var(--good); }
+  .ref .barre { grid-column: 1; position: relative; height: 12px; background: var(--row); border-radius: 0 4px 4px 0; }
+  .ref .barre span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--muted); }
+  .ref.e-bad .barre span { background: var(--bad); } .ref.e-warn .barre span { background: var(--warn); }
+  .ref.e-good .barre span { background: var(--good); } .ref.moi .barre span { background: var(--accent); }
+  .ref .barre i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--text); }
+  .duo { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); column-gap: 0; row-gap: 4px;
+         margin: 8px 0; }
+  .duo-tete { font-weight: 700; padding: 4px 10px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .duo-tete.dm { text-align: right; border-bottom: 3px solid var(--accent); }
+  .duo-tete.dr { border-bottom: 3px solid var(--muted); }
+  .duo-minute { grid-column: 1 / -1; text-align: center; font-weight: 700; color: var(--muted); font-size: .85rem;
+                margin-top: 10px; border-top: 1px solid var(--border); padding-top: 4px; }
+  .duo-phase { grid-column: 1 / -1; text-align: center; font-style: italic; color: var(--muted); font-size: .88rem;
+               background: var(--row); border-radius: 6px; padding: 2px 8px; }
+  .duo-axe { background: linear-gradient(var(--border), var(--border)) center / 2px 100% no-repeat; }
+  .duo-c { padding: 3px 10px; border-radius: 6px; font-size: .92rem; }
+  .duo-c.cd:not(.vide) { background: color-mix(in srgb, var(--c) 12%, var(--surface)); }
+  .duo-c.dm { text-align: right; } .duo-c.dm.cd:not(.vide) { border-right: 4px solid var(--c); }
+  .duo-c.dr.cd:not(.vide) { border-left: 4px solid var(--c); }
+  .duo-c .t { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .85rem; }
+  .duo-c .absent { color: var(--muted); font-style: italic; font-size: .85rem; }
+  .duo-c .pourquoi { display: block; font-size: .85rem; color: var(--warn); }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases .mono { fill: var(--row); stroke: var(--border); } .phases .multi { fill: #eb6834; opacity: .55; }
+  .phases text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  section.boss > summary { font-size: 1.1rem; padding: 4px 0; }
+  section.boss { margin: 10px 0; }
+  details.boss { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px;
+                 margin: 10px 0; }
+  details.boss > summary { font-size: 1.08rem; }
+  .muted { color: var(--muted); }
+  @media (max-width: 600px) { .prio > li { padding-left: 16px; } .prio > li::before { position: static; margin-bottom: 6px; } }
+</style>
+<style>
+  .graphique { margin: 10px 0 4px; } .graphique .zone { position: relative; min-width: 0; }
+</style>
+<style>
+  .cause { display: flex; height: 10px; border-radius: 3px; overflow: hidden; background: var(--row); margin: 4px 0 2px; max-width: 420px; }
+  .cause span { display: block; height: 100%; }
+  .c-freq { background: #2a78d6; } .c-crit { background: #eb6834; } .c-coup { background: #9a6fd0; } .c-abs { background: #888; }
+  .pastille { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin: 0 4px 0 10px; }
+  .sorts-pourquoi { list-style: none; padding: 0; }
+  .sorts-pourquoi li { border-bottom: 1px solid var(--border); padding: 8px 0; }
+  .sorts-pourquoi .faits { color: var(--muted); font-size: .92rem; }
+  .centile { font-weight: 600; }
+  .c-legendaire { color: #e08a00; } .c-epique { color: #a335ee; } .c-rare { color: #0070dd; }
+  .c-peu { color: #1eaa1e; } .c-commun { color: var(--muted); }
+  .mecanisme { margin: 6px 0 0; padding: 6px 10px; border-left: 3px solid #eb6834; background: var(--row); font-size: .92rem; }
+  section.boss { border-top: 2px solid var(--border); margin-top: 28px; }
+</style>
+<h1>Mon DPS — Dibbuk</h1><p class="accroche-coaching" style="margin:12px 0 16px;padding:12px 14px;border-radius:10px;line-height:1.45;background:var(--surface);border:1px solid var(--border);border-left:6px solid var(--good)"><a href="Dibbuk_coaching.html"><strong>Ton coaching</strong> : ce que tu fais bien et tes axes de progrès (5 au plus) →</a></p>
+<p class="meta"><i class="ic ic-spec ic-spec-MageArcane" title="Arcane Mage"></i>Mage Arcanes · ilvl 325 · raid du 28/10/2026 · 4 boss tués, meilleur kill de chacun · 1 boss non tué, meilleur essai · <a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd">rapport Warcraft Logs</a> · <a href="https://murlok.io/mage/arcane/m+" title="Talents, statistiques et équipement des meilleurs joueurs de ta spé en Mythique+ (Murlok)">builds du top M+ (Murlok) ↗</a></p>
+<p class="mode"><span class="etiq">Niveau d'analyse</span><strong>léger</strong> : rotation lue dans le log seulement : ni top mondial, ni joueur équivalent, ni simulation (fiche des PU).</p>
+<p class="note"><strong>Moyennes sur 4 boss tués</strong> (sans le meilleur essai des boss non tués, détaillé plus bas)</p>
+<div class="cartes">
+<div class="carte"><div class="val">184 k</div><div class="lib">DPS moyen (pas de top 3 trouvé)</div></div>
+<div class="carte"><div class="val"><span class="pc vert" title="centile 42 : moyen">42</span></div><div class="lib"><span class="verdict pc-t vert">moyen</span> · centile moyen (tous ilvl) : tu fais mieux que 42 % des joueurs</div></div>
+<div class="carte"><div class="val"><span class="pc bleu" title="centile 64 : bon">64</span></div><div class="lib"><span class="verdict pc-t bleu">bon</span> · centile moyen à ton ilvl : tu fais mieux que 64 % des joueurs</div></div>
+<div class="carte"><div class="val">≈ 0,0 %</div><div class="lib">à gagner par le jeu (estimé)</div></div>
+<div class="carte"><div class="val muted">—</div><div class="lib">écart à ton potentiel simc (sans simulation)</div></div>
+</div>
+<div class="bandeau"><strong>Spé pas encore vérifiée</strong> : ce rapport repose sur des règles génériques qui n'ont pas encore été contrôlées sur des logs de cette spé (familiers, incantations, ressource, cooldowns propres à la classe). À lire avec prudence.</div>
+
+<h2 id="s-boss-par-boss">Boss par boss</h2>
+<div class="table-wrap">
+<table class="boss-soiree">
+<thead><tr><th>Boss</th><th class="num">Centile</th><th class="num">À ton ilvl</th><th class="num">DPS</th><th class="num">Durée</th><th class="num">Rang</th><th class="num">vs top 3</th><th class="num">vs potentiel simc</th><th class="num">Wipes</th><th>Combat</th></tr></thead>
+<tbody>
+<tr><td><a href="#boss-nek-zali-the-soulcoiler">Nek&#x27;zali the Soulcoiler</a></td><td class="num"><span class="pc vert" title="centile 33 : moyen">33</span></td><td class="num"><span class="pc bleu" title="centile 54 : bon">54</span></td><td class="num">166 k</td><td class="num">4:53</td><td class="num">≈ 38 004 / 56 723</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=4" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/JYPGyjAh3648KbXd/fight/4" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/JYPGyjAh3648KbXd/4/Dibbuk/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-entombed-sentinels">Entombed Sentinels</a></td><td class="num"><span class="pc bleu" title="centile 56 : bon">56</span></td><td class="num"><span class="pc violet" title="centile 84 : très bon">84</span></td><td class="num">168 k</td><td class="num">5:27</td><td class="num">≈ 21 135 / 48 036</td><td class="num">—</td><td class="num">—</td><td class="num">4</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=15" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/JYPGyjAh3648KbXd/fight/15" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/JYPGyjAh3648KbXd/15/Dibbuk/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-vashnik-the-malignant">Vashnik the Malignant</a></td><td class="num"><span class="pc bleu" title="centile 50 : bon">50</span></td><td class="num"><span class="pc violet" title="centile 78 : très bon">78</span></td><td class="num">229 k</td><td class="num">5:09</td><td class="num">≈ 24 215 / 48 431</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=19" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/JYPGyjAh3648KbXd/fight/19" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/JYPGyjAh3648KbXd/19/Dibbuk/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-the-lost-explorers">The Lost Explorers</a></td><td class="num"><span class="pc vert" title="centile 27 : moyen">27</span></td><td class="num"><span class="pc vert" title="centile 42 : moyen">42</span></td><td class="num">172 k</td><td class="num">5:56</td><td class="num">≈ 33 869 / 46 396</td><td class="num">—</td><td class="num">—</td><td class="num">1</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=25" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/JYPGyjAh3648KbXd/fight/25" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/JYPGyjAh3648KbXd/25/Dibbuk/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+<tr><td><a href="#boss-sszorak">Sszorak (meilleur essai, wipe à 16,3 %)</a></td><td class="num"><span class="muted">—</span></td><td class="num"><span class="muted">—</span></td><td class="num">188 k</td><td class="num">3:27</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=32" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/JYPGyjAh3648KbXd/fight/32" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/JYPGyjAh3648KbXd/32/Dibbuk/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Centiles aux couleurs de Warcraft Logs : gris sous 25, vert 25 à 49, bleu 50 à 74, violet 75 à 94, orange 95 à 98, rose 99, doré 100. Écarts : en vert au-dessus de la référence, en orange jusqu'à 15 % en dessous, en rouge au-delà ; face au top 3, un écart de 30 à 40 % reste courant. Pas d'écart à l'équivalent ici : il est choisi pour faire environ 25 % de plus que toi, son écart vaut donc toujours environ −20 % (il sert à comparer la rotation, dans le détail de chaque boss). Le nom du boss mène à son détail ; « Logs », « Wipefest » et « Analyzer » ouvrent le combat sur warcraftlogs.com, ses mécaniques sur wipefest.gg et ton analyse sur wowanalyzer.com.</p>
+<h2 id="s-corriger-en-priorit">À corriger en priorité</h2>
+<ol class="prio"><li><span class="gain nc">gain non chiffré</span><h3><i class="ic ic-racial_troll_berserk"></i>Bijou hors de Berserking</h3><span class="boss-chip">Nek&#x27;zali the Soulcoiler</span><span class="boss-chip">Entombed Sentinels</span><span class="boss-chip">Vashnik the Malignant</span><span class="boss-chip">The Lost Explorers</span><p><span class="etiq">Cause</span>4 sur 4 hors de Berserking (Berserker).</p><p><span class="etiq">Conseil</span>Activer le bijou au début de Berserking : leurs bonus se multiplient.</p><pre class="macro">#showtooltip
+/use 13
+/use 14
+/cast Berserker</pre><p><span class="etiq">Affichage</span>Macro qui colle les bijoux au gros cooldown (les bijoux sans effet à activer sont ignorés).</p><p class="note"><span class="etiq">Preuve</span>Règle vérifiée lancer par lancer sur le log : 4 fautes sur 4 occasions.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=4&amp;type=casts&amp;source=67&amp;start=2272674&amp;end=2282674">Nek&#x27;zali the Soulcoiler 0:01</a> <a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=4&amp;type=casts&amp;source=67&amp;start=2367834&amp;end=2377834">Nek&#x27;zali the Soulcoiler 1:38</a> <a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=4&amp;type=casts&amp;source=67&amp;start=2461834&amp;end=2471834">Nek&#x27;zali the Soulcoiler 3:12</a> <a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=4&amp;type=casts&amp;source=67&amp;start=2553724&amp;end=2563724">Nek&#x27;zali the Soulcoiler 4:44</a> <a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=15&amp;type=casts&amp;source=67&amp;start=4480238&amp;end=4490238">Entombed Sentinels 0:00</a> <a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=15&amp;type=casts&amp;source=67&amp;start=4570418&amp;end=4580418">Entombed Sentinels 1:33</a> <a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=15&amp;type=casts&amp;source=67&amp;start=4663268&amp;end=4673268">Entombed Sentinels 3:06</a> <a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=15&amp;type=casts&amp;source=67&amp;start=4758968&amp;end=4768968">Entombed Sentinels 4:41</a> </p></li><li><span class="gain nc">gain non chiffré</span><h3><i class="ic ic-racial_troll_berserk"></i>Potion hors de Berserking</h3><span class="boss-chip">Nek&#x27;zali the Soulcoiler</span><span class="boss-chip">Entombed Sentinels</span><span class="boss-chip">Vashnik the Malignant</span><p><span class="etiq">Cause</span>1 sur 1 hors de Berserking (Berserker).</p><p><span class="etiq">Conseil</span>Boire la potion au début de Berserking.</p><p class="note"><span class="etiq">Preuve</span>Règle vérifiée lancer par lancer sur le log : 1 faute sur 1 occasion.</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=4&amp;type=casts&amp;source=67&amp;start=2272674&amp;end=2282674">Nek&#x27;zali the Soulcoiler 0:01</a> <a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=15&amp;type=casts&amp;source=67&amp;start=4480238&amp;end=4490238">Entombed Sentinels 0:00</a> <a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=19&amp;type=casts&amp;source=67&amp;start=5364411&amp;end=5374411">Vashnik the Malignant 0:00</a> </p></li><li><span class="gain nc">gain non chiffré</span><h3>Piste : rune Vantus sur Sszorak</h3><span class="boss-chip">Sszorak</span><p><span class="etiq">Cause</span>Boss pas encore tué : c&#x27;est le cas où une rune Vantus se justifie.</p><p><span class="etiq">Conseil</span>La rune Vantus s&#x27;achète à l&#x27;hôtel des ventes et sert une semaine sur un seul boss du raid : à garder pour le boss où le raid bloque (ou pour viser un meilleur score), pas à prendre partout.</p><p class="note"><span class="etiq">Preuve</span>Buff « Vantus Rune » absent du meilleur essai ; effet non simulé.</p></li></ol>
+
+<h2 id="s-rotation">Rotation</h2>
+<h3 id="s-synth-se-de-la-soir-e">Synthèse de la soirée</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">DPS</th><th class="num">vs équivalent</th><th class="num">vs top 3</th><th class="num">Multicible</th><th class="num">Cooldowns manqués</th><th class="num">vs potentiel simc</th></tr></thead>
+<tbody>
+<tr><td>Nek&#x27;zali the Soulcoiler</td><td class="num">166 k</td><td class="num">—</td><td class="num">—</td><td class="num">15 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Entombed Sentinels</td><td class="num">168 k</td><td class="num">—</td><td class="num">—</td><td class="num">32 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Vashnik the Malignant</td><td class="num">229 k</td><td class="num">—</td><td class="num">—</td><td class="num">16 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>The Lost Explorers</td><td class="num">172 k</td><td class="num">—</td><td class="num">—</td><td class="num">84 %</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Sszorak</td><td class="num">188 k</td><td class="num">—</td><td class="num">—</td><td class="num">0 %</td><td class="num">0</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+
+<p class="note">Potentiel simc : ton équipement simulé avec une rotation parfaite, à la durée du kill, chaque phase au nombre d'ennemis qu'elle a en moyenne (1, 2, ou 3 et plus). Un vrai combat (déplacements, phases, cibles qui changent) reste en dessous : l'écart sert surtout à comparer les boss entre eux et d'une soirée à l'autre.</p>
+<h3 id="s-d-tail-de-chaque-boss">Détail de chaque boss</h3>
+<details class="boss" id="boss-nek-zali-the-soulcoiler"><summary><strong>Nek&#x27;zali the Soulcoiler</strong> · 166 k · — face à l'équivalent · 15 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=4" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/JYPGyjAh3648KbXd/fight/4" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/JYPGyjAh3648KbXd/4/Dibbuk/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Dibbuk</b> (toi) <span class="det">· 166 k</span><div class="det"><b>rang ≈ 38 004</b> / 56 723 · centile 33 (54 à ton ilvl)</div></div><div class="ecart"><div class="dps">166 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Blessing of the Bronze, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">14</td><td>non</td><td>—</td><td>Power Infusion 5 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="157.3" height="18"><title>Monocible : 0:00 → 1:02 (1,1 ennemis)</title></rect><rect class="multi" x="357.3" y="4" width="38.1" height="18"><title>Multicible : 1:02 → 1:17 (3,9 ennemis)</title></rect><rect class="mono" x="395.3" y="4" width="329.8" height="18"><title>Monocible : 1:17 → 3:27 (1,1 ennemis)</title></rect><rect class="multi" x="725.1" y="4" width="38.1" height="18"><title>Multicible : 3:27 → 3:42 (3,9 ennemis)</title></rect><rect class="mono" x="763.2" y="4" width="38.1" height="18"><title>Monocible : 3:42 → 3:57 (1,1 ennemis)</title></rect><rect class="multi" x="801.2" y="4" width="33.0" height="18"><title>Multicible : 3:57 → 4:10 (5,2 ennemis)</title></rect><rect class="mono" x="834.2" y="4" width="109.8" height="18"><title>Monocible : 4:10 → 4:53 (1,2 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Berserking</td><td class="num">4 / 4</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Berserking</td><td class="num">1 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(250 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="2.5 s d&#x27;incantation 1.5 min de recharge Requiert Mage Vous dépensez tout votre mana actuel pour annihiler votre cible ainsi que les adversaires proches en leur infligeant jusqu’à [([372% of Spell Power]) * 2] points de dégâts des arcanes, en fonction du mana dépensé. Inflige des dégâts réduits au-delà de 8 cibles. Octroie Idées claires. Pendant 15 s, votre régénération de mana est augmentée de 425 % et vos dégâts des sorts de 35 %. Accorde Idées claires."><i class="ic ic-ability_mage_arcanesurge"></i>Arcane Surge <span class="fr">(Éruption d’arcanes)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Feu Lorsque vous lancez Combustion, invoque un phénix arcanique pour vous aider au combat. Phénix arcanique Votre phénix vous aide pendant la durée de Combustion en lançant des sorts aléatoires de feu et des arcanes. Arcanes Lorsque vous lancez Éruption d’arcanes, invoque un phénix arcanique pour vous aider au combat. Phénix arcanique Votre phénix vous aide pendant la durée d’Éruption d’arcanes en lançant des sorts aléatoires de feu et des arcanes.">Familier : <i class="ic ic-inv_ability_sunfurymage_spellfirespheres"></i>Arcane Phoenix <span class="fr">(Phénix arcanique)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 20 s de recharge 1 Charge Requiert Mage Niveau 45 requis Projette un orbe arcanique depuis votre emplacement. Il parcourt jusqu’à 40 mètres et inflige ([243.2% of Spell Power]) points de dégâts des arcanes aux ennemis sur son passage. Confère 1 charge arcanique à l’incantation et à chaque fois qu’il inflige des dégâts."><i class="ic ic-spell_mage_arcaneorb"></i>Arcane Orb <span class="fr">(Orbe arcanique)</span></span></td><td class="num">7 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><i class="ic ic-inv_ability_mage_radiantspark"></i>Touch of the Magi <span class="fr">(Toucher des magi)</span></td><td class="num">7 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2.25 s d&#x27;incantation Requiert Mage Niveau 10 requis Frappe la cible avec de l’énergie et lui inflige ([148.7% of Spell Power]) points de dégâts des arcanes. Chaque charge arcanique augmente les dégâts de 60 %, le coût en mana de 100 % et réduit le temps d’incantation de 8 %. Génère 1 charge arcanique."><i class="ic ic-spell_arcane_blast"></i>Arcane Blast <span class="fr">(Déflagration des Arcanes)</span></span></td><td class="num">9 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(43 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><i class="ic ic-spell_mage_meteor"></i>Meteorite <span class="fr">(Météorite)</span></td><td class="num">12 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-entombed-sentinels"><summary><strong>Entombed Sentinels</strong> · 168 k · — face à l'équivalent · 32 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=15" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/JYPGyjAh3648KbXd/fight/15" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/JYPGyjAh3648KbXd/15/Dibbuk/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Dibbuk</b> (toi) <span class="det">· 168 k</span><div class="det"><b>rang ≈ 21 135</b> / 48 036 · centile 56 (84 à ton ilvl)</div></div><div class="ecart"><div class="dps">168 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Blessing of the Bronze, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">14</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="38.6" height="18"><title>Monocible : 0:00 → 0:17 (2,0 ennemis)</title></rect><rect class="multi" x="238.6" y="4" width="22.7" height="18"><title>Multicible : 0:17 → 0:27 (3,0 ennemis)</title></rect><rect class="mono" x="261.3" y="4" width="106.8" height="18"><title>Monocible : 0:27 → 1:14 (2,0 ennemis)</title></rect><rect class="multi" x="368.1" y="4" width="43.2" height="18"><title>Multicible : 1:14 → 1:33 (3,0 ennemis)</title></rect><rect class="mono" x="411.2" y="4" width="72.7" height="18"><title>Monocible : 1:33 → 2:05 (2,0 ennemis)</title></rect><rect class="multi" x="483.9" y="4" width="45.4" height="18"><title>Multicible : 2:05 → 2:25 (3,0 ennemis)</title></rect><rect class="mono" x="529.4" y="4" width="72.7" height="18"><title>Monocible : 2:25 → 2:57 (2,0 ennemis)</title></rect><rect class="multi" x="602.1" y="4" width="50.0" height="18"><title>Multicible : 2:57 → 3:19 (3,0 ennemis)</title></rect><rect class="mono" x="652.0" y="4" width="65.9" height="18"><title>Monocible : 3:19 → 3:48 (2,0 ennemis)</title></rect><rect class="multi" x="717.9" y="4" width="31.8" height="18"><title>Multicible : 3:48 → 4:02 (3,0 ennemis)</title></rect><rect class="mono" x="749.7" y="4" width="93.1" height="18"><title>Monocible : 4:02 → 4:43 (2,0 ennemis)</title></rect><rect class="multi" x="842.8" y="4" width="43.2" height="18"><title>Multicible : 4:43 → 5:02 (3,0 ennemis)</title></rect><rect class="mono" x="886.0" y="4" width="58.0" height="18"><title>Monocible : 5:02 → 5:27 (1,2 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Berserking</td><td class="num">4 / 4</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Berserking</td><td class="num">1 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(224 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Feu Lorsque vous lancez Combustion, invoque un phénix arcanique pour vous aider au combat. Phénix arcanique Votre phénix vous aide pendant la durée de Combustion en lançant des sorts aléatoires de feu et des arcanes. Arcanes Lorsque vous lancez Éruption d’arcanes, invoque un phénix arcanique pour vous aider au combat. Phénix arcanique Votre phénix vous aide pendant la durée d’Éruption d’arcanes en lançant des sorts aléatoires de feu et des arcanes.">Familier : <i class="ic ic-inv_ability_sunfurymage_spellfirespheres"></i>Arcane Phoenix <span class="fr">(Phénix arcanique)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2.25 s d&#x27;incantation Requiert Mage Niveau 10 requis Frappe la cible avec de l’énergie et lui inflige ([148.7% of Spell Power]) points de dégâts des arcanes. Chaque charge arcanique augmente les dégâts de 60 %, le coût en mana de 100 % et réduit le temps d’incantation de 8 %. Génère 1 charge arcanique."><i class="ic ic-spell_arcane_blast"></i>Arcane Blast <span class="fr">(Déflagration des Arcanes)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><i class="ic ic-inv_ability_mage_radiantspark"></i>Touch of the Magi <span class="fr">(Toucher des magi)</span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 20 s de recharge 1 Charge Requiert Mage Niveau 45 requis Projette un orbe arcanique depuis votre emplacement. Il parcourt jusqu’à 40 mètres et inflige ([243.2% of Spell Power]) points de dégâts des arcanes aux ennemis sur son passage. Confère 1 charge arcanique à l’incantation et à chaque fois qu’il inflige des dégâts."><i class="ic ic-spell_mage_arcaneorb"></i>Arcane Orb <span class="fr">(Orbe arcanique)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><i class="ic ic-spell_mage_meteor"></i>Meteorite <span class="fr">(Météorite)</span></td><td class="num">10 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(104 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="2.5 s d&#x27;incantation 1.5 min de recharge Requiert Mage Vous dépensez tout votre mana actuel pour annihiler votre cible ainsi que les adversaires proches en leur infligeant jusqu’à [([372% of Spell Power]) * 2] points de dégâts des arcanes, en fonction du mana dépensé. Inflige des dégâts réduits au-delà de 8 cibles. Octroie Idées claires. Pendant 15 s, votre régénération de mana est augmentée de 425 % et vos dégâts des sorts de 35 %. Accorde Idées claires."><i class="ic ic-ability_mage_arcanesurge"></i>Arcane Surge <span class="fr">(Éruption d’arcanes)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2.25 s d&#x27;incantation Requiert Mage Niveau 10 requis Frappe la cible avec de l’énergie et lui inflige ([148.7% of Spell Power]) points de dégâts des arcanes. Chaque charge arcanique augmente les dégâts de 60 %, le coût en mana de 100 % et réduit le temps d’incantation de 8 %. Génère 1 charge arcanique."><i class="ic ic-spell_arcane_blast"></i>Arcane Blast <span class="fr">(Déflagration des Arcanes)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Feu Lorsque vous lancez Combustion, invoque un phénix arcanique pour vous aider au combat. Phénix arcanique Votre phénix vous aide pendant la durée de Combustion en lançant des sorts aléatoires de feu et des arcanes. Arcanes Lorsque vous lancez Éruption d’arcanes, invoque un phénix arcanique pour vous aider au combat. Phénix arcanique Votre phénix vous aide pendant la durée d’Éruption d’arcanes en lançant des sorts aléatoires de feu et des arcanes.">Familier : <i class="ic ic-inv_ability_sunfurymage_spellfirespheres"></i>Arcane Phoenix <span class="fr">(Phénix arcanique)</span></span></td><td class="num">7 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 20 s de recharge 1 Charge Requiert Mage Niveau 45 requis Projette un orbe arcanique depuis votre emplacement. Il parcourt jusqu’à 40 mètres et inflige ([243.2% of Spell Power]) points de dégâts des arcanes aux ennemis sur son passage. Confère 1 charge arcanique à l’incantation et à chaque fois qu’il inflige des dégâts."><i class="ic ic-spell_mage_arcaneorb"></i>Arcane Orb <span class="fr">(Orbe arcanique)</span></span></td><td class="num">12 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><i class="ic ic-inv_ability_mage_radiantspark"></i>Touch of the Magi <span class="fr">(Toucher des magi)</span></td><td class="num">13 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><i class="ic ic-spell_mage_meteor"></i>Meteorite <span class="fr">(Météorite)</span></td><td class="num">19 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-vashnik-the-malignant"><summary><strong>Vashnik the Malignant</strong> · 229 k · — face à l'équivalent · 16 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=19" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/JYPGyjAh3648KbXd/fight/19" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/JYPGyjAh3648KbXd/19/Dibbuk/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Dibbuk</b> (toi) <span class="det">· 229 k</span><div class="det"><b>rang ≈ 24 215</b> / 48 431 · centile 50 (78 à ton ilvl)</div></div><div class="ecart"><div class="dps">229 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Blessing of the Bronze, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">14</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="74.6" height="18"><title>Monocible : 0:00 → 0:31 (1,1 ennemis)</title></rect><rect class="multi" x="274.6" y="4" width="19.2" height="18"><title>Multicible : 0:31 → 0:39 (3,0 ennemis)</title></rect><rect class="mono" x="293.8" y="4" width="370.5" height="18"><title>Monocible : 0:39 → 3:13 (1,2 ennemis)</title></rect><rect class="multi" x="664.4" y="4" width="55.3" height="18"><title>Multicible : 3:13 → 3:36 (3,6 ennemis)</title></rect><rect class="mono" x="719.7" y="4" width="156.4" height="18"><title>Monocible : 3:36 → 4:41 (1,1 ennemis)</title></rect><rect class="multi" x="876.1" y="4" width="48.1" height="18"><title>Multicible : 4:41 → 5:01 (3,4 ennemis)</title></rect><rect class="mono" x="924.2" y="4" width="19.8" height="18"><title>Monocible : 5:01 → 5:09 (1,7 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Berserking</td><td class="num">4 / 4</td><td class="num">—</td><td class="num"></td></tr>
+<tr><td>Potion hors de Berserking</td><td class="num">1 / 1</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(258 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Feu Lorsque vous lancez Combustion, invoque un phénix arcanique pour vous aider au combat. Phénix arcanique Votre phénix vous aide pendant la durée de Combustion en lançant des sorts aléatoires de feu et des arcanes. Arcanes Lorsque vous lancez Éruption d’arcanes, invoque un phénix arcanique pour vous aider au combat. Phénix arcanique Votre phénix vous aide pendant la durée d’Éruption d’arcanes en lançant des sorts aléatoires de feu et des arcanes.">Familier : <i class="ic ic-inv_ability_sunfurymage_spellfirespheres"></i>Arcane Phoenix <span class="fr">(Phénix arcanique)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><i class="ic ic-inv_ability_mage_radiantspark"></i>Touch of the Magi <span class="fr">(Toucher des magi)</span></td><td class="num">8 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2.25 s d&#x27;incantation Requiert Mage Niveau 10 requis Frappe la cible avec de l’énergie et lui inflige ([148.7% of Spell Power]) points de dégâts des arcanes. Chaque charge arcanique augmente les dégâts de 60 %, le coût en mana de 100 % et réduit le temps d’incantation de 8 %. Génère 1 charge arcanique."><i class="ic ic-spell_arcane_blast"></i>Arcane Blast <span class="fr">(Déflagration des Arcanes)</span></span></td><td class="num">9 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 20 s de recharge 1 Charge Requiert Mage Niveau 45 requis Projette un orbe arcanique depuis votre emplacement. Il parcourt jusqu’à 40 mètres et inflige ([243.2% of Spell Power]) points de dégâts des arcanes aux ennemis sur son passage. Confère 1 charge arcanique à l’incantation et à chaque fois qu’il inflige des dégâts."><i class="ic ic-spell_mage_arcaneorb"></i>Arcane Orb <span class="fr">(Orbe arcanique)</span></span></td><td class="num">10 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><i class="ic ic-spell_mage_meteor"></i>Meteorite <span class="fr">(Météorite)</span></td><td class="num">10 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(51 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><i class="ic ic-inv_knife_1h_zuljin_d_01"></i>Polished Lightwood Channeler</td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2.5 s d&#x27;incantation 1.5 min de recharge Requiert Mage Vous dépensez tout votre mana actuel pour annihiler votre cible ainsi que les adversaires proches en leur infligeant jusqu’à [([372% of Spell Power]) * 2] points de dégâts des arcanes, en fonction du mana dépensé. Inflige des dégâts réduits au-delà de 8 cibles. Octroie Idées claires. Pendant 15 s, votre régénération de mana est augmentée de 425 % et vos dégâts des sorts de 35 %. Accorde Idées claires."><i class="ic ic-ability_mage_arcanesurge"></i>Arcane Surge <span class="fr">(Éruption d’arcanes)</span></span></td><td class="num">11 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Feu Lorsque vous lancez Combustion, invoque un phénix arcanique pour vous aider au combat. Phénix arcanique Votre phénix vous aide pendant la durée de Combustion en lançant des sorts aléatoires de feu et des arcanes. Arcanes Lorsque vous lancez Éruption d’arcanes, invoque un phénix arcanique pour vous aider au combat. Phénix arcanique Votre phénix vous aide pendant la durée d’Éruption d’arcanes en lançant des sorts aléatoires de feu et des arcanes.">Familier : <i class="ic ic-inv_ability_sunfurymage_spellfirespheres"></i>Arcane Phoenix <span class="fr">(Phénix arcanique)</span></span></td><td class="num">17 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 20 s de recharge 1 Charge Requiert Mage Niveau 45 requis Projette un orbe arcanique depuis votre emplacement. Il parcourt jusqu’à 40 mètres et inflige ([243.2% of Spell Power]) points de dégâts des arcanes aux ennemis sur son passage. Confère 1 charge arcanique à l’incantation et à chaque fois qu’il inflige des dégâts."><i class="ic ic-spell_mage_arcaneorb"></i>Arcane Orb <span class="fr">(Orbe arcanique)</span></span></td><td class="num">19 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><i class="ic ic-spell_mage_meteor"></i>Meteorite <span class="fr">(Météorite)</span></td><td class="num">22 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><i class="ic ic-inv_ability_mage_radiantspark"></i>Touch of the Magi <span class="fr">(Toucher des magi)</span></td><td class="num">24 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-the-lost-explorers"><summary><strong>The Lost Explorers</strong> · 172 k · — face à l'équivalent · 84 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=25" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/JYPGyjAh3648KbXd/fight/25" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/JYPGyjAh3648KbXd/25/Dibbuk/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Dibbuk</b> (toi) <span class="det">· 172 k</span><div class="det"><b>rang ≈ 33 869</b> / 46 396 · centile 27 (42 à ton ilvl)</div></div><div class="ecart"><div class="dps">172 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Blessing of the Bronze, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">14</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="multi" x="200.0" y="4" width="233.5" height="18"><title>Multicible : 0:00 → 1:52 (3,0 ennemis)</title></rect><rect class="mono" x="433.5" y="4" width="56.3" height="18"><title>Monocible : 1:52 → 2:19 (2,0 ennemis)</title></rect><rect class="multi" x="489.8" y="4" width="319.0" height="18"><title>Multicible : 2:19 → 4:52 (3,0 ennemis)</title></rect><rect class="mono" x="808.7" y="4" width="62.5" height="18"><title>Monocible : 4:52 → 5:22 (2,0 ennemis)</title></rect><rect class="multi" x="871.3" y="4" width="72.7" height="18"><title>Multicible : 5:22 → 5:56 (2,9 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Berserking</td><td class="num">3 / 4</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(57 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée 20 s de recharge 1 Charge Requiert Mage Niveau 45 requis Projette un orbe arcanique depuis votre emplacement. Il parcourt jusqu’à 40 mètres et inflige ([243.2% of Spell Power]) points de dégâts des arcanes aux ennemis sur son passage. Confère 1 charge arcanique à l’incantation et à chaque fois qu’il inflige des dégâts."><i class="ic ic-spell_mage_arcaneorb"></i>Arcane Orb <span class="fr">(Orbe arcanique)</span></span></td><td class="num">12 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2.5 s d&#x27;incantation Requiert Mage Anéantit la cible avec une énergie dévastatrice, lui infligeant ([3200% of Spell Power]) points de dégâts des arcanes et ([2500% of Spell Power]) aux autres adversaires proches. Dégâts réduits au-delà de 5 cibles. Génère 4 charges arcaniques."><i class="ic ic-8026694"></i>Prismatic Bolt <span class="fr">(Trait prismatique)</span></span></td><td class="num">18 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(300 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Feu Lorsque vous lancez Combustion, invoque un phénix arcanique pour vous aider au combat. Phénix arcanique Votre phénix vous aide pendant la durée de Combustion en lançant des sorts aléatoires de feu et des arcanes. Arcanes Lorsque vous lancez Éruption d’arcanes, invoque un phénix arcanique pour vous aider au combat. Phénix arcanique Votre phénix vous aide pendant la durée d’Éruption d’arcanes en lançant des sorts aléatoires de feu et des arcanes.">Familier : <i class="ic ic-inv_ability_sunfurymage_spellfirespheres"></i>Arcane Phoenix <span class="fr">(Phénix arcanique)</span></span></td><td class="num">4 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="2.25 s d&#x27;incantation Requiert Mage Niveau 10 requis Frappe la cible avec de l’énergie et lui inflige ([148.7% of Spell Power]) points de dégâts des arcanes. Chaque charge arcanique augmente les dégâts de 60 %, le coût en mana de 100 % et réduit le temps d’incantation de 8 %. Génère 1 charge arcanique."><i class="ic ic-spell_arcane_blast"></i>Arcane Blast <span class="fr">(Déflagration des Arcanes)</span></span></td><td class="num">6 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 20 s de recharge 1 Charge Requiert Mage Niveau 45 requis Projette un orbe arcanique depuis votre emplacement. Il parcourt jusqu’à 40 mètres et inflige ([243.2% of Spell Power]) points de dégâts des arcanes aux ennemis sur son passage. Confère 1 charge arcanique à l’incantation et à chaque fois qu’il inflige des dégâts."><i class="ic ic-spell_mage_arcaneorb"></i>Arcane Orb <span class="fr">(Orbe arcanique)</span></span></td><td class="num">9 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><i class="ic ic-spell_mage_meteor"></i>Meteorite <span class="fr">(Météorite)</span></td><td class="num">11 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><i class="ic ic-inv_ability_mage_radiantspark"></i>Touch of the Magi <span class="fr">(Toucher des magi)</span></td><td class="num">13 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="boss" id="boss-sszorak"><summary><strong>Sszorak (meilleur essai, wipe à 16,3 %)</strong> · 188 k · — face à l'équivalent · 0 % en multicible</summary>
+<p class="note warn">Analyse sur un essai, moins sûre que sur un kill : le combat ne s'est pas fini normalement ; ton DPS et ta rotation sont comptés jusqu'à ta mort, face à des références qui ont tué le boss. Essai 2, boss à 16,3 % de vie : celui où le boss est descendu le plus bas parmi les essais où tu es resté en vie au moins 60 s et la moitié du combat (sur un essai où tu meurs plus tôt, ta rotation ne se juge pas).</p><p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=32" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/JYPGyjAh3648KbXd/fight/32" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/JYPGyjAh3648KbXd/32/Dibbuk/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Dibbuk</b> (toi) <span class="det">· 188 k</span></div><div class="ecart"><div class="dps">188 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Blessing of the Bronze, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">14</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="744.0" height="18"><title>Monocible : 0:00 → 3:27 (1,0 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><div class="table-wrap">
+<table>
+<thead><tr><th>Règle de la rotation simc</th><th class="num">Toi : fautes / occasions</th><th class="num">Équivalent</th><th class="num">Top 3</th></tr></thead>
+<tbody>
+<tr><td>Bijou hors de Arcane Surge</td><td class="num">0 / 3</td><td class="num">—</td><td class="num"></td></tr>
+
+</tbody>
+</table>
+</div>
+
+<h4>Dégâts par sort en phase monocible <span class="muted">(207 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Feu Lorsque vous lancez Combustion, invoque un phénix arcanique pour vous aider au combat. Phénix arcanique Votre phénix vous aide pendant la durée de Combustion en lançant des sorts aléatoires de feu et des arcanes. Arcanes Lorsque vous lancez Éruption d’arcanes, invoque un phénix arcanique pour vous aider au combat. Phénix arcanique Votre phénix vous aide pendant la durée d’Éruption d’arcanes en lançant des sorts aléatoires de feu et des arcanes.">Familier : <i class="ic ic-inv_ability_sunfurymage_spellfirespheres"></i>Arcane Phoenix <span class="fr">(Phénix arcanique)</span></span></td><td class="num">5 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Instantanée 20 s de recharge 1 Charge Requiert Mage Niveau 45 requis Projette un orbe arcanique depuis votre emplacement. Il parcourt jusqu’à 40 mètres et inflige ([243.2% of Spell Power]) points de dégâts des arcanes aux ennemis sur son passage. Confère 1 charge arcanique à l’incantation et à chaque fois qu’il inflige des dégâts."><i class="ic ic-spell_mage_arcaneorb"></i>Arcane Orb <span class="fr">(Orbe arcanique)</span></span></td><td class="num">7 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><i class="ic ic-inv_ability_mage_radiantspark"></i>Touch of the Magi <span class="fr">(Toucher des magi)</span></td><td class="num">10 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><i class="ic ic-spell_mage_meteor"></i>Meteorite <span class="fr">(Météorite)</span></td><td class="num">12 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+
+<h2 id="s-build-et-stats">Build et stats</h2>
+<p class="note">Pas de simulation (mode rapide ou export de l'addon absent).</p>
+
+<h2 id="s-quipement">Équipement</h2>
+<p class="note">Pas d'analyse d'équipement (mode rapide ou export absent).</p>
+
+<h2 id="s-progression">Progression</h2>
+<p>Première soirée analysée : la progression apparaîtra à la prochaine analyse.</p>
+
+<details class="methode"><summary><h2 id="s-m-thode" style="display:inline">Méthode</h2> <span class="muted">(cliquer pour déplier)</span></summary><div class="cartes"><div class="carte"><div class="lib"><strong>Combats analysés</strong></div><p>Pour chaque boss, ton meilleur kill de la soirée (centile le plus haut).</p></div><div class="carte"><div class="lib"><strong>Top 3</strong></div><p>Les trois premiers de ta spé au classement héroïque du boss, logs postérieurs au 28/10 à 05 h (maintenance du mercredi, ou dernier correctif de tes sorts intégré à simc).</p></div><div class="carte"><div class="lib"><strong>Joueur équivalent</strong></div><p>Même tranche d&#x27;ilvl, raid de taille (±5) et de durée (±25 %) proches, sans Évocateur Augmentation, 10 à 45 % de DPS en plus ; parmi les plus proches de +25 %, le plus proche en talents et bijoux. Critères élargis (tranches voisines, ±8 joueurs, ±35 %) si personne après le correctif.</p></div><div class="carte"><div class="lib"><strong>Phases</strong></div><p>Multicible quand 3 ennemis ou plus sont attaqués par le raid (seuil de la rotation simc).</p></div><div class="carte"><div class="lib"><strong>Règles de rotation</strong></div><p>Conditions de la rotation simc vérifiées lancer par lancer ; retenues seulement si tu fais nettement moins bien que les références.</p></div><div class="carte"><div class="lib"><strong>Gains</strong></div><p>Estimés à partir des écarts mesurés, puis validés en simulation pour les plus gros (fautes imitées dans simc à ton rythme et à celui des références ; gain = écart des deux).</p></div><div class="carte"><div class="lib"><strong>Limites</strong></div><p>Une référence joue un autre combat que le tien (raid, durée, adds) : un écart est une piste, pas une preuve. Avec moins de 0,5 % d&#x27;écart, une simulation n&#x27;est pas significative.</p></div></div></details>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.js" integrity="sha384-G436+Z2nlA8+PNoeRvWdxKbvOf8E/y+lYxqht2iBwNHTQDV5CJr3+AGVj8fGZi5t" crossorigin="anonymous"></script>
+<script>
+// Graphiques des pages (controleurs/commun/graphiques.py) : chaque <div class="graphique"> porte sa description en
+// JSON, traduite ici pour Chart.js (chargé juste avant, templates/commun/_chart_js.html.j2). Sans Chart.js (hors ligne),
+// la zone reste vide : les tableaux de la page disent l'essentiel.
+(() => {
+  if (typeof Chart === 'undefined') return;
+
+  // « --a|--b » : la première variable CSS définie (les fiches ont leurs propres noms), lue sur la figure ; alpha < 1 :
+  // la même couleur, transparente
+  function couleur(figure, nom, alpha = 1) {
+    if (!nom) return undefined;
+    const valeur = nom.startsWith('--')
+      ? nom.split('|').reduceRight((secours, v) => `var(${v.trim()}, ${secours})`, '#888')
+      : nom;
+    const span = document.createElement('span');
+    span.style.color = valeur;
+    figure.appendChild(span);
+    const rgb = getComputedStyle(span).color;
+    span.remove();
+    if (alpha === 1) return rgb;
+    const [r, g, b] = rgb.match(/[\d.]+/g);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+  const parPoint = (v, i) => (Array.isArray(v) ? v[i] : v);
+  const chaquePoint = (v, f) => (Array.isArray(v) ? v.map(f) : f(v));
+
+  function axe(figure, a) {
+    const o = {
+      type: a.type,
+      grid: { color: couleur(figure, '--border') },
+      border: { display: false },
+      ticks: { color: couleur(figure, '--mut|--muted'), maxRotation: 0, autoSkipPadding: 10 },
+    };
+    // axe en temps sous des barres : 0:00 au bord, pas décalé d'une demi-barre comme sous des catégories
+    if (a.type === 'linear') { o.offset = false; o.grid.offset = false; }
+    if (a.etiquettes) o.labels = a.etiquettes;
+    if (a.min !== undefined) o.min = a.min;
+    if (a.max !== undefined) o.max = a.max;
+    if (a.graduations) {
+      const textes = new Map(a.graduations);
+      o.afterBuildTicks = axis => { axis.ticks = a.graduations.map(([v]) => ({ value: v })); };
+      o.ticks.callback = v => textes.get(v) ?? '';
+    }
+    if (a.titre) o.title = { display: true, text: a.titre, color: o.ticks.color };
+    return o;
+  }
+
+  function jeuDeDonnees(figure, s, g) {
+    const type = s.type || g.type;
+    const c = couleur(figure, s.couleur);
+    const rayons = s.rayons ?? (type === 'line' ? 3 : 4);
+    const d = {
+      type, label: s.libelle, bulles: s.bulles, etiquettes: s.etiquettes, centrees: s.etiquettes_centrees,
+      dessous: s.etiquettes_dessous,
+      data: s.points.map(p => (Array.isArray(p) ? { x: p[0], y: p[1] } : p)),
+      borderColor: c, backgroundColor: c, fill: false, spanGaps: true,
+      borderWidth: s.epaisseur ?? 2.5, borderDash: s.pointilles ? [7, 5] : [],
+      pointRadius: rayons, pointHoverRadius: chaquePoint(rayons, r => r + 2),
+      pointBackgroundColor: s.fonds ? chaquePoint(s.fonds, f => couleur(figure, f)) : c,
+      pointBorderColor: s.bordures ? chaquePoint(s.bordures, f => couleur(figure, f)) : c,
+      pointBorderWidth: s.bordures_epaisseur ?? 2, pointStyle: s.style_point || 'circle',
+    };
+    if (type === 'bar') {
+      Object.assign(d, { borderWidth: 0, borderRadius: 2, barPercentage: 0.9, categoryPercentage: g.horizontal ? 0.8 : 1 });
+      if (s.couleurs) d.backgroundColor = s.couleurs.map((x, i) => couleur(figure, x, parPoint(s.opacites ?? 1, i)));
+    }
+    if (type === 'scatter') d.showLine = false;
+    return d;
+  }
+
+  // traits verticaux (cooldowns, morts) : un point en haut, survolable, et son trait dessiné par le greffon
+  function jeuDeReperes(figure, r, g) {
+    const c = couleur(figure, r.couleur);
+    return {
+      type: 'scatter', label: r.libelle, repere: true, pointilles: r.pointilles, epaisseurTrait: r.epaisseur,
+      data: r.points.map(([x]) => ({ x, y: g.y.max })), bulles: r.points.map(([, bulle]) => bulle),
+      borderColor: c, backgroundColor: c, pointRadius: r.rond ? 4 : 2.5, pointHoverRadius: 6,
+    };
+  }
+
+  const traits = {
+    id: 'traits',
+    beforeDatasetsDraw(chart) {
+      const { ctx, chartArea: zone } = chart;
+      chart.data.datasets.forEach((d, i) => {
+        if (!d.repere || !chart.isDatasetVisible(i)) return;
+        ctx.save();
+        ctx.strokeStyle = d.borderColor;
+        ctx.lineWidth = d.epaisseurTrait;
+        ctx.setLineDash(d.pointilles ? [3, 3] : []);
+        chart.getDatasetMeta(i).data.forEach(p => {
+          ctx.beginPath(); ctx.moveTo(p.x, zone.top); ctx.lineTo(p.x, zone.bottom); ctx.stroke();
+        });
+        ctx.restore();
+      });
+    },
+  };
+
+  // texte près d'un point (valeur), sur un liseré de la couleur du fond pour rester lisible ; centré : dans le point
+// (numéro d'essai), de la couleur du fond
+  const etiquettes = {
+    id: 'etiquettes',
+    afterDatasetsDraw(chart, _args, options) {
+      const { ctx } = chart;
+      chart.data.datasets.forEach((d, i) => {
+        if (!d.etiquettes || !chart.isDatasetVisible(i)) return;
+        const points = chart.getDatasetMeta(i).data;
+        ctx.save();
+        ctx.font = d.centrees ? 'bold 10px system-ui, sans-serif' : 'bold 11px system-ui, sans-serif';
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = options.fond;
+        ctx.fillStyle = d.centrees ? options.fond : d.borderColor;
+        ctx.textBaseline = 'middle';
+        points.forEach((p, j) => {
+          const texte = d.etiquettes[j];
+          if (!texte || p.skip) return;
+          const premier = j === 0, dernier = j === points.length - 1;
+          ctx.textAlign = d.centrees ? 'center' : premier ? 'left' : dernier ? 'right' : 'center';
+          const y = d.centrees ? p.y : d.dessous && d.dessous[j] ? p.y + 14 : p.y - 12;
+          if (!d.centrees) ctx.strokeText(texte, p.x, y);
+          ctx.fillText(texte, p.x, y);
+        });
+        ctx.restore();
+      });
+    },
+  };
+
+  const SURVOL = {
+    index: { mode: 'index', intersect: false },
+    point: { mode: 'nearest', intersect: true },
+    x: { mode: 'nearest', axis: 'x', intersect: false },
+  };
+
+  function dessiner(figure) {
+    const g = JSON.parse(figure.querySelector('script[type="application/json"]').textContent);
+    const jeux = g.series.map(s => jeuDeDonnees(figure, s, g)).concat(g.reperes.map(r => jeuDeReperes(figure, r, g)));
+    return new Chart(figure.querySelector('canvas'), {
+      type: g.type,
+      data: { datasets: jeux, labels: g.horizontal ? g.y.etiquettes : g.x.etiquettes },
+      options: {
+        responsive: true, maintainAspectRatio: false, animation: false, indexAxis: g.horizontal ? 'y' : 'x',
+        layout: { padding: { top: 14, right: 8 } },  // étiquettes et points au bord du cadre
+        interaction: SURVOL[g.survol],
+        scales: { x: axe(figure, g.x), y: axe(figure, g.y) },
+        plugins: {
+          legend: {
+            display: g.legende, position: 'bottom',
+            labels: { color: couleur(figure, '--mut|--muted'), usePointStyle: true, boxWidth: 8, boxHeight: 8 },
+          },
+          tooltip: {
+            filter: item => !item.dataset.bulles || item.dataset.bulles[item.dataIndex] != null,
+            callbacks: {
+              title: () => '',
+              label: item => {
+                const bulles = item.dataset.bulles;
+                return bulles ? String(bulles[item.dataIndex]).split('\n') : `${item.dataset.label} : ${item.formattedValue}`;
+              },
+            },
+          },
+          etiquettes: { fond: couleur(figure, '--card|--surface') },
+        },
+      },
+      plugins: [traits, etiquettes],
+    });
+  }
+
+  const figures = [...document.querySelectorAll('div.graphique')];
+  let graphiques = figures.map(dessiner);
+  // palette changée (data-theme) ou mode sombre du système : redessinés avec les couleurs du moment
+  const redessiner = () => { graphiques.forEach(c => c.destroy()); graphiques = figures.map(dessiner); };
+  new MutationObserver(redessiner).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', redessiner);
+})();
+</script>
+<script>
+function ouvrirAncre() {
+  const d = location.hash && document.getElementById(location.hash.slice(1));
+  if (d && d.tagName === "DETAILS") { d.open = true; d.scrollIntoView(); }
+}
+addEventListener("hashchange", ouvrirAncre); addEventListener("DOMContentLoaded", ouvrirAncre);
+</script>
+
+</main>
+</div>
+<script>
+(function () {
+  var nav = document.querySelector('.sommaire'); if (!nav) return;
+  var det = nav.querySelector('details'), petit = window.matchMedia('(max-width: 1100px)');
+  if (petit.matches) det.open = false;
+  var liens = {}; nav.querySelectorAll('a').forEach(function (a) { liens[a.getAttribute('href').slice(1)] = a; });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A' && petit.matches) det.open = false; });
+  var titres = Array.prototype.filter.call(document.querySelectorAll('main h2[id], main h3[id]'),
+                                           function (h) { return liens[h.id]; });
+  function actif() {
+    var courant = titres[0];
+    titres.forEach(function (h) { if (h.getBoundingClientRect().top < 120) courant = h; });
+    Object.keys(liens).forEach(function (k) { liens[k].classList.toggle('actif', courant && k === courant.id); });
+  }
+  window.addEventListener('scroll', actif, {passive: true}); actif();
+})();
+</script>
+</body>
+</html>

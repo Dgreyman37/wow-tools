@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ga-genere" content="2026-10-29T08:45">
+<meta name="ga-version" content="adb28e1">
+<title>Coaching Dibbuk</title>
+<style>
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .badge { font-size: .74rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px;
+           padding: 2px 10px; background: var(--surface); }
+  .badge-verif.ok { color: var(--good); border-color: var(--good); }
+  .badge-verif.alerte { color: var(--warn); border-color: var(--warn); }
+  .badge-verif.non { font-style: italic; }
+  :root { --bg: #f7f6f3; --surface: #ffffff; --text: #1f2328; --muted: #5f6670; --border: #e1e0dc;
+          --accent: #b8860b; --good: #1f7a4d; --bad: #b23b2e; --warn: #9a6400; --row: #faf9f7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #16171a; --surface: #1f2125; --text: #e6e6e3; --muted: #9ba1a8; --border: #33363c;
+            --accent: #e3b341; --good: #5cc48f; --bad: #ef7a6c; --warn: #e0b04f; --row: #23252a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  h2 { font-size: 1.35rem; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.08rem; margin: 26px 0 8px; }
+  a { color: var(--accent); }
+  .meta { color: var(--muted); margin: 0 0 20px; font-size: .95rem; }
+  .lead { background: var(--surface); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 6px; }
+  .lead ul { margin: 6px 0 0; padding-left: 20px; }
+  .note { color: var(--muted); font-size: .92rem; }
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+  th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; vertical-align: top; }
+  td.wrap { white-space: normal; min-width: 240px; }
+  th { background: var(--row); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--good); font-weight: 600; } .mid { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; } .muted { color: var(--muted); }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 8px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  td details { background: none; border: 0; padding: 0; margin: 4px 0 0; }
+  td summary { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  td details p { margin: 4px 0; max-width: 46em; }
+  .faire { display: block; margin-top: 2px; }
+</style>
+<style>
+  .avec-nav { display: grid; grid-template-columns: 230px minmax(0, 1040px); gap: 28px; justify-content: center;
+              padding: 0 16px; }
+  .avec-nav main { max-width: none; margin: 0; padding: 32px 0 64px; }
+  .sommaire { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 32px 0 24px;
+              font-size: .9rem; }
+  .sommaire summary { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+                      font-size: .75rem; margin-bottom: 8px; cursor: pointer; list-style: none; }
+  .sommaire summary::-webkit-details-marker { display: none; }
+  .sommaire ul { list-style: none; margin: 0; padding: 0; }
+  .sommaire li { margin: 0; }
+  .sommaire a { display: block; padding: 4px 10px; border-left: 3px solid var(--border); color: var(--text);
+                text-decoration: none; line-height: 1.35; }
+  .sommaire li ul a { padding-left: 22px; color: var(--muted); font-size: .85rem; }
+  .sommaire a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .sommaire a.actif { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  /* sections bien séparées : un bandeau par grande partie */
+  .avec-nav main > h2, .avec-nav main section > h2 {
+    margin: 64px 0 18px; padding: 12px 16px; font-size: 1.45rem; background: var(--surface);
+    border: 1px solid var(--border); border-left: 6px solid var(--accent); border-radius: 10px; }
+  .avec-nav main > h2:first-of-type { margin-top: 36px; }
+  .avec-nav h2, .avec-nav h3 { scroll-margin-top: 16px; }
+  .avec-nav main > h3 { padding-bottom: 4px; border-bottom: 1px dashed var(--border); }
+  @media (max-width: 1100px) {
+    .avec-nav { display: block; padding: 0; }
+    .avec-nav main { padding: 16px 16px 64px; }
+    .sommaire { position: sticky; top: 0; z-index: 5; max-height: 70vh; padding: 8px 16px; background: var(--bg);
+                border-bottom: 1px solid var(--border); }
+    .sommaire summary { margin: 0; padding: 6px 0; }
+    .sommaire summary::after { content: " ▾"; }
+  }
+</style>
+<style>.ic{display:inline-block;width:1.2em;height:1.2em;border-radius:3px;background-size:cover;vertical-align:-.25em;margin-right:.3em;flex:none}.ic-spec{border-radius:50%}.ic-ability_mage_arcanesurge,.io-ability_mage_arcanesurge,.fi-ability_mage_arcanesurge{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAQUBAQAAAAAAAAAAAAAAAAEFBgcIBAn/xAAxEAACAQMDAwQBAgQHAAAAAAABAgMEBREABhIHITETFCJBMggzFyNCUVJhYnGBkaH/xAAYAQADAQEAAAAAAAAAAAAAAAABBQYEA//EACsRAAECBQIEBgMBAAAAAAAAAAECEQADBBIxISJBUWHwBRNxgZGhcoKx0f/aAAwDAQACEQMRAD8AzrQUlfHM03uRBOzcJDO3wkY5zlj2wf8AV2OfOrO2h08t8lKl43ZaTRxuBJTUsVXxNSmQPVYfIxwDP5qSzH4oD5CdObJSRbQk3DuKhNZbqeTFNR8M+7KfkXOP2UYpyxgsSEHk4790XJKue61LxwO0pgFRMx+bwsrAKpH4EFBhVwqgBQMDOqejoFSVndt/py2C3qIpaWjtF6ztzr399hLjuGV1jFvRIFt0MkQo6eRaeKg5nAfB/a7YHI8mZmOTnA0yWqrFyhajWpLCnVIo46VS8QXkfiSwyxHIyclA7jJPgjupa+dLbD7GjWogpfTjhq3bjKIcn4TMPy4EkFSMFSCPvU06A7Cfcu48pDJDaxI0000fwXgWyygfl8gAoHb4jvnxpxcqy+aAEJ5fLd5eGfmGYL1AJlpDlsDp3kxonoTtxLZ0qslNVQtzMPqL6gHIKxJXOSe+CPvRqL3r9Q+z9t3qu2/cLTdYJ7dO1MVVUIIXsCMkYBH/AJo1MzqDxCbMKwgsdcp4/tE7No62asrCM65H+xnfet5p6wxUVmrJKahytJTUZTjDSxQglWzjLlVLOT/jYnzg6jFyqPSta2yipp3hMUMnuH+KsoVmDfYH7hGc+ABpwu1ILqKw++lZl5QQP6hmPptxLjm2MdwAGwFIc4Ax3l3SvohuDdcaidHt9pPEtLKC0bryJYZPd/xGOOFyQfrVDNmmVuItT171+4cVBWDcdqQOPLv1iM9KdnXTd99ShtkKy8yGlkkDLF6YI5dx/SP+C31rWN5t/wDD3pubBsmrpYdxTRtNSeqilq6VMGQKCCGYjwvnHj++oTX7q2Ps2K5dL7BI1lqqql9vDfPUAElVx44lPYocjjnGBn6HfWSa/ee7NqXy57avU1VNSrNl6eSU8onByssbd8MPph5H3jQqHmJlqqDZLcMCHucEhSunBmfLtpGerqbkIQrbLBGhGdNCenIe8XvNvbo/vxhfOoNrrbduZR7avjpZvSRnTtyKnJBwQD/to1Rdy3rtTclQLnuuySVl2ZQk1VBMIjUY8O4wcv3wT94B850aKZtoZE0AcGWoD2DRwFQQGSsN+REeh9k6bbHtU3uKLbdvjkzzGYgQG/uAe2f89NvXUy0nTOvraConoqmgaOpp5adyjI4cD/rBPbRo1L+HzVzq2V5hJ3DOvERhopq5tZL8wvuGfWMgfqqVa/a21N5yKsV1vET++aIcUlePAEmPpiD3I7HA7aoO6XKsudvheumaeSD+Wkj93448E/ePrRo028RWoTVofRlhuiVG344coNcSJy0jGv0TDWB28nRo0anHMLI//9k=)}.ic-ability_mage_timewarp,.io-ability_mage_timewarp,.fi-ability_mage_timewarp{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAgGBwEEBQL/xAAvEAABAwMDBAAFAgcAAAAAAAABAgMEAAURBhIhBxMxQRQiIzJRCBUWQlJhcZGh/8QAGQEBAQADAQAAAAAAAAAAAAAAAwUBAgcE/8QAKhEAAQMDAwEIAwEAAAAAAAAAAQIDEQAEIQUxQRIGEzJRYXGRsSIjgaH/2gAMAwEAAhEDEQA/AFMgd52V3e4tTqlbisqO7Oc5z5zn3TPafTdp3RS0XaI9fZ9zLr8KQmNJWjY4hQwtWwedi0H5vu/zVNdPtOwJNruV8ud0cgRLcGkhLDAedecdUQlICiABwckn8VcvSPVb2j7hOc05MlagtU0JVc7I5GTFntFKcJkRkhRbeKfCkpO4gcp8KFq401p2zKijrUkjBH4nEwVcHby9xVVH6gFCcHO8V50f0z19dlNF6LqyKXFpAW5MUhLYyMlW4evNQr9UDq7drlelWbvNuUa0R221qkvlwh8pyvn/AFx6yR+aau7dWLcnpTctY6TdZvsiOhLYaaQcxnFKCd76PvbSjO5QI9Yz7pEtRSpN0uUudNmfGSpLy3XnVKClOLUSVKJHnJJouzmkpuy5ellKCiQABkE775wPukW8txcgwPIVGUXOfE3NxZ0lhBO4pbdUkE/nAPniisvQ1Fw/KaK2ctXOo15FMuTtUl0dqKTZ33FMsxZbEhHbkRZbe9l9HoKAIPB5BBBBqcs33SF32xl6bv8AanErSptVqu/xJC8YGxp9G4nPgBzdxxzzVP2p47wKYHpLak2DptO1/sW/d5r67ZYm0J3KaO0d+QgAZ3YPbSR9uVGrtpcsptVOEkKMDCiJPE8EDmRt70wV3kdJycb/AHWrfmpFsuCLq5d5MratLLWpbahcea2s+G5jSTuXnxvySeQFLPFaEj92dnCdKjQNTxn1/Ot1tDqZABwQXEJS40rn+fBBqxun9gvNtU25qXT0pu33DdBmsyGVbHWXOClX9PO0g+QQD6qseqmmG9G6xumnX1uSVRkpejy9+FyYyxltS8cFQHBPOdpoNPUzcOrZQpBIBgkSPXpKTII4AJSdyByyWAh0tCPQkfP9/wAqD31iDFusliK+pyOh1YZWfKkBRCSf74xRXEnTEpkqCUJTj0Tn/tFIb5ts9GDGJIyfU0nfJTia0LI2HZ7LSiQlbiUHHnBUBTw/w8bBoq2N2G+Xe2R2t5ZYYcbKGso3K27kEjJGTzRRXMu0z7jbbSUqIBmaxpaEqUJFQ6PqfWSbkwynWd5AWUAn6ORk84+nXA6+W9D1mN4nSZU+7JaYzOkOlTqm+6UdogYTsAUTgJBzznzRRUjTH3G9QtkoVAJzGJ+Iqg6hIBUBkGlsmcyFZ9UUUV0ZzxmoK/Ea/9k=)}.ic-inv_ability_mage_radiantspark,.io-inv_ability_mage_radiantspark,.fi-inv_ability_mage_radiantspark{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAcFBggDBP/EAC0QAAEEAQMDAwMDBQAAAAAAAAECAwQFEQAGEgchIhQxQRMVUQgyYRYjQrHw/8QAGAEAAwEBAAAAAAAAAAAAAAAAAgQFAQP/xAAgEQACAgICAwEBAAAAAAAAAAABAgADETEhQQQSIlHw/9oADAMBAAIRAxEAPwDK2yNr3G9Nw+ggDks5dkyHSeDKM+S1n/iT2HfTz2t0+2vWWiaav2jKvpTLResL6/QuLWQ2091u4+Uj8dyo9gdSXR7ZdvVUW36eAmJEtJsxu1u1vlSS1CbWMAqxhOPHxJBJOBknU6WazcdO3UuP2Tex0yZD0hyZKWy9ZiOcvzZSjlSGUHKGo6cEqA5EY72EqWhAMfe+ep2WoEc7ngkq6Zbkq5y9qdO4F8K1sqmQTFMKdIj+wnRAg+bZOct/uSMHVM3H0s2xHqjcU1DdyIjgS9JiyH1Ny4jCwPJpPHi7w/yBJPx+SLlA3PtHqA+m1os1F5tUD7ZIrEGLIi1wIS3hCiUyPpKI5pPHkhasYx3kbe+t3WZZqmGv6m29Z+s3FUJJWHYqk/3JcAK8g0sFLqmx+wnIGDokKE4sAIPcIKoyZlS0NjQW86pi2cgNxpC28tOqQFEHGcfB7D/WjU91qoWqLqHPZhFTsOWEzY6u58HRzHf57k6NTLaCrkARY7mj7BVTvzp/VUAvfsEe+dblQJv1uKpUgLI9LIT7r78uCgcJUMkdxrp1K2bv246Ux6yoplxbeUlf3VhyU3zZiiQtxuOolXgtalhxecc+KQCeONKToTuqsMeJtHcSm0MRrJuxqJDhwll8Ecm1KPslePf2BJz79m44iC/bx6K9mXtPethTMG7mQ2S1KZzlMOQSShxHsELcHj2B7Yxb9DYvuNHY/uv2Pp9jmLDpl0j6sba3pBt2dvBtLJV6htx9l1MhgpIcZKErJWFoJTj+fjGdXzfGy5tH1gV1Ily7Cu25UswU1r0KR9WZPcSyEIioWCRy8SlxZJSAD78hr0qp6yFXWEvcH3bb9fHkGNJiRKKJDk2jmRyitqa8yMd1KHiAfnOpqwUG3485frmK6DKLlVDQlEeM2wG+CWwASENAEqcLmCSCVAnA1i+KGIA13DaoDiIX9T1kh3qd5sR2XkwGC8zGGG2VqysoSPwOYGjVG37ZLud63Np6hT6ZMxxaXPfknlhOM/GAMD8Y0aWsuPsYi1RzONc2n1K0EZAJHf8Ag6c+yN438SvRVrmCbAQgpRHmIDyUjIGAVdwO/tnGjRp7xdCVK0VqxkS47k3fdCK0/wDUaU6w0I7C1o5lpsdwhPInAGktvaysbB95ybPkvl3BWFuHCj/I9tGjTnkAKMCbUoCtxKhGiNvpWtalghRHbGjRo1Ac/RiLbn//2Q==)}.ic-inv_alchemy_90_flask_red,.io-inv_alchemy_90_flask_red,.fi-inv_alchemy_90_flask_red{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAAAAUEBgcDAgj/xAAtEAACAQMEAgEDAQkAAAAAAAABAgMEBREABhIhMUEiE2FxkRQjMkJRcoHB0f/EABkBAAMBAQEAAAAAAAAAAAAAAAMEBQEGB//EACoRAAEDAgUDAgcAAAAAAAAAAAECAxEAIQQFEjFBIlHwE2FxgZGx0eHx/9oADAMBAAIRAxEAPwDCdtUtDarpUXC63FZonjIcAFzMXByuTj5Ens56zn1p1sqwWPddVVwUMVXSkRM0D1BAEnAZYDBwcYPvWYUFBdLvTgicJApwhmYgMft+vnxrTNu2TdNpttM9Jc7VXxBFL07TRxPAx8ITKoDdnwjH7jUN/BKVJ9TrMcwLV6Cxn6G4DbOlqOQCZO5vcD4VFpNu7d2/d50uzUNxrZkSop46mbgoUHvsfEFjjBYjIBGP63q7bpr6elW4XKnq7VR8VSJ/oARFRhVVFU4JwPiB116GdVylt5tt7fdu5a0m4Sn91QUsokqZyVxxJIxhlwCxXiB0OTEAUneDz1N8aOSOOnWGZi9JTZWmppWOXSJM4UKAFPslWzqwwlTQBJud/wBdq5PEuB1StIhMmPr5vNRdxXq7V95qK621Mltpp25LT07tEq+hkIQC2AMn2dGpVuiiekX6qfIFh2fWTjRoC8QkKIINUGsuLjaVhe4H2rX9qbP23VU0b7Z3BElSq8QaWqWTiAPBjcEH3noe+9dN3X/cmx/2WmqKvbV6ujiRqWGS3FJ6PkmBPyDcVJOOKkdjJ6ByfnuiroKgqlaxhqB/BVoMHPrnjz/cOx99WG1V1wqJzbq55J5pZAImkkBkEh6wWY5IPXZz6x50yEtujSUwR586nOlQ60qkHyCOPbjtawl2+63SG9VV6lrp3u8zl2rajuaN8dyrnoOMhVP8oyVwcYXSSxCnacRSLExIp2dPhKSTyYtn4tkeD58ZHk8nSVJqijkXEwd42U+eRJ/7pyYbrc5cTxIruAkcEMQVEAUKqhR6wAO8n3570q88GFAmq2W5W5mCCGxcAn++b1BoKqvSDhTVojjUkYkODn36P4/xo0rV4BlZvrqynAEbYGPWjTw0ETapqXHUDTrIikNXEsVRLGuSEkIBP5I09t0kk9uhd3PJVdM4HYU9Zz9jj9NGjQE7itYuFj2Fe6uVjFS1ICpK44sVGMlQSG/PWptPeriyqq1DRsw4l0+LYxjzo0ax5CVRqE0XAYp5l8JbUQCDMc7fmllFTJLCSXkXicAKfsD/AL0aNGmlb1FdMLNf/9k=)}.ic-racial_troll_berserk,.io-racial_troll_berserk,.fi-racial_troll_berserk{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAYEBQcDCP/EAC4QAAIBAwMDAgUDBQAAAAAAAAECAwQFEQAGEgcTITFBFBUiMmEjQlFxcoGhwf/EABkBAAMBAQEAAAAAAAAAAAAAAAMFBgQHAv/EAC0RAAIABAQEAwkAAAAAAAAAAAECAAMRIQQSMUEFUbHwBnGBExQiIyRhweHx/9oADAMBAAIRAxEAPwBWuXUO1xUtJYdtWuC1LWVEa/MJKyOeYQ8xkywBCiE/dwDknGG8E6mXkWK4bqkotwbqegsovDivo7FAOwjqqp8ZGvFu0JAYXdfQcmIyU8Q6DpTt/dUVFPtDcVe1XV10cAimhUGFvLvIceyLgnAA8j3OtZ6s7qsO19qz9Mdi2ynra+UpRSFRkGeQYJdx5eU4LN5yADkjGsWHWStPdbKdbUvuTWGHEi7LkxYYTgb5uXKnSEjc9ds28V++Kzb26Htb2eKEWEW2q4RTyIihpGPrKpPJQMlRhm+5idYvT2jd/VCuttBSsbhWq3ZTuMASMe7HzhcAZc+mPJxrSN47PpdjWSGzNeKSejq6Z2qeVuSepp6tFy3wz+CqyFguPq4s48E4IVL9fLp02vMVrsd6lFTT0SQVszQrxppmQNJHEyfWQjHjhsjIwSDoslXSYcrVrpUQA4nCT8EqYaX8e5+2npfn6Q21O1NndLe1tneextx3q7NEtU9ZaLk7QSBxjGAU4kFSCMH0Byc6NQ5eoVFUWayVm55aWavqbck2aipPJVLv4HI5wW5EDJxywPAGjXohyakmvmYWezbs/qHnpluGnsPSGt+X9ukvNVUCiFSPMsELqT3Ex5LM5YDAOSoHniNJ9iN0oL1V0W1rZFa6ukoKieGuvKhmeGMjvdlM4RicAlySQCcjB1nuzN7V0dOiUU7RurfpsEHdiz4PBvVQfcA4PrrYN+zzUW1bjuGjjMtVarWytF2uQPxE4Rg38AxCXP4Of41iwc7J8pl0tfnYDrFx4g4RLeY2PSbmWaSQBsKb92impLbvKqrK643hqr51bpoqVZqp41+DWapEHOkjRQGbuAjuk/Tg4BOCEDfWxpUobheLJXQ1VJTVFTSRlZCytHGZcMGJJLMYpCfOMkY0o1G8b9VKthqb5XVVpbkvZkk+4NJ3sM33MO4eeCccvOr7pruSah2vurbNfKGplo3rKNn/AGSxyKHC/wByM39CPydO2kOpLk/ywialzUUZUFAexeFrdEdNWXbjIXljpYYqWFgfBSONVyMexOT/AJ0aorhVyRvFDGQBHCin3ycedGtAlCFxDbGGHp4oju6R4DKs/HDecjkPXW376qqqLcW8NrrUy/LKK01HCMt5dnVGLuf3MA3EewUAAeuTRqTnn6o+Y6iOoYVQ3B0qNFf8R5wqhloqgkmTswtn8+n/AAakXGaWK6zLHIyh43DAe4ZfI/1o0atBdLxzc2jmaSOomldywIbiMY9MDRo0aESYBH//2Q==)}.ic-spec-MageArcane,.io-spec-MageArcane,.fi-spec-MageArcane{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACQAJAMBIgACEQEDEQH/xAAZAAACAwEAAAAAAAAAAAAAAAAFBwIDBgT/2gAIAQEAAAAAxfJDaJ9lcossJJVTvCG7SWcVDsWDQRI3/8QAGQEAAgMBAAAAAAAAAAAAAAAAAgMBBAYH/9oACAECEAAAAOnFBHQWjC//xAAZAQACAwEAAAAAAAAAAAAAAAAEBQEDBgf/2gAIAQMQAAAA5zU4VxoxCtN//8QAKRAAAgICAQMCBgMBAAAAAAAAAQIDBAURAAYSITFBExQVIkJxUWGBEP/aAAgBAQABPwCTFdLYZESeGzbtfDQmJgI4x3DfqPLcsZ5zGI4K1WsmvCxRjf8ApO+Y6gl+QmTJx1zv8ye48FLGUabw5CU2kYbB+EoP7B5mIsFHflFZ2aI6I7l8jftyjkPqWHryW8dHNOirXrkkqX0PG/6Uep4mMw/zUXdM7wpTexZlUaL/AHdoCD+ByLG05YbpTJRSukDyxLGCQwj8nv3rXHFKCJ41d/k+yIzxH7nrGVQwkQnyU4ej605LpdgdSfDIO4cx1mHMxUDjZjWswQMgruNxSADbkH2J9w3KeQaVEWpjJpJYlKPGo+JG8Mh2yHXkDfpy1VevBI0XTtilXYD5l/uJKA7Kgt4HINymbIxRihDZBR5XYyzOgGikanQ/3ljqFq7LXoI8NeJe1F1snzss39nnRdeqmDvyNWllklh+CoQkNtvRR++fU0wFGSpGYpLUpBcjysf7Puw5GLN3ppabwkmVzIrM7DwD5lkJ9h6DmY6nFWoKMEyuUQI0/aBtQNBI/wCByzk3klLb5ayM+J6KwopBY2sxyGR/y5hZHvZiFZzsM6jX7IHOv8var2Pp0ASOvHEmlUa2F8AHl2xK8rlj/wA//8QAJhEAAgAEBQMFAAAAAAAAAAAAAQIAAxEhBAUSEyIQUZExUmFxgf/aAAgBAgEBPwBBLVF3Bqbz4pBEp2X2/QEGVLqbp+iJcosCo5Hj6/IqYVAF00UBGNe1O94fH5cHYby2MYZm0pyN2FYxTuMrsxFTfp//xAAjEQACAgAFBAMAAAAAAAAAAAABAgMRAAQSIUEFEyJREDHR/9oACAEDAQE/ADKpll76SuyMedQ29AYzkTzMumaQAMPEJR97N94Tq2SjRUOYntRXP5idl78sMUJcrJpVbrbkkjCGWYiKKNi+sq1sT4+zd4Xo66RaWeSTZxk0TtZ1tI1W+/OOiKKuh8f/2Q==)}</style>
+</head>
+<body>
+<div class="avec-nav">
+<nav class="sommaire"><details open><summary>Sur cette page</summary><ul><li><a href="#s-ce-que-tu-fais-bien">Ce que tu fais bien</a><ul><li class="sous"><a href="#s-arcane-surge-touch-of-the-magi-et-bijou-cal-s-ensemble">Arcane Surge, Touch of the Magi et bijou calés ensemble</a></li><li class="sous"><a href="#s-potion-et-time-warp-d-s-le-pull">Potion et Time Warp dès le pull</a></li><li class="sous"><a href="#s-aucune-mort-sur-les-4-kills-consommables-complets">Aucune mort sur les 4 kills, consommables complets</a></li></ul></li><li><a href="#s-tes-1-axes-de-progr-s">Tes 1 axes de progrès</a><ul><li class="sous"><a href="#s-lance-berserking-avec-arcane-surge-deux-fois-par-combat">Lance Berserking avec Arcane Surge, deux fois par combat</a></li></ul></li><li><a href="#s-garder-en-t-te">À garder en tête</a></li></ul></details></nav>
+<main>
+<p class="badges"><span class="badge">Généré le 29/10/2026 à 08:45</span><span class="badge" title="Commit du code guild_analyser qui a produit cette page">Version adb28e1</span><span class="badge badge-verif non" title="Pas encore relue par le vérificateur (intégrité des données, anomalies)">Non vérifié</span></p>
+<style>
+  .accroche { font-size: 1.1rem; background: var(--surface); border: 1px solid var(--border);
+              border-left: 6px solid var(--good); border-radius: 10px; padding: 14px 18px; margin: 18px 0; }
+  .forts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .fort { background: var(--surface); border: 1px solid var(--border); border-top: 4px solid var(--good);
+          border-radius: 10px; padding: 12px 14px; }
+  .fort h3 { margin: 0 0 6px; font-size: 1rem; }
+  .fort p { margin: 0; color: var(--muted); }
+  ol.conseils { list-style: none; counter-reset: c; padding: 0; margin: 0; }
+  ol.conseils > li { counter-increment: c; position: relative; background: var(--surface);
+                     border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px 14px 62px; margin: 0 0 14px; }
+  ol.conseils > li::before { content: counter(c); position: absolute; left: 16px; top: 14px; width: 32px; height: 32px;
+                             border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700;
+                             display: flex; align-items: center; justify-content: center; }
+  ol.conseils h3 { margin: 4px 0 10px; font-size: 1.08rem; }
+  .ligne { margin: 6px 0; } .ligne .etiq { display: inline-block; min-width: 92px; color: var(--muted);
+          font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; }
+  .gain { float: right; font-size: .85rem; border: 1px solid var(--border); border-radius: 999px; padding: 2px 10px; }
+  .gain.ok { color: var(--good); border-color: var(--good); }
+  .objectif { background: var(--row); border-radius: 8px; padding: 8px 12px; margin-top: 8px; }
+  .preuve { color: var(--muted); font-size: .86rem; margin-top: 8px; }
+  .statut-corrige { color: var(--good); font-weight: 600; } .statut-progres { color: var(--warn); font-weight: 600; }
+  .statut-la { color: var(--bad); font-weight: 600; }
+</style>
+<h1>Ton coaching — Dibbuk</h1>
+<p class="meta"><i class="ic ic-spec ic-spec-MageArcane" title="Arcane Mage"></i>Arcane Mage · raid du 2026-10-28 · <a href="Dibbuk_leger.html">ta fiche détaillée</a></p>
+<p class="accroche">Tes 4 kills du soir sont propres : Arcane Surge, Touch of the Magi et ton bijou partent ensemble, au pull comme toutes les 90 s environ, et tu n&#x27;es mort sur aucun kill. Le seul vrai gain facile : ton racial Berserking, lancé une seule fois par combat et jamais pendant Arcane Surge.</p>
+<h2 id="s-ce-que-tu-fais-bien">Ce que tu fais bien</h2><div class="forts"><div class="fort"><h3 id="s-arcane-surge-touch-of-the-magi-et-bijou-cal-s-ensemble"><i class="ic ic-ability_mage_arcanesurge"></i>Arcane Surge, <i class="ic ic-inv_ability_mage_radiantspark"></i>Touch of the Magi et bijou calés ensemble</h3><p>Sur Nek&#x27;zali (4 <i class="ic ic-ability_mage_arcanesurge"></i>Arcane Surge à 0:03, 1:40, 3:14, 4:46), <i class="ic ic-inv_ability_mage_radiantspark"></i>Touch of the Magi part à 0:01, 1:38, 3:12 et 4:46 et <i class="ic ic-inv_alchemy_90_flask_red"></i><a href="https://www.wowhead.com/fr/item=250215">Freightrunner&#x27;s Flask</a> à 0:01, 1:38, 3:12, 4:44 : le bijou et Touch précèdent Surge de 1 à 2 s, comme le veut la rotation. Même schéma sur Entombed Sentinels, Vashnik et The Lost Explorers (4 Arcane Surge chacun).</p></div><div class="fort"><h3 id="s-potion-et-time-warp-d-s-le-pull">Potion et <i class="ic ic-ability_mage_timewarp"></i>Time Warp dès le pull</h3><p>Light&#x27;s Potential et <i class="ic ic-ability_mage_timewarp"></i>Time Warp sont lancés à la première seconde sur Nek&#x27;zali, Entombed Sentinels et Vashnik, en même temps que le premier <i class="ic ic-ability_mage_arcanesurge"></i>Arcane Surge.</p></div><div class="fort"><h3 id="s-aucune-mort-sur-les-4-kills-consommables-complets">Aucune mort sur les 4 kills, consommables complets</h3><p>0 mort sur Nek&#x27;zali, Entombed Sentinels, Vashnik et The Lost Explorers. Flacon, nourriture et rune d&#x27;augmentation présents sur 5 combats sur 5. Meilleurs centiles : Entombed Sentinels 56 (84 en tenant compte de ton ilvl) et Vashnik 50 (78).</p></div></div>
+<h2 id="s-tes-1-axes-de-progr-s">Tes 1 axes de progrès</h2><ol class="conseils">
+<li><h3 id="s-lance-berserking-avec-arcane-surge-deux-fois-par-combat">Lance <i class="ic ic-racial_troll_berserk"></i>Berserking avec <i class="ic ic-ability_mage_arcanesurge"></i>Arcane Surge, deux fois par combat</h3><p class="ligne"><span class="etiq">Pourquoi</span>Dans la rotation simc, <i class="ic ic-racial_troll_berserk"></i>Berserking se lance quand <i class="ic ic-ability_mage_arcanesurge"></i>Arcane Surge et le debuff de <i class="ic ic-inv_ability_mage_radiantspark"></i>Touch of the Magi sont actifs (actions+=/berserking,if=(buff.arcane_surge.up&amp;debuff.touch_of_the_magi.up)). Chez toi il est lancé une seule fois par combat, à 0:43 (Nek&#x27;zali, Entombed Sentinels), 1:46 (Vashnik), 3:07 (The Lost Explorers) et 0:09 puis plus jamais sur Sszorak : jamais pendant un Arcane Surge (lancés à 0:03, 1:40, 3:14, 4:46 sur Nek&#x27;zali). Son recharge est de 3 min : un lancer au pull et un vers le 3e Arcane Surge (~3:10) tiennent dans un combat de 5 min.</p><p class="ligne"><span class="etiq">Comment</span>Au pull, lance <i class="ic ic-racial_troll_berserk"></i>Berserking juste après <i class="ic ic-inv_ability_mage_radiantspark"></i>Touch of the Magi, dans la même séquence que ton bijou, <i class="ic ic-ability_mage_timewarp"></i>Time Warp et la potion. Le deuxième est prêt à ~3:00 : lance-le au 3e <i class="ic ic-ability_mage_arcanesurge"></i>Arcane Surge (vers 3:10). Une macro /cast Berserking dans ta séquence de burst t&#x27;évite d&#x27;oublier.</p><p class="objectif"><strong>Objectif au prochain raid :</strong> <i class="ic ic-racial_troll_berserk"></i>Berserking lancé 2 fois sur un combat de 5 min, les 2 fois pendant <i class="ic ic-ability_mage_arcanesurge"></i>Arcane Surge (aujourd&#x27;hui : 1 fois, 0 sur 4 dans la fenêtre).</p><p class="preuve">Lancers du log, 4 kills : <i class="ic ic-racial_troll_berserk"></i>Berserking à 43 s, 43 s, 106 s, 187 s ; <i class="ic ic-ability_mage_arcanesurge"></i>Arcane Surge à ~2, ~97, ~190, ~285 s. Gain non chiffré (pas de simulation sur fiche légère) : 10 % de hâte pendant 12 s, pas énorme, mais gratuit.</p></li>
+</ol>
+<h2 id="s-garder-en-t-te">À garder en tête</h2><p class="note">Spé Mage Arcane pas encore vérifiée par l&#x27;outil et fiche légère (pas de références ni de simulation) : lis ces chiffres comme des pistes. Le constat « bijou hors de Berserking » de la fiche est écarté : ton bijou est bien calé sur Arcane Surge, c&#x27;est Berserking qui ne l&#x27;est pas. La piste rune Vantus sur Sszorak est écartée aussi. Sszorak (meilleur essai à 16,3 %, mort à 3:27) : je n&#x27;en tire pas de conseil de rotation.</p>
+
+</main>
+</div>
+<script>
+(function () {
+  var nav = document.querySelector('.sommaire'); if (!nav) return;
+  var det = nav.querySelector('details'), petit = window.matchMedia('(max-width: 1100px)');
+  if (petit.matches) det.open = false;
+  var liens = {}; nav.querySelectorAll('a').forEach(function (a) { liens[a.getAttribute('href').slice(1)] = a; });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A' && petit.matches) det.open = false; });
+  var titres = Array.prototype.filter.call(document.querySelectorAll('main h2[id], main h3[id]'),
+                                           function (h) { return liens[h.id]; });
+  function actif() {
+    var courant = titres[0];
+    titres.forEach(function (h) { if (h.getBoundingClientRect().top < 120) courant = h; });
+    Object.keys(liens).forEach(function (k) { liens[k].classList.toggle('actif', courant && k === courant.id); });
+  }
+  window.addEventListener('scroll', actif, {passive: true}); actif();
+})();
+</script>
+</body>
+</html>

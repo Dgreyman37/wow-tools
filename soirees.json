@@ -19,6 +19,235 @@
  ],
  "soirees": [
   {
+   "date": "2026-10-28",
+   "saison": "midnight-2",
+   "page": "raid_JYPGyjAh3648KbXd.html",
+   "zone": "The Venomous Abyss",
+   "difficulte": "Héroïque",
+   "tues": 4,
+   "affrontes": 5,
+   "essais": 11,
+   "boss": [
+    {
+     "nom": "Nek'zali the Soulcoiler",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Entombed Sentinels",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 5,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Vashnik the Malignant",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Lost Explorers",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 2,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "Sszorak",
+     "difficulte": "Héroïque",
+     "tue": false,
+     "essais": 2,
+     "meilleur_pv": 16.32
+    }
+   ],
+   "joueurs": [
+    {
+     "nom": "Fabi",
+     "personnage": "Fabi",
+     "role": "tank",
+     "classe": "Paladin",
+     "spec_fr": "Protection",
+     "pu": true,
+     "allie": null,
+     "page": "Fabi_soiree.html"
+    },
+    {
+     "nom": "Louac",
+     "personnage": "Louac",
+     "role": "tank",
+     "classe": "Paladin",
+     "spec_fr": "Protection",
+     "pu": false,
+     "allie": null,
+     "page": "Louac_soiree.html"
+    },
+    {
+     "nom": "Hektelion",
+     "personnage": "Hektelion",
+     "role": "soigneur",
+     "classe": "Paladin",
+     "spec_fr": "Sacré",
+     "pu": true,
+     "allie": null,
+     "page": "Hektelion_soiree.html"
+    },
+    {
+     "nom": "Ingolmo",
+     "personnage": "Ingolmo",
+     "role": "soigneur",
+     "classe": "Priest",
+     "spec_fr": "Sacré",
+     "pu": false,
+     "allie": null,
+     "page": "Ingolmo_soiree.html"
+    },
+    {
+     "nom": "Jalyne-Restauration",
+     "personnage": "Jalyne",
+     "role": "soigneur",
+     "classe": "Shaman",
+     "spec_fr": "Restauration",
+     "pu": false,
+     "allie": null,
+     "page": "Jalyne-Restauration_soiree.html"
+    },
+    {
+     "nom": "Кайэаль",
+     "personnage": "Кайэаль",
+     "role": "soigneur",
+     "classe": "Druid",
+     "spec_fr": "Restauration",
+     "pu": true,
+     "allie": null,
+     "page": "Кайэаль_soiree.html"
+    },
+    {
+     "nom": "Alats",
+     "personnage": "Alats",
+     "role": "DPS",
+     "classe": "Warrior",
+     "spec_fr": "Armes",
+     "pu": false,
+     "allie": null,
+     "page": "Alats_soiree.html"
+    },
+    {
+     "nom": "Armagøn",
+     "personnage": "Armagøn",
+     "role": "DPS",
+     "classe": "Shaman",
+     "spec_fr": "Amélioration",
+     "pu": true,
+     "allie": null,
+     "page": "Armagøn_soiree.html"
+    },
+    {
+     "nom": "Breathnight",
+     "personnage": "Breathnight",
+     "role": "DPS",
+     "classe": "Rogue",
+     "spec_fr": "Finesse",
+     "pu": true,
+     "allie": null,
+     "page": "Breathnight_soiree.html"
+    },
+    {
+     "nom": "Côrnus",
+     "personnage": "Côrnus",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévastation",
+     "pu": false,
+     "allie": null,
+     "page": "Côrnus_soiree.html"
+    },
+    {
+     "nom": "Dibbuk",
+     "personnage": "Dibbuk",
+     "role": "DPS",
+     "classe": "Mage",
+     "spec_fr": "Arcanes",
+     "pu": true,
+     "allie": null,
+     "page": "Dibbuk_soiree.html"
+    },
+    {
+     "nom": "Endhaim",
+     "personnage": "Endhaim",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "pu": true,
+     "allie": null,
+     "page": "Endhaim_soiree.html"
+    },
+    {
+     "nom": "Fymrynn",
+     "personnage": "Fymrynn",
+     "role": "DPS",
+     "classe": "Druid",
+     "spec_fr": "Farouche",
+     "pu": true,
+     "allie": null,
+     "page": "Fymrynn_soiree.html"
+    },
+    {
+     "nom": "Gruskastarn",
+     "personnage": "Gruskastarn",
+     "role": "DPS",
+     "classe": "Shaman",
+     "spec_fr": "Élémentaire",
+     "pu": true,
+     "allie": null,
+     "page": "Gruskastarn_soiree.html"
+    },
+    {
+     "nom": "Jalyne-Élémentaire",
+     "personnage": "Jalyne",
+     "role": "DPS",
+     "classe": "Shaman",
+     "spec_fr": "Élémentaire",
+     "pu": false,
+     "allie": null,
+     "page": "Jalyne-Élémentaire_soiree.html"
+    },
+    {
+     "nom": "Mécafree",
+     "personnage": "Mécafree",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
+     "allie": null,
+     "page": "Mécafree_soiree.html"
+    },
+    {
+     "nom": "Métaforme",
+     "personnage": "Métaforme",
+     "role": "DPS",
+     "classe": "Druid",
+     "spec_fr": "Farouche",
+     "pu": false,
+     "allie": null,
+     "page": "Métaforme_soiree.html"
+    },
+    {
+     "nom": "Tunnelvision",
+     "personnage": "Tunnelvision",
+     "role": "DPS",
+     "classe": "Warrior",
+     "spec_fr": "Fureur",
+     "pu": true,
+     "allie": null,
+     "page": "Tunnelvision_soiree.html"
+    }
+   ]
+  },
+  {
    "date": "2026-10-22",
    "saison": "midnight-2",
    "page": "raid_6kqwQJcXZrn4PWY1.html",
