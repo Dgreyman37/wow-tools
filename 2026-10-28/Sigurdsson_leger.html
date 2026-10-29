@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ga-genere" content="2026-10-29T09:30">
+<meta name="ga-version" content="d4def6a+modifs">
+<title>Mon tank Sigurdsson</title>
+<style>
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .badge { font-size: .74rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px;
+           padding: 2px 10px; background: var(--surface); }
+  .badge-verif.ok { color: var(--good); border-color: var(--good); }
+  .badge-verif.alerte { color: var(--warn); border-color: var(--warn); }
+  .badge-verif.non { font-style: italic; }
+  :root { --bg: #f7f6f3; --surface: #ffffff; --text: #1f2328; --muted: #5f6670; --border: #e1e0dc;
+          --accent: #b8860b; --good: #1f7a4d; --bad: #b23b2e; --warn: #9a6400; --row: #faf9f7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #16171a; --surface: #1f2125; --text: #e6e6e3; --muted: #9ba1a8; --border: #33363c;
+            --accent: #e3b341; --good: #5cc48f; --bad: #ef7a6c; --warn: #e0b04f; --row: #23252a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  h2 { font-size: 1.35rem; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.08rem; margin: 26px 0 8px; }
+  a { color: var(--accent); }
+  .meta { color: var(--muted); margin: 0 0 20px; font-size: .95rem; }
+  .lead { background: var(--surface); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 6px; }
+  .lead ul { margin: 6px 0 0; padding-left: 20px; }
+  .note { color: var(--muted); font-size: .92rem; }
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+  th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; vertical-align: top; }
+  td.wrap { white-space: normal; min-width: 240px; }
+  th { background: var(--row); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--good); font-weight: 600; } .mid { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; } .muted { color: var(--muted); }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 8px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  td details { background: none; border: 0; padding: 0; margin: 4px 0 0; }
+  td summary { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  td details p { margin: 4px 0; max-width: 46em; }
+  .faire { display: block; margin-top: 2px; }
+</style>
+<style>
+  .avec-nav { display: grid; grid-template-columns: 230px minmax(0, 1040px); gap: 28px; justify-content: center;
+              padding: 0 16px; }
+  .avec-nav main { max-width: none; margin: 0; padding: 32px 0 64px; }
+  .sommaire { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 32px 0 24px;
+              font-size: .9rem; }
+  .sommaire summary { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+                      font-size: .75rem; margin-bottom: 8px; cursor: pointer; list-style: none; }
+  .sommaire summary::-webkit-details-marker { display: none; }
+  .sommaire ul { list-style: none; margin: 0; padding: 0; }
+  .sommaire li { margin: 0; }
+  .sommaire a { display: block; padding: 4px 10px; border-left: 3px solid var(--border); color: var(--text);
+                text-decoration: none; line-height: 1.35; }
+  .sommaire li ul a { padding-left: 22px; color: var(--muted); font-size: .85rem; }
+  .sommaire a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .sommaire a.actif { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  /* sections bien séparées : un bandeau par grande partie */
+  .avec-nav main > h2, .avec-nav main section > h2 {
+    margin: 64px 0 18px; padding: 12px 16px; font-size: 1.45rem; background: var(--surface);
+    border: 1px solid var(--border); border-left: 6px solid var(--accent); border-radius: 10px; }
+  .avec-nav main > h2:first-of-type { margin-top: 36px; }
+  .avec-nav h2, .avec-nav h3 { scroll-margin-top: 16px; }
+  .avec-nav main > h3 { padding-bottom: 4px; border-bottom: 1px dashed var(--border); }
+  @media (max-width: 1100px) {
+    .avec-nav { display: block; padding: 0; }
+    .avec-nav main { padding: 16px 16px 64px; }
+    .sommaire { position: sticky; top: 0; z-index: 5; max-height: 70vh; padding: 8px 16px; background: var(--bg);
+                border-bottom: 1px solid var(--border); }
+    .sommaire summary { margin: 0; padding: 6px 0; }
+    .sommaire summary::after { content: " ▾"; }
+  }
+</style>
+<style>.ic{display:inline-block;width:1.2em;height:1.2em;border-radius:3px;background-size:cover;vertical-align:-.25em;margin-right:.3em;flex:none}.ic-spec{border-radius:50%}.ic-ability_bullrush,.io-ability_bullrush,.fi-ability_bullrush{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAAAAUEBgcCAwj/xAAuEAACAQMDAgUDAwUAAAAAAAABAgMEBREAEiEGEyIxQVFhBxVxFDJSQqGxwdH/xAAXAQADAQAAAAAAAAAAAAAAAAACAwQF/8QAIREAAgICAgIDAQAAAAAAAAAAAQIAAxExBBIhYSJBkfD/2gAMAwEAAhEDEQA/APk+it5klUTNLHCxBDqRtA9j/wB07h6dgap2LLG6527d+WyTgYx5g8fIzrwtdbSi2OJqV3MIwJo5drRnPt/Upz8HWi2Ort0VhrLZNalqKZZOwtHJ2SP2blqBJgssoYZ/jsODnOo7bCNy6usAKV37md3zpqoo1EgheNfLwtkZ/wAg/kaUWuigqbilDV136PutsSdssiMTxuA52/I8vnW41lmU9J007xXeOjmmV5q9ZY6lIRlVLbDgtGGJGVPhUKeScaoX1J+n9VaJIpqWsopI6iftwwtOq1BByAxjGRtyDhgSCMHQ13fLqTuNtrVqy2PIlIr7XU0FwqaCvj2VNPIY5FJzgj59R86NMusmla+MJZA8yRIkjfyZVAz/AGGjT+3uQkAHE76eRZKNgyBlSZndpP2gccAepJ/3q00ryXIR2Wn3PLcJViLtyduQZZD7KqgjP51WenlElBUhn8CKx2gc4J8vyxAHwM6un0+W3Qbeoq0TRT000tGvZJwJRDmIng7UJ37gM8KePTS7yFHYiNpJ8iTBV0djrvt1x6brKeoiDd2toalk7aFy26JD4DgPCpXHiwR8iv8AXN6W5yyxpLEtClS5pWNOsVRJGudhkCgDgYGAAMk8a0rqian6nudPDHJ9vgw0xr5Z0ljjEUYds4ORk7iPUkqMeWsh6sp5WmSV4zG7IrFCMEZ9SfnzxqHspsH9+TX4vFRq3dMkD6iO8VYrrlNUDIBIHPJOB5n8+ejUIgq7DOedGtAETGdcsZ3R1FRDAe1O6B+SAeM6aWPqG/WeSZrTeKyhMwzJ2ZMBufMj39j5jRo03GYnJGpFq75c6q4NV1FT3ajcHaUooZz7tgc6kXbqC6XZcV9R3T6nGCdGjQmitgXKjI0ZVxuVfWDWjkK2xnwd7iKeV1kwDgaNGjRgCSljnc//2Q==)}.ic-ability_druid_mangle2,.io-ability_druid_mangle2,.fi-ability_druid_mangle2{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAgICAwAAAAAAAAAAAAAAAAcFBgQIAQID/8QAMBAAAQMDAwIEBAYDAAAAAAAAAQIDBAAFEQYSITFBBxMiYRQyUaEVFiNCcZFTcoH/xAAZAQADAAMAAAAAAAAAAAAAAAACBQYDBAf/xAAuEQACAAQEAwUJAAAAAAAAAAABAgADBBEFEiFRMUGRBhNhodEUFSJCUlNxkrH/2gAMAwEAAhEDEQA/ANOXnFPOqcWtSlrUVKUo5JP1NZ1msk+6u7YzYDaeVurO1CR7mrFomw6PujqWbpqeRElK4S0YPoJ+m/fz9j7U2754SXmXYGlWGTGuNpSPW3bcof8AcLbUAofc9zS+qrDKORRqedjYesU2CYPTVRL1MwAclBALHYsbhRuTc7C8KjT7+mLROEG4sovzDygl1Ch5baCeMoWPUD7jj+qkdfaXh2aEzfrDCblWOQsoy+lReiOf43cEZ9ld8Y4IrtL07pW1yUQ7k1IZkLVs2Ole4Hp0AppaIcsMlEi0y8LhTUBDzLilYW3gJPzdwADn681p+2qtnsxG5GnlDit7O1EtiEaSpHyKwLD9rknxv0im6TuVkk2KM5d4D3xOwAKjSXGUqTgYyEq5I6ZPOAB2or2naLkW2fIhxFImQm3CIjqVgZZ/bnPOcdT3PNFGZ1OdQ/nCP3Xin2T0hHBXPPNPLwR1XqwtW4Wu4/qwS82pUlw7VtYQpDZVglO3CyknIAJHAFIqrDonVNw0pdPj4KWHgpBQ7HfSVNuJIPUAggjPBBBH90zqJInJlMJKeaJbfFwjbnxM0a7re327UMt6Kuc0N0xphxCm8oSSD5g4KycJ4Pelswh/TN3k2+eoecEjehpQW2jcARsJBzx9cGp3TniEzcrTZfwp2CthABlQ5EooU0nI3MjcOQMn1AHOOewMnqm06cvunyYLjLdxix1OiXFT1XjdsWScK7p/gf8AKm2WokN3XFetosMNelmZTUKWUcxYG3LX1jDg3aO/FQty8tR1dNi4yHD/ADuPNFU+0xFXC3syUqU2sp2uJIHCxwce1FBln/T/ACG5oMKY3FcQNijXHgbG1/xpGvlcHrRRVYOMcyhg+GDDUyO+xIQlxDMhlxAKQcKVuB69flHHTin3ZlI/I7gbYZZ8h0MI8tO3hxGVK/2O489uwFFFKMU0UEbxQULGyiFBcZkmHJKI7qkBz1qweqskZ+wooookAyiMbk5jH//Z)}.ic-inv_ability_lightsmithpaladin_holybulwark,.io-inv_ability_lightsmithpaladin_holybulwark,.fi-inv_ability_lightsmithpaladin_holybulwark{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAgIDAQEAAAAAAAAAAAAAAAcGCAEDBAIF/8QAMhAAAQMDAwMDAgILAAAAAAAAAQIDBAAFEQYSIQcTQSIxgVFhFLEVIzJCVHFygpGhwf/EABgBAQEBAQEAAAAAAAAAAAAAAAYFAwQC/8QAKBEAAQIFAwQBBQAAAAAAAAAAAQACAwQRIbESUXEFMTORIyQyYXKB/9oADAMBAAIRAxEAPwCqGkJ64Wp4lxWkvKbcU4rckLySk8kKyDyec10QrLczMTFRbJi3ONoTGWSoEcEccgjnP3rp0ZIhWuel2fC/EiXbZDTQyRtcWFISr74PNWv1LcpTc+GxbruqNGMJkIQhwgEdlvbgfPFSZ2cdCdYW55VSWlREYKm9TgKu126davtMCLcZ+mri3FfSVBaWt5RjjC0pyUHzhQHFRtTqIGirlDl2R5D0qUz2ZjjakbdgWVIGQAc5HxViG9T3uPLBgTJMfavYrYo7lEH3UfJNe+urcvU/S7SEOUtyVPlahb9avUrZ2VhfxynP8q45aeLnAPFu9a7VK2jywaNTD+PdlVGPMuERoJYky2EL9YCHFICvGePf2xn7UVvvsebFuC4Erer8IVMtpX+4kLUdoB9hkk/JopA1wcAQVILaGhU3sOnnZtvtMvtkobgtr3YPmVj8s075y3LlpixXBCUoDkRMVzaDgPM4ZVnPn9WhX94PmlfYNaHT/T9q3JaaV+MsyAVKQCobZSj6Sf2T/wApudFJUa8WNm2zkNqalKU6nKdym3M43pGRnI4KfIxjBANFJuLEvrFqkA/0pBAa2g096An0F8u6LEObhmO25IUsKdyNw34HpA+uT/k1jq5qSZYj0/aZKETIslU5WxGCkOFttA+nPbcI+xB81P4/T8WedKul5dQ5Fac7rSQ4D3j7+k+6R9VKAI8JJ5CG60XR2468hdpwdw3AEbRwnZt2JSPCQAAB9BWMuWGJo72PqhXqISW12plKbWVzk3LVVynSFbnXpK1qJHvlROf90Vv6j2z9D67vNrO0mNJU2cKCh7DyKKXwAwwm02GEdik6zXdZ1EpSbXYkBRwIzjfwHlY/Kn90OWoM2QhRB3KOR/UKKKOdZH0zeTkq7IeZ36jAT36kuOHS75KzntZ+d4FVC1cd+vLco/xqTiiionSPuPBwV1zXjHIyFFNWxUz9W3iS+673FS1ZII54B+n3ooop3LD4WcDARiY8ruTkr//Z)}.ic-inv_misc_monsterclaw_03,.io-inv_misc_monsterclaw_03,.fi-inv_misc_monsterclaw_03{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAgICAwAAAAAAAAAAAAAAAAcEBgUIAQID/8QAMBAAAgECBQIFAwIHAAAAAAAAAQIDBAUABhESIQcxExQiUWEWQXEIMkJSYoGRobH/xAAaAQACAgMAAAAAAAAAAAAAAAAFBgAEAgMH/8QAKBEAAQMCBAUFAQAAAAAAAAAAAQIDEQAEEiExQQUUIlHBcYGRsfCh/9oADAMBAAIRAxEAPwCl5DyNb/paLNF2jmqYXAaoVYw8oLMoDeojjUgk69te+Oz1PTyCsq2u9B4c8HhRxvdFVGmieNZA26MFV3M+pUAFUCqO7HE261rPk2G2V1jrbltt4KUVPWgQRUkccZepKggl2kZAN/II0HzOvVLR3LpdbLpTwxPUVuVpY5UKnVpoKQwTFhp6Skka/wCRpjnDaXXcTr6ldSokGIHnSCcveJp5urvnHAIACEmBG4jtudaqt7rctivhEdso387CsiVMZBRh/IABwQNNNPkHTErL1HSTZNvFdbLTRTXWSKsufjmFWFDSU6FFbaeNx00XXu7/ANOEHVXi5VMsMstXJvh0MRT0heANQB99P+Y2V/TUkMvQHPVdWSs80zR20uzcpTgBtg44GskhP5+MGrnhPJshSlkgESJOcEkb6d+8RpQdu+TcOYUpjtpvA8mlznqlo5L2ktsnqKelkpYWTwqgrv8AQPU2hG5j7/j2wYWdbe6yqkRnYERxrGnJ4UcD/WDBhiyebbSiZiqbl9blZ6a2k6dwLdroouWxg2XaygVRD4bTR07QThVGm5yAHBJGhI07Yk9PcyZZk6m3rpzf2ho2acvbJSwjR/MwIKmm3HhSx2uv2LBhwSMU20x3Ky5YtvUGyt56qtNy1gVmCqIjTK0kJ++hUTD3LNqdThY9a5KK/dTLve8seLV2ushhro9iMz0yGNFZJR3VkYFST7A684D2XDW3pCj0wR6HFI/e1Wbi6dZbDYEGQf4QfuqxnXL9blXNd0y5cEdam3VT077l03BT6W09iuhH5wz+kOdaax9COpNkkljSrnSCWjVmAZ2kPhMVHuvBwuM43TMuYKilu+YjPVTeUSCOtkgIaoii9Csz6esqNF3HnTbqe2MBqfnDK5bi4aCFmYj5EfedCGXiyvEBXnIFDaDtgxxJyf7YMWw4oCBWinh04zLdPpiosDPG1BURSeLGV/dtjYLz8byfzp7Yw9He6/LPl5cvSG2LW0sU1VFAzbJm0/iBJ45Pp7c9sGDCw80grKCBBmRsfWm+2UTehR16TUy25puHl/ImnojBJM8xUw9mcjdpzptO1dV7cDjgYpmYaWjqb3dZlo4KYNSioSOAFEifudq68A6du3J0040MGMrRCWn1YMpHkVONoSWwYH4VXbdRRVcTySPIpD7QFI000HuPnBgwYYqUK//Z)}.ic-spec-DruidGuardian,.io-spec-DruidGuardian,.fi-spec-DruidGuardian{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACQAJAMBIgACEQEDEQH/xAAaAAACAwEBAAAAAAAAAAAAAAAGBwADBQEI/9oACAEBAAAAAPNBjVAg1d43iLI9zQ12iVK+6+FbCyjCBP/EABcBAAMBAAAAAAAAAAAAAAAAAAIDBAX/2gAIAQIQAAAAsszqGELcb//EABYBAQEBAAAAAAAAAAAAAAAAAAIFA//aAAgBAxAAAACCLcsvFW//xAAnEAACAgEEAQMEAwAAAAAAAAABAgMEEQAFEjEhBhNBIiMzsRZRgf/aAAgBAQABPwChTntzrHEhZidQ7CFLxyKn0Z5t2BgefI7xpYo5Nu3JKdUqgVF5kZdyzdk/oa2+rWpXa1ZYvcld0E0p6GT5RR+zqSNlkkU9qxBxraoTBtCzRvxlmm7HYWIggf6exqTZ6TUZPfZYhNDgsSAFLjJ8nSS+n63sbVFZDszYyo5KWPRZh2Trdtsgoy2bjzleb4jAXJUsPj4JHxre4q8e4SCGIRxskbIoyQAyA969MPHBWV5VQxxfdDFclCfGRr1Z6zl3HhVrZWGNyST2zapXrEVuOUOeQYEH5BByCNXq/wDIdmpzgmLDlm8HsDDYxqx6ZguTPLLZSDGESJhkqiDiM6pQy2Njnji/IAr4HZA71apTwSHmuq0TmRcDzreZ5hsEFWiMOIYV4qQCVx5x1qffpNvcVoBFNxH3JD9QaT54n+tbVesQBDG+MLkaVYtwdhPEhJ88gMHUFCosz/aBC9DW7X7NjkZCPI6A1N+Rtf/EACMRAAIBAwIHAQAAAAAAAAAAAAECAAMEERJRECEyQlJhYrH/2gAIAQIBAT8AWyYqjHv/ACCioYHbphp4JED1VtUK6vptvUtGJRg3lC9rk5LZlkTpeXvJUxw//8QAJBEAAQMEAQMFAAAAAAAAAAAAAQACAwQREiExBRMyI0FRYcH/2gAIAQMBAT8A6jXGJ7QOC7H70oq4vcYy1zQfHK+/ZNkuAbKmgglqXvk2WuOLf1dUHrUvb0/Ly+EIKu2pVLqo0uZ9ocL/2Q==)}.ic-spell_druid_incarnation,.io-spell_druid_incarnation,.fi-spell_druid_incarnation{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAQUAAwAAAAAAAAAAAAAAAAMFBgcIAQQJ/8QALxAAAQMDAwMCBQMFAAAAAAAAAQIDBAUGEQASIQcTMUFRFCIyYXEVgZEWIzNS4f/EABcBAQEBAQAAAAAAAAAAAAAAAAQFBgL/xAAtEQABAwIFAQUJAAAAAAAAAAABAgMRADEEBRIhQVEGExTR8DJSYXGBscHS4f/aAAwDAQACEQMRAD8AzHS2rsXTjHjOynGqsruLZTlSnxkgrUfznydaEsCx7fotAZRJpsUyyn++8UhwqV5xlQ8D7Y1WFevBFrs0qkU871MQWu6vYCMqGcfnVq2J1Etm9uzRYbEuFVlMlXw7m0IkLA4bbVnJUfOMe/OthhWMFhXi2pcq2G9h6NZzMm3nEakphJMmPuYpGouxmao1Dp/wcZCwpBMhKUsJyOSoY/7qMWlSqezNWmj27ETMUVLW+3lSlBOVHaFEhAwPCfTViLs+TVO8pUJyIhKfmDiSAFeDjPJ1HVdOLrE5l1qsmLRCtMgoQ52HkOoStIUheCR9ZJzwRxjVjFBpoBQQFHi231qXhQy5rRqte/4vTfOjwNzUiqX9Gt5yS0mQ0wl5Sg62sZS6Cjg58fbbg+NGqi6zsxqNe7kGlvsuU8RmXIyY7hU02lSdxCck4BUVKwOAVHRrNuZssLI0irzGXhxtKkuEAjoPKuxeVvzanaMK7mGVYDYYnhI/xqR8oXj0SoY/fSPRG4q9at9wp1AXBbmuHtb5bKVISg/XyrABwDyDn09ca4rVXqtR6Sxm5LrpDFVCVZHBT2vk/g7v50w2c9I3z4pCVwnYLplJWMpCQNwUPZQUBg++iY3R4sKRO4B3+INPWk92sbc/yvQy8uoloUmyk3PLltLjbeFspC1KUfCUpT5JPHHGsidb+qnUWrspjT6b/T9MqKVKYCOXXGf9VLHg4I3AY8+2ol0gvN63aqmmVqTHkW5IKRMgzBvbKSR87Y5CVjznj76fusbVduu73rcoNv7YVAQpLSIzgWHEqG8OA8ZKk4ISMnGdcF0KZlBINov6FRGsN4fGQ6kEXKrCONusxMzxEVDaJZFx3LC/VIbJkNrVs3k+oA4/YY0abKTdlw0mIIcGe8yylWdgOMHRoodajeaa6jNdZ7oo08bG1Tm222pHTi5Ij7SXER2dyFK85GSn7cEcar63XFkT0biEmA9kDweNGjVTNBDjJHu+dP5X8/Kmlv6j+Nbjh2hb9v2oi7qZACKouhNklS1KQC3HG0hJOAeMZGjRoGW7qPrrWe7VLUllIBif2RWMW44nOPSX3HO4t0lRBHJPJPj3OjRo0Ctcj2RX/9k=)}.ic-spell_holy_ardentdefender,.io-spell_holy_ardentdefender,.fi-spell_holy_ardentdefender{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgIDAAAAAAAAAAAAAAAAAAcGCAMFCf/EAC4QAAIBAwQBAwIEBwAAAAAAAAECAwQFEQAGEiExBxNBImEUIzORQlFxgbHB0f/EABgBAQEBAQEAAAAAAAAAAAAAAAUGAgED/8QALBEAAQQABAMGBwAAAAAAAAAAAQACAxEEITGxEoHREyIjQVHxJEJhcZGh4f/aAAwDAQACEQMRAD8Ah3oB6CUe4rMu79/w3GGjllBoaJXEIqUwD7skjZKoc4UdFsE+MHT93hsXZtdakNBbbLS19riZ6CeqjhnanfjgHgow8Yzko+R1kDI1A7v6X7r2buSuu+xKauuNrroxJTVdLcnaVY1RUFNLTyAxzAYJBbGQCOSnGsF1h3hbLGl3utoa0RuTiCWbhM5UHl7adtxwMjOPIHZ1N4jENm7znV6c+fuk4YqGS1Fnvlk2nAzjZ1nt1/UuLi9vGI6pwcKACfpTJ58Rgdr560jfV6nqLrVUlbb6V6mOmgMNRJCC49wuzscAHCgtxBPniT8jU+p7LUb+37t2htzTNb66V2rpo1/TghIMjE/GAAP2GrD7x3ftWyem62/blsipLYp9hFjjHJMqW5MB4yM/Uc5713DSiEtLjnnvXsvWeMG2N0y6rnkvuL0GZfsCdGmFumno7peZawQqhbpiAAW+5++MaNPiUEXSNMJvVdDKOWnvMTK6VivHIHUxVLwEBAMHyBjOfI71Xf1EvEVTvKoghkuLUEvGOI1k7SPyHhwWY9McjrA8dDTa3ZuWC07euc/4gs1XIaWAoeyoH1EY85zgY+2q37guctxr2aTCoh4IgOQo/wC6jIPiHviAHBWZ8763qnOHsfFOt5DdTO0tJtv0vv1qqGlaWsSaKmuAPbQuO42bypXLZU/1+c6Tt0hrYbLa9qWKrEY/NkczzAJGhfn+YfH09fB7YgDOmnY5rvT2dYKql/ExVsgiWlqlHGpjx2WVuiB8Mf31noLRtCZKnhshaauldVnMdXLCCM5QDDEDsZOOsAazFjzAS2YXR1FUfrV/y1t8IdmzzH4SBu8NTDWtBTVlO6RDg0hQj3GHlsfAz8aNSu8LY4r3cFtFGq241LGnEtSXOP4iGJBILciCe8HRqnbMS0EA/rqhHA2U2N2Xauue56uGeXjBTRo0EMYwkZeIEkfOllHK3tBcDJfJb58eNGjQeGAEkgHo3ZyYnPhs5qTWysqZTTzyzPJL7M0fJiSeIUj/AB1rb7jq5rV6VVtxpCFqVoJZldhnDsfbz/ZfGjRoqVo7Vgr5hutgnhP2OxVfrfcpzQwvwhHJc49sfzI/1o0aNWrmiyp9f//Z)}.ic-spell_holy_holynova,.io-spell_holy_holynova,.fi-spell_holy_holynova{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAcDBQYI/8QAMRAAAQMDAwMDAQYHAAAAAAAAAQIDBAAFERIhMQYHQRMicYEVFhdRYbEjMkJSYoLh/8QAGgEAAgIDAAAAAAAAAAAAAAAAAwYABAEFB//EACoRAAECBgAFAwUBAAAAAAAAAAECEQADBCFBUQUSEzGBYXGhFCKRscHh/9oADAMBAAIRAxEAPwDe9qr1cOoGm5suxQPVcJIXHtYZCjnJOeDueae1occbaSxK9BDmMhttWSB+tIb8Roqm0CzMyrNb3x/Aflalz5yeA4nXlSGzgYUef6QeKvz1jZ+hrX94ep33W0Kc9NLedSi6eck8qHknJHHOQnlvDlfS8SKkgkqO7AeAXP8AfMMVVIM2UCWDdsn92jWdxps6zWe7yJ0NubbX3Gy28t7CY+oJQMge5OleFah4Pg1sY0Zw2NiM7ND7nopSt8AH1TgZV+W/P1rn/vN3Zst97Tz2IrqEPTEsLZbW4UlbZdTkpwffsQTyMHf8qk7Id1S/20h29oNGZaSqMtBA0uNj3IO3B0n6lJppXWUsrqTVuUKDF3s5LjG9nXpAV0s1clCAAFg/DBj8Xax794aU6wuNv6VSZbu2xRDQoD9P+UVVW/uLYp7HrSJAhvg6XGXVjKTgcHPuTvkEc0UizaWjKyUyre/+QdKaoBjHPnQ1jukOXdLrebgtd7jIL12nvueoi2kgaWtXC5ah4zhlP+RACl7g9XTOoktwn1aYUcgNthevJSVBKgojONKuPPJ3NNXux1XaI3S6u2vRjaW240cyJRPuXJcUQVAnlTpBKyTuT8Vz3LWS6SRjem3g9IqZOXUTgxe2wNth8DA9XiVU9YRybjUdKwJHVc6NEuE8s2+zwQguacltnWdLafGpS1nc+Mk5001o0u32+8xH7QvENyIiC4kHdCkbtHI5O2nJyd00lbTPXG6aurDQw45JjuFXnSEuDHxlQP0qbpG/Ps3VLUp9SWHsJUv+w5yFf6qCVfSjV9DMqCpj9qbcu3Dk+738QeinS5aQFC5zpseYbf2jYr2pct3qyzWOQlRbfjT1KBKxytGlJ9isggeDqHAFFKXq61KcvK5DaSpL6Q5htGoJUSQpP0UFD4xRQ5fDKcpB5yPxGF9XmLREXHFOuSFLUp4hThWTklXOc/NUr+6hRRW1p+5irU4iRhaktPoH8qm9x8KGP3qNnZQI2I3BoooiswMdhGkTe50RhpLSkHWjUdQzuCU/skUUUVW6SDiLXUVuP//Z)}.ic-spell_nature_stoneclawtotem,.io-spell_nature_stoneclawtotem,.fi-spell_nature_stoneclawtotem{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwEBAQEAAAAAAAAAAAAAAAYHBQMECP/EADAQAAIBAwMCBAUCBwAAAAAAAAECAwQFEQAGIRIxBxMiQRQVMlFhCIEjJUJDcaHB/8QAGAEAAwEBAAAAAAAAAAAAAAAABAUGAAf/xAAsEQABAgQFAwEJAAAAAAAAAAABAhEAAwQhBRJBUWExcYGxBhMUIpGh0fDx/9oADAMBAAIRAxEAPwCEUVqqrvs2KouHXN8BViC31sUfVKU5MscjKPoUuGVmPckDIPFL8PTZ4aJbdc7ItXcJmdYmlHokAXgFgCQ3DHJ4Pbg9+/6fbHNSxrWmGnnZkJmmpmPQRzlWx3AxjjOne6pZLNYpK4R0FMAGWKUzI5kLA9LAKeB0nqwcewwc65xiWJqmT/h0ozDNZt9fGp0Owi9pKaTTyD7wsSH54+kKW2tv7W3Pu9RTWNaK6UsYElCtQzRz05YB2jkwCjhWBKtzknpyDrw7u2HaZa+6QWR5Y6imkihrqWTreNUdxGHjZsuQTk4ySMMCMgM2HsPdhs/iM+4jStMkcdR5VMrYVi0fSgYn+kHpZvfj3OtLw83HVvva4XSpqpZitIXmZv78xqI3XI7AZZs8fTkcd9NZkiZLKlINgBrqLt+6mFcupKSG5894m/ipZdx2vfFfbqqGalipW8mkjpldIRTp6Y+jHcdIHJ5JznnOjX0xsN6fdu16a8XKoMcpeWJWkcZlVJGXr78ZIJxo1k43USEiUqWCU2tx4PrvApoZajmzC/EL1jhqj4YzBcQyxzK8vkMQzkkhQjEcEc8Y+plORjmPbgkroq51rLi9dCSzU8/nFkkXOcdJ5Q5PIIznvng6vdJf6BbZPW317U9JKPJqo6SqhkOT2yykL3HOcFCAckdo08IrpJqdKjbtRRxVInSSavwWQH1Y/h4Un0hiPSOT9PIXYJUrCZiVJa78Xa3cehEaqxKkWt1LAIszv0t1DgjZtPMK0bzTmUUymRekeasY6gec8/b9/wDmtyzW26VLvQWamd6qq9C5U+kZ9TsPsM/6/Y9qq7XZ7wtlprQYLqspiemKLlXP4AAAxjB+wznHJrG1tuR7R2ZdrjX1X87MQkq3jIkKnPCKCRkDP4Hc40biOICjlBSh8ymCRuTr2/kF0dOKlYCTbU6NxGFua51m1FtVhtdpjnpKa3oEaaORiCWcsMx8fUST7hiw9ho1jx+K9PQTVEXy6omDSlw8dasIOQM+llPvnkcYxo0uSitZ1SHO79fvDo09LLOUnpyPzDNfL7dKzwmobo1UYq2SeKRZogAY28iRvSO2OMYIPB1MherpWXGgpbjVtXwy1MUEYnAzT5R8PEygMrDH3wQSCCONGjReEU8pMqeyRZa2t0Z+m0ROOy0LqVKUA+VF9boJttfZop3hfWTR+DkW516fmtT51K0+PUkELDy4lPcKCzHH+B2AAVLnuG7Q1Vtf4kS/G0pMoljVwegvjgj8Dvnto0aWUkpEytqc4dlqHgCw7CLn2blpThySBv6mI3uKKK43NqypTMsihmIJAJPP3/OjRo1ey1KSgAGJDEEg1Uwncx//2Q==)}.ic-spell_unused2,.io-spell_unused2,.fi-spell_unused2{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAcFBggEAv/EADAQAAEDAwMDAwIEBwAAAAAAAAECAwQABREGEiEHMUETUXEUMggWYZEVI0JjgaGx/8QAGQEAAwADAAAAAAAAAAAAAAAABAUGAgMH/8QAJBEAAgEDAwQDAQAAAAAAAAAAAQIAAwQREzFRBRIhQTNh8HH/2gAMAwEAAhEDEQA/AFjZm0S4GWEOB1PLilEbVZJ7DHHGP903ukFtUzYHXVJAW7JVuPnAAAH/AH96U+l237Kl6PckLa9MEL3qAAx7k8Y7+eaaPSHVLE7U0jSTX0spCYn1n1cRRKWiVAem4CSNxHIwfkV27rd0KFtog+CRj+eZF3dZrguU9bzi69dVfyTCbs1jW0u/SE7ipQChEb8KI7FR8A/J8ZnOhfUhnqFp1xEpCGL5b0pExtPCXEnhLqB4BPceD8iov8RnSzTVz0vdtXpV/Dr3Djl9TynSESUowNiknjJBABHnA80tPwe2a5Pa5nXlptabdGgrZfd7JUtZTtR+p4KseOPcVBGq5q59TNKVs9g1RPDLuTzx9g+poadGjvSCp+LGeUBgFxpKiB7ZIoqXkMN+oSSKKZh0xtFguHxMFXl5y4SZDrHriMlQylSuBzgZAOP81cOhWpZmmtSymIyWnG50cp9Jx9DCC4nlBLiyAgDnnn2Aziqr9JhPY/ArwxbZM6SmNDjrkOq7ISM8e/6CtNS2qauqfLH99yuymn2HaX/qhpHUEFj80366RZVsVKbQqDDnOveg0o/a2tzIIwnjv4PYcaHsl90lpnSMK3acielCSyHGGkqG5W4BW5SjyVHPJPNZUa0RqN1pLc1xMOMBgF1/eBjPZIJ9zV8g3FFrtMWKpwyFRY6WSr7cgDuM9vHFNemdGNd81VIUcxXfqlZFVWzj0NvqMK59QrsuYsx0R2W/6UlG8/vRSsfvs8OqEdiPs/uKGe1FV69LtVAGmIOLUY2lN+5kKIGSkGuzTEh2JLfdjq2LKNmcA8E58/AoopRZKGuqeR+xDbv4Wk29dJgdDhWlRaWMBSQUnjOCDwar1xny25iCh5Q/m47A84Bzz5yaKKpayhc4gdkB3SBfutxdeW4uW5uWSpWOMk8miiilvceY87RxP//Z)}</style>
+</head>
+<body>
+<div class="avec-nav">
+<nav class="sommaire"><details open><summary>Sur cette page</summary><ul><li><a href="#s-boss-par-boss">Boss par boss</a></li><li><a href="#s-corriger-en-priorit">À corriger en priorité</a></li><li><a href="#s-survie-boss-par-boss">Survie boss par boss</a></li><li><a href="#s-d-g-ts-second-plan">Dégâts (second plan)</a><ul><li class="sous"><a href="#s-rotation">Rotation</a></li><li class="sous"><a href="#s-build-et-stats">Build et stats</a></li><li class="sous"><a href="#s-quipement">Équipement</a></li></ul></li><li><a href="#s-progression">Progression</a></li><li><a href="#s-m-thode">Méthode</a></li></ul></details></nav>
+<main>
+<p class="badges"><span class="badge">Généré le 29/10/2026 à 09:30</span><span class="badge" title="Commit du code guild_analyser qui a produit cette page">Version d4def6a+modifs</span><span class="badge badge-verif ok" title="Relue par le vérificateur (intégrité des données, anomalies)">Vérifié le 29/10/2026</span></p>
+<style>
+  main { max-width: 1100px; }
+  .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 16px 0; }
+  .carte { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .carte .val { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .carte .lib { color: var(--muted); font-size: .85rem; }
+  .prio { list-style: none; padding: 0; margin: 0; counter-reset: p; }
+  .prio > li { counter-increment: p; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+               padding: 14px 16px 12px 56px; margin: 12px 0; position: relative; }
+  .prio > li::before { content: counter(p); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px;
+                       border-radius: 50%; background: var(--accent); color: var(--surface); font-weight: 700;
+                       display: flex; align-items: center; justify-content: center; }
+  .prio h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .gain { float: right; margin-left: 10px; background: var(--row); border: 1px solid var(--border); border-radius: 999px;
+          padding: 2px 10px; font-size: .85rem; font-weight: 600; white-space: nowrap; }
+  .gain.nc { color: var(--muted); font-weight: 400; }
+  .gain.grave { color: var(--bad); border-color: var(--bad); }
+  .gain.ok { border-color: var(--good); }
+  .prio p { margin: 6px 0; }
+  .etiq { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; margin-right: 6px; }
+  pre.macro { background: var(--row); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin: 6px 0;
+              font-size: .88rem; white-space: pre-wrap; }
+  code { background: var(--row); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: .86em;
+         word-break: break-word; }
+  .moments a { margin-right: 4px; white-space: nowrap; display: inline-block; }
+  .boss-chip { display: inline-block; font-size: .8rem; color: var(--muted); border: 1px solid var(--border);
+               border-radius: 999px; padding: 0 8px; margin: 2px 4px 2px 0; }
+  .sort { border-bottom: 1px dotted var(--muted); cursor: help; }
+  .fr { color: var(--muted); }
+  .bandeau { background: color-mix(in srgb, var(--warn) 14%, var(--surface)); border: 1px solid var(--warn);
+             border-radius: 8px; padding: 8px 12px; margin: 8px 0; font-size: .92rem; }
+  .pc { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .gris { --pc: #7d838b; } .vert { --pc: #1b9a1b; } .bleu { --pc: #0070dd; } .violet { --pc: #a335ee; }
+  .orange { --pc: #e07800; } .rose { --pc: #d6559b; } .dore { --pc: #b8942a; }
+  .pc, .pc-t { color: var(--pc, var(--muted)); }
+  .verdict { font-weight: 700; }
+  table.boss-soiree td a, .liens a { white-space: nowrap; }
+  .e-pos { color: var(--good); font-weight: 600; } .e-mid { color: var(--warn); font-weight: 600; }
+  .e-neg { color: var(--bad); font-weight: 600; }
+  .methode .carte p { margin: 4px 0 0; font-size: .92rem; }
+  .methode summary { cursor: pointer; }
+  p.mode { margin: 4px 0 10px; }
+  .refs { display: grid; gap: 10px; margin: 12px 0 16px; }
+  .ref { display: grid; grid-template-columns: minmax(0, 1fr) 11rem; gap: 4px 16px; align-items: center;
+         background: var(--surface); border: 1px solid var(--border); border-left: 6px solid var(--muted);
+         border-radius: 10px; padding: 10px 14px; }
+  .ref.e-bad { border-left-color: var(--bad); } .ref.e-warn { border-left-color: var(--warn); }
+  .ref.e-good { border-left-color: var(--good); } .ref.moi { border-left-color: var(--accent); }
+  .ref .qui { font-size: 1.05rem; } .ref .qui b { font-size: 1.15rem; }
+  .ref .det { color: var(--muted); font-size: .85rem; } .ref .det b { color: var(--text); font-size: inherit; }
+  .ref .ecart { grid-row: span 2; text-align: right; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .ref .ecart .dps { font-size: 1.9rem; font-weight: 800; }
+  .ref .ecart .pc { font-size: 1.05rem; font-weight: 700; }
+  .ref .ecart .lib { color: var(--muted); font-size: .8rem; }
+  .ref.e-bad .ecart .dps, .ref.e-bad .ecart .pc { color: var(--bad); }
+  .ref.e-warn .ecart .dps, .ref.e-warn .ecart .pc { color: var(--warn); }
+  .ref.e-good .ecart .dps, .ref.e-good .ecart .pc { color: var(--good); }
+  .ref .barre { grid-column: 1; position: relative; height: 12px; background: var(--row); border-radius: 0 4px 4px 0; }
+  .ref .barre span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--muted); }
+  .ref.e-bad .barre span { background: var(--bad); } .ref.e-warn .barre span { background: var(--warn); }
+  .ref.e-good .barre span { background: var(--good); } .ref.moi .barre span { background: var(--accent); }
+  .ref .barre i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--text); }
+  .duo { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); column-gap: 0; row-gap: 4px;
+         margin: 8px 0; }
+  .duo-tete { font-weight: 700; padding: 4px 10px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .duo-tete.dm { text-align: right; border-bottom: 3px solid var(--accent); }
+  .duo-tete.dr { border-bottom: 3px solid var(--muted); }
+  .duo-minute { grid-column: 1 / -1; text-align: center; font-weight: 700; color: var(--muted); font-size: .85rem;
+                margin-top: 10px; border-top: 1px solid var(--border); padding-top: 4px; }
+  .duo-phase { grid-column: 1 / -1; text-align: center; font-style: italic; color: var(--muted); font-size: .88rem;
+               background: var(--row); border-radius: 6px; padding: 2px 8px; }
+  .duo-axe { background: linear-gradient(var(--border), var(--border)) center / 2px 100% no-repeat; }
+  .duo-c { padding: 3px 10px; border-radius: 6px; font-size: .92rem; }
+  .duo-c.cd:not(.vide) { background: color-mix(in srgb, var(--c) 12%, var(--surface)); }
+  .duo-c.dm { text-align: right; } .duo-c.dm.cd:not(.vide) { border-right: 4px solid var(--c); }
+  .duo-c.dr.cd:not(.vide) { border-left: 4px solid var(--c); }
+  .duo-c .t { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .85rem; }
+  .duo-c .absent { color: var(--muted); font-style: italic; font-size: .85rem; }
+  .duo-c .pourquoi { display: block; font-size: .85rem; color: var(--warn); }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases .mono { fill: var(--row); stroke: var(--border); } .phases .multi { fill: #eb6834; opacity: .55; }
+  .phases text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  section.boss > summary { font-size: 1.1rem; padding: 4px 0; }
+  section.boss { margin: 10px 0; }
+  details.boss { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px;
+                 margin: 10px 0; }
+  details.boss > summary { font-size: 1.08rem; }
+  .muted { color: var(--muted); }
+  @media (max-width: 600px) { .prio > li { padding-left: 16px; } .prio > li::before { position: static; margin-bottom: 6px; } }
+</style>
+<style>
+  .graphique { margin: 10px 0 4px; } .graphique .zone { position: relative; min-width: 0; }
+</style>
+<style>
+  .cause { display: flex; height: 10px; border-radius: 3px; overflow: hidden; background: var(--row); margin: 4px 0 2px; max-width: 420px; }
+  .cause span { display: block; height: 100%; }
+  .c-freq { background: #2a78d6; } .c-crit { background: #eb6834; } .c-coup { background: #9a6fd0; } .c-abs { background: #888; }
+  .pastille { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin: 0 4px 0 10px; }
+  .sorts-pourquoi { list-style: none; padding: 0; }
+  .sorts-pourquoi li { border-bottom: 1px solid var(--border); padding: 8px 0; }
+  .sorts-pourquoi .faits { color: var(--muted); font-size: .92rem; }
+  .centile { font-weight: 600; }
+  .c-legendaire { color: #e08a00; } .c-epique { color: #a335ee; } .c-rare { color: #0070dd; }
+  .c-peu { color: #1eaa1e; } .c-commun { color: var(--muted); }
+  .mecanisme { margin: 6px 0 0; padding: 6px 10px; border-left: 3px solid #eb6834; background: var(--row); font-size: .92rem; }
+  section.boss { border-top: 2px solid var(--border); margin-top: 28px; }
+</style>
+<style>
+  td.nu { color: var(--bad); font-weight: 600; }
+  .duo-c.coup { font-size: .88rem; }
+  .duo-c.coup.nu { color: var(--bad); font-weight: 600; }
+</style>
+<h1>Mon tank — Sigurdsson</h1>
+<p class="meta"><i class="ic ic-spec ic-spec-DruidGuardian" title="Guardian Druid"></i>Druide Gardien · ilvl 326 · raid du 28/10/2026 · 1 boss tué · <a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd">rapport Warcraft Logs</a> · <a href="https://murlok.io/druid/guardian/m+" title="Talents, statistiques et équipement des meilleurs joueurs de ta spé en Mythique+ (Murlok)">builds du top M+ (Murlok) ↗</a></p>
+<p class="mode"><span class="etiq">Niveau d'analyse</span><strong>léger</strong> : rotation lue dans le log seulement : ni top mondial, ni joueur équivalent, ni simulation (fiche des PU).</p>
+<p class="note"><strong>Moyennes sur 1 boss</strong></p>
+<div class="cartes">
+<div class="carte"><div class="val">0</div><div class="lib">morts (kills, et wipes où tu tombes parmi les 3 premiers)</div></div>
+<div class="carte"><div class="val">0 %</div><div class="lib">de tes plus gros coups encaissés sous un défensif majeur</div></div>
+<div class="carte"><div class="val">100 %</div><div class="lib">des mêlées encaissées sous Ironfur</div></div>
+<div class="carte"><div class="val bad">1</div><div class="lib">relais tardifs (3 s de plus que le rythme normal des relais du boss)</div></div>
+<div class="carte"><div class="val"><span class="pc gris" title="centile 10 : à travailler">10</span></div><div class="lib"><span class="verdict pc-t gris">à travailler</span> · centile moyen au DPS : tu fais mieux que 10 % des joueurs</div></div>
+<div class="carte"><div class="val">37 k</div><div class="lib">DPS moyen (pas de top 3 trouvé)</div></div>
+</div>
+<div class="bandeau"><strong>Survie d'abord</strong> : les constats de survie (morts, défensifs, relais, mitigation) passent toujours devant ceux de dégâts. simc ne simule pas la survie : elle est comparée aux références et à l'autre tank, sans gain chiffré. Les mécaniques de raid punitives se jugent mal dans un log seul : le croisement avec Wipefest viendra plus tard.</div>
+<div class="bandeau"><strong>Spé pas encore vérifiée</strong> : ce rapport repose sur des règles génériques qui n'ont pas encore été contrôlées sur des logs de cette spé (familiers, incantations, ressource, cooldowns propres à la classe). À lire avec prudence.</div>
+
+<h2 id="s-boss-par-boss">Boss par boss</h2>
+<div class="table-wrap">
+<table class="boss-soiree">
+<thead><tr><th>Boss</th><th class="num">Morts</th><th class="num">Gros coups sous défensif</th><th class="num">Mitigation active</th><th class="num">Relais tardifs / relais</th><th class="num">Centile DPS</th><th class="num">DPS</th><th class="num">Durée</th><th>Combat</th></tr></thead>
+<tbody>
+<tr><td><a href="#survie-nymrissa-wavecaller">Nymrissa Wavecaller</a></td><td class="num">—</td><td class="num">0 %</td><td class="num">100 %</td><td class="num"><span class="bad">1</span> / 5</td><td class="num"><span class="pc gris" title="centile 10 : à travailler">10</span></td><td class="num">37 k</td><td class="num">4:51</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=1" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/JYPGyjAh3648KbXd/fight/1" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/JYPGyjAh3648KbXd/1/Sigurdsson/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Gros coups : tes coups encaissés d'au moins 75 % du plus gros (les tank busters). Relais : provocations où tu reprends le boss après le debuff de relais de l'autre tank. Centile au DPS (le classement Warcraft Logs des tanks), aux couleurs du site. Le nom du boss mène au détail de sa survie ; « Logs », « Wipefest » et « Analyzer » ouvrent le combat sur warcraftlogs.com, ses mécaniques sur wipefest.gg et ton analyse sur wowanalyzer.com.</p>
+<h2 id="s-corriger-en-priorit">À corriger en priorité</h2>
+<ol class="prio"><li><span class="gain grave">grave</span><span class="gain nc">gain non chiffré</span><h3>4 de tes 4 plus gros coups encaissés sans défensif majeur</h3><span class="boss-chip">Nymrissa Wavecaller</span><p><span class="etiq">Cause</span>Défensif majeur actif sur 0 % de tes plus gros coups, 100 % chez Louac. Sans défensif : Iceblade Flurry 383 k à 3:29, Iceblade Flurry 378 k à 3:28, Iceblade Flurry 331 k à 3:27, Iceblade Flurry 304 k à 0:54.</p><p><span class="etiq">Conseil</span>Repérer ces coups (souvent les mêmes à chaque fois : le tank buster du boss) et y placer un défensif majeur (Barkskin, Survival Instincts, Frenzied Regeneration, Rage of the Sleeper…) ; une aide d&#x27;affichage (WeakAura du boss) prévient quelques secondes avant.</p><p class="note"><span class="etiq">Preuve</span>Plus gros coups encaissés et buffs actifs à ce moment-là (Warcraft Logs).</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=1&amp;view=events&amp;start=204000">Nymrissa Wavecaller 3:29</a> <a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=1&amp;view=events&amp;start=203000">Nymrissa Wavecaller 3:28</a> <a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=1&amp;view=events&amp;start=202000">Nymrissa Wavecaller 3:27</a> <a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=1&amp;view=events&amp;start=49000">Nymrissa Wavecaller 0:54</a> </p></li><li><span class="gain grave">grave</span><span class="gain nc">gain non chiffré</span><h3>1 relais tardif sur Iceblade Flurry</h3><span class="boss-chip">Nymrissa Wavecaller</span><p><span class="etiq">Cause</span>Tu reprends le boss 9.7 s après le dernier Iceblade Flurry sur Louac (1:27, 1 stack). L&#x27;autre tank reprend en 0.8 s en médiane. Seuil sur ce boss : 4.9 s (délai médian des relais + 3 s).</p><p><span class="etiq">Conseil</span>Provoquer dès que l&#x27;autre tank prend son dernier Iceblade Flurry : chaque seconde de retard, il encaisse les coups du boss avec le debuff au maximum.</p><p class="note"><span class="etiq">Preuve</span>Provocations et stacks du debuff de relais (Warcraft Logs).</p><p class="moments note"><span class="etiq">Dans le log</span><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=1&amp;view=events&amp;start=82000">Nymrissa Wavecaller 1:27</a> </p></li></ol>
+
+<h2 id="s-survie-boss-par-boss">Survie boss par boss</h2>
+<details class="boss" id="survie-nymrissa-wavecaller" open><summary><strong>Nymrissa Wavecaller</strong> · survie</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=1" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/JYPGyjAh3648KbXd/fight/1" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/JYPGyjAh3648KbXd/1/Sigurdsson/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Sigurdsson</b> (toi) <span class="det">· 37 k</span><div class="det"><b>rang ≈ 7 175</b> / 7 973 · centile 10 (4 à ton ilvl)</div></div><div class="ecart"><div class="dps">37 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Blessing of the Bronze, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">14</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<h4>Tes plus gros coups encaissés</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th class="num">Moment</th><th>Coup</th><th class="num">Dégâts</th><th>Actif à ce moment</th></tr></thead>
+<tbody>
+<tr><td class="num">3:29</td><td>Iceblade Flurry</td><td class="num">383 k</td><td class="nu">seulement Ironfur</td></tr>
+<tr><td class="num">3:28</td><td>Iceblade Flurry</td><td class="num">378 k</td><td class="nu">seulement Ironfur</td></tr>
+<tr><td class="num">3:27</td><td>Iceblade Flurry</td><td class="num">331 k</td><td class="nu">seulement Ironfur</td></tr>
+<tr><td class="num">0:54</td><td>Iceblade Flurry</td><td class="num">304 k</td><td class="nu">rien</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Sous un défensif majeur : toi 0 %, Louac 100 %. En rouge : coup encaissé sans défensif majeur (la mitigation active seule ne suffit pas sur un tank buster).</p>
+<h4>Déroulé : tes défensifs et tes gros coups face à l'autre tank</h4><p class="note">À gauche toi, à droite Louac (l'autre tank, même combat). Défensifs face à face quand vous les lancez à moins de 10 s d'écart ; vos plus gros coups encaissés (en rouge sans défensif majeur) ; sur toute la largeur, les relais.</p><div class="duo"><div class="duo-tete dm">Toi</div><div class="duo-tete t"></div><div class="duo-tete dr">Louac</div><div class="duo-minute">0:00</div><div class="duo-c dm cd vide" style="--c:#d0632b"></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="t">0:00</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm cd" style="--c:#c4447a"><span class="t">0:05</span> <i class="ic ic-spell_druid_incarnation"></i>Incarnation: Guardian of Ursoc</div><div class="duo-axe"></div><div class="duo-c dr cd vide" style="--c:#c4447a"></div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">0:12</span> <i class="ic ic-ability_bullrush"></i>Frenzied Regeneration</div><div class="duo-axe"></div><div class="duo-c dr cd vide" style="--c:#2f9e6e"></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">0:12</span> <i class="ic ic-spell_nature_stoneclawtotem"></i>Barkskin</div><div class="duo-axe"></div><div class="duo-c dr cd vide" style="--c:#2a78d6"></div><div class="duo-c dm cd vide" style="--c:#b8860b"></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#b8860b"><span class="t">0:21</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-c dm cd vide" style="--c:#3b8fa0"></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#3b8fa0"><span class="t">0:28</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-phase">0:36 : Sigurdsson reprend le boss à Louac (6 Iceblade Flurry, 2,2 s après le dernier)</div><div class="duo-c dm coup nu"><span class="t">0:54</span> Iceblade Flurry 304 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">0:54</span> <i class="ic ic-spell_nature_stoneclawtotem"></i>Barkskin</div><div class="duo-axe"></div><div class="duo-c dr cd vide" style="--c:#2a78d6"></div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">0:54</span> <i class="ic ic-ability_bullrush"></i>Frenzied Regeneration</div><div class="duo-axe"></div><div class="duo-c dr cd vide" style="--c:#2f9e6e"></div><div class="duo-phase">0:56 : Louac reprend le boss à Sigurdsson (6 Iceblade Flurry, 0,9 s après le dernier)</div><div class="duo-minute">1:00</div><div class="duo-c dm cd vide" style="--c:#d0632b"></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="t">1:13</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-phase">1:27 : Sigurdsson reprend le boss à Louac (1 Iceblade Flurry, 9,7 s après le dernier) — tardif</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">1:34</span> <i class="ic ic-spell_nature_stoneclawtotem"></i>Barkskin</div><div class="duo-axe"></div><div class="duo-c dr cd vide" style="--c:#2a78d6"></div><div class="duo-phase">1:39 : Louac reprend le boss à Sigurdsson (5 Iceblade Flurry, 0,5 s après le dernier)</div><div class="duo-minute">2:00</div><div class="duo-c dm cd vide" style="--c:#b8860b"></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#b8860b"><span class="t">2:10</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-c dm cd vide" style="--c:#3b8fa0"></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#3b8fa0"><span class="t">2:18</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-c dm cd vide" style="--c:#d0632b"></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="t">2:19</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-phase">2:25 : Sigurdsson reprend le boss à Louac (6 Iceblade Flurry, 1,8 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">2:34</span> <i class="ic ic-ability_bullrush"></i>Frenzied Regeneration</div><div class="duo-axe"></div><div class="duo-c dr cd vide" style="--c:#2f9e6e"></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">2:34</span> <i class="ic ic-spell_nature_stoneclawtotem"></i>Barkskin</div><div class="duo-axe"></div><div class="duo-c dr cd vide" style="--c:#2a78d6"></div><div class="duo-phase">2:46 : Louac reprend le boss à Sigurdsson (6 Iceblade Flurry, 0,8 s après le dernier)</div><div class="duo-minute">3:00</div><div class="duo-c dm cd" style="--c:#c4447a"><span class="t">3:03</span> <i class="ic ic-spell_druid_incarnation"></i>Incarnation: Guardian of Ursoc</div><div class="duo-axe"></div><div class="duo-c dr cd vide" style="--c:#c4447a"></div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">3:06</span> Iceblade Flurry 384 k sous Holy Bulwark</div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">3:07</span> Iceblade Flurry 393 k sous Holy Bulwark</div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">3:08</span> Iceblade Flurry 460 k sous Holy Bulwark</div><div class="duo-phase">3:10 : Sigurdsson reprend le boss à Louac (6 Iceblade Flurry, 2,0 s après le dernier)</div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">3:23</span> <i class="ic ic-ability_bullrush"></i>Frenzied Regeneration</div><div class="duo-axe"></div><div class="duo-c dr cd vide" style="--c:#2f9e6e"></div><div class="duo-c dm cd vide" style="--c:#d0632b"></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="t">3:23</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm coup nu"><span class="t">3:27</span> Iceblade Flurry 331 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-c dm coup nu"><span class="t">3:28</span> Iceblade Flurry 378 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-c dm coup nu"><span class="t">3:29</span> Iceblade Flurry 383 k sans défensif</div><div class="duo-axe"></div><div class="duo-c dr coup nu vide"></div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">3:29</span> <i class="ic ic-spell_nature_stoneclawtotem"></i>Barkskin</div><div class="duo-axe"></div><div class="duo-c dr cd vide" style="--c:#2a78d6"></div><div class="duo-phase">3:30 : Louac reprend le boss à Sigurdsson (6 Iceblade Flurry, 0,4 s après le dernier)</div><div class="duo-minute">4:00</div><div class="duo-c dm cd vide" style="--c:#b8860b"></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#b8860b"><span class="t">4:01</span> <i class="ic ic-inv_ability_lightsmithpaladin_holybulwark"></i>Holy Bulwark</div><div class="duo-c dm cd vide" style="--c:#3b8fa0"></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#3b8fa0"><span class="t">4:09</span> <i class="ic ic-spell_holy_ardentdefender"></i>Ardent Defender</div><div class="duo-c dm coup vide"></div><div class="duo-axe"></div><div class="duo-c dr coup"><span class="t">4:14</span> Iceblade Flurry 348 k sous Ardent Defender, Holy Bulwark</div><div class="duo-phase">4:17 : Sigurdsson reprend le boss à Louac (6 Iceblade Flurry, 3,4 s après le dernier)</div><div class="duo-c dm cd vide" style="--c:#d0632b"></div><div class="duo-axe"></div><div class="duo-c dr cd" style="--c:#d0632b"><span class="t">4:24</span> <i class="ic ic-spell_holy_holynova"></i>Sentinel</div><div class="duo-c dm cd" style="--c:#2a78d6"><span class="t">4:26</span> <i class="ic ic-spell_nature_stoneclawtotem"></i>Barkskin</div><div class="duo-axe"></div><div class="duo-c dr cd vide" style="--c:#2a78d6"></div><div class="duo-c dm cd" style="--c:#2f9e6e"><span class="t">4:36</span> <i class="ic ic-ability_bullrush"></i>Frenzied Regeneration</div><div class="duo-axe"></div><div class="duo-c dr cd vide" style="--c:#2f9e6e"></div><div class="duo-phase">4:39 : Louac reprend le boss à Sigurdsson (6 Iceblade Flurry, 3,4 s après le dernier)</div></div>
+<h4>Dégâts subis par capacité</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Capacité</th><th class="num">Encaissé / s</th><th class="num">Absorbé</th><th class="num">Atténué</th></tr></thead>
+<tbody>
+<tr><td>Iceblade Flurry</td><td class="num">23 k</td><td class="num">32 %</td><td class="num">14 %</td></tr>
+<tr><td>Abyssal Rain</td><td class="num">16 k</td><td class="num">43 %</td><td class="num">28 %</td></tr>
+<tr><td>Melee</td><td class="num">3 k</td><td class="num">50 %</td><td class="num">65 %</td></tr>
+<tr><td>Frost Orb</td><td class="num">2 k</td><td class="num">32 %</td><td class="num">22 %</td></tr>
+<tr><td>Pop!</td><td class="num">2 k</td><td class="num">5 %</td><td class="num">24 %</td></tr>
+<tr><td>Lingering Frost</td><td class="num">0 k</td><td class="num">18 %</td><td class="num">44 %</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Ton auto-soin et tes boucliers : 20 k/s, soit 46 % de tous les soins que tu reçois (45 k/s).</p>
+</details>
+<h2 id="s-d-g-ts-second-plan">Dégâts (second plan)</h2><p class="note">La même analyse que le rapport DPS : rotation, cooldowns offensifs, simulations selon le niveau d'analyse.</p>
+<h3 id="s-rotation">Rotation</h3>
+<h4>Synthèse de la soirée</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Boss</th><th class="num">DPS</th><th class="num">vs équivalent</th><th class="num">vs top 3</th><th class="num">Multicible</th><th class="num">Cooldowns manqués</th><th class="num">vs potentiel simc</th></tr></thead>
+<tbody>
+<tr><td>Nymrissa Wavecaller</td><td class="num">37 k</td><td class="num">—</td><td class="num">—</td><td class="num">28 %</td><td class="num">0</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+
+<p class="note">Potentiel simc : ton équipement simulé avec une rotation parfaite, à la durée du kill, chaque phase au nombre d'ennemis qu'elle a en moyenne (1, 2, ou 3 et plus). Un vrai combat (déplacements, phases, cibles qui changent) reste en dessous : l'écart sert surtout à comparer les boss entre eux et d'une soirée à l'autre.</p>
+<details class="boss" id="boss-nymrissa-wavecaller"><summary><strong>Nymrissa Wavecaller</strong> · 37 k · — face à l'équivalent · 28 % en multicible</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=1" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/JYPGyjAh3648KbXd/fight/1" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/JYPGyjAh3648KbXd/1/Sigurdsson/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Sigurdsson</b> (toi) <span class="det">· 37 k</span><div class="det"><b>rang ≈ 7 175</b> / 7 973 · centile 10 (4 à ton ilvl)</div></div><div class="ecart"><div class="dps">37 k</div><div class="lib">ton DPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton DPS"></i></div></div></div>
+<h4>Contexte : ce qui nuance la comparaison</h4>
+<p>Buffs de raid absents de ton raid : <strong>Arcane Intellect, Battle Shout, Blessing of the Bronze, Mystic Touch</strong>.</p><div class="table-wrap">
+<table>
+<thead><tr><th></th><th class="num">Taille du raid</th><th>Évocateur Augmentation</th><th>Buffs de raid en plus du tien</th><th>Buffs externes reçus</th></tr></thead>
+<tbody>
+<tr><td><strong>Toi</strong></td><td class="num">14</td><td>non</td><td>—</td><td>—</td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Un Évocateur Augmentation donne à quelques DPS une grosse part de ses propres dégâts (Ebon Might, Prescience) : un joueur qui en profite fait mécaniquement plus. Chaque buff de raid absent de ton raid (Battle Shout, Arcane Intellect, Mystic Touch, Chaos Brand…) coûte quelques % de DPS. Un raid plus grand a des boss avec plus de points de vie et davantage de buffs et d'externes : le top joue souvent à 25-30. </p>
+<div class="phases"><svg viewBox="0 0 960 26"><text x="0" y="17">Phases (orange : 3 ennemis ou +)</text><rect class="mono" x="200.0" y="4" width="74.0" height="18"><title>Monocible : 0:00 → 0:29 (1,1 ennemis)</title></rect><rect class="multi" x="274.0" y="4" width="40.8" height="18"><title>Multicible : 0:29 → 0:45 (5,4 ennemis)</title></rect><rect class="mono" x="314.9" y="4" width="89.3" height="18"><title>Monocible : 0:45 → 1:20 (1,6 ennemis)</title></rect><rect class="multi" x="404.2" y="4" width="43.4" height="18"><title>Multicible : 1:20 → 1:37 (3,2 ennemis)</title></rect><rect class="mono" x="447.6" y="4" width="104.6" height="18"><title>Monocible : 1:37 → 2:18 (1,1 ennemis)</title></rect><rect class="multi" x="552.2" y="4" width="28.1" height="18"><title>Multicible : 2:18 → 2:29 (3,5 ennemis)</title></rect><rect class="mono" x="580.3" y="4" width="89.3" height="18"><title>Monocible : 2:29 → 3:04 (1,1 ennemis)</title></rect><rect class="multi" x="669.6" y="4" width="56.2" height="18"><title>Multicible : 3:04 → 3:26 (5,5 ennemis)</title></rect><rect class="mono" x="725.8" y="4" width="109.8" height="18"><title>Monocible : 3:26 → 4:09 (1,1 ennemis)</title></rect><rect class="multi" x="835.5" y="4" width="43.4" height="18"><title>Multicible : 4:09 → 4:26 (5,4 ennemis)</title></rect><rect class="mono" x="878.9" y="4" width="65.1" height="18"><title>Monocible : 4:26 → 4:51 (1,0 ennemis)</title></rect></svg></div>
+<h4>Règles de la rotation</h4><p class="note">Pas de règles expertes pour cette spé : seuls les cooldowns, les trous et les dégâts sont comparés.</p>
+<h4>Dégâts par sort en phase monocible <span class="muted">(208 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+<tr><td><span class="sort" title="Instantanée Requiert Druide Requiert Forme de félin Vous balayez les adversaires proches et leur infligez ([112.7% of Attack Power]) points de dégâts physiques. Les dégâts sont réduits au-delà de 5 cibles. Confère 1 point de combo."><i class="ic ic-inv_misc_monsterclaw_03"></i>Swipe <span class="fr">(Balayage)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="Lorsqu’un esprit est éveillé, les temps de recharge de Rosser et de Mutilation sont annulés, et ces techniques infligent 30 % de dégâts supplémentaires tant que l’esprit est à vos côtés. Chaque fois qu’un esprit attaque, vous générez 8 points supplémentaires de rage. Après le lancement [ Incarnation : Gardien d’Ursoc : d’Incarnation : Gardien d’Ursoc / de Berserk], vous gagnez 1 charge de Garde farouche : Garde farouche : Votre prochaine utilisation de [Destruction massive][Mutiler] ou Ravage éveillera un esprit à coup sûr."><i class="ic ic-spell_unused2"></i>Spirit&#x27;s Wrath <span class="fr">(Courroux de l’esprit)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><span class="sort" title="1 Charge Requiert Druide Niveau 8 requis Requiert Forme d’ours Mutile la cible, ce qui lui inflige ([200% of Attack Power]) points de dégâts physiques. Génère 12 points de rage."><i class="ic ic-ability_druid_mangle2"></i>Mangle <span class="fr">(Mutilation)</span></span></td><td class="num">3 k</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+<h4>Dégâts par sort en phase multicible <span class="muted">(83 s)</span></h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Sort</th><th class="num">Toi</th><th class="num">Équivalent</th><th class="num">Top 3</th><th class="num">Écart</th></tr></thead>
+<tbody>
+
+</tbody>
+</table>
+</div>
+</details>
+<h3 id="s-build-et-stats">Build et stats</h3>
+<p class="note">Pas de simulation (mode rapide ou export de l'addon absent).</p>
+
+<h3 id="s-quipement">Équipement</h3>
+<p class="note">Pas d'analyse d'équipement (mode rapide ou export absent).</p>
+
+<h2 id="s-progression">Progression</h2>
+<p>Première soirée analysée : la progression apparaîtra à la prochaine analyse.</p>
+
+<details class="methode"><summary><h2 id="s-m-thode" style="display:inline">Méthode</h2> <span class="muted">(cliquer pour déplier)</span></summary><div class="cartes"><div class="carte"><div class="lib"><strong>Combats analysés</strong></div><p>Ton meilleur kill de chaque boss ; pour les morts, tous les wipes de la soirée (comptées si tu es parmi les 3 premiers à tomber).</p></div><div class="carte"><div class="lib"><strong>Références</strong></div><p>Le top 3 mondial de ta spé et un tank équivalent, trouvés au classement Warcraft Logs des tanks (au DPS) ; et l&#x27;autre tank de la soirée sur le même combat, la comparaison la plus juste pour les relais.</p></div><div class="carte"><div class="lib"><strong>Gros coups</strong></div><p>Les coups encaissés d&#x27;au moins 75 % du plus gros du combat (avant absorption) : les tank busters, avec les buffs actifs à ce moment-là (défensif majeur, mitigation active, ou rien).</p></div><div class="carte"><div class="lib"><strong>Relais</strong></div><p>Le debuff de relais est reconnu sans liste écrite à la main : celui dont les stacks viennent de monter sur un tank (au moins 2 stacks) juste avant que l&#x27;autre provoque. Relais tardif : 3 s de plus que le délai médian des relais du combat, et au moins 4 s.</p></div><div class="carte"><div class="lib"><strong>Classement des constats</strong></div><p>Critique : ta mort. Grave : gros coups sans défensif, relais tardif, boss qui frappe un autre joueur. Puis mitigation et défensifs sous-utilisés ; les constats de dégâts viennent après.</p></div><div class="carte"><div class="lib"><strong>Limites</strong></div><p>simc ne simule pas la survie. Les mécaniques punitives (coups qui tuent d&#x27;un coup) et le bon moment d&#x27;un relais dépendent du boss : le log ne dit pas tout, Wipefest viendra en complément.</p></div></div></details>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.js" integrity="sha384-G436+Z2nlA8+PNoeRvWdxKbvOf8E/y+lYxqht2iBwNHTQDV5CJr3+AGVj8fGZi5t" crossorigin="anonymous"></script>
+<script>
+// Graphiques des pages (controleurs/commun/graphiques.py) : chaque <div class="graphique"> porte sa description en
+// JSON, traduite ici pour Chart.js (chargé juste avant, templates/commun/_chart_js.html.j2). Sans Chart.js (hors ligne),
+// la zone reste vide : les tableaux de la page disent l'essentiel.
+(() => {
+  if (typeof Chart === 'undefined') return;
+
+  // « --a|--b » : la première variable CSS définie (les fiches ont leurs propres noms), lue sur la figure ; alpha < 1 :
+  // la même couleur, transparente
+  function couleur(figure, nom, alpha = 1) {
+    if (!nom) return undefined;
+    const valeur = nom.startsWith('--')
+      ? nom.split('|').reduceRight((secours, v) => `var(${v.trim()}, ${secours})`, '#888')
+      : nom;
+    const span = document.createElement('span');
+    span.style.color = valeur;
+    figure.appendChild(span);
+    const rgb = getComputedStyle(span).color;
+    span.remove();
+    if (alpha === 1) return rgb;
+    const [r, g, b] = rgb.match(/[\d.]+/g);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+  const parPoint = (v, i) => (Array.isArray(v) ? v[i] : v);
+  const chaquePoint = (v, f) => (Array.isArray(v) ? v.map(f) : f(v));
+
+  function axe(figure, a) {
+    const o = {
+      type: a.type,
+      grid: { color: couleur(figure, '--border') },
+      border: { display: false },
+      ticks: { color: couleur(figure, '--mut|--muted'), maxRotation: 0, autoSkipPadding: 10 },
+    };
+    // axe en temps sous des barres : 0:00 au bord, pas décalé d'une demi-barre comme sous des catégories
+    if (a.type === 'linear') { o.offset = false; o.grid.offset = false; }
+    if (a.etiquettes) o.labels = a.etiquettes;
+    if (a.min !== undefined) o.min = a.min;
+    if (a.max !== undefined) o.max = a.max;
+    if (a.graduations) {
+      const textes = new Map(a.graduations);
+      o.afterBuildTicks = axis => { axis.ticks = a.graduations.map(([v]) => ({ value: v })); };
+      o.ticks.callback = v => textes.get(v) ?? '';
+    }
+    if (a.titre) o.title = { display: true, text: a.titre, color: o.ticks.color };
+    return o;
+  }
+
+  function jeuDeDonnees(figure, s, g) {
+    const type = s.type || g.type;
+    const c = couleur(figure, s.couleur);
+    const rayons = s.rayons ?? (type === 'line' ? 3 : 4);
+    const d = {
+      type, label: s.libelle, bulles: s.bulles, etiquettes: s.etiquettes, centrees: s.etiquettes_centrees,
+      dessous: s.etiquettes_dessous,
+      data: s.points.map(p => (Array.isArray(p) ? { x: p[0], y: p[1] } : p)),
+      borderColor: c, backgroundColor: c, fill: false, spanGaps: true,
+      borderWidth: s.epaisseur ?? 2.5, borderDash: s.pointilles ? [7, 5] : [],
+      pointRadius: rayons, pointHoverRadius: chaquePoint(rayons, r => r + 2),
+      pointBackgroundColor: s.fonds ? chaquePoint(s.fonds, f => couleur(figure, f)) : c,
+      pointBorderColor: s.bordures ? chaquePoint(s.bordures, f => couleur(figure, f)) : c,
+      pointBorderWidth: s.bordures_epaisseur ?? 2, pointStyle: s.style_point || 'circle',
+    };
+    if (type === 'bar') {
+      Object.assign(d, { borderWidth: 0, borderRadius: 2, barPercentage: 0.9, categoryPercentage: g.horizontal ? 0.8 : 1 });
+      if (s.couleurs) d.backgroundColor = s.couleurs.map((x, i) => couleur(figure, x, parPoint(s.opacites ?? 1, i)));
+    }
+    if (type === 'scatter') d.showLine = false;
+    return d;
+  }
+
+  // traits verticaux (cooldowns, morts) : un point en haut, survolable, et son trait dessiné par le greffon
+  function jeuDeReperes(figure, r, g) {
+    const c = couleur(figure, r.couleur);
+    return {
+      type: 'scatter', label: r.libelle, repere: true, pointilles: r.pointilles, epaisseurTrait: r.epaisseur,
+      data: r.points.map(([x]) => ({ x, y: g.y.max })), bulles: r.points.map(([, bulle]) => bulle),
+      borderColor: c, backgroundColor: c, pointRadius: r.rond ? 4 : 2.5, pointHoverRadius: 6,
+    };
+  }
+
+  const traits = {
+    id: 'traits',
+    beforeDatasetsDraw(chart) {
+      const { ctx, chartArea: zone } = chart;
+      chart.data.datasets.forEach((d, i) => {
+        if (!d.repere || !chart.isDatasetVisible(i)) return;
+        ctx.save();
+        ctx.strokeStyle = d.borderColor;
+        ctx.lineWidth = d.epaisseurTrait;
+        ctx.setLineDash(d.pointilles ? [3, 3] : []);
+        chart.getDatasetMeta(i).data.forEach(p => {
+          ctx.beginPath(); ctx.moveTo(p.x, zone.top); ctx.lineTo(p.x, zone.bottom); ctx.stroke();
+        });
+        ctx.restore();
+      });
+    },
+  };
+
+  // texte près d'un point (valeur), sur un liseré de la couleur du fond pour rester lisible ; centré : dans le point
+// (numéro d'essai), de la couleur du fond
+  const etiquettes = {
+    id: 'etiquettes',
+    afterDatasetsDraw(chart, _args, options) {
+      const { ctx } = chart;
+      chart.data.datasets.forEach((d, i) => {
+        if (!d.etiquettes || !chart.isDatasetVisible(i)) return;
+        const points = chart.getDatasetMeta(i).data;
+        ctx.save();
+        ctx.font = d.centrees ? 'bold 10px system-ui, sans-serif' : 'bold 11px system-ui, sans-serif';
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = options.fond;
+        ctx.fillStyle = d.centrees ? options.fond : d.borderColor;
+        ctx.textBaseline = 'middle';
+        points.forEach((p, j) => {
+          const texte = d.etiquettes[j];
+          if (!texte || p.skip) return;
+          const premier = j === 0, dernier = j === points.length - 1;
+          ctx.textAlign = d.centrees ? 'center' : premier ? 'left' : dernier ? 'right' : 'center';
+          const y = d.centrees ? p.y : d.dessous && d.dessous[j] ? p.y + 14 : p.y - 12;
+          if (!d.centrees) ctx.strokeText(texte, p.x, y);
+          ctx.fillText(texte, p.x, y);
+        });
+        ctx.restore();
+      });
+    },
+  };
+
+  const SURVOL = {
+    index: { mode: 'index', intersect: false },
+    point: { mode: 'nearest', intersect: true },
+    x: { mode: 'nearest', axis: 'x', intersect: false },
+  };
+
+  function dessiner(figure) {
+    const g = JSON.parse(figure.querySelector('script[type="application/json"]').textContent);
+    const jeux = g.series.map(s => jeuDeDonnees(figure, s, g)).concat(g.reperes.map(r => jeuDeReperes(figure, r, g)));
+    return new Chart(figure.querySelector('canvas'), {
+      type: g.type,
+      data: { datasets: jeux, labels: g.horizontal ? g.y.etiquettes : g.x.etiquettes },
+      options: {
+        responsive: true, maintainAspectRatio: false, animation: false, indexAxis: g.horizontal ? 'y' : 'x',
+        layout: { padding: { top: 14, right: 8 } },  // étiquettes et points au bord du cadre
+        interaction: SURVOL[g.survol],
+        scales: { x: axe(figure, g.x), y: axe(figure, g.y) },
+        plugins: {
+          legend: {
+            display: g.legende, position: 'bottom',
+            labels: { color: couleur(figure, '--mut|--muted'), usePointStyle: true, boxWidth: 8, boxHeight: 8 },
+          },
+          tooltip: {
+            filter: item => !item.dataset.bulles || item.dataset.bulles[item.dataIndex] != null,
+            callbacks: {
+              title: () => '',
+              label: item => {
+                const bulles = item.dataset.bulles;
+                return bulles ? String(bulles[item.dataIndex]).split('\n') : `${item.dataset.label} : ${item.formattedValue}`;
+              },
+            },
+          },
+          etiquettes: { fond: couleur(figure, '--card|--surface') },
+        },
+      },
+      plugins: [traits, etiquettes],
+    });
+  }
+
+  const figures = [...document.querySelectorAll('div.graphique')];
+  let graphiques = figures.map(dessiner);
+  // palette changée (data-theme) ou mode sombre du système : redessinés avec les couleurs du moment
+  const redessiner = () => { graphiques.forEach(c => c.destroy()); graphiques = figures.map(dessiner); };
+  new MutationObserver(redessiner).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', redessiner);
+})();
+</script>
+<script>
+function ouvrirAncre() {
+  const d = location.hash && document.getElementById(location.hash.slice(1));
+  if (d && d.tagName === "DETAILS") { d.open = true; d.scrollIntoView(); }
+}
+addEventListener("hashchange", ouvrirAncre); addEventListener("DOMContentLoaded", ouvrirAncre);
+</script>
+
+</main>
+</div>
+<script>
+(function () {
+  var nav = document.querySelector('.sommaire'); if (!nav) return;
+  var det = nav.querySelector('details'), petit = window.matchMedia('(max-width: 1100px)');
+  if (petit.matches) det.open = false;
+  var liens = {}; nav.querySelectorAll('a').forEach(function (a) { liens[a.getAttribute('href').slice(1)] = a; });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A' && petit.matches) det.open = false; });
+  var titres = Array.prototype.filter.call(document.querySelectorAll('main h2[id], main h3[id]'),
+                                           function (h) { return liens[h.id]; });
+  function actif() {
+    var courant = titres[0];
+    titres.forEach(function (h) { if (h.getBoundingClientRect().top < 120) courant = h; });
+    Object.keys(liens).forEach(function (k) { liens[k].classList.toggle('actif', courant && k === courant.id); });
+  }
+  window.addEventListener('scroll', actif, {passive: true}); actif();
+})();
+</script>
+</body>
+</html>

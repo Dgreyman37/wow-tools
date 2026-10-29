@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ga-genere" content="2026-10-29T09:30">
+<meta name="ga-version" content="d4def6a+modifs">
+<title>Mes soins Rachmana</title>
+<style>
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .badge { font-size: .74rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px;
+           padding: 2px 10px; background: var(--surface); }
+  .badge-verif.ok { color: var(--good); border-color: var(--good); }
+  .badge-verif.alerte { color: var(--warn); border-color: var(--warn); }
+  .badge-verif.non { font-style: italic; }
+  :root { --bg: #f7f6f3; --surface: #ffffff; --text: #1f2328; --muted: #5f6670; --border: #e1e0dc;
+          --accent: #b8860b; --good: #1f7a4d; --bad: #b23b2e; --warn: #9a6400; --row: #faf9f7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #16171a; --surface: #1f2125; --text: #e6e6e3; --muted: #9ba1a8; --border: #33363c;
+            --accent: #e3b341; --good: #5cc48f; --bad: #ef7a6c; --warn: #e0b04f; --row: #23252a; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.9rem; margin: 0 0 4px; }
+  h2 { font-size: 1.35rem; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.08rem; margin: 26px 0 8px; }
+  a { color: var(--accent); }
+  .meta { color: var(--muted); margin: 0 0 20px; font-size: .95rem; }
+  .lead { background: var(--surface); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 6px; }
+  .lead ul { margin: 6px 0 0; padding-left: 20px; }
+  .note { color: var(--muted); font-size: .92rem; }
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+  th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; vertical-align: top; }
+  td.wrap { white-space: normal; min-width: 240px; }
+  th { background: var(--row); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--good); font-weight: 600; } .mid { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; } .muted { color: var(--muted); }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 8px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  td details { background: none; border: 0; padding: 0; margin: 4px 0 0; }
+  td summary { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  td details p { margin: 4px 0; max-width: 46em; }
+  .faire { display: block; margin-top: 2px; }
+</style>
+<style>
+  .avec-nav { display: grid; grid-template-columns: 230px minmax(0, 1040px); gap: 28px; justify-content: center;
+              padding: 0 16px; }
+  .avec-nav main { max-width: none; margin: 0; padding: 32px 0 64px; }
+  .sommaire { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 32px 0 24px;
+              font-size: .9rem; }
+  .sommaire summary { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em;
+                      font-size: .75rem; margin-bottom: 8px; cursor: pointer; list-style: none; }
+  .sommaire summary::-webkit-details-marker { display: none; }
+  .sommaire ul { list-style: none; margin: 0; padding: 0; }
+  .sommaire li { margin: 0; }
+  .sommaire a { display: block; padding: 4px 10px; border-left: 3px solid var(--border); color: var(--text);
+                text-decoration: none; line-height: 1.35; }
+  .sommaire li ul a { padding-left: 22px; color: var(--muted); font-size: .85rem; }
+  .sommaire a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .sommaire a.actif { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  /* sections bien séparées : un bandeau par grande partie */
+  .avec-nav main > h2, .avec-nav main section > h2 {
+    margin: 64px 0 18px; padding: 12px 16px; font-size: 1.45rem; background: var(--surface);
+    border: 1px solid var(--border); border-left: 6px solid var(--accent); border-radius: 10px; }
+  .avec-nav main > h2:first-of-type { margin-top: 36px; }
+  .avec-nav h2, .avec-nav h3 { scroll-margin-top: 16px; }
+  .avec-nav main > h3 { padding-bottom: 4px; border-bottom: 1px dashed var(--border); }
+  @media (max-width: 1100px) {
+    .avec-nav { display: block; padding: 0; }
+    .avec-nav main { padding: 16px 16px 64px; }
+    .sommaire { position: sticky; top: 0; z-index: 5; max-height: 70vh; padding: 8px 16px; background: var(--bg);
+                border-bottom: 1px solid var(--border); }
+    .sommaire summary { margin: 0; padding: 6px 0; }
+    .sommaire summary::after { content: " ▾"; }
+  }
+</style>
+<style>.ic{display:inline-block;width:1.2em;height:1.2em;border-radius:3px;background-size:cover;vertical-align:-.25em;margin-right:.3em;flex:none}.ic-spec{border-radius:50%}.ic-ability_paladin_beaconoflight,.io-ability_paladin_beaconoflight,.fi-ability_paladin_beaconoflight{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAgICAwAAAAAAAAAAAAAAAAgGBwECAwQF/8QAMhAAAgEDAwIEAwYHAAAAAAAAAQIDBAURAAYSByEIMUFREyJhFBZxcpGxI1KBkqHh8P/EABcBAQEBAQAAAAAAAAAAAAAAAAUGBwT/xAAtEQABAwICCAUFAAAAAAAAAAABAAIDBBEFIQYSFDFhcYHBEzJBUdEzQmJysf/aAAwDAQACEQMRAD8ApTptbXrtwNzdmYkF2Y5Jyw9fcnT9dMqBaS1xpjARf2GlN8NW25bzfap44yyxvFyI9ByB/wC/DTcVV7ttkKWuFUnqZCYuImVePbuTnv6+2hNMcRhhrYmSEBjMzztdWuJSgUTKSLN1yTbn8LuS32z36CopbfU/FligE2CpGUJIDD3GQf8AHuNKz4mbbwhNRwHyPk/11Z3Ty0VfT+/3G6XGqN0palVpYUSoLNBHzz5Ht27DHbsNY8SVkpb3sCpvVpaOohGAxiOQCCQc49tTeEYoyuxOGsjeCQbG2WR4dVy0cYpZTH9rhYHjZI29RW0U0sNNXVECcyeMcrKCffsfw0a4rzGyXOdD2KtjRrbNna7OyKeSHEWTYdHbxR9O9h1Eyn4t+uMXOmijQu4UgBcoO5YkfKPbJOtN7bL3e+14uo+6rnEJqd4le0wKV4RM2OUsikFn5MOQHocZ1UmwN1VL7upnMoYmFkL4wT2wAD54GMaYjqJd+Xh2uc7qJXkqaaJlz3P8QHt9e2spx2mlbWh8wBMmt0y3D2J9U21rmaszdxcAePBQ/cMNLvS57c2zR1D0zXGZKf7TCgjeJAoZmATAK45AK2f31KqNb9tqat6cbpqqGotdTQ/DpK+HEayhWwruvpIBgOvqPmGdV3tHcdsp+oeyZooXGK2NZGyAED4TJ/u17/iGvE9PXVlOkmSteRx/KPT28xoLB6JzmxwMbZ1yQTvvf4HrlmkqynLqvw4/KGg9ffolz3/t+ut+8LlRvCVeKdlYDuM/TRqUbmvlvudbDPOyPOkCxSMXwSVyBn3IGBn6aNbJDUVIjaCw7lOSwgvJuoXsuWQXmAhiCO4P6HTUbyJk8Nu4ZWJ5Ry0kiH+VjIoJH6nRo1FaU/Wp+fYpJpOyt/YdlQ+2HeXeW2YHduMlzpkbHngyoDqeeI+eX771aliR9tk8/wA3+tGjXLg4G3xdf6koifGkP49wl/nmkMrEnPc6NGjWnAlTjydYr//Z)}.ic-ability_paladin_holyavenger,.io-ability_paladin_holyavenger,.fi-ability_paladin_holyavenger{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAgFBgcECf/EAC8QAAIBAwMDAgUCBwAAAAAAAAECAwQFEQAGIQcSMRNBIkJRYXEIFBUWIzNikZL/xAAaAQACAgMAAAAAAAAAAAAAAAAEBgIFAAED/8QAKREAAQMDAQUJAAAAAAAAAAAAAQACAwQRIVEFEjJhgRQiMXKRkrLB8f/aAAwDAQACEQMRAD8AUqwSNPdTNO7SSM3czOcliTySdMb0igE9ZTRKvcWYAAax7o30/ue8LlLVeulss1KwFXcp1ykZPyIvzv8A4jwOSR7s5042lbNu77thtlyqbnaKvujhqJ4RG8U64JjYDj4hkg8ZxjSzt2drDcHIF/Rd42m11Pb92o0lExXtcABCR7t44+2eNKJ1QofQrZkKgFGIxr0Iq5dxMmai2UtZTrJKXaFskdmSoKeMthQPzzpYet3SS516S3O11dDNe5EM9RZKWFkCAjlYWZj3kHyvuTx7aq9l175KzfeLAgKb4+7YJX6K63KiiMVHcKumjLdxWKZlBP1wD9ho1z1ETxTvFKjI6MVZWUgqQeQQfB0aewChU9exNkC0bTorbXNDSQUUXelOT8x5DN+TkljyfYcDXaatqOwyrZ2Uyz9qIvpCRZF7hkjz8Y8j3GNYBvzrPV1c38NsYJE8uD3MWZixHcW5ySfvz48Dg2ffHUavsAp1qLGkgiWGoqBTzmERxluxkII7gSeMnke2kqtpKlzmauudEc6Vpw3wC2za+zr1NuuXcJqS9JXwqyuk5fkoqlceCMgnu+mdTXUCyUdwrKV4JVDMuYqgHCCRc/AfpkAn/eqBsrqji31dmoHipYpIswxx4AgDjIKksACARkZ9tVeq3bfbhty73zblA9O1HTyVFVT1cit2/t2C90QQgt/bJBPOGYHI51S08VUJQZMAWGnIfvRREjWuwqz1V6Sz3veM91kopjLUIrSSQSIqynkd5z5OMDI84z5J0amNuddbTUWqOeaurLZM5LSwRsOzu92A7TjP2x+M50abRJWsG7pyWy2E5SoUcjwVkUsZw8cisp+hBBGmI/VvcamrqPiYRBXp1cRjHq/0yQWJySQRx4GjRomtA7fTnzfSFbwHoq7BM7b1tkTdrI1dQoykcMCWzkffA1PdPbxX/wAodTUExH7OhuPpN7/GzA5/6OPzo0arqhoMHt+YWR8RS/QTSxp2o5Az40aNGmdQX//Z)}.ic-inv12_ability_paladin_sentinel,.io-inv12_ability_paladin_sentinel,.fi-inv12_ability_paladin_sentinel{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgIDAAAAAAAAAAAAAAAAAAcFBgMECP/EAC8QAAEDAwMCBAUEAwAAAAAAAAECAwQFBhEAEiEHMRMUIkEIMlFhcRZSYnIjU6H/xAAXAQADAQAAAAAAAAAAAAAAAAAEBgcF/8QALBEAAQMDAQYEBwAAAAAAAAAAAQIDEQAEIVEFEjFhccEiQZHRExQjgaGx4f/aAAwDAQACEQMRAD8Ai+n1tVyFIDzdwUhxKzuUlx84OTzroGyqJF8dp99ylplY4VDl5WftjGSPtzrlPpzb9Rqi/NPzSIjJ/wAzynQllr+ziuO3sMn7HTqYva3rUoEqpUsKq6KY7GM1aWlJbLLjwbXtUTvWpOcgqIT/ABGdTt22LlwJIV9o/Iql7TKlW5S2SOgn1MwJph9dLll2hZ7TVOb8JE5amly205DZwTgjsPqT9AdUX4YLhqlwKr1X2xm6CyBHdfcdyZEjGSoAfKkA53HOc/nEjdPVux7ji021YjbNyv1Wqx4nlpcJxDCUFYKnMEAnCQQAPc88Z0nr4vNuw/iccYtxhuHSGHYjTsGBhthaPDSh5KkDCd2FKBABII+utRNsh0byRBjA0Ax5a985pebeU3aG2KY3pk65EcxoOeaddVpE9ypyX6W/QSw64V7t3iFRPuVHue2jVQuaTQWa7Mj1e1YU+Ww6ppb20NLUEqIG5OR6sc5HcEHRpa+sjw5xyHvTQyy8W0lKZEDO6D3pOWNbd5X2G3/LTZFLjubG2I6MNgn2SkcJ+6v+6vNZvnpfbFn1iyHoU+sS5UYsylxEhDKnRyhCFEhSkoWAreAAdpPOkPc3U+4ahVIT8B5dGh03iBEhOKQiPnurOcqWfdZ5P2GBqRqPUFi8C2bkp0UVMelFTjIDT2D/ALEj0rH5APfB03/IO7wWsY5GI9+tYT+0k3KC0lUd+vsIE61HW3ckm3KhLqdNKWKkoO+WfW36myUAKKM9lcqwR2ycaz9MqZ+vr6p1Lqj8gJaD0yc+jla2W0lx3b/NQGATxk51T59T2pdiuRkeKlRSSDwT9c6YVlvKsiixZKSpNcrLDchxauPLw9+5tvH7nCgLUf2BAHzHRjyfhNqWB4zw9P0BWTbBd08GQcDj0nP8pqXpdFNo1TYotXS5VJMCI1HFQeISuYhKfQ6QkkfKQM5Py886NaD1et2e1HfqNNVLV4QDKgAdiMk7D/UlQ/AGjSqUgmVoUT5xFUFlstoCELMDmaSXU2KwzdKnGWkNiZFYmOIQAEhx1sKXtHsMknHtnVQbUW5Y28YOjRp2tSVMpnSpzegJdEa1nrBIqbh75CVEH3OBpjdTpLki85clQCVPNxnClOcJKo7ZwM9gOwHsNGjQ9zxb6HtRuzsPPRr3Na1Gq86ND8JtwbAo4yM47aNGjQKkJnhTEhxW6M1//9k=)}.ic-inv12_apextalent_paladin_beaconofthesavior,.io-inv12_apextalent_paladin_beaconofthesavior,.fi-inv12_apextalent_paladin_beaconofthesavior{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwEAAwAAAAAAAAAAAAAAAAYHCAMEBf/EADEQAAEDAwMCBAMIAwAAAAAAAAECAwQFBhEABxITIRQxQWEIUXEiMkJSgZGhomJysf/EABgBAAMBAQAAAAAAAAAAAAAAAAQFBgID/8QAKREAAQIFAgUEAwAAAAAAAAAAAQIRAAMEITESQQUTUWGxInGBwSNSkf/aAAwDAQACEQMRAD8AhWxlnVC85tVLHTBjxy+5IkOYCllQARk+qic/PtrXu09LpNl0tt6uVODCdAPNK5KFHPpxCSSf21mjYuM8dpbxUw6jkJEBwYJyFBwn/g1VdpbQqFwXhSfEjNOXHblOlLXEY8yMgevlqI4sEzqv8hdjZPUgBvL/ABFTSahREAsGuYusLc606wuVTVvv07GUx35jRbafGPMK/D9Dg9tTG8bPps+7afJbqERyO9IWsutSEEe2MHHfXLZlce3Fr12WW+2pL9KjvlKei2gNOCQUIDZT3UCjPtjHqcmbTqFWaBeVvU2c+lwvS2lrIbAwEvgYPvgDOl1cibULBn+hbFiNwHftt7sQYIpEokFXJPRwS+emD9RF7sdlQLmqTER56O34lZ4NOqCR3+vto13tz4zp3BrgbRlKZzo/udGqimnDkovsPAhbUUxXNUoDJiqfD7QjJsidDjIbJqEOG8oE4yoLIJ9vsgkn2z6a96/t1GaHGi0q24jVTosRSGJXQWpKUHKkoU8791IWQeCT6Jz5nSIu7Itn7NUxuA4FVWdAjtyx2JajFS8JHfuteScdsJyPU4pbrNAonwlXWzAKZEGRCbdbeU0kuSX31p4vK7efIjHokJwPLSBNHzqkzJ5JC1FIG2+TkWAwb4w8MJ04SZY0AOAk+A7b7t8nLQsV6+mqWzFqEC3oXj3yhTSKe+pp0rJASEHA6gJIHbB88DvnVFodZp25EanS5jzDdz0lxsvtcFIXwLmFoWlWFdRtQwr2wffUF2trDS92du3KgtK2G6ozzKk8vtEcEkj/AG46pO/Vcbs/cejXxTeMe4pUoMOISgBD7aO3WX/kCrgT+NJwfLOto4XLRKEpzqVqw5sD3Nj0PuDYxqdVFc5kswAv3PkHBHzkQpXFa8mXctXlusOI6098oCh34hxSQf66NO123LQ629Bn0WT0WVxT1mlOJPTe6rhWkE/eGT2Pyx650aCBqUjT0t/LfUHpmJIB0xjqVJkhzw6pDq2mlcEJUokAAnAx+p/fWj6QVr+GW9aQp1Zhw4sWdGQTnoueIT2Sfy5JOPmTjGdGjVlxSy5IH7fYiUogFSJxOQB5iS7MrXN3es2M+slo1qKSB7OAj+Rpq+JqoSp9zyJshzk6t1TY+SEJUeKUj0HmfqdGjQ9TbiUkDDHzHem9VLOJ7RMIBkSmCtydKBSogAOdvmf5JP66NGjTc5hbH//Z)}.ic-inv_121_trinket_raid_ulatek_ritualvessel,.io-inv_121_trinket_raid_ulatek_ritualvessel,.fi-inv_121_trinket_raid_ulatek_ritualvessel{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAUHBggE/8QAKxAAAQQBBAAGAQQDAAAAAAAAAQIDBBEFAAYSIRMUIjFBUWEHFXHBJDOB/8QAGwEAAgIDAQAAAAAAAAAAAAAABAUCBgABAwf/xAAmEQABAwMDBAIDAAAAAAAAAAABAAIRAwQhEjFBBQYiUWHBE7Hw/9oADAMBAAIRAxEAPwDmLYe15u7txNw23Q00bdkyXLIaQCOSj8qPfQ+SRrop2HCfxmDwuKxbkrymMCW3gU+YZCVcQeXsQb7T7G+tST9JF41jHz1zsrGiCQPCDalcXHPfoE9JFkd/GqztnN5OLgoUbEQsjNdfedacagvtFuLSkpSCeJNkHny66ujdDS2611KukbBHWzvw2+sGC7mJiDtE855HCzr23SmW2xn4zsvHyHVMh1qMpLJWCSoeKrqgAbI7sUCdS/cO3YsrzuZwzSGIIcATGSSShF8Uqs3YNWfonVQ3rkXHI+ShHKSlPSUojIgsIJZhstqHYSFFPI8bBu6WeVHS3aOGMiBJfTkIbRfYW1Hx7jakLUoe1qrj8fBN/jRFrRcHjKW9Xv2MtXPgyDgwSd+SBt87DlTJBmQypiPJeaSD2lDiki/4GjWj3lB8hnnmFoI9KVDqrsaNMS2DEJBSunVWB7RIOUp2E62tbsFxCD4gJRzArl9d+16peI2rOxTMKWEs4h+Y4ptQQ4ELSwBRUVDpNk1fv31epjt5j/JBHJCgfervW73NkJ0vbsZ5PN3y7ZZcN2Wxdgn5o965uoggu5WO6jWp3LKLXQwmT7mMAH0fr5VPTisazjjBhYxKCUhDjEbi8tPIVyWtVpbSe/Uu1H3CR7DC71E2Dk3VSRHQh0IDfFanEBKargasKFdihfRGl+D3hk2MQYjrpSnmXfXQPaUgk/zV6T5bNuyEqDrri/EP+y/T+B91376B0GclWbS3SWtGN9z/AH0qhtH9s3Ft6LMyDLKpjSPBeLh9RUO7P/CNGpVgcvIhx3mmZAbSXiquRHdAf1o01betDQCvObztG4qXD30nQ0kkCTzn2s/BKmpI4KIIXQN/nVZ2OUzguNKabcS6gIWop9Shf3/ejRrdNR7j8aRIwVOM82Im4J8NtSi226pAKjZIv50kU64WEqKiSAB39fWjRoB48lfLVxNBhJ4b+gvTCR6XByV0v7/A0aNGoplAX//Z)}.ic-inv_12_profession_mining_miningspecializations_overloded,.io-inv_12_profession_mining_miningspecializations_overloded,.fi-inv_12_profession_mining_miningspecializations_overloded{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAgICAwAAAAAAAAAAAAAAAAYDCAQFAQIH/8QALhAAAQMDAgUDAwQDAAAAAAAAAQIDBAAFEQYhBxIxQVEiYXETFCMVMkKhgZHB/8QAGAEBAAMBAAAAAAAAAAAAAAAABAIDBQf/xAAnEQACAQMDAwMFAAAAAAAAAAABAgMABBESMVETIUEFFNEiI3GR4f/aAAwDAQACEQMRAD8A8a1AZL7sOwsZLsgB+Sc7qz0GfGNzUF8ukOxwzAgyAhKRhx9I3WruE+1Md/YbgxL1qVsYAjx245G/KFNgnH+iKQuHFo/Xb+3dbqhS4MeQ22lHX6rqlDCB8Zyf8fB6U03RVUQZdtuAOaBa3C4Z+N/isO5NXtu5RIci1uQXpyEusLnr+mFoPRZUogAfJ2rZydJX9MATGLpZJSMbpizEqx/WKtVxe4aWnWGmV29xAakM8whSV/uirHk90HAB8j3Aql0Nm42W/S4Sn2o0uCpxDjal5C1oVhSARsonfHY4+KxOriX7mSG2I7fsf2qLL1Vr+PVG2CNxvUgud7ti1xkyZUUhWVIS6Ub+djv23opwbct89luQ+gJWUgEYopx9GkJyrdq0BLJxTRp+ejWHCm46XSnmv0JKZEdkbKlsIJJCB3KQo7DfFL3BkOO230vIZbgXATHXnN0oShKVAkdzlIAHc7UvFyay2mRZ3iRz87KkkpcjOD+SFDBSexHT2rnROpH9OXCZHv8ADfctlzUPu/xkLQsZIdT0BIycp7g9jg1D3LW8yO4yoyM+MGjpZ9F5CuzHOOD5+QOata7xdgaq0deGLZaZMG8o5fS/hSORagkuJx1PQcpGxUNzjNVx0TZYt84t6i0/MZacanMyWvqKAJZdBCkuA9QQsb49x0pifv8AZ9F2xdzg3iPdp1xjLahRoyuYKyfS653SlJGQDhRIxjrhX4bunS7M7VNzKhKkILUMLVhThWr8jvxjbPnNTmjt3ZIYRkAlid/GMURLJYUk6Axqxj81qYqHIyFRnRhbKi2oe42P9g0USpQkS3398uOKWceSc/8AaKdHKVUKNhW2pbAqJhxaHSEnHfNZchbtyZajTnnX2W1+htayUpJHUCiihWn1KA3cVeACK3VttVut9vMxiGyp7l5gVpzg0o6lny5ToXIdLhUsJ36BPgeBRRS71RHbHSMUScDUK6wXFfZtLPqUscyifJNFFFEjdtA71Ov/2Q==)}.ic-inv_ability_heraldofthesunpaladin_dawnlight,.io-inv_ability_heraldofthesunpaladin_dawnlight,.fi-inv_ability_heraldofthesunpaladin_dawnlight{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAAAAcEBQYDAQj/xAAtEAACAQMDAwIFBAMAAAAAAAABAgMEBREABhITITEiQQcUFVFhIzJS8TNCQ//EABgBAAMBAQAAAAAAAAAAAAAAAAMEBQYC/8QAKBEAAgEDAQUJAAAAAAAAAAAAAQIAAwQREhMhMcHwQVFhcYGRsdHx/9oADAMBAAIRAxEAPwD56qtv11slV6nE6zgyQ1dO/VjqVOTyif39+WfUvuB7sPbfw2qKh4p0ippIYpzLFWMQkUiFQVU5HLmG7MpyVx7d8yPgvRXW5XOls9QiLbmmMkMkmEMWQTJKPwFDkcgQGI8DIOyudW+6oKuOHlRWGlkEEFOgbkV7hBxU/qSOQzDJ4gdznI1jb2+cPs1Pmeu2aW3t1xkzP334W20WdYtuXCOvq2ij66Tv0y0wbuUJwMMGIwSPA1hrltKotN0kttWFjp46hRKBCZDLLgAJ0z35nJ4J/sDnwSQ0rNY7XT1MVwoUrLNcEKx0HzAURTzccDlg+lj28jBYj31y+eqbvtesqammaS70sJiqZniXk9NIxQuqkgdSKQgZPjkcdjjSlC8qKcFsj265Rh7dSOEUV53Tufb1RHatp3U2i3wxjNLQzA8JMnl1ZCMSy/ycenPpHZRo1X3Kx1kVRwlhngYKBxETEH2yMAj+tGtArUioOAfQSS1Fs8I0fgleqQ0c23IXomnr45o0qHgMc4kaJ1VGfuGUk+c5z9/GpmyaKtqrX9OiV4qq33EztCysHnUoqMqjyWTiDj+JOlptuoq7fb4NwIkiTLIPlZD4wOyuvsACCASMentnDYcFDcqDcNP8/bbhS0dwdVNUoYdFpAP8je4byeXpIHhmGdQb+gUdiOB+ZUt3UqJu/ipd4N40VoENv+nUtDOv1CrkXprBGPUcMw7j0nAwcEj76xW3Lsa6S+7n+lCOhoYXILqSk7yVSSqhwDgAL37HHfxnXKs23dBLFPvLdMcFtkxhKicnqIxxmPLN9+zAHBI/OqffO6tpy7dFh23JJS2yFyKqNExNKx/7orE8gpGGjyDxOQSP2pUaRqYRN/jvwB9zo6aQwItd03OgnvlTP8yaLquz9G30nShTLHsFZgc/k6Ne3JNwxyRCw2WrraEwrxq6WGSeOoPguCg7eMcW9Q49/to1qEpYUDmIg1Tf+zNxXKsuO4WqauXnLJIyghQoRVUhVVR2VQAAFAwB7auNsytJPBcRiOdJcZQdmz2OR+c+2NGjRbkAKcQNsSSJLa63O5W56etr55kgdKOIs2SsMfNlXv7Z1TX9ljuFVTQxrFEOTYUknGf25JJwP7zo0aDRUB8AQtUnSZGtFbc6amZaK73KjR35slNVNGpYgdyAfPjv+Bo0aNUdI7ooCcT/2Q==)}.ic-inv_helm_plate_raidpaladindragon_d_01,.io-inv_helm_plate_raidpaladindragon_d_01,.fi-inv_helm_plate_raidpaladindragon_d_01{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAYCBQcDBP/EAC8QAAIBAwMDAwEHBQAAAAAAAAECAwQFEQAGEiExQRMiURQHFSMyYXGRJEJigcH/xAAYAQADAQEAAAAAAAAAAAAAAAADBAUGAv/EACsRAAEDAgMGBgMAAAAAAAAAAAEAAgMRIQQxQQUSE1Gx8BUjcZGh0VJh0v/aAAwDAQACEQMRAD8AzrZGzZKikS8V23q29Qy8niTkfSJyRzcL7nOevHIHznOpVlqud/vqW+DM8iExhQAG4L/j0CgAdsAAdMDTp9je5vuK4y2+u5G3VWCQq5Mb9AWA8jGAR37ee71u7ZyWi8w7x2xLRzUle3C6FpRwCEZ9ZT0JX2nkq9yAcd9Zx0rpKDLvqrVGxZpC2XsKiirma7TvhDkwwDkzHvx6du416r3VC7XeFrBapEholMaqIyxljJy0bDyMjz2J+eumh7jE9xS2UNJTw10VH6tO6VauassW5RydcLMo69+PcZAwNNVLZqHZtpSor5fqrxUEsIoH5MzEk8V8cRk5c+evwNISYZzJw8kki1K27OV9ERsgcPXJZJNS31ZnaDbN5okdiwhjf1FXx0JAPjzn99Gme/UFXc7nLVS1PJ/yt7cBSP7RnwO3+j5zo1wdo4YW3O/dMCB+run0sutqytTtUR5HQ+kzjofnp8d860u03iqoNrU1fLPTJaql1ZaiWQtHSSN7VkYcWKKSWUsPafytjkCaqyWeatkilr2M3pwrDFG3RRGowF/QAf8Ac6ZbPXTU1/ghoJla2yCORvQjPJXlA5fiA+wgqcDsSTnsMEwU/FDh+NPmv1Xkh4k0IbqaqFKto2hTGsmFBRiQClpKcAN9VnBPoBAWqAx4gMowV4qSOo16txXO7RVFNDb6BVu1xnFOaytkEghPEkj2e0FcAYBIUg4BxnXDbqQW287zq6eiiEiV0aN6MSxl1algcplACq85JGKpgFmZsZ1YF5ptoRV1UUirjUFYY/RMZVQ3Engfykfz0Gh48tjYXC/rlccvlcwF77ZaKFya12yWOkaqjLiMMygcuGeoBOe+MZ/fRqje1gYeUq8kg5scEkE/P66NY/hRm7pDVVhAKXKZdjU0UlQ8jrllTI1T1a/cv2mXCgoGZKZraJvSJyqszhiAPjPb40aNU9iPd4hI2tt3+VMlPmey6bbqHTcG7OAVS17iAI7qPpYB0+Ow/jVvSVD1FkpI5AvEvUMfk/1DADr4GNGjTm2iRGKfroEfCi1e9VyaNSx6aNGjWZqU3Ur/2Q==)}.ic-inv_torch_thrown,.io-inv_torch_thrown,.fi-inv_torch_thrown{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAYHBQMI/8QALxAAAgEDAwIEBQMFAAAAAAAAAQIDBAURAAYhEjEHIkFRExUyYXEIgZEUJGKx8P/EABgBAQEBAQEAAAAAAAAAAAAAAAYFBAED/8QAKREAAQMDAgQGAwAAAAAAAAAAAQACAwQRIQVREjFxoQYTIjJh4UGx8P/aAAwDAQACEQMRAD8Ap/hJtSk+WR1hhX4xQkyEZY+/J9c9zquR24JSCIqEUDLtjk647IpKVNv0JgUKscQjwPcdz/3vrWu6j+jkZpRGiKWYntxzz9tDdM0RhiE8h4ic9b57K1qFe+eoI+VON73aO0QmClZYBJkAKgyR6knvqYVfwrlN8N4nmdvReSf20411db9wUk98qQrx08pp8RKGklkyAEjB4yeOT/IAOsCc10lPMsMMdsoR9axnP7PJ3dvsOPYai6hSkPD5H2B9rRk23+OpVigrfJ9DBn8k7/sqa7htkdHdJI+qRM4Yqjnj+NGtqrq7etS6ojygH6y3T1fgen76NeQqpALX7/SRie4uR2+1X6nxBothyUk19gq/lFSjsk8CdQWU48rDIxxnH51M/F39RNDebbJatu/28czFXLTAyyxcjqPTkIucHpJ6mHHlGqtZrraqyljoqiCF4ZVIaKZVdD9sHg6Q9+eB2xdwyS1tjs1tt12Q9QgLSRUkzZyOpEI6Qf8AHA+2tGkeIohGKWqJb84sep5hCqmB0cpfwZS5sbelpS32unpXqEtdop6mtqOqAyTXGoLYZcD6CeoKGPZs44U52J7i+6dtUV2paqIrUwktH9EdIy8SqxP0iNsqc8k+5OvPl7sXiH4fz10N0oZbVAWYS1UciojqewjcNll4AUDJ4AGDnT/4b7/2zHtW17WeP5VPVytLc5usMs0kiBYCFGfIvkDexBY850i1SgjqoPNYbgbW9QA9vTl/WWOCVzH3HM7ramW1RsFVHn45kZinUfcL6D88/wCtGse6q8NfKjSA88EHII9CPto0O4XHIACYslHCLnumbbF3rJLfE7spJA9Pxp9tFZMXzkBgMhuc6NGo2qNaL2CqajG3ON0y3Cy2jdtDDbNw2ylr4JUPMiedD7q3ca8p+Ku1bLsnxBmpNvU7U0VK3WgLlix5AyTycaNGlHg2WR0BDnEhAqtoEmAuVLXSzQCOYCUQExx9TNlUzkL37DJ0aNGrD42cRwF0Pduv/9k=)}.ic-spec-PaladinHoly,.io-spec-PaladinHoly,.fi-spec-PaladinHoly{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACQAJAMBIgACEQEDEQH/xAAZAAADAQEBAAAAAAAAAAAAAAAFBgcIAgT/2gAIAQEAAAAAc15lgfDNqwjKcU37U/sS87Wc7yVWIoOAv1K//8QAGQEAAgMBAAAAAAAAAAAAAAAAAwQBAgUG/9oACAECEAAAAONrt4sInE9//8QAFgEBAQEAAAAAAAAAAAAAAAAAAwQF/9oACAEDEAAAANpJLDtU5P/EACkQAAIBBAIBAwMFAQAAAAAAAAECAwAEBREGEiEHE2EUMUEiMjNCUbL/2gAIAQEAAT8AscDxblnFbWCO3t+7Wyr2TQJIH/Qq24LcYfEWVnZ4i2uJvqSLl5tb6H7sKg4Xa2cN/N9HCSEZYUCg9SazHpxkp8mzxo0asdyE/YfIqXF8KxhFrcS+7Ko27g78mvSqKc4sXFpl0WaKY97Vh/Wscy3kEbzIfcUDbEaJqWFOhGgK9QAY8Y8MLCNZPEj6rMQJb5K5iS699Q/8vkd69JzBBawOlysjhtiL2iCGb5FWRcIO5HcjdOVPjYBNcixZu42BX4ZazfCbT69ybNdkCuL4nH4LDWk0nVp2hVgP82Ktc2ZHDdlHf9vmspnkgmRS+lB0Dsff4qxzEN6nRiO2vB/BrM2aPebD9f0DxoVluUZVMPC4dNiBPx8VjOTZSN4iHQkAnyKz/Jcr0u5PdAdenVv83XDeSZOa2tDIyEunY+PzVxlLib2XdYyxjGzqv//EACcRAAEDAgQFBQAAAAAAAAAAAAIBAwQAEQUSIVEiMUFicRMyM0Jy/9oACAECAQE/AHWifluQxfK4OZtboh+aebk4UYGD/u4SzXW91ocNVwUNZz9yS+3OhmNxJzrjp6ulfLt5qZiMOeRxiLKv1LdU6UJYiIoKPHp3VNbbVXFUBXjXpUtptIAEgCi+pzt20z8Tf5Sv/8QAJxEAAgEDAgMJAAAAAAAAAAAAAQIDAAQhERITFDEjQUJDUWJxgbH/2gAIAQMBAT8AVjDCk2xdGX7FQyx3vZvF7l7ugppwpI5aLFSQNPbosa4RdN3r8VDbXNqEmC6iuNbnPBWrUkRYPgok72z5Q/aPWv/Z)}.ic-spell_holy_flashheal,.io-spell_holy_flashheal,.fi-spell_holy_flashheal{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAYEBQIHCAP/xAAvEAABAwMDAgQEBwEAAAAAAAABAgMEAAURBhIhMUEHE1FxCBQikRYjMlJhYoGh/8QAGAEAAwEBAAAAAAAAAAAAAAAAAgQGAwX/xAApEQABAwEFCAMBAAAAAAAAAAABAAIDIQQFETFBBhIiUVJxobGBkfDB/9oADAMBAAIRAxEAPwDbUGzW+baoEy1JajslsJQ0nA8tIHAAp/tkVMK0uLkIIW03uTkZKuMjH2rDQmkmrFb/AJSSfPCT+XuHI9arLz+InvEJaYkjzraG0oTHHCEFKSVFX9ie/pgVH3Pcji4zSupWn3U/u6orwvBsjjFGeFuR9D+JUlaxi3O+3uxSozUM27y/KkOObQ6pagkJwe/OfarqwaRnXGYlM9hceKPqc3cFQ/aKmaw8L41+dvL7bwiuT34zqVDJ5bB3E++49PSmh3U1mi6gt2l1yluXGWwXEISkqIQkdVHtnCvsa7Ut0xA77ajUc6fsVnHe8scJZFr4poqm+6N03cpaHJem7ZOUy0GUOPsBSgkZwkH0GaKaVMo3cLIH8iipuS33oHEADDuEhvtNSMVKQpW4p6gd+9Ro7EaNcH3AtKXX1BRGevGBVRA1A3KmvR4wCw2oBsIyoujuQRxgVWTL/bHNeMWtL6vmlNNhSUgEZOVAH04Iqluy3MnaQ129nX5y+EJs7oyWvpROy/0EZwT0yaRNLaeab8SL3fl4Lny7UdAKTkFQypWT14SkcY4GKg621zbY13et4kvsOsrS2lxKht3ntg9PenqGtASWVLCpCUgLX03kCn7RO2JuBzOQ5lC1pbESNfC8pyyl8pD2zA6UVq3VviXEtd9fhSZDLLjZwUKxkUVBSySF5Nc+ZVFDs/a3xtcG5hVfw9zpV6sbNwmvLLzjbSiEKIA3JBIHfFRLhcZEb4k0WdraIzEJ2QnIyouFOSon/APYUUV2dmGNbPM0CgNPK1vLitb97pHoLmzUWrb7c9VTnpkwrU5JKjxgAlXYV2UzcJT9viTFOEPOwY76inj61NJJ/wC0UU1tZwxRkdQ9FDHGwSkYUXMfxIXN5jxCbWhlkqfgNOuEg8qJUM9fQCiiiis0bHQtJGidM0jTgHHDuV//2Q==)}.ic-spell_holy_righteousfury,.io-spell_holy_righteousfury,.fi-spell_holy_righteousfury{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAgICAwAAAAAAAAAAAAAAAAcGCAQFAQIJ/8QAKxAAAQMDAwMDBQEBAQAAAAAAAQIDBAUGEQAhMQcSQRMiYRUjMlGBcUKR/8QAGAEAAwEBAAAAAAAAAAAAAAAABAUGBwP/xAAtEQABAgUDAQUJAAAAAAAAAAABAgMABBEhMRJBUWETcYGx8AUUIjIzYqHB0f/aAAwDAQACEQMRAD8ArdYioVRn9kruW6rKlg5Uo+SsfvHJ86lNV6J3LKjyqpSIinmPTQ62hKSorJPuCAPy2wQP5paWsmqouWAKSiT9QElIjpZSS4XM4AAG5Px/7tr0HmX9T7ZosW22GG257aAZ6oqUqaacIHehJGxOc5xsON9TvtN5yReDja8jGcEbdb326w5YV70z2JRUg5x6/cLDopVIvQ+jyaRcMN5denemS3GYLiGvb7Wy8cJ7irkJ7sfOpWzftPvKvwqE3UF0+rS47hbqkIFx6G+g7xHPUT9s7KJCDnA3PGdPeF40o0SSq4KSiRAdUVQ5DmWwhG2SoDJIB4xjnSlt+rUmu1B2W1WZNOadhSBDloClux5GFD3pwf0jfkpWN9jpiwthaQ4i9b83NDAi0rFQ4L7eETfqF07RWq43Muet+hUBHS2TEqjYDiEkhKle4Hu8b74A0aqTUJkyfLXKnSXZEhZ963llSif9OjTG8AxdPpfadgGgwb/oshp6qE+g2ttQUphzsIUsjP5gKOCeMjXN+XLRLeos+qSaQxUWY6QIyG93FuHhB/QHJO+B/NYVu2POpliUSjRC3Djx4yXZfcSFOSHAFLJxyRsnHjGl/Vr/AKRalyv016RKRLit/adQgKaV3f8AKhynwScHI2xrMOzXOTSi2CsDa9aA0ztXpWnEWTaUJb1LWEk79TiOtkdRYl6Jfpc4xqfUp0ZUeYqQpIjFnjKAc4wMbH8cZHxD7Bdc6b9UU0+YaTUqbNUWC4+krYWnuwFZ5BHx+/8ANZVStS060BVLUrBZqIPquuBXa2lzPCEfkrPnjc+eNSmTTXanRm6RdMQ/XwyFwpBdSEJWNkqSTjfjnOMYPxTSkyzIvamAQD8ySLg80OQPLwgZ+UcmmdLt1DBGCPP1XmEt1HpCqZeE5mOx9hxZdb9M96QCTkAjwCCP5o1Yi3q19To0ZyoNU5mWwksPpdhkq70k53DSgcZxz40atQw2sateftMSygtJI0/kf2GJcFfn1O0qNWHwyiRPp8aQ6ltGEBawO4pHjSlqUGmVWmuxKhSoD/qyklTymB6wJPhf5fzONGjWRj4H3NNqKNKW3MXMikKYTqFaiMWpWDbdJvF2FTo78URgwptxt9QcysZJJ8/Gt3RWEpvKRSXFrfitkKAdwpWcnG+PGOONGjTKXdW86O0NbDN+I6rQltACBSoOIh3UC9ropV2TE0yrOxESO191DYHapwpCSrcHBPaCfnOjRo1pLClBpIBOBueO+IKY+qrvPHJ6R//Z)}.ic-spell_holy_searinglight,.io-spell_holy_searinglight,.fi-spell_holy_searinglight{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAcGCAkDBP/EACwQAAEDAwMDAwQCAwAAAAAAAAECAxEABAUGEiEHMWEiQVEIExQycbFCgeH/xAAYAQEAAwEAAAAAAAAAAAAAAAAFAQMEBv/EACkRAAIBAgQFAwUAAAAAAAAAAAECAwARBCExYQUSIkFRFHGxgZGhweH/2gAMAwEAAhEDEQA/ALF9PsJpTJ6FxRtsTj1NGzQkD8dHHpAI7fM0sesXQ3E3P3MhhrBLHpIUlpAISD4+B4rzfTjrW4dtGbe4uUKaA2JUFTMJkT5j38VYxl1u4twsQpJ4PiuZjkfESFSeSaPv2I3Him5kfh0oI6kYX2I/lZ8jo8sZJVrkX2cWyJUt1bRdSqeUqTO0QR7T7eYpb6h0i6zcKbQyoL3elYbISpMwDB7TWl+f0fgs2hX5dmhe8QVJPx/VQDWOhdP4TAXrltg7dza3C3XSpZSg8FXPciR2q+bik+GW80ZJPjSr4zgsSAgBDfSs8LrTt+w4EOoamJ/b2oqd9QrdWO1EpjHvt3FuppK0qMymSZSeO4opmKdZEDDvvWSXhwRyueVTPopqB3FWzN22rY2vagt/t3jnn+TH/KvBoTLNZXCtvsqBIMKHvxwazU6ZX7dxkU2t4va022Tt3xvgcJnyf6q5H076kyly67ahxpNui2ktkfqsGEifIB48UJxFBBOmJtpkfY6fat3J6zBZarmP38/NOfP3bOESi5Dqm0LcSkpSRuMmP1/yAnntA967N3WP1BjHrbclQUgpVtPpnwfkccHkVyylvY522+28lCHgiBvPC0mJHBmPPcGKXeeF9phs3eHetYs3A26yyuQn43DuZ81sRoJ1Kq4IYWA38bUTFDzC2jCqn9dLBzHdR79i3ZKyfU5sHp3yQY8GJ/3RTG6n4jTmpdVOZpGSGNduWkqfYWkcOchRE9weKKiKIqgVla49qfbExsbk/iqoaccLdyogAyAIP801cHrzP4VhCbJxgI5SUKQSkwO/fvRRSbxJIhDi4oTAzSRDoa1SpfVjV9rps3VvcstLUnskLAHMcDdxXo6ddUtW5TUKcffXFu8xfMFFwFtSpfCoO4mZBAI80UUXHhIFLFUAzpxpXe4Y3yqKa31Jk3c8sS0gIQEjanv3MnnvzRRRTQ0oBmNznX//2Q==)}.ic-spell_paladin_clarityofpurpose,.io-spell_paladin_clarityofpurpose,.fi-spell_paladin_clarityofpurpose{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwEAAwAAAAAAAAAAAAAAAAcIBgIECf/EAC4QAAEDAwQBAgQGAwAAAAAAAAECAwQABREGBxIhMQgiEzJBoSMzUVKBkbHB0f/EABgBAAMBAQAAAAAAAAAAAAAAAAMEBgIF/8QAJBEAAQQCAQQCAwAAAAAAAAAAAQACAxEhMQQFEjJBkcFhcYH/2gAMAwEAAhEDEQA/AFn6Z9Pqu2pESZAU4pa+SlE5J7ySc9mr+hNiPAjtDoAAD+qmb0m6Z+BGRJWgjiMdj6+afG6+oHNMbf6gvNvLS59rtjslppQ5YUEniSn9ue/4NREzncmSaRvstYPmyn5AGNaz+rUyDmSB5yisDv3plOptAz44bK3QyXWsDvkB/wAJpQejPdvV2uLjqK16zu4uS4TTUyPIcbQ2W0lRStB4gAp+UjPjuqZeS1Lth4kOIxlJHYUk/wCsVrl8Z7ZZ2HfkP2AD9EIcT6IK8o5blytU2RCZlyY4Q6QpCHVIGfGcA+eqKa3qA0C7bd07q1FYV8B1Qeb4jrCu6KpIOoxSRNeTsBDdA6zSqCJqTTu0G1ab7fVcFJRwYYQr8SS+RkITn7k9AVOev90tZzY9xv2oHnLXL1VFbiNWqKvAj21PLK1JVn3L5kJKsHGTjBFbPdPUN0TuFItQvQtjcYoZbhSn2A2WgMhwtPpAOcqVyCjn7Ui9x4l0mXJOppEeQmFcAVR5D6ipUjgopK1K8ciR4GABgADFcTpkDgwQvGNk5yfQ+c+8D1lMTVfeDtdrQF1gaYuVwtEG/vtwrzBehyZpbU0hBUg/BJT2farHI9js4yO6c+ynqC1do/VMXQ26TTk2GQhiPNbbC3W0kYQ4Cj85sgD3DJx333Uzwml3J9MSI0X33FBCEJGSon9Kbdjl3nSsVOjJ90lWG627moYU2FKaWApQaec7Y8+4JyFYyE8s56XIDoSZAO4nd/jAdgaF0carWUJoDyG3SrDXmn7ReL6Jj7DbxLKQhZSfcnJI/wA0Vx2RtdyO29uF3hPyHRzLTkhSuamyokElYCjnJOSB58AYoqTdwnWacQnRLWKSt9at8k2u7afRFi25TqIqnEPvw23nBlzBT7wRx9oOMeayG+94dk7C7dpehwSZEMyVlLAThRzkJAwAk+cAeaKKpi0B0bhu/pKu8EoNn56oe5mnXmIsUKNwZQQW+iCsA01vVRqu7WnfpUa3qjx2m3oq3AhlIL/aThxXzKH0xkdUUUfsbJy2h4sUUNunK3Iai5GQtXkj6UUUUpSwSv/Z)}.ic-spell_paladin_divinecircle,.io-spell_paladin_divinecircle,.fi-spell_paladin_divinecircle{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAcFBggDBP/EADAQAAEDAwEFBwQCAwAAAAAAAAECAwQABREhBgcSMWETFBUiQVFxMlKBkSOhQoLB/8QAGgEAAgIDAAAAAAAAAAAAAAAABAYABQIDB//EACMRAAEEAgEEAwEAAAAAAAAAAAEAAgMRBSEEE0FRkRIxodH/2gAMAwEAAhEDEQA/AOUe3+IWdc2FJm2mMQoPhnHfJoBwVrUCMj0IyEJJwMnJqSibLWZaIMpjxOGWWu07w26niT7cXDg/o1OWS3W6ftYzFhuyWlMLDATw5SG0DGM+x1P+xpuT9nLPHtCW2m2UJSnRKRnA9tf+1y1000gc5p0PxMzyyOh5WZL1bbndprzD8UPyXQTAuUdkluaCDhp0gYJVgpSr6gocKueQr4N5vlju5A7VMTRTal5+nljX2OlbWREYDCUJYI7NeUH7SfbHwKom9nctA28U84mS5bpDSipt2LgDU5wpB0UP0etXmI5Bmd0iNFActoAsdkq7ftul2IhYla482FetFVOVuU3iWiS5Bj+HzGm1eV3vPZcQ6pVqP7+aKvDjW39oDrLVDtvQtYjx0COpBHapHlKwBgEH1GBUbdbltAmM2Foedb7RXGlQ4EhHUnQDrmvYL/Bi7MifPdYVGbTq44rg7MfaTzT8a9Kpm0W3WzT1sZeSwqU0VEpBl4Qf0nJ/FKEmJmD6q/auGclhG1ZYF9Q2tK2ZgdgMKK5T6SCOL0bHuTyHvknkK9F83p2fZ2wmZMT3mdIKjGitLGXSDjn/AIpBzkn+zSL2o27chtpKWUQopJShptYQkZ+rDepyfVR160u9pr9ZXXGpvepbiHUfw29pPC6kDQJKuSU9RkmmrDYN0bvlMKHkoLkSdQ0Eyb5vkudzuLkp1KkE+UNxAooQPtzg5NFKVk7XT2w/bleHReTcdhBCUD5xknqdTRTBWNbovd+f1D1H5PpMLeLPk3K4wY8hZDIjhXAgkJJydSK5315cZm2W6MEstrYKytI8+ehPL8YNFFbMexruVECNWVOMAZNpN3y+XB2+vsIdDDTSylKWxz6knJJ+TVx3aWKBcri29NQt5alalSueKKKEzEr6dvuViTbyFpK1WS2RoDTTURATw5ooopBdI+ztFACl/9k=)}.ic-spell_paladin_lightofdawn,.io-spell_paladin_lightofdawn,.fi-spell_paladin_lightofdawn{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAHAAAAQQDAQAAAAAAAAAAAAAAAAMEBgcBAgUI/8QALhAAAQMDAgUCBQUBAAAAAAAAAQIDBAAFEQYhBxITMUFRoSIjYXGBCBQVMsHw/8QAGAEBAQEBAQAAAAAAAAAAAAAABQYHBAP/xAAsEQABAwIEAgoDAAAAAAAAAAABAgMRADEEEiFBBVETFSJCYXGRkqHRMnKB/9oADAMBAAIRAxEAPwCvOCHAbiM/xCs141FpWbFtYkdZ52YtKFAjfKkqPNkn6V64kF2HJut7uDLjUhxfRitqGMJ7D2xUV4OcNtX6VuN3v2t725dri7HAYc/dLewtWR3V5Hb81ZUFhUiSbdOAmwobSFLLgyrrZynB+wyaznj6xxDEJZUYvr3YF53HmPSncE4GGzuN+caSOXIbVyoGgLPaG2bxJluHppLrvPjAVjORWibRp+/vKvU63zhEQn5Jde5QtI88gGyT9TvUgvFvk3CQW5jhTb2fiKQcdbzj6JHvSlunfIkOvRgxDQMNqcOOZI848CiH1tnE5UMhtI3UM1tJ8ASNr3mvY4t9SOkKypXgYgE2HMn4FQp692qY6tVv07qB9hs9MLjoRyEj0zRT+Tq2S26W7NZFvQ0bIWElKT9seKKLOPYB/Ee0fdIpwz8CG/VwA/2pNo6yyrdpO2Wua8p+Qy0FPrWsqyvvjPoO34rrw4qYrZTgL6jinHVnbc/9iugpIx6UkpCFoABJCDnbzWpdXJYWXECVRufLSx0iZ0n1qSLpUCNqZ3GWhhxDfIV5GeUDbH+U2lGJNjIExhLqVK2Sg5H5re4R0O5Mx7lQdumknemDzctCQ1bIbLKR2W7vj7JFS2Nx2OOIXnSC2bJIkx+oBI0FiReuplCYGUwedvn6mmVxtl/Mo/xyoqI2PgTzYx7UUhJujUN0sXDULbUgf2SSlHsSKK4uruHL7RaVr40ilT4EDL7Sfmp4e1Y8elFFamQImp6qn4166velIZVaUxAsnHO60VEbE+uPFUzwU4va31Bx0g2W63BqRBl9VC2ungJwMgpwdsUUVNgBb6grWKZUhKcLmA1NUf8AqI1Re7rxo1O67MUyGJqozaGPhSEN4SnbffA3NFFFMsMt9Ensi3KiumcHeNf/2Q==)}.ic-spell_priest_burningwill,.io-spell_priest_burningwill,.fi-spell_priest_burningwill{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwEBAQEAAAAAAAAAAAAAAAYHBQMIBP/EAC0QAAEDBAEDAwMDBQAAAAAAAAECAwQABQYRIRIxQRMiYQdxgRQyUSRCUtHh/8QAGQEAAwEBAQAAAAAAAAAAAAAAAQMFAgQG/8QAKREAAQMDAgUDBQAAAAAAAAAAAQACEQMEIRIxBRMUItFBcZFRYYGh8P/aAAwDAQACEQMRAD8AqFktdiw/E4ZXDYXJkthxxTgBISfJJ+5+5Nb7mJWKLFaul0DYQfeUhA2AeQKRM1fM7NcftaVERClkOhzsop6dAH7HevNVPG23LnlM+NOIcjsHSEdPt0NarxvUBzgw5JgD3VDlQ3UVwzHF8Ku1qix3Y6Iy307jltICt644rFxvGYmExema60/C/eXnQNr2d6/FVK4xYTMT11R2/wCnQS37R7ePFeX/AK2ZpdL9jcmJHbVFbj3NLQ2eCktq3o+edUy6a+nWFN5E422+mVq2Yaje3ZNmfxbOq9NybbBQqPIjpdCmlBIOyoePtRWVgzjrOH2xqVpbiWe6++uo0VxOrkEif2n8kBfTPtIm4za7+2htcxqKkKKwdNL8Oa3zpPAH86PinPAs4t89gTEONoeT7HkqP79cdQPn80iZrIvlqSi4WdbZs7aEreQtY9Qe3XpoT/jsA778nxWHieZWV1ZYlWsQX3R7lI0keof5B0OamVW1S3mNzBkR9lZZa06rNEeV6NvuRW8W1sqDr6JCSEBpBUPyRULvcGFcshMBFoCI6XS6l4gHk8L6kH+09vHxrtTTY8mgQrChmYJLXSgpZ9VrRc5J0Pn7VPZH1HtUO8nbSGGJHWl9xR7ADY+T/ug6tcXVXXBLo3QtrTpQ7t+Vo5Zc7Jb7i1AZuP6REdhLYbSkKT55BPOqKgGWZDLl36TJh2iU5HcV1NqdRpZHzvz/AMoqmzg7y0Evz+PK3ps/WZ9j4Tz9L8qu95xyKq4OtuuI6kdfTpR6fJ570zrQxJJDsVjvs6TqiijfNDKxDcZS7BzoGVzjISmTO0FH0GdN9S1HpB7654qQfUB1caRKbaOkpUnXxvmiim8NA6ghUL8kW7o/sFZDi5JjRH3Jspxx9gOLKnD3JI4144oooq6WidlCFWpA7j8nyv/Z)}.ic-spell_shadow_lifedrain02,.io-spell_shadow_lifedrain02,.fi-spell_shadow_lifedrain02{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAkACQDASIAAhEBAxEB/8QAGgAAAwEBAQEAAAAAAAAAAAAAAAYHCAQFAf/EAC8QAAEDAwMCBQMDBQAAAAAAAAECAwQFBhEAEiEHMRMUQVFhCCIyFRehI0JxcpH/xAAXAQADAQAAAAAAAAAAAAAAAAADBAUG/8QALxEAAQMDAAcFCQAAAAAAAAAAAQACEQMEIQUSEzFRcfAGFEGBoSJDUmGSosHR4f/aAAwDAQACEQMRAD8AyXFp02TMjhLD78iU7htJzudUT7+uSff/AJrWP052eqjW7UZ8uOiTUipKf09b25DagrAyo9znn4xx76kVLt2BR73oCIteh1WhyCX4dQhZYS6oDarc0rKm3G1H7gfTafXItFw2JcFrUOuSn3W6vClwlsxp8aSGmY6CM7VtE5Srd68k9851F0mH16ezaJyJjxE+WPE8kvpK3c+3AbOSMcea6uuU3rbTbfeqMdNONLYQvc3TFh3y4T+XiJUAcd+Rk5Gpf01pNIuOzXr66g1px+FFl4cjNNbgygY5KAMblZ4UrIA+Tpxt1CqhZQTLnV1yazLjs1ZKZxKZzMgHy4WFEYSl8JSrGDhQJyO076mXVcVr1qs9Pafb9PiTG21QX0QAlxnY4MnaEpBUog4+78eeAeylWi54FO2ZqmRLsD2QciTJmOERjik9I2ezeKduyDiXGN3CT8uSc1dbOilFUadTemqpUdo4Dy0ISpZ9Sc6NQKH006gTY6ZMW0Kw60v8VCKrB0ad7tYDBq/f/UQUrce89QvTYqMWbKM1mW6pyWgPpQp4qMZxG5IQoqTydo4OQNuM5Ixp7h3pMh0Oow/NZiTY6UrMhZUloBOeEDlRyePjueDqMW260mWC8X9qeyEKAC8nASSeQM47ZPtzzp9td56dV26fSocaTL8Rfl2BtKUJwCpQBOC5kJI3Hnkeo0e5ojfEx1vVjvL6bCWiTwTRY4um5bwiwqkW22JKmZRnPR9rzDCDkqQM43ZAIySfsAGBqtPB+gRV1q3ItCtWmShu/XqqjzE+atX9xThRGSMgAAfOviJNTg0jwqL0ZuaNKdwp+W61IWt47wDv/pqOw5KtucYGMemkbqzG6hMWca5cvmqVFddbjpiyW9qyFZ3KIOFeEkhsAKAOSoj21nnNu7qrEBrMDf8AgE554UB9O8uqpDsN39dea9OZWKxMfLv76oUexOxxkZ+Ej050azEut1RSipU10qPJJOjTB7P1znaj6G/pBOiqvx+gXRSYjbq5SCtxPgKAQpKsHlW0/wAaoNjRmYdXTGjp2JW9sKhwrCUbhz/k/wADRo1cuidUhai2A1grxbpqy4RdbuavR/CSSlLM0pHY/GkH6iaWWrHRMcqdUlOSGkSHBJlKcBXlPPP+x0aNTbcDbNVG4aBTMBZ6p0FqSypa1LBCyn7SPYfGjRo1oFDX/9k=)}</style>
+</head>
+<body>
+<div class="avec-nav">
+<nav class="sommaire"><details open><summary>Sur cette page</summary><ul><li><a href="#s-boss-par-boss">Boss par boss</a></li><li><a href="#s-corriger-en-priorit">À corriger en priorité</a></li><li><a href="#s-d-tail-de-chaque-boss">Détail de chaque boss</a></li><li><a href="#s-m-thode">Méthode</a></li></ul></details></nav>
+<main>
+<p class="badges"><span class="badge">Généré le 29/10/2026 à 09:30</span><span class="badge" title="Commit du code guild_analyser qui a produit cette page">Version d4def6a+modifs</span><span class="badge badge-verif ok" title="Relue par le vérificateur (intégrité des données, anomalies)">Vérifié le 29/10/2026</span></p>
+<style>
+  main { max-width: 1100px; }
+  .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 16px 0; }
+  .carte { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .carte .val { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .carte .lib { color: var(--muted); font-size: .85rem; }
+  .prio { list-style: none; padding: 0; margin: 0; counter-reset: p; }
+  .prio > li { counter-increment: p; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+               padding: 14px 16px 12px 56px; margin: 12px 0; position: relative; }
+  .prio > li::before { content: counter(p); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px;
+                       border-radius: 50%; background: var(--accent); color: var(--surface); font-weight: 700;
+                       display: flex; align-items: center; justify-content: center; }
+  .prio h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .gain { float: right; margin-left: 10px; background: var(--row); border: 1px solid var(--border); border-radius: 999px;
+          padding: 2px 10px; font-size: .85rem; font-weight: 600; white-space: nowrap; }
+  .gain.nc { color: var(--muted); font-weight: 400; }
+  .gain.grave { color: var(--bad); border-color: var(--bad); }
+  .gain.ok { border-color: var(--good); }
+  .prio p { margin: 6px 0; }
+  .etiq { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; margin-right: 6px; }
+  pre.macro { background: var(--row); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin: 6px 0;
+              font-size: .88rem; white-space: pre-wrap; }
+  code { background: var(--row); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: .86em;
+         word-break: break-word; }
+  .moments a { margin-right: 4px; white-space: nowrap; display: inline-block; }
+  .boss-chip { display: inline-block; font-size: .8rem; color: var(--muted); border: 1px solid var(--border);
+               border-radius: 999px; padding: 0 8px; margin: 2px 4px 2px 0; }
+  .sort { border-bottom: 1px dotted var(--muted); cursor: help; }
+  .fr { color: var(--muted); }
+  .bandeau { background: color-mix(in srgb, var(--warn) 14%, var(--surface)); border: 1px solid var(--warn);
+             border-radius: 8px; padding: 8px 12px; margin: 8px 0; font-size: .92rem; }
+  .pc { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .gris { --pc: #7d838b; } .vert { --pc: #1b9a1b; } .bleu { --pc: #0070dd; } .violet { --pc: #a335ee; }
+  .orange { --pc: #e07800; } .rose { --pc: #d6559b; } .dore { --pc: #b8942a; }
+  .pc, .pc-t { color: var(--pc, var(--muted)); }
+  .verdict { font-weight: 700; }
+  table.boss-soiree td a, .liens a { white-space: nowrap; }
+  .e-pos { color: var(--good); font-weight: 600; } .e-mid { color: var(--warn); font-weight: 600; }
+  .e-neg { color: var(--bad); font-weight: 600; }
+  .methode .carte p { margin: 4px 0 0; font-size: .92rem; }
+  .methode summary { cursor: pointer; }
+  p.mode { margin: 4px 0 10px; }
+  .refs { display: grid; gap: 10px; margin: 12px 0 16px; }
+  .ref { display: grid; grid-template-columns: minmax(0, 1fr) 11rem; gap: 4px 16px; align-items: center;
+         background: var(--surface); border: 1px solid var(--border); border-left: 6px solid var(--muted);
+         border-radius: 10px; padding: 10px 14px; }
+  .ref.e-bad { border-left-color: var(--bad); } .ref.e-warn { border-left-color: var(--warn); }
+  .ref.e-good { border-left-color: var(--good); } .ref.moi { border-left-color: var(--accent); }
+  .ref .qui { font-size: 1.05rem; } .ref .qui b { font-size: 1.15rem; }
+  .ref .det { color: var(--muted); font-size: .85rem; } .ref .det b { color: var(--text); font-size: inherit; }
+  .ref .ecart { grid-row: span 2; text-align: right; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .ref .ecart .dps { font-size: 1.9rem; font-weight: 800; }
+  .ref .ecart .pc { font-size: 1.05rem; font-weight: 700; }
+  .ref .ecart .lib { color: var(--muted); font-size: .8rem; }
+  .ref.e-bad .ecart .dps, .ref.e-bad .ecart .pc { color: var(--bad); }
+  .ref.e-warn .ecart .dps, .ref.e-warn .ecart .pc { color: var(--warn); }
+  .ref.e-good .ecart .dps, .ref.e-good .ecart .pc { color: var(--good); }
+  .ref .barre { grid-column: 1; position: relative; height: 12px; background: var(--row); border-radius: 0 4px 4px 0; }
+  .ref .barre span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--muted); }
+  .ref.e-bad .barre span { background: var(--bad); } .ref.e-warn .barre span { background: var(--warn); }
+  .ref.e-good .barre span { background: var(--good); } .ref.moi .barre span { background: var(--accent); }
+  .ref .barre i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--text); }
+  .duo { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); column-gap: 0; row-gap: 4px;
+         margin: 8px 0; }
+  .duo-tete { font-weight: 700; padding: 4px 10px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .duo-tete.dm { text-align: right; border-bottom: 3px solid var(--accent); }
+  .duo-tete.dr { border-bottom: 3px solid var(--muted); }
+  .duo-minute { grid-column: 1 / -1; text-align: center; font-weight: 700; color: var(--muted); font-size: .85rem;
+                margin-top: 10px; border-top: 1px solid var(--border); padding-top: 4px; }
+  .duo-phase { grid-column: 1 / -1; text-align: center; font-style: italic; color: var(--muted); font-size: .88rem;
+               background: var(--row); border-radius: 6px; padding: 2px 8px; }
+  .duo-axe { background: linear-gradient(var(--border), var(--border)) center / 2px 100% no-repeat; }
+  .duo-c { padding: 3px 10px; border-radius: 6px; font-size: .92rem; }
+  .duo-c.cd:not(.vide) { background: color-mix(in srgb, var(--c) 12%, var(--surface)); }
+  .duo-c.dm { text-align: right; } .duo-c.dm.cd:not(.vide) { border-right: 4px solid var(--c); }
+  .duo-c.dr.cd:not(.vide) { border-left: 4px solid var(--c); }
+  .duo-c .t { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .85rem; }
+  .duo-c .absent { color: var(--muted); font-style: italic; font-size: .85rem; }
+  .duo-c .pourquoi { display: block; font-size: .85rem; color: var(--warn); }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases svg { width: 100%; height: auto; display: block; }
+  .timeline { list-style: none; margin: 8px 0; padding: 0 0 0 4px; border-left: 2px solid var(--border); }
+  .timeline li { position: relative; padding: 3px 0 3px 18px; display: flex; gap: 10px; align-items: baseline; }
+  .timeline li::before { content: ""; position: absolute; left: -6px; top: 10px; width: 10px; height: 10px;
+                         border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+  .timeline li.cd::before { border-color: #2a78d6; background: #2a78d6; }
+  .timeline li.manque::before, .timeline li.faute::before { border-color: var(--bad); background: var(--bad); }
+  .timeline li.phase::before { border-color: var(--muted); background: var(--row); border-radius: 2px; }
+  .timeline li.trou::before { border-color: var(--warn); }
+  .timeline li.phase .ev { color: var(--muted); font-style: italic; }
+  .timeline li.minute { padding: 10px 0 2px 18px; font-weight: 600; color: var(--muted); font-size: .85rem; }
+  .timeline li.minute::before { display: none; }
+  .timeline .pourquoi { display: block; font-size: .88rem; color: var(--warn); }
+  .timeline .t { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 3em; font-size: .9rem; }
+  .phases .mono { fill: var(--row); stroke: var(--border); } .phases .multi { fill: #eb6834; opacity: .55; }
+  .phases text { fill: var(--muted); font: 12px system-ui, sans-serif; }
+  section.boss > summary { font-size: 1.1rem; padding: 4px 0; }
+  section.boss { margin: 10px 0; }
+  details.boss { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px;
+                 margin: 10px 0; }
+  details.boss > summary { font-size: 1.08rem; }
+  .muted { color: var(--muted); }
+  @media (max-width: 600px) { .prio > li { padding-left: 16px; } .prio > li::before { position: static; margin-bottom: 6px; } }
+</style>
+<style>
+  .graphique { margin: 10px 0 4px; } .graphique .zone { position: relative; min-width: 0; }
+</style>
+<style>
+  .cause { display: flex; height: 10px; border-radius: 3px; overflow: hidden; background: var(--row); margin: 4px 0 2px; max-width: 420px; }
+  .cause span { display: block; height: 100%; }
+  .c-freq { background: #2a78d6; } .c-crit { background: #eb6834; } .c-coup { background: #9a6fd0; } .c-abs { background: #888; }
+  .pastille { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin: 0 4px 0 10px; }
+  .sorts-pourquoi { list-style: none; padding: 0; }
+  .sorts-pourquoi li { border-bottom: 1px solid var(--border); padding: 8px 0; }
+  .sorts-pourquoi .faits { color: var(--muted); font-size: .92rem; }
+  .centile { font-weight: 600; }
+  .c-legendaire { color: #e08a00; } .c-epique { color: #a335ee; } .c-rare { color: #0070dd; }
+  .c-peu { color: #1eaa1e; } .c-commun { color: var(--muted); }
+  .mecanisme { margin: 6px 0 0; padding: 6px 10px; border-left: 3px solid #eb6834; background: var(--row); font-size: .92rem; }
+  section.boss { border-top: 2px solid var(--border); margin-top: 28px; }
+</style>
+<style>
+  .courbe svg { width: 100%; height: auto; display: block; }
+  .courbe rect.d { fill: var(--muted); opacity: .45; }
+  .courbe rect.d.pic { fill: var(--bad); opacity: .8; }
+  .courbe line.cd { stroke: var(--accent); stroke-width: 2; }
+  .courbe line.mort { stroke: var(--text); stroke-width: 1.5; stroke-dasharray: 3 3; }
+  .courbe text { fill: var(--muted); font-size: 11px; }
+  .duo-c.pic { color: var(--bad); font-size: .85rem; }
+  .legende-soig { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 6px 0; font-size: .92rem; }
+  .legende-soig i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px;
+                    vertical-align: -1px; }
+  th.grp { border-bottom: 3px solid var(--g); text-align: center; }
+  td.g, th.g { background: color-mix(in srgb, var(--g) 8%, var(--surface)); }
+  /* une section par soigneur : une bande vide de la couleur du fond avant chaque groupe, puis un trait coloré */
+  table.soin-sorts th.grp, table.soin-sorts td.g, table.soin-sorts th.g,
+  table.soin-sorts td:last-child, table.soin-sorts th[rowspan]:last-child {
+    border-left: 14px solid var(--bg); }
+  table.soin-sorts td.g, table.soin-sorts th.g { box-shadow: inset 3px 0 0 var(--g); }
+  table.soin-sorts th.grp { box-shadow: inset 3px 0 0 var(--g); }
+  table.soin-sorts th, table.soin-sorts td { padding-left: 8px; padding-right: 8px; }
+  table.soin-sorts th[rowspan]:last-child { white-space: normal; width: 6.5em; font-size: .85rem; }
+  tr.ecart-fort td:first-child { font-weight: 700; }
+  tr.ecart-fort td:first-child::before { content: "▸ "; color: var(--warn); }
+  .cartes ul { margin: 6px 0 0; padding-left: 18px; }
+</style>
+<h1>Mes soins — Rachmana</h1>
+<p class="meta"><i class="ic ic-spec ic-spec-PaladinHoly" title="Holy Paladin"></i>Paladin Sacré · ilvl 329 · raid du 28/10/2026 · 1 boss tué · <a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd">rapport Warcraft Logs</a> · <a href="https://murlok.io/paladin/holy/m+" title="Talents, statistiques et équipement des meilleurs joueurs de ta spé en Mythique+ (Murlok)">builds du top M+ (Murlok) ↗</a></p>
+<p class="mode"><span class="etiq">Niveau d'analyse</span><strong>soigneur</strong> : soin, survie, cooldowns, mana et rotation ; sans simulation (simc ne simule pas le soin).</p>
+<p class="note"><strong>Moyennes sur 1 boss</strong></p>
+<div class="cartes">
+<div class="carte"><div class="val">146 k</div><div class="lib">HPS moyen (pas de top 3 trouvé)</div></div>
+<div class="carte"><div class="val"><span class="pc vert" title="centile 42 : moyen">42</span></div><div class="lib"><span class="verdict pc-t vert">moyen</span> · centile moyen au soin (tous ilvl) : tu fais mieux que 42 % des joueurs</div></div>
+<div class="carte"><div class="val"><span class="pc vert" title="centile 33 : moyen">33</span></div><div class="lib"><span class="verdict pc-t vert">moyen</span> · centile moyen à ton ilvl : tu fais mieux que 33 % des joueurs</div></div>
+<div class="carte"><div class="val">59 %</div><div class="lib">de surplus de soin</div></div>
+<div class="carte"><div class="val">88 %</div><div class="lib">de mana en fin de combat</div></div>
+<div class="carte"><div class="val">0</div><div class="lib">morts (kills, et wipes où tu tombes parmi les 3 premiers)</div></div>
+</div>
+<div class="bandeau"><strong>Pas de simulation pour les soigneurs</strong> : SimulationCraft ne simule pas le soin. Tes talents et ton équipement sont comparés à ceux des références (« 3 références sur 4 ont ce talent »), sans gain chiffré : ce sont des pistes à essayer, pas des certitudes.</div>
+<div class="bandeau"><strong>Spé pas encore vérifiée</strong> : ce rapport repose sur des règles génériques qui n'ont pas encore été contrôlées sur des logs de cette spé (familiers, incantations, ressource, cooldowns propres à la classe). À lire avec prudence.</div>
+
+<h2 id="s-boss-par-boss">Boss par boss</h2>
+<div class="table-wrap">
+<table class="boss-soiree">
+<thead><tr><th>Boss</th><th class="num">Centile</th><th class="num">À ton ilvl</th><th class="num">HPS</th><th class="num">Durée</th><th class="num">Soigneurs</th><th class="num">vs top 3</th><th class="num">Surplus</th><th class="num">Mana fin</th><th class="num">Morts</th><th>Combat</th></tr></thead>
+<tbody>
+<tr><td><a href="#boss-nymrissa-wavecaller">Nymrissa Wavecaller</a></td><td class="num"><span class="pc vert" title="centile 42 : moyen">42</span></td><td class="num"><span class="pc vert" title="centile 33 : moyen">33</span></td><td class="num">146 k</td><td class="num">4:51</td><td class="num">3</td><td class="num">—</td><td class="num">59 %</td><td class="num">88 %</td><td class="num">—</td><td><span class="liens"><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=1" title="Le combat sur warcraftlogs.com">Logs</a> · <a href="https://www.wipefest.gg/report/JYPGyjAh3648KbXd/fight/1" title="Mécaniques du combat sur wipefest.gg">Wipefest</a> · <a href="https://wowanalyzer.com/report/JYPGyjAh3648KbXd/1/Rachmana/standard/overview" title="Ton analyse sur wowanalyzer.com">Analyzer</a></span></td></tr>
+
+</tbody>
+</table>
+</div>
+<p class="note">Centiles aux couleurs de Warcraft Logs : gris sous 25, vert 25 à 49, bleu 50 à 74, violet 75 à 94, orange 95 à 98, rose 99, doré 100. Écart au top 3 : en orange jusqu'à 15 % en dessous, en rouge au-delà ; face au top 3, un gros écart reste courant (raids plus grands, plus de dégâts subis). Le nom du boss mène à son détail ; « Logs », « Wipefest » et « Analyzer » ouvrent le combat sur warcraftlogs.com, ses mécaniques sur wipefest.gg et ton analyse sur wowanalyzer.com.</p>
+<h2 id="s-corriger-en-priorit">À corriger en priorité</h2>
+<ol class="prio"></ol>
+
+<h2 id="s-d-tail-de-chaque-boss">Détail de chaque boss</h2>
+<details class="boss" id="boss-nymrissa-wavecaller" open><summary><strong>Nymrissa Wavecaller</strong> · 146 k HPS · 3 soigneurs · 4,9 min</summary>
+<p class="note">Ce combat : <span class="liens"><a href="https://www.warcraftlogs.com/reports/JYPGyjAh3648KbXd?fight=1" title="Le combat sur warcraftlogs.com">Warcraft Logs ↗</a> · <a href="https://www.wipefest.gg/report/JYPGyjAh3648KbXd/fight/1" title="Mécaniques du combat sur wipefest.gg">Wipefest ↗</a> · <a href="https://wowanalyzer.com/report/JYPGyjAh3648KbXd/1/Rachmana/standard/overview" title="Ton analyse sur wowanalyzer.com">WoWAnalyzer ↗</a></span></p>
+<div class="refs"><div class="ref moi"><div class="qui"><b>Rachmana</b> (toi) <span class="det">· 146 k</span><div class="det"><b>rang ≈ 9 331</b> / 16 089 · centile 42 (33 à ton ilvl)</div></div><div class="ecart"><div class="dps">146 k</div><div class="lib">ton HPS</div></div><div class="barre"><span style="width:100.0%"></span><i style="left:100.0%" title="ton HPS"></i></div></div></div>
+<h4>Dégâts subis par le raid et tes cooldowns</h4><div class="graphique"><div class="zone" style="height:240px"><canvas role="img" aria-label="Dégâts subis par le raid"></canvas></div><script type="application/json">{"type": "bar", "x": {"type": "linear", "min": 0, "max": 295, "graduations": [[0, "0:00"], [60, "1:00"], [120, "2:00"], [180, "3:00"], [240, "4:00"]]}, "y": {"type": "linear", "min": 0, "max": 8164376, "graduations": [[0, "0 M"], [4082188.0, "4 M"], [8164376, "8 M"]]}, "series": [{"libelle": "Dégâts subis par le raid (5 s)", "couleur": "--mut|--muted", "points": [[2.5, 354908], [7.5, 148025], [12.5, 5740764], [17.5, 2325811], [22.5, 1497299], [27.5, 2310267], [32.5, 2657652], [37.5, 2337555], [42.5, 2205469], [47.5, 7102607], [52.5, 4706493], [57.5, 3070407], [62.5, 3055119], [67.5, 1791565], [72.5, 1595405], [77.5, 844618], [82.5, 580942], [87.5, 3328960], [92.5, 5483384], [97.5, 3039995], [102.5, 3642181], [107.5, 1525051], [112.5, 2301545], [117.5, 539179], [122.5, 4086298], [127.5, 709031], [132.5, 577720], [137.5, 821587], [142.5, 1329000], [147.5, 301391], [152.5, 2167491], [157.5, 6775916], [162.5, 4548460], [167.5, 3582341], [172.5, 3936462], [177.5, 2027595], [182.5, 2090933], [187.5, 1459795], [192.5, 707522], [197.5, 4585095], [202.5, 7369219], [207.5, 4522361], [212.5, 3885605], [217.5, 1759758], [222.5, 2726630], [227.5, 1738577], [232.5, 4590327], [237.5, 221807], [242.5, 19961], [247.5, 383224], [252.5, 1371988], [257.5, 316124], [262.5, 2937999], [267.5, 8164376], [272.5, 4387458], [277.5, 3477303], [282.5, 3607634], [287.5, 2670440], [292.5, 1568693]], "type": "bar", "couleurs": ["--mut|--muted", "--mut|--muted", "--bad", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--bad", "--bad", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--bad", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--bad", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--bad", "--bad", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--bad", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--bad", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted", "--mut|--muted"], "opacites": [0.4, 0.4, 0.85, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.85, 0.85, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.85, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.85, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.85, 0.85, 0.4, 0.4, 0.4, 0.4, 0.4, 0.85, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.85, 0.4, 0.4, 0.4, 0.4, 0.4], "bulles": ["0:00 : 0,4 M de dégâts subis par le raid", "0:05 : 0,1 M de dégâts subis par le raid", "0:10 : 5,7 M de dégâts subis par le raid (pic)", "0:15 : 2,3 M de dégâts subis par le raid", "0:20 : 1,5 M de dégâts subis par le raid", "0:25 : 2,3 M de dégâts subis par le raid", "0:30 : 2,7 M de dégâts subis par le raid", "0:35 : 2,3 M de dégâts subis par le raid", "0:40 : 2,2 M de dégâts subis par le raid", "0:45 : 7,1 M de dégâts subis par le raid (pic)", "0:50 : 4,7 M de dégâts subis par le raid (pic)", "0:55 : 3,1 M de dégâts subis par le raid", "1:00 : 3,1 M de dégâts subis par le raid", "1:05 : 1,8 M de dégâts subis par le raid", "1:10 : 1,6 M de dégâts subis par le raid", "1:15 : 0,8 M de dégâts subis par le raid", "1:20 : 0,6 M de dégâts subis par le raid", "1:25 : 3,3 M de dégâts subis par le raid", "1:30 : 5,5 M de dégâts subis par le raid (pic)", "1:35 : 3,0 M de dégâts subis par le raid", "1:40 : 3,6 M de dégâts subis par le raid", "1:45 : 1,5 M de dégâts subis par le raid", "1:50 : 2,3 M de dégâts subis par le raid", "1:55 : 0,5 M de dégâts subis par le raid", "2:00 : 4,1 M de dégâts subis par le raid", "2:05 : 0,7 M de dégâts subis par le raid", "2:10 : 0,6 M de dégâts subis par le raid", "2:15 : 0,8 M de dégâts subis par le raid", "2:20 : 1,3 M de dégâts subis par le raid", "2:25 : 0,3 M de dégâts subis par le raid", "2:30 : 2,2 M de dégâts subis par le raid", "2:35 : 6,8 M de dégâts subis par le raid (pic)", "2:40 : 4,5 M de dégâts subis par le raid", "2:45 : 3,6 M de dégâts subis par le raid", "2:50 : 3,9 M de dégâts subis par le raid", "2:55 : 2,0 M de dégâts subis par le raid", "3:00 : 2,1 M de dégâts subis par le raid", "3:05 : 1,5 M de dégâts subis par le raid", "3:10 : 0,7 M de dégâts subis par le raid", "3:15 : 4,6 M de dégâts subis par le raid (pic)", "3:20 : 7,4 M de dégâts subis par le raid (pic)", "3:25 : 4,5 M de dégâts subis par le raid", "3:30 : 3,9 M de dégâts subis par le raid", "3:35 : 1,8 M de dégâts subis par le raid", "3:40 : 2,7 M de dégâts subis par le raid", "3:45 : 1,7 M de dégâts subis par le raid", "3:50 : 4,6 M de dégâts subis par le raid (pic)", "3:55 : 0,2 M de dégâts subis par le raid", "4:00 : 0,0 M de dégâts subis par le raid", "4:05 : 0,4 M de dégâts subis par le raid", "4:10 : 1,4 M de dégâts subis par le raid", "4:15 : 0,3 M de dégâts subis par le raid", "4:20 : 2,9 M de dégâts subis par le raid", "4:25 : 8,2 M de dégâts subis par le raid (pic)", "4:30 : 4,4 M de dégâts subis par le raid", "4:35 : 3,5 M de dégâts subis par le raid", "4:40 : 3,6 M de dégâts subis par le raid", "4:45 : 2,7 M de dégâts subis par le raid", "4:50 : 1,6 M de dégâts subis par le raid"]}], "hauteur": 240, "survol": "x", "reperes": [{"libelle": "Ton cooldown de soin", "couleur": "--accent", "points": [[10.13, "0:10 Avenging Wrath"], [155.78, "2:35 Avenging Wrath"], [287.75, "4:47 Avenging Wrath"], [11.39, "0:11 Divine Toll"], [46.37, "0:46 Divine Toll"], [93.35, "1:33 Divine Toll"], [203.29, "3:23 Divine Toll"], [233.85, "3:53 Divine Toll"], [266.6, "4:26 Divine Toll"], [87.43, "1:27 Divine Shield"]], "pointilles": false, "epaisseur": 2.5, "rond": true}], "legende": false, "horizontal": false}</script></div><p class="note">Barres : dégâts subis par tout le raid toutes les 5 s (en rouge, les 15 % de moments les plus durs). Traits dorés : tes cooldowns de soin. Pointillés : morts.</p>
+<h4>D'où vient ton soin, face à tes références</h4><p class="legende-soig"><span><i style="background:#2a78d6"></i>Toi</span></p><div class="table-wrap"><table class="soin-sorts"><thead><tr><th rowspan="2">Sort</th><th colspan="3" class="grp" style="--g:#2a78d6">Toi</th><th rowspan="2" class="num">Écart de part<br>(toi − équivalent)</th></tr><tr><th class="num g" style="--g:#2a78d6">part</th><th class="num">surplus</th><th class="num">lancers/min</th></tr></thead><tbody><tr><td><i class="ic ic-spell_holy_searinglight"></i>Holy Shock</td><td class="num g" style="--g:#2a78d6"><span title="45 k HPS">29 %</span></td><td class="num">55 %</td><td class="num">14,8</td><td class="num">—</td></tr><tr><td><i class="ic ic-ability_paladin_beaconoflight"></i>Beacon of Light</td><td class="num g" style="--g:#2a78d6"><span title="14 k HPS">9 %</span></td><td class="num">69 %</td><td class="num">—</td><td class="num">—</td></tr><tr><td><i class="ic ic-inv_torch_thrown"></i>Eternal Flame</td><td class="num g" style="--g:#2a78d6"><span title="13 k HPS">8 %</span></td><td class="num">61 %</td><td class="num">4,5</td><td class="num">—</td></tr><tr><td><i class="ic ic-spell_paladin_lightofdawn"></i>Light of Dawn</td><td class="num g" style="--g:#2a78d6"><span title="12 k HPS">8 %</span></td><td class="num">75 %</td><td class="num">8,0</td><td class="num">—</td></tr><tr><td><i class="ic ic-spell_holy_righteousfury"></i>Judgment</td><td class="num g" style="--g:#2a78d6"><span title="11 k HPS">7 %</span></td><td class="num">30 %</td><td class="num">6,6</td><td class="num">—</td></tr><tr><td><i class="ic ic-spell_holy_flashheal"></i>Flash of Light</td><td class="num g" style="--g:#2a78d6"><span title="10 k HPS">7 %</span></td><td class="num">63 %</td><td class="num">4,1</td><td class="num">—</td></tr><tr><td><i class="ic ic-inv_121_trinket_raid_ulatek_ritualvessel"></i>Soulcoiler Ritual Vessel</td><td class="num g" style="--g:#2a78d6"><span title="8 k HPS">5 %</span></td><td class="num">40 %</td><td class="num">0,6</td><td class="num">—</td></tr><tr><td><i class="ic ic-spell_paladin_divinecircle"></i>Glistening Radiance</td><td class="num g" style="--g:#2a78d6"><span title="7 k HPS">4 %</span></td><td class="num">33 %</td><td class="num">3,7</td><td class="num">—</td></tr><tr><td><i class="ic ic-spell_paladin_clarityofpurpose"></i>Brought to Light</td><td class="num g" style="--g:#2a78d6"><span title="6 k HPS">4 %</span></td><td class="num">64 %</td><td class="num">—</td><td class="num">—</td></tr><tr><td><i class="ic ic-inv_helm_plate_raidpaladindragon_d_01"></i>Pillar of Lights</td><td class="num g" style="--g:#2a78d6"><span title="3 k HPS">2 %</span></td><td class="num">66 %</td><td class="num">—</td><td class="num">—</td></tr><tr><td><i class="ic ic-inv_ability_heraldofthesunpaladin_dawnlight"></i>Dawnlight</td><td class="num g" style="--g:#2a78d6"><span title="3 k HPS">2 %</span></td><td class="num">73 %</td><td class="num">1,2</td><td class="num">—</td></tr><tr><td><i class="ic ic-spell_paladin_clarityofpurpose"></i>Lightbearer</td><td class="num g" style="--g:#2a78d6"><span title="3 k HPS">2 %</span></td><td class="num">43 %</td><td class="num">—</td><td class="num">—</td></tr><tr><td><i class="ic ic-spell_priest_burningwill"></i>Sun Sear</td><td class="num g" style="--g:#2a78d6"><span title="2 k HPS">1 %</span></td><td class="num">72 %</td><td class="num">3,9</td><td class="num">—</td></tr><tr><td><i class="ic ic-spell_shadow_lifedrain02"></i>Leech</td><td class="num g" style="--g:#2a78d6"><span title="1 k HPS">1 %</span></td><td class="num">9 %</td><td class="num">—</td><td class="num">—</td></tr><tr><td><i class="ic ic-inv_12_profession_mining_miningspecializations_overloded"></i>Omnium Folio</td><td class="num g" style="--g:#2a78d6"><span title="1 k HPS">1 %</span></td><td class="num">57 %</td><td class="num">—</td><td class="num">—</td></tr><tr><td><i class="ic ic-ability_paladin_holyavenger"></i>Sun&#x27;s Avatar</td><td class="num g" style="--g:#2a78d6"><span title="1 k HPS">1 %</span></td><td class="num">72 %</td><td class="num">1,9</td><td class="num">—</td></tr><tr><td><i class="ic ic-inv12_ability_paladin_sentinel"></i>Armory of Light</td><td class="num g" style="--g:#2a78d6"><span title="1 k HPS">1 %</span></td><td class="num">0 %</td><td class="num">—</td><td class="num">—</td></tr><tr><td><i class="ic ic-inv12_apextalent_paladin_beaconofthesavior"></i>Beacon of the Savior</td><td class="num g" style="--g:#2a78d6"><span title="1 k HPS">1 %</span></td><td class="num">26 %</td><td class="num">3,5</td><td class="num">—</td></tr></tbody></table></div><p class="note">Part : part du sort dans le soin efficace de chacun (le HPS du sort au survol). Comparer des parts plutôt que des HPS gomme la différence de taille de raid et de dégâts subis. Sort marqué ▸ : il pèse 8 points de plus ou de moins chez l'équivalent, c'est-à-dire une différence de rotation ou de talents. « absent » : sort jamais utilisé.</p>
+<h4>Les soigneurs du raid</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Soigneur</th><th>Spé</th><th class="num">HPS</th><th class="num">Surplus</th><th class="num">Mana fin</th><th class="num">Cooldowns de soin</th><th class="num">Morts</th></tr></thead>
+<tbody>
+<tr><td>Ingolmo</td><td>Holy Priest</td><td class="num">154 k</td><td class="num">56 %</td><td class="num">91 %</td><td class="num">3 / 5</td><td class="num">—</td></tr>
+<tr><td><strong>Rachmana</strong></td><td>Holy Paladin</td><td class="num">146 k</td><td class="num">59 %</td><td class="num">88 %</td><td class="num">10 / 9</td><td class="num">—</td></tr>
+<tr><td>Nightblóod</td><td>Restoration Shaman</td><td class="num">116 k</td><td class="num">57 %</td><td class="num">41 %</td><td class="num">5 / 7</td><td class="num">—</td></tr>
+
+</tbody>
+</table>
+</div>
+</details>
+<details class="methode"><summary><h2 id="s-m-thode" style="display:inline">Méthode</h2> <span class="muted">(cliquer pour déplier)</span></summary><div class="cartes"><div class="carte"><div class="lib"><strong>Combats analysés</strong></div><p>Ton meilleur kill de chaque boss (centile au soin le plus haut). Pour la survie, tous les wipes de la soirée, même sur les boss non tués.</p></div><div class="carte"><div class="lib"><strong>Références</strong></div><p>Le top 3 mondial de ta spé au HPS, et un soigneur équivalent : même tranche d&#x27;ilvl, taille de raid et durée proches, même nombre de soigneurs (±1), HPS 10 à 45 % au-dessus du tien. Logs postérieurs au dernier correctif du jeu. Un log archivé ou d&#x27;avant le correctif est sauté : le rang affiché reste celui du classement (« Top 4 mondial » quand le 3e est sauté).</p></div><div class="carte"><div class="lib"><strong>Mesures</strong></div><p>Soin efficace = soin sans le surplus ; les boucliers comptent pour ce qu&#x27;ils ont absorbé. Pics de dégâts : les 15 % de tranches de 5 s où le raid prend le plus. Morts sur wipe : comptées seulement si tu es parmi les 3 premiers à tomber.</p></div><div class="carte"><div class="lib"><strong>Cooldowns</strong></div><p>Recharge d&#x27;au moins 60 s, lue dans les données de simc. Un sort lancé plus souvent que sa recharge ne le permet est un sort de rotation (recharge réduite en jeu), pas un cooldown.</p></div><div class="carte"><div class="lib"><strong>Classement des constats</strong></div><p>D&#x27;abord la gravité (critique : ta mort ; grave : un cooldown perdu pendant que des joueurs meurent), puis le soin à gagner quand il est chiffrable.</p></div><div class="carte"><div class="lib"><strong>Limites</strong></div><p>Pas de simulation pour les soigneurs : talents et équipement sont comparés aux références, sans gain chiffré. Une référence soigne un autre raid que le tien : ses dégâts subis et ses soigneurs ne sont pas les tiens, d&#x27;où la comparaison en parts plutôt qu&#x27;en HPS.</p></div></div></details>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.js" integrity="sha384-G436+Z2nlA8+PNoeRvWdxKbvOf8E/y+lYxqht2iBwNHTQDV5CJr3+AGVj8fGZi5t" crossorigin="anonymous"></script>
+<script>
+// Graphiques des pages (controleurs/commun/graphiques.py) : chaque <div class="graphique"> porte sa description en
+// JSON, traduite ici pour Chart.js (chargé juste avant, templates/commun/_chart_js.html.j2). Sans Chart.js (hors ligne),
+// la zone reste vide : les tableaux de la page disent l'essentiel.
+(() => {
+  if (typeof Chart === 'undefined') return;
+
+  // « --a|--b » : la première variable CSS définie (les fiches ont leurs propres noms), lue sur la figure ; alpha < 1 :
+  // la même couleur, transparente
+  function couleur(figure, nom, alpha = 1) {
+    if (!nom) return undefined;
+    const valeur = nom.startsWith('--')
+      ? nom.split('|').reduceRight((secours, v) => `var(${v.trim()}, ${secours})`, '#888')
+      : nom;
+    const span = document.createElement('span');
+    span.style.color = valeur;
+    figure.appendChild(span);
+    const rgb = getComputedStyle(span).color;
+    span.remove();
+    if (alpha === 1) return rgb;
+    const [r, g, b] = rgb.match(/[\d.]+/g);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+  const parPoint = (v, i) => (Array.isArray(v) ? v[i] : v);
+  const chaquePoint = (v, f) => (Array.isArray(v) ? v.map(f) : f(v));
+
+  function axe(figure, a) {
+    const o = {
+      type: a.type,
+      grid: { color: couleur(figure, '--border') },
+      border: { display: false },
+      ticks: { color: couleur(figure, '--mut|--muted'), maxRotation: 0, autoSkipPadding: 10 },
+    };
+    // axe en temps sous des barres : 0:00 au bord, pas décalé d'une demi-barre comme sous des catégories
+    if (a.type === 'linear') { o.offset = false; o.grid.offset = false; }
+    if (a.etiquettes) o.labels = a.etiquettes;
+    if (a.min !== undefined) o.min = a.min;
+    if (a.max !== undefined) o.max = a.max;
+    if (a.graduations) {
+      const textes = new Map(a.graduations);
+      o.afterBuildTicks = axis => { axis.ticks = a.graduations.map(([v]) => ({ value: v })); };
+      o.ticks.callback = v => textes.get(v) ?? '';
+    }
+    if (a.titre) o.title = { display: true, text: a.titre, color: o.ticks.color };
+    return o;
+  }
+
+  function jeuDeDonnees(figure, s, g) {
+    const type = s.type || g.type;
+    const c = couleur(figure, s.couleur);
+    const rayons = s.rayons ?? (type === 'line' ? 3 : 4);
+    const d = {
+      type, label: s.libelle, bulles: s.bulles, etiquettes: s.etiquettes, centrees: s.etiquettes_centrees,
+      dessous: s.etiquettes_dessous,
+      data: s.points.map(p => (Array.isArray(p) ? { x: p[0], y: p[1] } : p)),
+      borderColor: c, backgroundColor: c, fill: false, spanGaps: true,
+      borderWidth: s.epaisseur ?? 2.5, borderDash: s.pointilles ? [7, 5] : [],
+      pointRadius: rayons, pointHoverRadius: chaquePoint(rayons, r => r + 2),
+      pointBackgroundColor: s.fonds ? chaquePoint(s.fonds, f => couleur(figure, f)) : c,
+      pointBorderColor: s.bordures ? chaquePoint(s.bordures, f => couleur(figure, f)) : c,
+      pointBorderWidth: s.bordures_epaisseur ?? 2, pointStyle: s.style_point || 'circle',
+    };
+    if (type === 'bar') {
+      Object.assign(d, { borderWidth: 0, borderRadius: 2, barPercentage: 0.9, categoryPercentage: g.horizontal ? 0.8 : 1 });
+      if (s.couleurs) d.backgroundColor = s.couleurs.map((x, i) => couleur(figure, x, parPoint(s.opacites ?? 1, i)));
+    }
+    if (type === 'scatter') d.showLine = false;
+    return d;
+  }
+
+  // traits verticaux (cooldowns, morts) : un point en haut, survolable, et son trait dessiné par le greffon
+  function jeuDeReperes(figure, r, g) {
+    const c = couleur(figure, r.couleur);
+    return {
+      type: 'scatter', label: r.libelle, repere: true, pointilles: r.pointilles, epaisseurTrait: r.epaisseur,
+      data: r.points.map(([x]) => ({ x, y: g.y.max })), bulles: r.points.map(([, bulle]) => bulle),
+      borderColor: c, backgroundColor: c, pointRadius: r.rond ? 4 : 2.5, pointHoverRadius: 6,
+    };
+  }
+
+  const traits = {
+    id: 'traits',
+    beforeDatasetsDraw(chart) {
+      const { ctx, chartArea: zone } = chart;
+      chart.data.datasets.forEach((d, i) => {
+        if (!d.repere || !chart.isDatasetVisible(i)) return;
+        ctx.save();
+        ctx.strokeStyle = d.borderColor;
+        ctx.lineWidth = d.epaisseurTrait;
+        ctx.setLineDash(d.pointilles ? [3, 3] : []);
+        chart.getDatasetMeta(i).data.forEach(p => {
+          ctx.beginPath(); ctx.moveTo(p.x, zone.top); ctx.lineTo(p.x, zone.bottom); ctx.stroke();
+        });
+        ctx.restore();
+      });
+    },
+  };
+
+  // texte près d'un point (valeur), sur un liseré de la couleur du fond pour rester lisible ; centré : dans le point
+// (numéro d'essai), de la couleur du fond
+  const etiquettes = {
+    id: 'etiquettes',
+    afterDatasetsDraw(chart, _args, options) {
+      const { ctx } = chart;
+      chart.data.datasets.forEach((d, i) => {
+        if (!d.etiquettes || !chart.isDatasetVisible(i)) return;
+        const points = chart.getDatasetMeta(i).data;
+        ctx.save();
+        ctx.font = d.centrees ? 'bold 10px system-ui, sans-serif' : 'bold 11px system-ui, sans-serif';
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = options.fond;
+        ctx.fillStyle = d.centrees ? options.fond : d.borderColor;
+        ctx.textBaseline = 'middle';
+        points.forEach((p, j) => {
+          const texte = d.etiquettes[j];
+          if (!texte || p.skip) return;
+          const premier = j === 0, dernier = j === points.length - 1;
+          ctx.textAlign = d.centrees ? 'center' : premier ? 'left' : dernier ? 'right' : 'center';
+          const y = d.centrees ? p.y : d.dessous && d.dessous[j] ? p.y + 14 : p.y - 12;
+          if (!d.centrees) ctx.strokeText(texte, p.x, y);
+          ctx.fillText(texte, p.x, y);
+        });
+        ctx.restore();
+      });
+    },
+  };
+
+  const SURVOL = {
+    index: { mode: 'index', intersect: false },
+    point: { mode: 'nearest', intersect: true },
+    x: { mode: 'nearest', axis: 'x', intersect: false },
+  };
+
+  function dessiner(figure) {
+    const g = JSON.parse(figure.querySelector('script[type="application/json"]').textContent);
+    const jeux = g.series.map(s => jeuDeDonnees(figure, s, g)).concat(g.reperes.map(r => jeuDeReperes(figure, r, g)));
+    return new Chart(figure.querySelector('canvas'), {
+      type: g.type,
+      data: { datasets: jeux, labels: g.horizontal ? g.y.etiquettes : g.x.etiquettes },
+      options: {
+        responsive: true, maintainAspectRatio: false, animation: false, indexAxis: g.horizontal ? 'y' : 'x',
+        layout: { padding: { top: 14, right: 8 } },  // étiquettes et points au bord du cadre
+        interaction: SURVOL[g.survol],
+        scales: { x: axe(figure, g.x), y: axe(figure, g.y) },
+        plugins: {
+          legend: {
+            display: g.legende, position: 'bottom',
+            labels: { color: couleur(figure, '--mut|--muted'), usePointStyle: true, boxWidth: 8, boxHeight: 8 },
+          },
+          tooltip: {
+            filter: item => !item.dataset.bulles || item.dataset.bulles[item.dataIndex] != null,
+            callbacks: {
+              title: () => '',
+              label: item => {
+                const bulles = item.dataset.bulles;
+                return bulles ? String(bulles[item.dataIndex]).split('\n') : `${item.dataset.label} : ${item.formattedValue}`;
+              },
+            },
+          },
+          etiquettes: { fond: couleur(figure, '--card|--surface') },
+        },
+      },
+      plugins: [traits, etiquettes],
+    });
+  }
+
+  const figures = [...document.querySelectorAll('div.graphique')];
+  let graphiques = figures.map(dessiner);
+  // palette changée (data-theme) ou mode sombre du système : redessinés avec les couleurs du moment
+  const redessiner = () => { graphiques.forEach(c => c.destroy()); graphiques = figures.map(dessiner); };
+  new MutationObserver(redessiner).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', redessiner);
+})();
+</script>
+<script>
+function ouvrirAncre() {
+  const d = location.hash && document.getElementById(location.hash.slice(1));
+  if (d && d.tagName === "DETAILS") { d.open = true; d.scrollIntoView(); }
+}
+addEventListener("hashchange", ouvrirAncre); addEventListener("DOMContentLoaded", ouvrirAncre);
+</script>
+
+</main>
+</div>
+<script>
+(function () {
+  var nav = document.querySelector('.sommaire'); if (!nav) return;
+  var det = nav.querySelector('details'), petit = window.matchMedia('(max-width: 1100px)');
+  if (petit.matches) det.open = false;
+  var liens = {}; nav.querySelectorAll('a').forEach(function (a) { liens[a.getAttribute('href').slice(1)] = a; });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A' && petit.matches) det.open = false; });
+  var titres = Array.prototype.filter.call(document.querySelectorAll('main h2[id], main h3[id]'),
+                                           function (h) { return liens[h.id]; });
+  function actif() {
+    var courant = titres[0];
+    titres.forEach(function (h) { if (h.getBoundingClientRect().top < 120) courant = h; });
+    Object.keys(liens).forEach(function (k) { liens[k].classList.toggle('actif', courant && k === courant.id); });
+  }
+  window.addEventListener('scroll', actif, {passive: true}); actif();
+})();
+</script>
+</body>
+</html>
