@@ -19,6 +19,221 @@
  ],
  "soirees": [
   {
+   "date": "2026-10-29",
+   "saison": "midnight-2",
+   "page": "raid_4QAzNXDRPB6WdJ2c.html",
+   "zone": "The Venomous Abyss",
+   "difficulte": "Héroïque",
+   "tues": 3,
+   "affrontes": 3,
+   "essais": 22,
+   "boss": [
+    {
+     "nom": "Sszorak",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 16,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Twin Fangs",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 1,
+     "meilleur_pv": null
+    },
+    {
+     "nom": "The Coiled Altar",
+     "difficulte": "Héroïque",
+     "tue": true,
+     "essais": 5,
+     "meilleur_pv": null
+    }
+   ],
+   "joueurs": [
+    {
+     "nom": "Jairtrude",
+     "personnage": "Jairtrude",
+     "role": "tank",
+     "classe": "Paladin",
+     "spec_fr": "Protection",
+     "pu": false,
+     "allie": null,
+     "page": "Jairtrude_soiree.html"
+    },
+    {
+     "nom": "Louac",
+     "personnage": "Louac",
+     "role": "tank",
+     "classe": "Paladin",
+     "spec_fr": "Protection",
+     "pu": false,
+     "allie": null,
+     "page": "Louac_soiree.html"
+    },
+    {
+     "nom": "Ingolmo",
+     "personnage": "Ingolmo",
+     "role": "soigneur",
+     "classe": "Priest",
+     "spec_fr": "Sacré",
+     "pu": false,
+     "allie": null,
+     "page": "Ingolmo_soiree.html"
+    },
+    {
+     "nom": "Jalyne",
+     "personnage": "Jalyne",
+     "role": "soigneur",
+     "classe": "Shaman",
+     "spec_fr": "Restauration",
+     "pu": false,
+     "allie": null,
+     "page": "Jalyne_soiree.html"
+    },
+    {
+     "nom": "Oopiuum",
+     "personnage": "Oopiuum",
+     "role": "soigneur",
+     "classe": "Priest",
+     "spec_fr": "Sacré",
+     "pu": true,
+     "allie": null,
+     "page": "Oopiuum_soiree.html"
+    },
+    {
+     "nom": "Tirelacouete",
+     "personnage": "Tirelacouete",
+     "role": "soigneur",
+     "classe": "Priest",
+     "spec_fr": "Discipline",
+     "pu": false,
+     "allie": null,
+     "page": "Tirelacouete_soiree.html"
+    },
+    {
+     "nom": "Alats",
+     "personnage": "Alats",
+     "role": "DPS",
+     "classe": "Warrior",
+     "spec_fr": "Armes",
+     "pu": false,
+     "allie": null,
+     "page": "Alats_soiree.html"
+    },
+    {
+     "nom": "Arishala",
+     "personnage": "Arishala",
+     "role": "DPS",
+     "classe": "Shaman",
+     "spec_fr": "Élémentaire",
+     "pu": true,
+     "allie": null,
+     "page": "Arishala_soiree.html"
+    },
+    {
+     "nom": "Côrnus",
+     "personnage": "Côrnus",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévastation",
+     "pu": false,
+     "allie": null,
+     "page": "Côrnus_soiree.html"
+    },
+    {
+     "nom": "Fautores",
+     "personnage": "Fautores",
+     "role": "DPS",
+     "classe": "Rogue",
+     "spec_fr": "Finesse",
+     "pu": true,
+     "allie": null,
+     "page": "Fautores_soiree.html"
+    },
+    {
+     "nom": "Goloko",
+     "personnage": "Goloko",
+     "role": "DPS",
+     "classe": "Warrior",
+     "spec_fr": "Armes",
+     "pu": true,
+     "allie": null,
+     "page": "Goloko_soiree.html"
+    },
+    {
+     "nom": "Kaelhdyr",
+     "personnage": "Kaelhdyr",
+     "role": "DPS",
+     "classe": "DemonHunter",
+     "spec_fr": "Dévastation",
+     "pu": false,
+     "allie": null,
+     "page": "Kaelhdyr_soiree.html"
+    },
+    {
+     "nom": "Mécafree",
+     "personnage": "Mécafree",
+     "role": "DPS",
+     "classe": "Hunter",
+     "spec_fr": "Maîtrise des bêtes",
+     "pu": false,
+     "allie": null,
+     "page": "Mécafree_soiree.html"
+    },
+    {
+     "nom": "Métaforme",
+     "personnage": "Métaforme",
+     "role": "DPS",
+     "classe": "Druid",
+     "spec_fr": "Farouche",
+     "pu": false,
+     "allie": null,
+     "page": "Métaforme_soiree.html"
+    },
+    {
+     "nom": "Palvaso",
+     "personnage": "Palvaso",
+     "role": "DPS",
+     "classe": "Paladin",
+     "spec_fr": "Vindicte",
+     "pu": true,
+     "allie": null,
+     "page": "Palvaso_soiree.html"
+    },
+    {
+     "nom": "Ragnarorc",
+     "personnage": "Ragnarorc",
+     "role": "DPS",
+     "classe": "DeathKnight",
+     "spec_fr": "Impie",
+     "pu": false,
+     "allie": null,
+     "page": "Ragnarorc_soiree.html"
+    },
+    {
+     "nom": "Sadgemage",
+     "personnage": "Sadgemage",
+     "role": "DPS",
+     "classe": "Mage",
+     "spec_fr": "Arcanes",
+     "pu": true,
+     "allie": null,
+     "page": "Sadgemage_soiree.html"
+    },
+    {
+     "nom": "Shyell",
+     "personnage": "Shyell",
+     "role": "DPS",
+     "classe": "Rogue",
+     "spec_fr": "Finesse",
+     "pu": true,
+     "allie": null,
+     "page": "Shyell_soiree.html"
+    }
+   ]
+  },
+  {
    "date": "2026-10-28",
    "saison": "midnight-2",
    "page": "raid_JYPGyjAh3648KbXd.html",
